@@ -96,6 +96,7 @@ export default async function Home() {
           <a href="/alertas" className="hover:text-primary">Alertas</a>
           <a href="/favoritos" className="hover:text-primary">Favoritos</a>
           <a href="/comparador" className="hover:text-primary">Comparador</a>
+          <a href="/estatisticas" className="hover:text-primary">Estatísticas</a>
           <a href="/valoracao" className="hover:text-primary">Valorização</a>
           <a href="/blog" className="hover:text-primary">Blog</a>
           <a href="/faq" className="hover:text-primary">FAQ</a>
