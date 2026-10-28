@@ -1,30 +1,39 @@
 import { NextResponse } from "next/server";
 import { db } from "@/db";
-import { properties, users } from "@/db/schema";
-import { eq } from "drizzle-orm";
+import { properties, users, searchAlerts } from "@/db/schema";
+import { eq, and, gte, lte, sql } from "drizzle-orm";
 import { sendAlertEmail, buildNewPropertyAlertEmail } from "@/lib/email";
 
 export async function GET(request: Request) {
-  // Verify cron secret
   const authHeader = request.headers.get("authorization");
   if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
   try {
-    // Get recent properties (last 24h)
+    // Get active alerts
+    const activeAlerts = await db
+      .select()
+      .from(searchAlerts)
+      .where(eq(searchAlerts.active, true));
+
+    // Get properties created in the last 24 hours
     const oneDayAgo = new Date(Date.now() - 24 * 60 * 60 * 1000);
-    const recentProperties = await db
+    const newProperties = await db
       .select()
       .from(properties)
-      .where(eq(properties.district, "Lisboa")); // Simplified
-
-    // Get all users with alerts
-    const allUsers = await db.select().from(users);
+      .where(gte(properties.createdAt, oneDayAgo));
 
     let sent = 0;
-    for (const user of allUsers) {
-      for (const prop of recentProperties.slice(0, 3)) {
+
+    for (const alert of activeAlerts) {
+      for (const prop of newProperties) {
+        // Check if property matches alert criteria
+        if (alert.district && prop.district !== alert.district) continue;
+        if (alert.maxPrice && prop.price > alert.maxPrice) continue;
+        if (alert.minScore && (prop.score || 0) < alert.minScore) continue;
+        if (alert.propertyType && prop.type !== alert.propertyType) continue;
+
         const html = buildNewPropertyAlertEmail(
           prop.title,
           prop.district,
@@ -33,7 +42,7 @@ export async function GET(request: Request) {
           prop.score || 0
         );
         const ok = await sendAlertEmail(
-          user.email,
+          alert.email,
           `Nova oportunidade em ${prop.district}!`,
           html
         );
@@ -41,7 +50,11 @@ export async function GET(request: Request) {
       }
     }
 
-    return NextResponse.json({ sent, properties: recentProperties.length });
+    return NextResponse.json({
+      sent,
+      alerts: activeAlerts.length,
+      newProperties: newProperties.length,
+    });
   } catch (error) {
     console.error(error);
     return NextResponse.json({ error: "Erro" }, { status: 500 });
