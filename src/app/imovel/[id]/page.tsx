@@ -4,6 +4,7 @@ import { eq, desc } from "drizzle-orm";
 import { notFound } from "next/navigation";
 import { MapPin, TrendingDown, ExternalLink } from "lucide-react";
 import Image from "next/image";
+import ValuationCard from "@/components/ValuationCard";
 
 export default async function PropertyPage({
   params,
@@ -143,6 +144,17 @@ export default async function PropertyPage({
             >
               Ver anúncio original <ExternalLink size={16} />
             </a>
+          </div>
+
+          {/* Valuation */}
+          <div className="mb-6">
+            <ValuationCard
+              district={prop.district}
+              type={prop.type}
+              price={prop.price}
+              marketValue={prop.marketValue}
+              rentability={prop.rentability}
+            />
           </div>
 
           {/* Price history */}
