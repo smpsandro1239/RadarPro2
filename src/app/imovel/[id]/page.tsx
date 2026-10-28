@@ -2,7 +2,8 @@ import { db } from "@/db";
 import { properties } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import { notFound } from "next/navigation";
-import { MapPin, TrendingDown, ExternalLink, Home, Bath, Ruler } from "lucide-react";
+import { MapPin, TrendingDown, ExternalLink } from "lucide-react";
+import Image from "next/image";
 
 export default async function PropertyPage({
   params,
@@ -18,6 +19,8 @@ export default async function PropertyPage({
 
   if (result.length === 0) notFound();
   const prop = result[0];
+  const images = prop.images ? JSON.parse(prop.images) : [];
+  const imageUrl = images[0] || null;
 
   return (
     <main className="min-h-screen max-w-5xl mx-auto px-6 py-12">
@@ -26,9 +29,18 @@ export default async function PropertyPage({
       </a>
 
       <div className="grid md:grid-cols-2 gap-8">
-        {/* Image placeholder */}
-        <div className="aspect-video bg-slate-200 rounded-2xl flex items-center justify-center text-slate-400">
-          Foto do imóvel
+        {/* Image */}
+        <div className="aspect-video bg-slate-200 rounded-2xl overflow-hidden relative">
+          {imageUrl && (
+            <Image
+              src={imageUrl}
+              alt={prop.title}
+              fill
+              className="object-cover"
+              sizes="(max-width: 768px) 100vw, 50vw"
+              priority
+            />
+          )}
         </div>
 
         <div>
@@ -38,6 +50,9 @@ export default async function PropertyPage({
             </span>
             <span className="bg-slate-100 px-3 py-1 rounded-lg text-sm font-medium">
               {prop.sourceName}
+            </span>
+            <span className="bg-slate-100 px-3 py-1 rounded-lg text-sm font-medium">
+              {prop.type}
             </span>
           </div>
 
@@ -88,18 +103,22 @@ export default async function PropertyPage({
 
           <div className="border-t pt-6">
             <h2 className="font-bold mb-3">Detalhes</h2>
-            <div className="grid grid-cols-3 gap-4 text-sm">
-              <div className="flex items-center gap-2">
-                <Home size={16} className="text-secondary" />
-                <span>{prop.type}</span>
+            <div className="grid grid-cols-2 gap-4 text-sm">
+              <div className="flex justify-between">
+                <span className="text-secondary">Tipo</span>
+                <span className="font-medium">{prop.type}</span>
               </div>
-              <div className="flex items-center gap-2">
-                <Ruler size={16} className="text-secondary" />
-                <span>— m²</span>
+              <div className="flex justify-between">
+                <span className="text-secondary">Fonte</span>
+                <span className="font-medium">{prop.sourceName}</span>
               </div>
-              <div className="flex items-center gap-2">
-                <Bath size={16} className="text-secondary" />
-                <span>—</span>
+              <div className="flex justify-between">
+                <span className="text-secondary">Distrito</span>
+                <span className="font-medium">{prop.district}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-secondary">Concelho</span>
+                <span className="font-medium">{prop.municipality}</span>
               </div>
             </div>
           </div>

@@ -21,7 +21,9 @@ const props = [
     discountPct: 30,
     score: 92,
     rentability: 7.5,
-    images: "[]",
+    images: JSON.stringify([
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&q=80",
+    ]),
   },
   {
     id: "lis-2",
@@ -37,7 +39,27 @@ const props = [
     discountPct: 18,
     score: 81,
     rentability: 6.0,
-    images: "[]",
+    images: JSON.stringify([
+      "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&q=80",
+    ]),
+  },
+  {
+    id: "lis-3",
+    source: "portal",
+    sourceName: "Casa Sapo",
+    url: "https://casa.sapo.pt/",
+    title: "Apartamento T3 Lisboa Centro",
+    district: "Lisboa",
+    municipality: "Lisboa",
+    type: "T3",
+    price: 245000,
+    marketValue: 310000,
+    discountPct: 21,
+    score: 84,
+    rentability: 5.2,
+    images: JSON.stringify([
+      "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800&q=80",
+    ]),
   },
   {
     id: "por-1",
@@ -53,7 +75,9 @@ const props = [
     discountPct: 20,
     score: 85,
     rentability: 6.2,
-    images: "[]",
+    images: JSON.stringify([
+      "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&q=80",
+    ]),
   },
   {
     id: "por-2",
@@ -69,7 +93,27 @@ const props = [
     discountPct: 25,
     score: 88,
     rentability: 7.0,
-    images: "[]",
+    images: JSON.stringify([
+      "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80",
+    ]),
+  },
+  {
+    id: "por-3",
+    source: "portal",
+    sourceName: "Imovirtual",
+    url: "https://www.imovirtual.com/",
+    title: "Apartamento T2 Porto Centro",
+    district: "Porto",
+    municipality: "Porto",
+    type: "T2",
+    price: 195000,
+    marketValue: 240000,
+    discountPct: 19,
+    score: 76,
+    rentability: 5.5,
+    images: JSON.stringify([
+      "https://images.unsplash.com/photo-1493809842364-78817add7ffb?w=800&q=80",
+    ]),
   },
   {
     id: "bra-1",
@@ -85,7 +129,9 @@ const props = [
     discountPct: 18,
     score: 79,
     rentability: 5.8,
-    images: "[]",
+    images: JSON.stringify([
+      "https://images.unsplash.com/photo-1560185007-cde436f6a4d0?w=800&q=80",
+    ]),
   },
   {
     id: "bra-2",
@@ -101,7 +147,27 @@ const props = [
     discountPct: 40,
     score: 95,
     rentability: 0,
-    images: "[]",
+    images: JSON.stringify([
+      "https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=800&q=80",
+    ]),
+  },
+  {
+    id: "bra-3",
+    source: "banco",
+    sourceName: "Santander Totta",
+    url: "https://www.santander.pt/",
+    title: "Moradia V4 Braga",
+    district: "Braga",
+    municipality: "Braga",
+    type: "V4",
+    price: 285000,
+    marketValue: 360000,
+    discountPct: 21,
+    score: 82,
+    rentability: 4.8,
+    images: JSON.stringify([
+      "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&q=80",
+    ]),
   },
 ];
 
