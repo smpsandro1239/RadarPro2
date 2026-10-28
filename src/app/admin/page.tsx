@@ -38,7 +38,7 @@ export default async function AdminPage() {
         <p className="text-secondary mb-4">
           Disparar scraping de fontes imobiliárias portuguesas.
         </p>
-        <form action="/api/scrape" method="POST" className="flex gap-4 items-end">
+        <form action="/api/scrape" method="POST" className="flex gap-4 items-end mb-6">
           <div>
             <label className="block text-sm font-medium mb-1">Distrito</label>
             <select name="district" className="px-4 py-2 border rounded-lg">
@@ -54,6 +54,17 @@ export default async function AdminPage() {
             Iniciar Scraping
           </button>
         </form>
+
+        <h3 className="font-bold mb-2">Verificação de links</h3>
+        <p className="text-secondary text-sm mb-4">
+          Verifica se os imóveis ainda estão à venda (verifica até 50 por execução).
+        </p>
+        <a
+          href="/api/cron/check-links"
+          className="inline-block bg-slate-100 text-foreground px-6 py-2 rounded-lg font-bold hover:bg-slate-200 transition"
+        >
+          Verificar links agora
+        </a>
       </div>
 
       <h2 className="text-2xl font-bold mb-4">Últimos imóveis</h2>

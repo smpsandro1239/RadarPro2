@@ -239,6 +239,11 @@ export default function PropertyGrid({ properties }: { properties: Property[] })
                 <div className="absolute top-4 left-4 bg-white px-3 py-1 rounded-lg text-xs font-bold shadow-sm z-10">
                   {prop.sourceName}
                 </div>
+                {(prop as any).checkStatus === "ok" && (
+                  <div className="absolute bottom-4 right-4 bg-success text-white px-2 py-1 rounded-lg text-xs font-bold z-10">
+                    ✓ Verificado
+                  </div>
+                )}
                 <div className="absolute top-4 right-4 bg-primary text-white px-3 py-1 rounded-lg text-xs font-bold z-10">
                   {prop.score}/100
                 </div>

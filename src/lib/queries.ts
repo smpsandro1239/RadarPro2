@@ -1,7 +1,7 @@
 import { drizzle } from "drizzle-orm/libsql";
 import { createClient } from "@libsql/client";
 import { properties } from "@/db/schema";
-import { desc, eq } from "drizzle-orm";
+import { desc, eq, and } from "drizzle-orm";
 
 const client = createClient({
   url: process.env.TURSO_DATABASE_URL!,
@@ -11,9 +11,25 @@ const client = createClient({
 const db = drizzle(client);
 
 export async function getLatestProperties() {
-  return await db.select().from(properties).orderBy(desc(properties.createdAt)).limit(12);
+  return await db
+    .select()
+    .from(properties)
+    .where(eq(properties.isActive, true))
+    .orderBy(desc(properties.score))
+    .limit(50);
 }
 
 export async function getPropertiesByDistrict(district: string) {
-  return await db.select().from(properties).where(eq(properties.district, district));
+  return await db
+    .select()
+    .from(properties)
+    .where(and(eq(properties.district, district), eq(properties.isActive, true)));
+}
+
+export async function getAllActiveProperties() {
+  return await db
+    .select()
+    .from(properties)
+    .where(eq(properties.isActive, true))
+    .orderBy(desc(properties.score));
 }

@@ -15,7 +15,11 @@ export const properties = sqliteTable("properties", {
   score: integer("score"),
   rentability: real("rentability"),
   images: text("images"), 
+  isActive: integer("is_active", { mode: "boolean" }).default(true),
+  lastChecked: integer("last_checked", { mode: "timestamp" }),
+  checkStatus: text("check_status").$type<"ok" | "not_found" | "error" | "pending">().default("pending"),
   createdAt: integer("created_at", { mode: "timestamp" }).$defaultFn(() => new Date()),
+  updatedAt: integer("updated_at", { mode: "timestamp" }).$defaultFn(() => new Date()),
 });
 
 export const users = sqliteTable("users", {

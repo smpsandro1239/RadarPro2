@@ -201,6 +201,16 @@ export default async function PropertyPage({
                   </span>
                 </div>
               )}
+              {prop.lastChecked && (
+                <div className="flex justify-between">
+                  <span className="text-secondary">Última verificação</span>
+                  <span className="font-medium flex items-center gap-1">
+                    {prop.checkStatus === "ok" && <span className="text-success">✓</span>}
+                    {prop.checkStatus === "not_found" && <span className="text-red-500">✗</span>}
+                    {new Date(prop.lastChecked).toLocaleDateString("pt-PT")}
+                  </span>
+                </div>
+              )}
             </div>
           </div>
         </div>
