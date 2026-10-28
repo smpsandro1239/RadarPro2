@@ -76,12 +76,15 @@ export default async function Home() {
 
       {/* Footer */}
       <footer className="border-t py-8 text-center text-sm text-secondary">
-        <div className="flex justify-center gap-6 mb-4">
+        <div className="flex flex-wrap justify-center gap-4 mb-4">
           <a href="/como-funciona" className="hover:text-primary">Como funciona</a>
           <a href="/precos" className="hover:text-primary">Preços</a>
-          <a href="/faq" className="hover:text-primary">FAQ</a>
-          <a href="/blog" className="hover:text-primary">Blog</a>
+          <a href="/credito" className="hover:text-primary">Crédito</a>
           <a href="/valoracao" className="hover:text-primary">Valorização</a>
+          <a href="/blog" className="hover:text-primary">Blog</a>
+          <a href="/faq" className="hover:text-primary">FAQ</a>
+          <a href="/privacidade" className="hover:text-primary">Privacidade</a>
+          <a href="/termos" className="hover:text-primary">Termos</a>
         </div>
         <p>© 2026 RadarPro Portugal. Todos os direitos reservados.</p>
       </footer>

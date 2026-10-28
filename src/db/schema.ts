@@ -38,3 +38,11 @@ export const searchAlerts = sqliteTable("search_alerts", {
   active: integer("active", { mode: "boolean" }).default(true),
   createdAt: integer("created_at", { mode: "timestamp" }).$defaultFn(() => new Date()),
 });
+
+export const priceHistory = sqliteTable("price_history", {
+  id: text("id").primaryKey(),
+  propertyId: text("property_id").notNull(),
+  price: real("price").notNull(),
+  marketValue: real("market_value"),
+  recordedAt: integer("recorded_at", { mode: "timestamp" }).$defaultFn(() => new Date()),
+});
