@@ -11,6 +11,14 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "*.supabase.co",
       },
+      {
+        protocol: "https",
+        hostname: "media.casasapo.pt",
+      },
+      {
+        protocol: "https",
+        hostname: "ireland.apollo.olxcdn.com",
+      },
     ],
   },
 };
