@@ -19,6 +19,26 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "ireland.apollo.olxcdn.com",
       },
+      {
+        protocol: "https",
+        hostname: "images.egorealestate.com",
+      },
+      {
+        protocol: "https",
+        hostname: "scraper.weboto.io",
+      },
+      {
+        protocol: "https",
+        hostname: "jackhammer.janeladigital.com",
+      },
+      {
+        protocol: "https",
+        hostname: "cdn.proppy.app",
+      },
+      {
+        protocol: "https",
+        hostname: "www.caimoveis.pt",
+      },
     ],
   },
 };
