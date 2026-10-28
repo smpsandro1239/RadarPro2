@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { scrapeCasaSapo, scrapeImovirtual } from "@/lib/scraper";
 import { db } from "@/db";
 import { properties } from "@/db/schema";
+import { eq } from "drizzle-orm";
 
 export async function POST(request: Request) {
   try {
@@ -20,9 +21,20 @@ export async function POST(request: Request) {
       allScraped = allScraped.concat(results);
     }
 
-    // Save to database (basic - would need deduplication in production)
+    // Save to database with deduplication
     let saved = 0;
+    let skipped = 0;
     for (const prop of allScraped.slice(0, 20)) {
+      // Generate dedup hash
+      const dedupHash = [prop.title, district, prop.location, "Apartamento", prop.price].join("|").toLowerCase().replace(/\s+/g, "");
+
+      // Check if already exists
+      const existing = await db.select().from(properties).where(eq(properties.dedupHash, dedupHash)).limit(1);
+      if (existing.length > 0) {
+        skipped++;
+        continue;
+      }
+
       try {
         await db.insert(properties).values({
           id: crypto.randomUUID(),
@@ -34,16 +46,19 @@ export async function POST(request: Request) {
           municipality: prop.location,
           type: "Apartamento",
           price: prop.price,
-          marketValue: prop.price * 1.2, // Estimate
+          marketValue: prop.price * 1.2,
           discountPct: 15,
           score: 70,
           rentability: 5.0,
           images: prop.imageUrl ? JSON.stringify([prop.imageUrl]) : "[]",
+          dedupHash,
+          isActive: true,
+          checkStatus: "pending",
           createdAt: new Date(),
         });
         saved++;
       } catch {
-        // Skip duplicates
+        skipped++;
       }
     }
 

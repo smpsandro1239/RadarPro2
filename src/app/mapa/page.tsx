@@ -1,8 +1,10 @@
-import { getLatestProperties } from "@/lib/queries";
+import { getAllActiveProperties } from "@/lib/queries";
 import MapView from "@/components/MapView";
 
 export default async function MapaPage() {
-  const properties = await getLatestProperties();
+  const properties = await getAllActiveProperties();
+
+  const withCoords = properties.filter((p) => p.lat && p.lng);
 
   return (
     <main className="min-h-screen max-w-7xl mx-auto px-6 py-12">
@@ -11,7 +13,7 @@ export default async function MapaPage() {
       </a>
       <h1 className="text-4xl font-extrabold mb-2">Mapa de Oportunidades</h1>
       <p className="text-secondary mb-8">
-        {properties.length} imóveis em Portugal. Clique num marcador para ver detalhes.
+        {withCoords.length} de {properties.length} imóveis com localização no mapa.
       </p>
 
       <MapView properties={properties} />
