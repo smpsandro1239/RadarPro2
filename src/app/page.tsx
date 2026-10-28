@@ -12,6 +12,9 @@ export default async function Home() {
           RadarPro <span className="text-foreground">Portugal</span>
         </a>
         <div className="flex gap-4 items-center">
+          <a href="/mapa" className="px-4 py-2 text-sm font-medium hover:text-primary">
+            Mapa
+          </a>
           <a href="/como-funciona" className="px-4 py-2 text-sm font-medium hover:text-primary">
             Como funciona
           </a>
@@ -80,6 +83,7 @@ export default async function Home() {
           <a href="/como-funciona" className="hover:text-primary">Como funciona</a>
           <a href="/precos" className="hover:text-primary">Preços</a>
           <a href="/credito" className="hover:text-primary">Crédito</a>
+          <a href="/mapa" className="hover:text-primary">Mapa</a>
           <a href="/valoracao" className="hover:text-primary">Valorização</a>
           <a href="/blog" className="hover:text-primary">Blog</a>
           <a href="/faq" className="hover:text-primary">FAQ</a>
