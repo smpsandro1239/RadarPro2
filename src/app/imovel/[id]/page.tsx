@@ -154,6 +154,9 @@ export default async function PropertyPage({
               price={prop.price}
               marketValue={prop.marketValue}
               rentability={prop.rentability}
+              sourceName={prop.sourceName}
+              createdAt={prop.createdAt?.toISOString() || null}
+              isActive={prop.isActive ?? true}
             />
           </div>
 
