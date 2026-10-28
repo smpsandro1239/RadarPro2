@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import "leaflet/dist/leaflet.css";
 import CookieBanner from "@/components/CookieBanner";
+import ServiceWorkerRegistration from "@/components/ServiceWorkerRegistration";
 
 export const metadata: Metadata = {
   title: "RadarPro Portugal - Oportunidades Imobiliárias",
@@ -22,6 +23,7 @@ export default function RootLayout({
       <body className="antialiased">
         {children}
         <CookieBanner />
+        <ServiceWorkerRegistration />
       </body>
     </html>
   );

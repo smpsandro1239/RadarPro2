@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { Bell, Trash2, Plus } from "lucide-react";
+import PushNotificationButton from "@/components/PushNotificationButton";
 
 interface Alert {
   id: string;
@@ -66,12 +67,15 @@ export default function AlertasPage() {
       </a>
       <div className="flex justify-between items-center mb-8">
         <h1 className="text-4xl font-extrabold">Alertas de Oportunidades</h1>
-        <button
-          onClick={() => setShowForm(!showForm)}
-          className="bg-primary text-white px-4 py-2 rounded-lg font-bold flex items-center gap-2 hover:opacity-90 transition"
-        >
-          <Plus size={18} /> Novo alerta
-        </button>
+        <div className="flex gap-3">
+          <PushNotificationButton />
+          <button
+            onClick={() => setShowForm(!showForm)}
+            className="bg-primary text-white px-4 py-2 rounded-lg font-bold flex items-center gap-2 hover:opacity-90 transition"
+          >
+            <Plus size={18} /> Novo alerta
+          </button>
+        </div>
       </div>
 
       {showForm && (
