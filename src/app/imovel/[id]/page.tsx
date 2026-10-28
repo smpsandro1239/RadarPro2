@@ -2,9 +2,10 @@ import { db } from "@/db";
 import { properties, priceHistory } from "@/db/schema";
 import { eq, desc } from "drizzle-orm";
 import { notFound } from "next/navigation";
-import { MapPin, TrendingDown, ExternalLink } from "lucide-react";
+import { MapPin, TrendingDown, ExternalLink, Heart } from "lucide-react";
 import Image from "next/image";
 import ValuationCard from "@/components/ValuationCard";
+import FavoriteButton from "@/components/FavoriteButton";
 
 export default async function PropertyPage({
   params,
@@ -144,6 +145,7 @@ export default async function PropertyPage({
             >
               Ver anúncio original <ExternalLink size={16} />
             </a>
+            <FavoriteButton propertyId={prop.id} />
           </div>
 
           {/* Valuation */}

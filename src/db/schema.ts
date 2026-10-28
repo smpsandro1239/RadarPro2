@@ -54,3 +54,10 @@ export const priceHistory = sqliteTable("price_history", {
   marketValue: real("market_value"),
   recordedAt: integer("recorded_at", { mode: "timestamp" }).$defaultFn(() => new Date()),
 });
+
+export const savedProperties = sqliteTable("saved_properties", {
+  id: text("id").primaryKey(),
+  userId: text("user_id").notNull(),
+  propertyId: text("property_id").notNull(),
+  createdAt: integer("created_at", { mode: "timestamp" }).$defaultFn(() => new Date()),
+});

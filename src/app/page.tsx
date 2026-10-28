@@ -18,6 +18,12 @@ export default async function Home() {
           <a href="/alertas" className="px-4 py-2 text-sm font-medium hover:text-primary">
             Alertas
           </a>
+          <a href="/favoritos" className="px-4 py-2 text-sm font-medium hover:text-primary">
+            Favoritos
+          </a>
+          <a href="/comparador" className="px-4 py-2 text-sm font-medium hover:text-primary">
+            Comparar
+          </a>
           <a href="/como-funciona" className="px-4 py-2 text-sm font-medium hover:text-primary">
             Como funciona
           </a>
@@ -88,6 +94,8 @@ export default async function Home() {
           <a href="/credito" className="hover:text-primary">Crédito</a>
           <a href="/mapa" className="hover:text-primary">Mapa</a>
           <a href="/alertas" className="hover:text-primary">Alertas</a>
+          <a href="/favoritos" className="hover:text-primary">Favoritos</a>
+          <a href="/comparador" className="hover:text-primary">Comparador</a>
           <a href="/valoracao" className="hover:text-primary">Valorização</a>
           <a href="/blog" className="hover:text-primary">Blog</a>
           <a href="/faq" className="hover:text-primary">FAQ</a>
