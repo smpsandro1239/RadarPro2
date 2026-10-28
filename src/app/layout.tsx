@@ -13,6 +13,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt">
+      <head>
+        <link rel="manifest" href="/manifest.json" />
+        <meta name="theme-color" content="#2563eb" />
+      </head>
       <body className="antialiased">{children}</body>
     </html>
   );

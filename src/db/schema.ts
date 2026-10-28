@@ -26,3 +26,15 @@ export const users = sqliteTable("users", {
   stripeCustomerId: text("stripe_customer_id"),
   subscriptionStatus: text("subscription_status"),
 });
+
+export const searchAlerts = sqliteTable("search_alerts", {
+  id: text("id").primaryKey(),
+  userId: text("user_id").notNull(),
+  district: text("district"),
+  maxPrice: real("max_price"),
+  minScore: integer("min_score"),
+  propertyType: text("property_type"),
+  email: text("email").notNull(),
+  active: integer("active", { mode: "boolean" }).default(true),
+  createdAt: integer("created_at", { mode: "timestamp" }).$defaultFn(() => new Date()),
+});
