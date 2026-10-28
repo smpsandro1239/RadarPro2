@@ -1,6 +1,5 @@
-import { MapPin, TrendingDown, ExternalLink } from "lucide-react";
 import { getLatestProperties } from "@/lib/queries";
-import Image from "next/image";
+import PropertyGrid from "@/components/PropertyGrid";
 
 export default async function Home() {
   const properties = await getLatestProperties();
@@ -26,16 +25,16 @@ export default async function Home() {
       </nav>
 
       {/* Hero */}
-      <section className="py-20 px-6 text-center max-w-4xl mx-auto">
+      <section className="py-12 px-6 text-center max-w-4xl mx-auto">
         <h1 className="text-5xl md:text-6xl font-extrabold mb-6">
           Encontre as melhores <br />
           <span className="text-primary">oportunidades imobiliárias</span>
         </h1>
-        <p className="text-xl text-secondary mb-10">
+        <p className="text-xl text-secondary mb-8">
           Analisamos anúncios de bancos, portais e leilões em Portugal e selecionamos apenas os que valem a pena.
         </p>
 
-        <div className="flex flex-wrap justify-center gap-3 mb-16">
+        <div className="flex flex-wrap justify-center gap-3 mb-8">
           {["Lisboa", "Porto", "Braga"].map((city) => (
             <a
               key={city}
@@ -48,85 +47,17 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* Grid de Imóveis */}
-      <section className="max-w-7xl mx-auto px-6 py-12">
-        <div className="flex justify-between items-center mb-8">
-          <h2 className="text-2xl font-bold">Últimas oportunidades detectadas</h2>
+      {/* Properties with search */}
+      <section className="max-w-7xl mx-auto px-6 py-8">
+        <div className="flex justify-between items-center mb-6">
+          <h2 className="text-2xl font-bold">Oportunidades detectadas</h2>
           <div className="text-sm text-secondary">
             <span className="inline-block w-2 h-2 bg-success rounded-full mr-2 animate-pulse"></span>
-            Detectada há 2 min
+            {properties.length} imóveis de 7 fontes
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {properties.map((prop) => {
-            const images = prop.images ? JSON.parse(prop.images) : [];
-            const imageUrl = images[0] || null;
-            return (
-              <a
-                key={prop.id}
-                href={`/imovel/${prop.id}`}
-                className="border rounded-2xl overflow-hidden hover:shadow-xl transition group block"
-              >
-                <div className="aspect-video bg-slate-200 relative overflow-hidden">
-                  {imageUrl && (
-                    <Image
-                      src={imageUrl}
-                      alt={prop.title}
-                      fill
-                      className="object-cover group-hover:scale-105 transition-transform duration-300"
-                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    />
-                  )}
-                  <div className="absolute top-4 left-4 bg-white px-3 py-1 rounded-lg text-xs font-bold shadow-sm z-10">
-                    {prop.sourceName}
-                  </div>
-                  <div className="absolute top-4 right-4 bg-primary text-white px-3 py-1 rounded-lg text-xs font-bold z-10">
-                    {prop.score}/100
-                  </div>
-                </div>
-
-                <div className="p-6">
-                  <h3 className="font-bold text-lg truncate mb-2">{prop.title}</h3>
-
-                  <div className="flex items-center text-sm text-secondary mb-4">
-                    <MapPin size={14} className="mr-1" />
-                    {prop.municipality}, {prop.district}
-                  </div>
-
-                  <div className="grid grid-cols-2 gap-4 border-y py-4 mb-4">
-                    <div>
-                      <div className="text-xs text-secondary uppercase font-semibold">
-                        Preço
-                      </div>
-                      <div className="text-lg font-bold">
-                        {prop.price.toLocaleString()}€
-                      </div>
-                    </div>
-                    <div>
-                      <div className="text-xs text-secondary uppercase font-semibold">
-                        Valorização
-                      </div>
-                      <div className="text-lg font-bold text-success">
-                        {prop.marketValue?.toLocaleString()}€
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="flex justify-between items-center">
-                    <div className="flex items-center text-primary font-bold">
-                      <TrendingDown size={18} className="mr-1" />
-                      -{prop.discountPct}%
-                    </div>
-                    <div className="text-sm font-medium bg-primary/10 text-primary px-3 py-1 rounded-lg">
-                      Rentabilidade: {prop.rentability}%
-                    </div>
-                  </div>
-                </div>
-              </a>
-            );
-          })}
-        </div>
+        <PropertyGrid properties={properties} />
       </section>
 
       {/* Footer CTA */}
@@ -149,6 +80,8 @@ export default async function Home() {
           <a href="/como-funciona" className="hover:text-primary">Como funciona</a>
           <a href="/precos" className="hover:text-primary">Preços</a>
           <a href="/faq" className="hover:text-primary">FAQ</a>
+          <a href="/blog" className="hover:text-primary">Blog</a>
+          <a href="/valoracao" className="hover:text-primary">Valorização</a>
         </div>
         <p>© 2026 RadarPro Portugal. Todos os direitos reservados.</p>
       </footer>
