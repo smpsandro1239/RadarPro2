@@ -1,11 +1,18 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import { MapPin, TrendingDown, Search, SlidersHorizontal, X, Gavel } from "lucide-react";
+import {
+  MapPin,
+  TrendingDown,
+  Search,
+  SlidersHorizontal,
+  X,
+  Gavel,
+} from "lucide-react";
 import Link from "next/link";
-import Image from "next/image";
-import PropertyImage from "./PropertyImage";
-import AuctionCountdown from "./AuctionCountdown";
+import PropertyImage from "@/components/PropertyImage";
+import AuctionCountdown from "@/components/AuctionCountdown";
+import ValuationCard from "@/components/ValuationCard";
 
 interface Property {
   id: string;
@@ -13,6 +20,7 @@ interface Property {
   district: string;
   municipality: string;
   sourceName: string;
+  source: string;
   price: number;
   marketValue: number | null;
   discountPct: number | null;
@@ -20,9 +28,11 @@ interface Property {
   rentability: number | null;
   type: string;
   images: string | null;
-  source: string;
   isAuction: boolean | null;
   auctionEndDate: number | Date | null;
+  isActive: boolean | null;
+  lat?: number | null;
+  lng?: number | null;
 }
 
 export default function PropertyGrid({ properties }: { properties: Property[] }) {
@@ -43,7 +53,6 @@ export default function PropertyGrid({ properties }: { properties: Property[] })
 
   const filtered = useMemo(() => {
     let result = properties.filter((p) => {
-      // Text search
       if (searchQuery) {
         const q = searchQuery.toLowerCase();
         if (
@@ -55,20 +64,13 @@ export default function PropertyGrid({ properties }: { properties: Property[] })
         )
           return false;
       }
-      // District filter
       if (district !== "todos" && p.district !== district) return false;
-      // Type filter
       if (type !== "todos" && p.type !== type) return false;
-      // Source filter
       if (source !== "todos" && p.sourceName !== source) return false;
-      // Auction filter
       if (auctionFilter === "leilao" && !p.isAuction) return false;
       if (auctionFilter === "venda" && p.isAuction) return false;
-      // Min score
       if (minScore > 0 && (p.score || 0) < minScore) return false;
-      // Max price
       if (maxPrice && p.price > parseFloat(maxPrice)) return false;
-      // Min discount
       if (minDiscount > 0 && (p.discountPct || 0) < minDiscount) return false;
       return true;
     });
@@ -79,18 +81,18 @@ export default function PropertyGrid({ properties }: { properties: Property[] })
       if (sortBy === "rentability") return (b.rentability || 0) - (a.rentability || 0);
       if (sortBy === "price-asc") return a.price - b.price;
       if (sortBy === "price-desc") return b.price - a.price;
-      if (sortBy === "newest") return 0; // already sorted by date
       return 0;
     });
 
     return result;
-  }, [properties, searchQuery, district, type, source, minScore, maxPrice, minDiscount, sortBy]);
+  }, [properties, searchQuery, district, type, source, auctionFilter, minScore, maxPrice, minDiscount, sortBy]);
 
   const clearFilters = () => {
     setSearchQuery("");
     setDistrict("todos");
     setType("todos");
     setSource("todos");
+    setAuctionFilter("todos");
     setMinScore(0);
     setMaxPrice("");
     setMinDiscount(0);
@@ -103,7 +105,6 @@ export default function PropertyGrid({ properties }: { properties: Property[] })
 
   return (
     <div>
-      {/* Search bar */}
       <div className="flex gap-3 mb-4">
         <div className="flex-1 relative">
           <Search size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-secondary" />
@@ -126,7 +127,6 @@ export default function PropertyGrid({ properties }: { properties: Property[] })
         </button>
       </div>
 
-      {/* Advanced filters */}
       {showFilters && (
         <div className="bg-slate-50 border rounded-xl p-6 mb-6">
           <div className="flex justify-between items-center mb-4">
@@ -220,7 +220,6 @@ export default function PropertyGrid({ properties }: { properties: Property[] })
         </div>
       )}
 
-      {/* Results count */}
       <div className="flex items-center justify-between mb-6">
         <span className="text-sm text-secondary">
           {filtered.length} de {properties.length} imóveis
@@ -232,8 +231,7 @@ export default function PropertyGrid({ properties }: { properties: Property[] })
         )}
       </div>
 
-      {/* Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {filtered.map((prop) => {
           const images = prop.images ? JSON.parse(prop.images) : [];
           const imageUrl = images[0] || null;
@@ -263,47 +261,31 @@ export default function PropertyGrid({ properties }: { properties: Property[] })
                 </div>
               </div>
 
-              <div className="p-6">
+              <div className="p-4">
                 <h3 className="font-bold text-lg truncate mb-2">{prop.title}</h3>
-                <div className="flex items-center text-sm text-secondary mb-4">
+                <div className="flex items-center text-sm text-secondary mb-3">
                   <MapPin size={14} className="mr-1" />
                   {prop.municipality}, {prop.district}
                 </div>
 
-                <div className="grid grid-cols-2 gap-4 border-y py-4 mb-4">
-                  <div>
-                    <div className="text-xs text-secondary uppercase font-semibold">
-                      Preço
-                    </div>
-                    <div className="text-lg font-bold">
-                      {prop.price.toLocaleString()}€
-                    </div>
-                  </div>
-                  <div>
-                    <div className="text-xs text-secondary uppercase font-semibold">
-                      Valorização
-                    </div>
-                    <div className="text-lg font-bold text-success">
-                      {prop.marketValue?.toLocaleString()}€
-                    </div>
-                  </div>
-                </div>
+                <ValuationCard
+                  district={prop.district}
+                  municipality={prop.municipality}
+                  type={prop.type}
+                  price={prop.price}
+                  marketValue={prop.marketValue}
+                  rentability={prop.rentability}
+                  sourceName={prop.sourceName}
+                  source={prop.source}
+                  createdAt={null}
+                  isActive={prop.isActive ?? true}
+                />
 
-                <div className="flex justify-between items-center">
-                  <div className="flex items-center text-primary font-bold">
-                    <TrendingDown size={18} className="mr-1" />
-                    -{prop.discountPct}%
-                  </div>
-                  <div className="text-sm font-medium bg-primary/10 text-primary px-3 py-1 rounded-lg">
-                    Rentabilidade: {prop.rentability}%
-                  </div>
+                <div className="flex justify-between items-center mt-3">
+                  <a href={`/imovel/${prop.id}`} className="text-primary text-sm font-medium hover:underline">
+                    Ver detalhes
+                  </a>
                 </div>
-
-                {prop.isAuction && prop.auctionEndDate && (
-                  <div className="mt-3">
-                    <AuctionCountdown endDate={typeof prop.auctionEndDate === "number" ? prop.auctionEndDate : Math.floor(new Date(prop.auctionEndDate).getTime() / 1000)} compact />
-                  </div>
-                )}
               </div>
             </Link>
           );
