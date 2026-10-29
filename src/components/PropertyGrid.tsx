@@ -4,6 +4,7 @@ import { useState, useMemo } from "react";
 import { MapPin, TrendingDown, Search, SlidersHorizontal, X } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
+import PropertyImage from "./PropertyImage";
 
 interface Property {
   id: string;
@@ -227,15 +228,7 @@ export default function PropertyGrid({ properties }: { properties: Property[] })
               className="border rounded-2xl overflow-hidden hover:shadow-xl transition group block"
             >
               <div className="aspect-video bg-slate-200 relative overflow-hidden">
-                {imageUrl && (
-                  <Image
-                    src={imageUrl}
-                    alt={prop.title}
-                    fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-300"
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                  />
-                )}
+                <PropertyImage src={imageUrl} alt={prop.title} fill className="group-hover:scale-105 transition-transform duration-300" />
                 <div className="absolute top-4 left-4 bg-white px-3 py-1 rounded-lg text-xs font-bold shadow-sm z-10">
                   {prop.sourceName}
                 </div>

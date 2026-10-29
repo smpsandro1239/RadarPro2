@@ -6,6 +6,7 @@ import { MapPin, TrendingDown, ExternalLink, Heart } from "lucide-react";
 import Image from "next/image";
 import ValuationCard from "@/components/ValuationCard";
 import FavoriteButton from "@/components/FavoriteButton";
+import PropertyImage from "@/components/PropertyImage";
 
 export default async function PropertyPage({
   params,
@@ -72,16 +73,7 @@ export default async function PropertyPage({
 
       <div className="grid md:grid-cols-2 gap-8">
         <div className="aspect-video bg-slate-200 rounded-2xl overflow-hidden relative">
-          {imageUrl && (
-            <Image
-              src={imageUrl}
-              alt={prop.title}
-              fill
-              className="object-cover"
-              sizes="(max-width: 768px) 100vw, 50vw"
-              priority
-            />
-          )}
+          <PropertyImage src={imageUrl} alt={prop.title} fill />
         </div>
 
         <div>

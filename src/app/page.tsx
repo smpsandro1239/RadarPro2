@@ -1,5 +1,6 @@
 import { getLatestProperties } from "@/lib/queries";
 import PropertyGrid from "@/components/PropertyGrid";
+import PropertyImage from "@/components/PropertyImage";
 
 export default async function Home() {
   const properties = await getLatestProperties();
