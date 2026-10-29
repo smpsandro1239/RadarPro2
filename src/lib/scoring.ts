@@ -108,11 +108,20 @@ export function calculateOpportunityScore(params: {
   breakdown.source = sourceReliability[params.sourceName] || 5;
   if (breakdown.source >= 13) factors.push("Fonte de alta confiança (banco/leilão)");
 
-  // 5. Price per m² (0-10 points)
+  // 5. Price per m² (0-10 points) - use marketValue when available for realistic comparison
   const benchmark = pricePerSqmBenchmarks[params.district] || pricePerSqmBenchmarks["Braga"];
   const estSqm = typeSizeEstimates[params.type] || 70;
   const pricePerSqm = params.price / estSqm;
-  const ratio = pricePerSqm / benchmark.avg;
+  
+  // Use marketValue for more realistic AVM comparison
+  let marketAvgPerSqm = benchmark.avg;
+  if (params.marketValue && params.marketValue > 0) {
+    const marketPricePerSqm = params.marketValue / estSqm;
+    // Blend market data with property-specific data
+    marketAvgPerSqm = Math.round((benchmark.avg + marketPricePerSqm) / 2);
+  }
+  
+  const ratio = pricePerSqm / marketAvgPerSqm;
   if (ratio < 0.6) { breakdown.pricePerSqm = 10; factors.push("Preço/m² muito abaixo da média"); }
   else if (ratio < 0.75) { breakdown.pricePerSqm = 8; factors.push("Preço/m² abaixo da média"); }
   else if (ratio < 0.9) { breakdown.pricePerSqm = 5; }
@@ -175,14 +184,23 @@ export function calculateAVM(params: {
   const benchmark = pricePerSqmBenchmarks[params.district] || pricePerSqmBenchmarks["Braga"];
   const estSqm = typeSizeEstimates[params.type] || 70;
 
-  const marketAvgPerSqm = benchmark.avg;
-  const estimatedValue = Math.round(marketAvgPerSqm * estSqm);
-  const pricePerSqm = Math.round(params.price / estSqm);
-
-  // Confidence based on data availability
+  // Use marketValue when available for more realistic estimate
+  let estimatedValue: number;
   let confidence: "alta" | "média" | "baixa" = "média";
-  if (params.marketValue && params.marketValue > 0) confidence = "alta";
-  else if (estSqm === 70) confidence = "baixa";
+
+  if (params.marketValue && params.marketValue > 0) {
+    // Use actual market value as primary estimate, blend with benchmark
+    const marketPricePerSqm = params.marketValue / estSqm;
+    const blendedPerSqm = Math.round((benchmark.avg + marketPricePerSqm) / 2);
+    estimatedValue = Math.round(blendedPerSqm * estSqm);
+    confidence = "alta";
+  } else {
+    estimatedValue = Math.round(benchmark.avg * estSqm);
+    confidence = estSqm === 70 ? "baixa" : "média";
+  }
+
+  const pricePerSqm = Math.round(params.price / estSqm);
+  const marketAvgPerSqm = Math.round(estimatedValue / estSqm);
 
   // Valuation range (±15%)
   const valuationRange = {

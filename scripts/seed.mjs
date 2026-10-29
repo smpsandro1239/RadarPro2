@@ -97,7 +97,7 @@ const props = [
         p.score,
         p.rentability,
         JSON.stringify([p.images]),
-        Date.now(),
+        Math.floor(Date.now() / 1000),
       ],
     });
   }

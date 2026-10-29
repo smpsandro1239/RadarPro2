@@ -14,7 +14,7 @@ const c = createClient({
   )`);
 
   // Add sample price history for a few properties
-  const now = Date.now();
+  const now = Math.floor(Date.now() / 1000);
   const day = 24 * 60 * 60 * 1000;
   const samples = [
     { propId: "cs-lis-1", prices: [115000, 120000, 125000, 115000] },
