@@ -8,6 +8,7 @@ import ValuationCard from "@/components/ValuationCard";
 import FavoriteButton from "@/components/FavoriteButton";
 import PropertyImage from "@/components/PropertyImage";
 import AuctionCountdown from "@/components/AuctionCountdown";
+import SimilarProperties from "@/components/SimilarProperties";
 
 export default async function PropertyPage({
   params,
@@ -160,6 +161,14 @@ export default async function PropertyPage({
               isActive={prop.isActive ?? true}
             />
           </div>
+
+          {/* Similar properties */}
+          <SimilarProperties
+            currentPropertyId={prop.id}
+            district={prop.district}
+            type={prop.type}
+            price={prop.price}
+          />
 
           {/* Price history */}
           {history.length > 1 && (
