@@ -173,6 +173,12 @@ export default async function PropertyPage({
               source={prop.source}
               createdAt={prop.createdAt?.toISOString() || null}
               isActive={prop.isActive ?? true}
+              isAuction={prop.isAuction}
+              currentBid={prop.currentBid}
+              auctionType={prop.auctionType}
+              vpt={prop.vpt}
+              condominiumDebt={prop.condominiumDebt}
+              renovationEstimate={prop.renovationEstimate}
             />
           </div>
 

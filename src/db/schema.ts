@@ -19,8 +19,17 @@ export const properties = sqliteTable("properties", {
   image_source: text("image_source").$type<"og_image" | "gallery_first" | "portal_thumbnail" | "missing">(),
   image_status: text("image_status").$type<"real" | "missing" | "broken">().default("missing"),
   isAuction: integer("is_auction", { mode: "boolean" }).default(false),
+  auctionType: text("auction_type").$type<"judicial" | "fiscal" | "private" | null>(),
+  auctionHouse: text("auction_house"), // e-Leilões, Leilosoc, Martelo.pt, Estamo, etc.
+  currentBid: real("current_bid"), // Lance atual
+  reservePrice: real("reserve_price"), // Preço de reserva se conhecido
+  maxBid: real("max_bid"), // Lance máximo sustentável calculado
   auctionEndDate: integer("auction_end_date", { mode: "timestamp" }),
   auctionStartDate: integer("auction_start_date", { mode: "timestamp" }),
+  vpt: real("vpt"), // Valor Patrimonial Tributário
+  condominiumDebt: real("condominium_debt"), // Condomínio em atraso
+  renovationEstimate: real("renovation_estimate"), // Estimativa de obras
+  maxBidCalculation: text("max_bid_calculation"), // JSON com breakdown dos custos
   lat: real("lat"),
   lng: real("lng"),
   geoQuality: text("geo_quality").$type<"exact" | "street" | "parish" | "district" | "NA">(),
