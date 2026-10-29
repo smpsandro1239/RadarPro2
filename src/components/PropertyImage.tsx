@@ -1,4 +1,7 @@
+"use client";
+
 import { Camera, Building2 } from "lucide-react";
+import Image from "next/image";
 
 interface PropertyImageProps {
   src: string | null;
@@ -24,11 +27,14 @@ export default function PropertyImage({ src, alt, className = "", fill, width, h
     );
   }
 
+  const proxyUrl = `/api/img?u=${encodeURIComponent(src)}`;
+
   if (fill) {
     return (
-      <img
-        src={src}
+      <Image
+        src={proxyUrl}
         alt={alt}
+        fill
         className={`object-cover w-full h-full ${className}`}
         loading="lazy"
       />
@@ -37,7 +43,7 @@ export default function PropertyImage({ src, alt, className = "", fill, width, h
 
   return (
     <img
-      src={src}
+      src={proxyUrl}
       alt={alt}
       width={width || 400}
       height={height || 250}
