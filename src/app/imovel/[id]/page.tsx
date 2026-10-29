@@ -7,6 +7,7 @@ import Image from "next/image";
 import ValuationCard from "@/components/ValuationCard";
 import FavoriteButton from "@/components/FavoriteButton";
 import PropertyImage from "@/components/PropertyImage";
+import AuctionCountdown from "@/components/AuctionCountdown";
 
 export default async function PropertyPage({
   params,
@@ -111,6 +112,12 @@ export default async function PropertyPage({
               </div>
             </div>
           </div>
+
+          {prop.isAuction && prop.auctionEndDate && (
+            <div className="mb-4 p-3 bg-orange-50 border border-orange-200 rounded-xl">
+              <AuctionCountdown endDate={Math.floor(new Date(prop.auctionEndDate).getTime() / 1000)} />
+            </div>
+          )}
 
           <div className="flex items-center gap-6 mb-6 text-sm flex-wrap">
             <div className="flex items-center gap-1">

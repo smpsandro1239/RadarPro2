@@ -1,10 +1,11 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import { MapPin, TrendingDown, Search, SlidersHorizontal, X } from "lucide-react";
+import { MapPin, TrendingDown, Search, SlidersHorizontal, X, Gavel } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import PropertyImage from "./PropertyImage";
+import AuctionCountdown from "./AuctionCountdown";
 
 interface Property {
   id: string;
@@ -20,6 +21,8 @@ interface Property {
   type: string;
   images: string | null;
   source: string;
+  isAuction: boolean | null;
+  auctionEndDate: number | Date | null;
 }
 
 export default function PropertyGrid({ properties }: { properties: Property[] }) {
@@ -27,6 +30,7 @@ export default function PropertyGrid({ properties }: { properties: Property[] })
   const [district, setDistrict] = useState("todos");
   const [type, setType] = useState("todos");
   const [source, setSource] = useState("todos");
+  const [auctionFilter, setAuctionFilter] = useState("todos");
   const [minScore, setMinScore] = useState(0);
   const [maxPrice, setMaxPrice] = useState("");
   const [minDiscount, setMinDiscount] = useState(0);
@@ -57,6 +61,9 @@ export default function PropertyGrid({ properties }: { properties: Property[] })
       if (type !== "todos" && p.type !== type) return false;
       // Source filter
       if (source !== "todos" && p.sourceName !== source) return false;
+      // Auction filter
+      if (auctionFilter === "leilao" && !p.isAuction) return false;
+      if (auctionFilter === "venda" && p.isAuction) return false;
       // Min score
       if (minScore > 0 && (p.score || 0) < minScore) return false;
       // Max price
@@ -160,6 +167,15 @@ export default function PropertyGrid({ properties }: { properties: Property[] })
             </div>
 
             <div>
+              <label className="block text-xs font-medium text-secondary mb-1">Tipo de venda</label>
+              <select value={auctionFilter} onChange={(e) => setAuctionFilter(e.target.value)} className="w-full px-3 py-2 border rounded-lg text-sm">
+                <option value="todos">Todos</option>
+                <option value="leilao">Apenas leilões</option>
+                <option value="venda">Apenas venda normal</option>
+              </select>
+            </div>
+
+            <div>
               <label className="block text-xs font-medium text-secondary mb-1">Ordenar por</label>
               <select value={sortBy} onChange={(e) => setSortBy(e.target.value)} className="w-full px-3 py-2 border rounded-lg text-sm">
                 <option value="score">Melhor score</option>
@@ -232,6 +248,11 @@ export default function PropertyGrid({ properties }: { properties: Property[] })
                 <div className="absolute top-4 left-4 bg-white px-3 py-1 rounded-lg text-xs font-bold shadow-sm z-10">
                   {prop.sourceName}
                 </div>
+                {prop.isAuction && (
+                  <div className="absolute bottom-4 left-4 bg-orange-500 text-white px-2 py-1 rounded-lg text-xs font-bold z-10 flex items-center gap-1">
+                    <Gavel size={12} /> Leilão
+                  </div>
+                )}
                 {(prop as any).checkStatus === "ok" && (
                   <div className="absolute bottom-4 right-4 bg-success text-white px-2 py-1 rounded-lg text-xs font-bold z-10">
                     ✓ Verificado
@@ -277,6 +298,12 @@ export default function PropertyGrid({ properties }: { properties: Property[] })
                     Rentabilidade: {prop.rentability}%
                   </div>
                 </div>
+
+                {prop.isAuction && prop.auctionEndDate && (
+                  <div className="mt-3">
+                    <AuctionCountdown endDate={typeof prop.auctionEndDate === "number" ? prop.auctionEndDate : Math.floor(new Date(prop.auctionEndDate).getTime() / 1000)} compact />
+                  </div>
+                )}
               </div>
             </Link>
           );
