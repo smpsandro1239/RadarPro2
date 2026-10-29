@@ -15,9 +15,11 @@
  * - Obras estimadas
  */
 
+import { PropertyValuationInput, PropertyValuationOutput, municipalityPremiums } from "./valuation";
+
 interface AuctionCalculationInput {
   propertyType: string; // T0, T1, T2, T3, T4, V2, V3, V4, Terreno, Garagem, Loja, Armazém, Prédio
-  marketValue: number; // Valor de mercado (AVM)
+  marketValueNumSafe: number; // Valor de mercado (AVM)
   currentBid: number; // Lance atual do leilão
   district: string; // Distrito para IMT e referência de preço
   municipality: string; // Concelho para ajustes locais
@@ -35,7 +37,7 @@ interface AuctionCalculationInput {
 
 interface AuctionCalculationOutput {
   askingPrice: number; // Lance atual
-  marketValue: number; // Valor de mercado (referência)
+  marketValueNumSafe: number; // Valor de mercado (referência)
   maxBid: number; // LANCE MÁXIMO SUSTENTÁVEL
   discountPct: number; // Desconto do lance atual vs mercado (apenas referência)
   maxBidDiscountPct: number; // Desconto do lance máximo vs mercado
@@ -107,7 +109,7 @@ export const districtBenchmarks: Record<string, { avgPricePerSqm: number; minPri
  */
 export const typeMultipliers: Record<string, number> = {
   T0: 0.85, T1: 0.95, T2: 1.00, T3: 1.10, T4: 1.20,
-  V2: 1.15, V3: 1.25, V4: 1.35, V4: 1.35, V5: 1.45,
+  V2: 1.15, V3: 1.25, V4: 1.35, V5: 1.45,
   Terreno: 0.50, Garagem: 0.15, Loja: 0.70, Armazém: 0.60,
   "Prédio": 1.50, Arrecadação: 0.10,
 };
@@ -255,13 +257,13 @@ function calculateCommission(price: number, sourceName: string): number {
 /**
  * Algoritmo principal de cálculo do Lance Máximo Sustentável
  */
-export function calculateAuctionValuation(input: PropertyValuationInput): PropertyValuationOutput {
+export function calculateAuctionValuation(input: AuctionCalculationInput): PropertyValuationOutput & { costBreakdown: CostBreakdown } {
   const {
     district,
     municipality = district,
     type,
     price,
-    marketValue,
+    marketValueNum,
     source = "portal",
     sourceName = source,
     sourceType = "judicial",
@@ -274,6 +276,7 @@ export function calculateAuctionValuation(input: PropertyValuationInput): Proper
     vpt,
   } = input;
 
+  const marketValueNumSafe = marketValueNum ?? 0;
   const bench = districtBenchmarks[district] || districtBenchmarks["Braga"];
   const estSqm = sqm > 0 ? sqm : typeSizeEstimates[type] || 70;
 
@@ -308,12 +311,12 @@ export function calculateAuctionValuation(input: PropertyValuationInput): Proper
   // Cálculo do Lance Máximo Sustentável
   // Max Bid = (Valor de Mercado × (1 - Margem Alvo)) - Custos Totais sem Lance
   // Mas como o IMT, selo e comissão dependem do lance, resolvemos:
-  // Max Bid = (marketValue × (1 - margin)) - fixedCosts - (variablePct × Max Bid)
-  // Max Bid × (1 + variablePct) = (marketValue × (1 - margin)) - fixedCosts
-  // Max Bid = ((marketValue × (1 - margin)) - fixedCosts) / (1 + variablePct)
+  // Max Bid = (marketValueNumSafe × (1 - margin)) - fixedCosts - (variablePct × Max Bid)
+  // Max Bid × (1 + variablePct) = (marketValueNumSafe × (1 - margin)) - fixedCosts
+  // Max Bid = ((marketValueNumSafe × (1 - margin)) - fixedCosts) / (1 + variablePct)
 
   const targetMarginDecimal = targetMargin / 100;
-  const targetValue = marketValue * (1 - targetMarginDecimal);
+  const targetValue = marketValueNumSafe * (1 - targetMarginDecimal);
   const fixedCosts = registrationFee + courtCosts + condoDebt + renovationEst;
   const variablePct = (commission + imt + stampDuty) / price; // Percentagem variável do preço
 
@@ -322,13 +325,13 @@ export function calculateAuctionValuation(input: PropertyValuationInput): Proper
 
   // Preço por m²
   const pricePerSqm = Math.round(price / estSqm);
-  const marketAvgPerSqm = Math.round(marketValue / estSqm);
+  const marketAvgPerSqm = Math.round(marketValueNumSafe / estSqm);
 
   // Desconto do lance atual vs mercado
-  const discountPct = Math.round(((marketValue - price) / marketValue) * 100);
+  const discountPct = Math.round(((marketValueNumSafe - price) / marketValueNumSafe) * 100);
 
   // Desconto do lance máximo vs mercado
-  const maxBidDiscountPct = Math.round(((marketValue - maxBidRounded) / marketValue) * 100);
+  const maxBidDiscountPct = Math.round(((marketValueNumSafe - maxBidRounded) / marketValueNumSafe) * 100);
 
   // Rentabilidade estimada (baseada no lance máximo, não no atual)
   let monthlyRentEstimate: number | null = null;
@@ -418,7 +421,7 @@ export function calculateAuctionValuation(input: PropertyValuationInput): Proper
   // Metodologia para transparência
   const methodology = `
   Cálculo do Lance Máximo para ${district}:
-  • Valor de mercado (AVM): ${marketValue.toLocaleString()}€
+  • Valor de mercado (AVM): ${marketValueNumSafe.toLocaleString()}€
   • Margem alvo: ${targetMargin}%
   • Preço/m² do distrito: ${bench.avgPricePerSqm}€
   • Tipo de imóvel: ${type} (multiplicador ${typeMultipliers[type] || 1}x)
@@ -441,13 +444,13 @@ export function calculateAuctionValuation(input: PropertyValuationInput): Proper
 
   return {
     askingPrice: price,
-    marketValue,
-    avm: marketValue,
-    avmLow: Math.round(marketValue * 0.85),
-    avmHigh: Math.round(marketValue * 1.15),
+    marketValueNumSafe,
+    avm: marketValueNumSafe,
+    avmLow: Math.round(marketValueNumSafe * 0.85),
+    avmHigh: Math.round(marketValueNumSafe * 1.15),
     avmConfidence: "alta",
     pricePerSqm,
-    marketAvgPerSqm: Math.round(marketValue / estSqm),
+    marketAvgPerSqm: Math.round(marketValueNumSafe / estSqm),
     areaSqm: estSqm,
     discountPct,
     maxBidDiscountPct,
@@ -475,7 +478,7 @@ export function calculateAuctionValuation(input: PropertyValuationInput): Proper
       renovationEstimate,
       totalCosts: Math.round(commission + imt + stampDuty + registrationFee + courtCosts + condoDebt + renovationEst),
       maxBid: maxBidRounded,
-      remainingMargin: Math.round(((marketValue - maxBidRounded - (commission + imt + stampDuty + registrationFee + courtCosts + condoDebt + renovationEst)) / marketValue) * 100),
+      remainingMargin: Math.round(((marketValueNumSafe - maxBidRounded - (commission + imt + stampDuty + registrationFee + courtCosts + condoDebt + renovationEst)) / marketValueNumSafe) * 100),
     },
   };
 }

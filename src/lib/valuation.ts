@@ -146,7 +146,12 @@ export interface PropertyValuationInput {
   sqm?: number;               // área útil/m² (opcional)
   createdAt?: Date | null;
   isActive?: boolean | null;
-}
+  isAuction?: boolean;        // é um leilão?
+  currentBid?: number;        // lance atual (apenas leilão)
+  auctionType?: string;       // tipo de leilão: judicial, extrajudicial, etc.
+  vpt?: number;               // Valor Patrimonial Tributário
+  condominiumDebt?: number;   // condomínio em atraso
+  renovationEstimate?: number; // estimativa de obras
 
 export interface PropertyValuationOutput {
   askingPrice: number;
@@ -177,6 +182,32 @@ export interface PropertyValuationOutput {
     municipalityPremium: number;
     marketTrend: number;
     conditionFactor: number;
+  };
+  costBreakdown?: {
+    basePrice: number;
+    marketValue: number;
+    discountPct: number;
+    maxBid: number;
+    rentability: number | null;
+    monthlyRentEstimate: number | null;
+    score: number;
+    risk: "baixo" | "medio" | "alto";
+    recommendation: string;
+    factors: {
+      discount: number;
+      rentability: number;
+      pricePerSqm: number;
+      liquidity: number;
+      source: number;
+    };
+    methodology: string;
+    valuationFactors: {
+      basePricePerSqm: number;
+      typeMultiplier: number;
+      municipalityPremium: number;
+      marketTrend: number;
+      conditionFactor: number;
+    };
   };
 }
 

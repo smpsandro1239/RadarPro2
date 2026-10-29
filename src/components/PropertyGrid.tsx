@@ -33,6 +33,11 @@ interface Property {
   isActive: boolean | null;
   lat?: number | null;
   lng?: number | null;
+  currentBid: number | null;
+  auctionType: string | null;
+  vpt: number | null;
+  condominiumDebt: number | null;
+  renovationEstimate: number | null;
 }
 
 export default function PropertyGrid({ properties }: { properties: Property[] }) {
@@ -279,6 +284,12 @@ export default function PropertyGrid({ properties }: { properties: Property[] })
                   source={prop.source}
                   createdAt={null}
                   isActive={prop.isActive ?? true}
+                  isAuction={prop.isAuction}
+                  currentBid={prop.currentBid}
+                  auctionType={prop.auctionType}
+                  vpt={prop.vpt}
+                  condominiumDebt={prop.condominiumDebt}
+                  renovationEstimate={prop.renovationEstimate}
                 />
 
                 <div className="flex justify-between items-center mt-3">

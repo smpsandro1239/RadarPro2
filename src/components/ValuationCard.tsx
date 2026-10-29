@@ -23,7 +23,7 @@ interface ValuationCardProps {
 }
 
 export default function ValuationCard({ district, municipality, type, price, marketValue, rentability, sourceName, source, createdAt, isActive, isAuction, currentBid, auctionType, vpt, condominiumDebt, renovationEstimate }: ValuationCardProps) {
-  const isAuctionBool = isAuction === true || isAuction === 1 || isAuction === "true";
+  const isAuctionBool = isAuction === true;
 
   // Usar cálculo de leilão se for leilão, senão uso normal
   const val = isAuctionBool
@@ -53,13 +53,13 @@ export default function ValuationCard({ district, municipality, type, price, mar
         isActive,
       });
 
-  const riskColors = {
+  const riskColors: Record<string, string> = {
     baixo: "text-success bg-green-50 border-green-200",
     medio: "text-yellow-600 bg-yellow-50 border-yellow-200",
     alto: "text-red-500 bg-red-50 border-red-200",
   };
 
-  const riskLabels = {
+  const riskLabels: Record<string, string> = {
     baixo: "Risco Baixo",
     medio: "Risco Médio",
     alto: "Risco Alto",
@@ -71,8 +71,8 @@ export default function ValuationCard({ district, municipality, type, price, mar
     <div className="border rounded-2xl p-6 space-y-4">
       <div className="flex items-center justify-between">
         <h2 className="font-bold text-lg">{isAuctionBool ? "Análise de Leilão" : "Análise de Oportunidade"}</h2>
-        <div className={`px-3 py-1 rounded-full text-xs font-bold border ${riskColors[val.risk]}`}>
-          {riskLabels[val.risk]}
+        <div className={`px-3 py-1 rounded-full text-xs font-bold border ${riskColors[val.risk as string]}`}>
+          {riskLabels[val.risk as string]}
         </div>
       </div>
 
@@ -174,8 +174,8 @@ export default function ValuationCard({ district, municipality, type, price, mar
           };
           return (
             <div key={key} className="bg-slate-50 p-2 rounded-lg">
-              <div className="text-secondary">{labels[key]}</div>
-              <div className="font-bold">{value}/{maxValues[key]}</div>
+              <div className="text-secondary">{labels[key as keyof typeof labels]}</div>
+              <div className="font-bold">{value as number}/{maxValues[key as keyof typeof maxValues]}</div>
             </div>
           );
         })}
@@ -213,14 +213,12 @@ export default function ValuationCard({ district, municipality, type, price, mar
           };
           return (
             <div key={key} className="bg-slate-50 p-2 rounded-lg text-center">
-              <div className="text-secondary">{labels[key]}</div>
-              <div className="font-bold">{value}x</div>
+              <div className="text-secondary">{labels[key as keyof typeof labels]}</div>
+    <div className="font-bold">{value as number}x</div>
             </div>
           );
         })}
       </div>
-
-      {/* Methodology */}
       <details className="text-xs text-secondary">
         <summary className="cursor-pointer hover:text-primary">Metodologia AVM</summary>
         <p className="mt-2">{val.methodology}</p>
@@ -242,7 +240,7 @@ export default function ValuationCard({ district, municipality, type, price, mar
               return (
                 <li key={key} className="flex items-start gap-2">
                   <span className="text-primary mt-0.5">•</span>
-                  <span>{labels[key]}: {value}</span>
+                  <span>{labels[key as keyof typeof labels]}: {value as number}</span>
                 </li>
               );
             })}
