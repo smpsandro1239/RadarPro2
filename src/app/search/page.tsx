@@ -6,13 +6,14 @@ import {
   TrendingDown,
   Search,
   SlidersHorizontal,
+  X,
+  ChevronLeft,
+  ChevronRight,
   Home,
   Bath,
   Ruler,
   Filter,
-  X,
-  ChevronLeft,
-  ChevronRight,
+  Gauge,
 } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
@@ -75,19 +76,51 @@ export default function AdvancedSearchPage() {
     }
   }
 
-  // Extract unique filter options
-  const districts = useMemo(
-    () => ["todos", ...Array.from(new Set(properties.map((p) => p.district)))],
-    [properties]
-  );
-  const types = useMemo(
-    () => ["todos", ...Array.from(new Set(properties.map((p) => p.type)))],
-    [properties]
-  );
-  const sources = useMemo(
-    () => ["todos", ...Array.from(new Set(properties.map((p) => p.sourceName)))],
-    [properties]
-  );
+  // Extract unique filter options WITH COUNTS for faceted search
+  const districts = useMemo(() => {
+    const counts: Record<string, number> = {};
+    properties.forEach((p) => {
+      counts[p.district] = (counts[p.district] || 0) + 1;
+    });
+    return [
+      { label: "Todos", value: "todos", count: properties.length },
+      ...Object.entries(counts).map(([district, count]) => ({
+        label: district,
+        value: district,
+        count,
+      })),
+    ];
+  }, [properties]);
+
+  const types = useMemo(() => {
+    const counts: Record<string, number> = {};
+    properties.forEach((p) => {
+      counts[p.type] = (counts[p.type] || 0) + 1;
+    });
+    return [
+      { label: "Todos", value: "todos", count: properties.length },
+      ...Object.entries(counts).map(([type, count]) => ({
+        label: type,
+        value: type,
+        count,
+      })),
+    ];
+  }, [properties]);
+
+  const sources = useMemo(() => {
+    const counts: Record<string, number> = {};
+    properties.forEach((p) => {
+      counts[p.sourceName] = (counts[p.sourceName] || 0) + 1;
+    });
+    return [
+      { label: "Todas", value: "todos", count: properties.length },
+      ...Object.entries(counts).map(([source, count]) => ({
+        label: source,
+        value: source,
+        count,
+      })),
+    ];
+  }, [properties]);
 
   // Filter properties
   const filtered = useMemo(() => {
@@ -203,7 +236,9 @@ export default function AdvancedSearchPage() {
               className="w-full px-3 py-2 border rounded-lg text-sm"
             >
               {districts.map((d) => (
-                <option key={d} value={d}>{d === "todos" ? "Todos" : d}</option>
+                <option key={d.value} value={d.value}>
+                  {d.label} ({d.count})
+                </option>
               ))}
             </select>
           </div>
@@ -219,7 +254,9 @@ export default function AdvancedSearchPage() {
               className="w-full px-3 py-2 border rounded-lg text-sm"
             >
               {types.map((t) => (
-                <option key={t} value={t}>{t === "todos" ? "Todos" : t}</option>
+                <option key={t.value} value={t.value}>
+                  {t.label} ({t.count})
+                </option>
               ))}
             </select>
           </div>
@@ -235,7 +272,9 @@ export default function AdvancedSearchPage() {
               className="w-full px-3 py-2 border rounded-lg text-sm"
             >
               {sources.map((s) => (
-                <option key={s} value={s}>{s === "todos" ? "Todas" : s}</option>
+                <option key={s.value} value={s.value}>
+                  {s.label} ({s.count})
+                </option>
               ))}
             </select>
           </div>

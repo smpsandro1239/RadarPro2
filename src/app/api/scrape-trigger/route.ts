@@ -14,7 +14,10 @@ export async function POST(request: Request) {
 
     if (allDistricts) {
       const result = await scrapeAllDistricts();
-      return NextResponse.json({ message: "Scraping de todos os distritos iniciado", ...result });
+      return NextResponse.json({
+        message: "Scraping de todos os distritos iniciado",
+        ...result,
+      });
     }
 
     if (!source || !district) {
