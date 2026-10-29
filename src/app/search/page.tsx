@@ -19,6 +19,7 @@ import Image from "next/image";
 import PropertyImage from "@/components/PropertyImage";
 import AuctionCountdown from "@/components/AuctionCountdown";
 import ValuationCard from "@/components/ValuationCard";
+import RadarAssistant from "@/components/RadarAssistant";
 
 interface Property {
   id: string;
@@ -321,6 +322,20 @@ export default function AdvancedSearchPage() {
             </select>
           </div>
         </div>
+      </div>
+
+      {/* Radar Assistant */}
+      <div className="border rounded-2xl p-6 mb-8">
+        <RadarAssistant
+          onApplyFilters={(filters) => {
+            if (filters.district) setDistrict(filters.district);
+            if (filters.type) setType(filters.type);
+            if (filters.maxPrice !== undefined) setMaxPrice(String(filters.maxPrice));
+            if (filters.minDiscount !== undefined) setMinDiscount(filters.minDiscount);
+            if (filters.isAuction !== undefined) setIsAuction(filters.isAuction ? "leilao" : "todos");
+            setPage(1);
+          }}
+        />
       </div>
 
       {/* Results */}

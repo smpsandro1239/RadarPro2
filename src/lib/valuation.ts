@@ -145,7 +145,7 @@ export interface PropertyValuationInput {
   sourceName?: string;        // nome exibível da fonte
   sqm?: number;               // área útil/m² (opcional)
   createdAt?: Date | null;
-  isActive?: boolean;
+  isActive?: boolean | null;
 }
 
 export interface PropertyValuationOutput {

@@ -10,6 +10,10 @@ import PropertyImage from "@/components/PropertyImage";
 import AuctionCountdown from "@/components/AuctionCountdown";
 import SimilarProperties from "@/components/SimilarProperties";
 import CommuteEstimator from "@/components/CommuteEstimator";
+import VerifiedBadge from "@/components/VerifiedBadge";
+import SourceReliabilityBadge from "@/components/SourceReliabilityBadge";
+import VisitBooking from "@/components/VisitBooking";
+import NeighborhoodRadar from "@/components/NeighborhoodRadar";
 
 export default async function PropertyPage({
   params,
@@ -36,6 +40,8 @@ export default async function PropertyPage({
 
   const images = prop.images ? JSON.parse(prop.images) : [];
   const imageUrl = images[0] || null;
+  const isVerified = prop.checkStatus === "ok";
+  const hasImage = !!(prop.image_url && prop.image_status === "real");
 
   // JSON-LD
   const jsonLd = {
@@ -77,6 +83,10 @@ export default async function PropertyPage({
       <div className="grid md:grid-cols-2 gap-8">
         <div className="aspect-video bg-slate-200 rounded-2xl overflow-hidden relative">
           <PropertyImage src={imageUrl} alt={prop.title} fill />
+          <VerifiedBadge
+            isVerified={isVerified}
+            hasImage={hasImage}
+          />
         </div>
 
         <div>
@@ -85,11 +95,12 @@ export default async function PropertyPage({
               {prop.score}/100
             </span>
             <span className="bg-slate-100 px-3 py-1 rounded-lg text-sm font-medium">
-              {prop.sourceName}
-            </span>
-            <span className="bg-slate-100 px-3 py-1 rounded-lg text-sm font-medium">
               {prop.type}
             </span>
+            <SourceReliabilityBadge
+              sourceName={prop.sourceName}
+              score={prop.score || 0}
+            />
           </div>
 
           <h1 className="text-3xl font-bold mb-2">{prop.title}</h1>
@@ -172,6 +183,13 @@ export default async function PropertyPage({
             </div>
           )}
 
+          {/* Neighborhood Radar */}
+          {prop.lat && prop.lng && (
+            <div className="mb-6">
+              <NeighborhoodRadar district={prop.district} municipality={prop.municipality} />
+            </div>
+          )}
+
           {/* Similar properties */}
           <SimilarProperties
             currentPropertyId={prop.id}
@@ -235,6 +253,12 @@ export default async function PropertyPage({
                 </div>
               )}
             </div>
+          </div>
+
+          {/* Visit booking */}
+          <div className="border-t pt-6">
+            <h2 className="font-bold mb-4">Agendar Visita</h2>
+            <VisitBooking propertyTitle={prop.title} propertyId={prop.id} sourceName={prop.sourceName} />
           </div>
         </div>
       </div>
