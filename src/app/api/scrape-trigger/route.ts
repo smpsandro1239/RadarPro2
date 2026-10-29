@@ -1,49 +1,67 @@
 import { NextResponse } from "next/server";
-import {
-  scrapeCasaSapo,
-  scrapeImovirtual,
-  scrapeIdealista,
-  scrapeOLX,
-  scrapeCustoJusto,
-  scrapeAllDistricts,
-} from "@/lib/scrapers";
+import { inngest } from "@/lib/inngest";
+
+const VALID_SOURCES = [
+  "casasa",
+  "imovirtual",
+  "idealista",
+  "olx",
+  "custojusto",
+  "leiloes",
+  "imobancos",
+  "millennium-bcp",
+  "santander",
+  "montepio",
+  "caixa-imobiliario",
+  "credito-agricola",
+  "novobanco",
+  "bpi",
+];
+
+const VALID_DISTRICTS = [
+  "Lisboa",
+  "Porto",
+  "Braga",
+  "Faro",
+  "Setúbal",
+  "Aveiro",
+  "Coimbra",
+];
 
 export async function POST(request: Request) {
   try {
-    const { source, district, allDistricts } = await request.json();
+    const { source, district, allDistricts, allSources } = await request.json();
 
-    if (allDistricts) {
-      const result = await scrapeAllDistricts();
+    if (allDistricts || allSources) {
+      await inngest.send({ name: "scrape.all" });
       return NextResponse.json({
-        message: "Scraping de todos os distritos iniciado",
-        ...result,
+        message: "Pipeline de scraping completo iniciado (via Inngest)",
       });
     }
 
     if (!source || !district) {
-      return NextResponse.json({ error: "source e district são obrigatórios" }, { status: 400 });
+      return NextResponse.json(
+        { error: "source e district são obrigatórios" },
+        { status: 400 }
+      );
     }
 
-    const validSources = ["casasa", "imovirtual", "idealista", "olx", "custojusto"];
-    if (!validSources.includes(source)) {
+    if (!VALID_SOURCES.includes(source)) {
       return NextResponse.json({ error: "source inválido" }, { status: 400 });
     }
 
-    const validDistricts = ["Lisboa", "Porto", "Braga", "Faro", "Setúbal", "Aveiro", "Coimbra"];
-    if (!validDistricts.includes(district)) {
+    if (!VALID_DISTRICTS.includes(district)) {
       return NextResponse.json({ error: "district inválido" }, { status: 400 });
     }
 
-    const scrapers: Record<string, (district: string) => Promise<any>> = {
-      casasa: scrapeCasaSapo,
-      imovirtual: scrapeImovirtual,
-      idealista: scrapeIdealista,
-      olx: scrapeOLX,
-      custojusto: scrapeCustoJusto,
-    };
+    await inngest.send({
+      name: "scrape.source",
+      data: { source, district },
+    });
 
-    const result = await scrapers[source](district);
-    return NextResponse.json({ message: `Scraping ${source} para ${district} concluído`, ...result });
+    return NextResponse.json({
+      message: `Scraping ${source} para ${district} enviado para fila (Inngest)`,
+    });
   } catch (error) {
     console.error(error);
     return NextResponse.json({ error: "Erro interno" }, { status: 500 });
