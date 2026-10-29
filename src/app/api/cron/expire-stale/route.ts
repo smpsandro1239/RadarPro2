@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { db } from "@/db";
 import { properties } from "@/db/schema";
-import { eq } from "drizzle-orm";
+import { eq, and, lt } from "drizzle-orm";
 
 export async function POST(request: Request) {
   try {
@@ -15,12 +15,14 @@ export async function POST(request: Request) {
         id: properties.id,
         title: properties.title,
         source: properties.source,
+        district: properties.district,
       })
       .from(properties)
-      .where(eq(properties.isActive, true))
-      .and(
-        new Date(Date.now() - 7 * 24 * 60 * 60 * 1000) >
-          (properties.lastChecked ?? new Date(0))
+      .where(
+        and(
+          eq(properties.isActive, true),
+          lt(properties.lastChecked, cutoffDate)
+        )
       );
 
     // Mark them as inactive
@@ -28,8 +30,10 @@ export async function POST(request: Request) {
       .update(properties)
       .set({ isActive: false, checkStatus: "not_found" })
       .where(
-        properties.isActive === true &&
-          new Date(Date.now() - 7 * 24 * 60 * 60 * 1000) > properties.lastChecked
+        and(
+          eq(properties.isActive, true),
+          lt(properties.lastChecked, cutoffDate)
+        )
       );
 
     return NextResponse.json({

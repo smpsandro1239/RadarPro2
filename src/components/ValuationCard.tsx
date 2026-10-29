@@ -1,9 +1,10 @@
 "use client";
 
-import { calculateValuation } from "@/lib/valuation";
+import { calculateValuation, formatCurrency, formatScoreText } from "@/lib/valuation";
 
 interface ValuationCardProps {
   district: string;
+  municipality: string;
   type: string;
   price: number;
   marketValue: number | null;
@@ -22,6 +23,7 @@ interface ValuationCardProps {
 
 export default function ValuationCard({
   district,
+  municipality,
   type,
   price,
   marketValue,
@@ -39,9 +41,10 @@ export default function ValuationCard({
 }: ValuationCardProps) {
   const val = calculateValuation({
     district,
+    municipality,
     type,
     price,
-    marketValue,
+    marketValue: marketValue ?? undefined,
     source,
     sourceName,
     createdAt: createdAt ? new Date(createdAt) : null,
@@ -54,10 +57,34 @@ export default function ValuationCard({
     alto: "text-red-500 bg-red-50 border-red-200",
   };
 
-  const riskLabels = {
+  const riskLabels: Record<string, string> = {
     baixo: "Risco Baixo",
     medio: "Risco Médio",
     alto: "Risco Alto",
+  };
+
+  const factorLabels: Record<string, string> = {
+    discount: "Desconto",
+    rentability: "Rentabilidade",
+    pricePerSqm: "Preço/m²",
+    liquidity: "Liquidez",
+    source: "Fonte",
+  };
+
+  const maxValues: Record<string, number> = {
+    discount: 30,
+    rentability: 20,
+    pricePerSqm: 25,
+    liquidity: 15,
+    source: 10,
+  };
+
+  const valuationFactorLabels: Record<string, string> = {
+    basePricePerSqm: "Preço/m² base",
+    typeMultiplier: "Tipo",
+    municipalityPremium: "Localização",
+    marketTrend: "Tendência",
+    conditionFactor: "Condição",
   };
 
   return (
@@ -80,32 +107,19 @@ export default function ValuationCard({
       </div>
 
       <div className="grid grid-cols-3 gap-2 text-xs">
-        {Object.entries(val.factors).map(([key, value]) => {
-          const labels: Record<string, string> = {
-            discount: "Desconto",
-            rentability: "Rentabilidade",
-            pricePerSqm: "Preço/m²",
-            liquidity: "Liquidez",
-            source: "Fonte",
-          };
-          const maxValues: Record<string, number> = {
-            discount: 30,
-            rentability: 20,
-            pricePerSqm: 25,
-            liquidity: 15,
-            source: 10,
-          };
-          return (
-            <div key={key} className="bg-slate-50 p-2 rounded-lg">
-              <div className="text-secondary">{labels[key]}</div>
-              <div className="font-bold">{value}/{maxValues[key]}</div>
-            </div>
-          ))}
+        {Object.entries(val.factors).map(([key, value]) => (
+          <div key={key} className="bg-slate-50 p-2 rounded-lg text-center">
+            <div className="text-secondary">{factorLabels[key]}</div>
+            <div className="font-bold">{value}/{maxValues[key]}</div>
+          </div>
+        ))}
       </div>
 
       <div className="grid grid-cols-2 gap-4">
         <div className="bg-slate-50 p-3 rounded-xl">
-          <div className="text-xs text-secondary uppercase font-semibold mb-1">Valor de mercado</div>
+          <div className="text-xs text-secondary uppercase font-semibold mb-1">
+            Valor de mercado (AVM)
+          </div>
           <div className="text-xl font-bold">{formatCurrency(val.avm)}</div>
           <div className="text-xs text-secondary">Confiança: {val.avmConfidence}</div>
         </div>

@@ -34,7 +34,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "district inválido" }, { status: 400 });
     }
 
-    const scrapers: Record<string, (d: { district: string }) => Promise<any>> = {
+    const scrapers: Record<string, (district: string) => Promise<any>> = {
       casasa: scrapeCasaSapo,
       imovirtual: scrapeImovirtual,
       idealista: scrapeIdealista,
@@ -42,7 +42,7 @@ export async function POST(request: Request) {
       custojusto: scrapeCustoJusto,
     };
 
-    const result = await scrapers[source]({ district });
+    const result = await scrapers[source](district);
     return NextResponse.json({ message: `Scraping ${source} para ${district} concluído`, ...result });
   } catch (error) {
     console.error(error);

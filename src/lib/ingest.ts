@@ -30,13 +30,13 @@ export async function ingestProperty(prop: ScrapedProperty): Promise<{
     municipality: prop.location,
     type: "Apartamento", // Will be refined by parser
     price: prop.price,
-    marketValue: Math.round(price * 1.2), // Estimate market value
-    discountPct: Math.round(((marketValue || price * 1.2) - price) / marketValue * 100) || 0,
+    marketValue: Math.round(prop.price * 1.2), // Estimate market value
+    discountPct: Math.round(((Math.round(prop.price * 1.2) || prop.price * 1.2) - prop.price) / Math.round(prop.price * 1.2) * 100) || 0,
     score: Math.round(Math.random() * 20) + 70, // Temporary scoring
     rentability: Math.round((5 + Math.random() * 5) * 10) / 10,
     images: JSON.stringify(prop.images),
     isActive: true,
-    checkStatus: "pending",
+    checkStatus: "pending" as "ok" | "not_found" | "error" | "pending",
     createdAt: new Date(),
     updatedAt: new Date(),
   };
@@ -58,8 +58,8 @@ export async function ingestProperty(prop: ScrapedProperty): Promise<{
       price: normalized.price,
       marketValue: normalized.marketValue,
       discountPct: normalized.discountPct,
-      score: val.score,
-      rentability: val.rentability,
+      score: normalized.score,
+      rentability: normalized.rentability,
       images: normalized.images,
       isActive: true,
       checkStatus: "ok",
@@ -68,11 +68,11 @@ export async function ingestProperty(prop: ScrapedProperty): Promise<{
 
     await db.update(properties).set(updatedFields).where(eq(properties.id, existing[0].id));
 
-    return { success: true, action: "updated", id: existing[0].id };
+    return { action: "updated", id: existing[0].id };
   }
 
-  await db.insert(properties).values(normalized);
-  return { success: true, action: "inserted", id: normalized.id };
+  await db.insert(properties).values([normalized]);
+  return { action: "inserted", id: normalized.id };
 }
 
 export async function processScrapeResults(results: ScrapedProperty[]) {

@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { scrapeLeiloes } from "@/lib/scrapers";
+import { scrapeELeiloes } from "@/lib/scrapers";
 import { processScrapeResults } from "@/lib/ingest";
 
 export async function POST(request: Request) {
@@ -12,7 +12,7 @@ export async function POST(request: Request) {
 
     for (const district of districtsList) {
       try {
-        const results = await scrapeLeiloes(district);
+        const results = await scrapeELeiloes(district);
         const processed = await processScrapeResults(results);
         allResults.push({ district, scraped: results.length, ...processed });
       } catch (err) {

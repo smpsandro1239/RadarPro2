@@ -5,7 +5,7 @@ import {
   scrapeIdealista,
   scrapeOLX,
   scrapeCustoJusto,
-  scrapeLeiloes,
+  scrapeELeiloes,
 } from "@/lib/scrapers";
 import { processScrapeResults } from "@/lib/ingest";
 
@@ -19,7 +19,7 @@ export async function POST(request: Request) {
       idealista: scrapeIdealista,
       olx: scrapeOLX,
       custojusto: scrapeCustoJusto,
-      leiloes: scrapeLeiloes,
+      leiloes: scrapeELeiloes,
     };
 
     const allResults: any[] = [];
