@@ -12,6 +12,7 @@ const navLinks = [
   { href: "/alertas", label: "Alertas" },
   { href: "/estatisticas", label: "Estatísticas" },
   { href: "/credito", label: "Crédito" },
+  { href: "/agencias", label: "Agências" },
   { href: "/como-funciona", label: "Como funciona" },
   { href: "/precos", label: "Preços" },
 ];

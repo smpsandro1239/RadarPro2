@@ -1,17 +1,29 @@
-import { calculateOpportunityScore, calculateAVM } from "@/lib/scoring";
+import { calculateAdvancedAVM } from "@/lib/avm";
+import { calculateOpportunityScore } from "@/lib/scoring";
 
 interface ValuationCardProps {
   district: string;
+  municipality: string;
   type: string;
   price: number;
   marketValue: number | null;
   rentability: number | null;
   sourceName: string;
+  source: string;
   createdAt: string | null;
   isActive: boolean;
 }
 
-export default function ValuationCard({ district, type, price, marketValue, rentability, sourceName, createdAt, isActive }: ValuationCardProps) {
+export default function ValuationCard({ district, municipality, type, price, marketValue, rentability, sourceName, source, createdAt, isActive }: ValuationCardProps) {
+  const avm = calculateAdvancedAVM({
+    district,
+    municipality: municipality || district,
+    type,
+    price,
+    marketValue,
+    source: source || "portal",
+  });
+
   const score = calculateOpportunityScore({
     price,
     marketValue,
@@ -23,8 +35,6 @@ export default function ValuationCard({ district, type, price, marketValue, rent
     createdAt: createdAt ? new Date(createdAt) : null,
     isActive,
   });
-
-  const avm = calculateAVM({ district, type, price, marketValue });
 
   const riskColors = {
     baixo: "text-success bg-green-50 border-green-200",
@@ -103,6 +113,31 @@ export default function ValuationCard({ district, type, price, marketValue, rent
           <div className="text-xs text-secondary">{avm.pricePerSqm}€/m² vs {avm.marketAvgPerSqm}€/m² média</div>
         </div>
       </div>
+
+      {/* AVM Factors */}
+      <div className="grid grid-cols-5 gap-2 text-xs">
+        {Object.entries(avm.factors).map(([key, value]) => {
+          const labels: Record<string, string> = {
+            district: "Distrito",
+            type: "Tipo",
+            condition: "Condição",
+            location: "Localização",
+            trend: "Tendência",
+          };
+          return (
+            <div key={key} className="bg-slate-50 p-2 rounded-lg text-center">
+              <div className="text-secondary">{labels[key]}</div>
+              <div className="font-bold">{typeof value === "number" && value > 100 ? value.toLocaleString() : value}x</div>
+            </div>
+          );
+        })}
+      </div>
+
+      {/* Methodology */}
+      <details className="text-xs text-secondary">
+        <summary className="cursor-pointer hover:text-primary">Metodologia AVM</summary>
+        <p className="mt-2">{avm.methodology}</p>
+      </details>
 
       {/* Factors */}
       {score.factors.length > 0 && (

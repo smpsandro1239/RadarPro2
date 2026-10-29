@@ -9,6 +9,7 @@ import FavoriteButton from "@/components/FavoriteButton";
 import PropertyImage from "@/components/PropertyImage";
 import AuctionCountdown from "@/components/AuctionCountdown";
 import SimilarProperties from "@/components/SimilarProperties";
+import CommuteEstimator from "@/components/CommuteEstimator";
 
 export default async function PropertyPage({
   params,
@@ -152,15 +153,24 @@ export default async function PropertyPage({
           <div className="mb-6">
             <ValuationCard
               district={prop.district}
+              municipality={prop.municipality}
               type={prop.type}
               price={prop.price}
               marketValue={prop.marketValue}
               rentability={prop.rentability}
               sourceName={prop.sourceName}
+              source={prop.source}
               createdAt={prop.createdAt?.toISOString() || null}
               isActive={prop.isActive ?? true}
             />
           </div>
+
+          {/* Commute estimator */}
+          {prop.lat && prop.lng && (
+            <div className="mb-6">
+              <CommuteEstimator propertyLat={prop.lat} propertyLng={prop.lng} />
+            </div>
+          )}
 
           {/* Similar properties */}
           <SimilarProperties

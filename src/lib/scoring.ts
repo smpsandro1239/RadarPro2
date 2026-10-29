@@ -17,7 +17,7 @@ export interface OpportunityScore {
 }
 
 // Source reliability scores
-const sourceReliability: Record<string, number> = {
+export const sourceReliability: Record<string, number> = {
   "e-Leilões": 15,
   "Estamo": 15,
   "Leilosoc": 14,
@@ -43,21 +43,21 @@ const sourceReliability: Record<string, number> = {
 };
 
 // District liquidity scores (how fast properties sell)
-const districtLiquidity: Record<string, number> = {
+export const districtLiquidity: Record<string, number> = {
   Lisboa: 15,
   Porto: 12,
   Braga: 8,
 };
 
 // Price per m² benchmarks by district (2026 market data)
-const pricePerSqmBenchmarks: Record<string, { avg: number; min: number; max: number }> = {
+export const pricePerSqmBenchmarks: Record<string, { avg: number; min: number; max: number }> = {
   Lisboa: { avg: 5200, min: 3800, max: 8500 },
   Porto: { avg: 3800, min: 2500, max: 6500 },
   Braga: { avg: 2600, min: 1800, max: 4200 },
 };
 
 // Type size estimates (m²) for properties without area data
-const typeSizeEstimates: Record<string, number> = {
+export const typeSizeEstimates: Record<string, number> = {
   T0: 35, T1: 55, T2: 75, T3: 100, T4: 130,
   V2: 120, V3: 150, V4: 180, V5: 220,
   Terreno: 500, Garagem: 15, Loja: 60,
