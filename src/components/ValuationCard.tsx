@@ -22,7 +22,6 @@ interface ValuationCardProps {
 
 export default function ValuationCard({
   district,
-  municipality,
   type,
   price,
   marketValue,
@@ -42,17 +41,11 @@ export default function ValuationCard({
     district,
     type,
     price,
-    marketValue: marketValue ?? undefined,
+    marketValue,
     source,
     sourceName,
     createdAt: createdAt ? new Date(createdAt) : null,
     isActive,
-    isAuction,
-    currentBid,
-    auctionType,
-    vpt,
-    condominiumDebt,
-    renovationEstimate,
   });
 
   const riskColors: Record<string, string> = {
@@ -61,7 +54,7 @@ export default function ValuationCard({
     alto: "text-red-500 bg-red-50 border-red-200",
   };
 
-  const riskLabels: Record<string, string> = {
+  const riskLabels = {
     baixo: "Risco Baixo",
     medio: "Risco Médio",
     alto: "Risco Alto",
@@ -112,7 +105,7 @@ export default function ValuationCard({
 
       <div className="grid grid-cols-2 gap-4">
         <div className="bg-slate-50 p-3 rounded-xl">
-          <div className="text-xs text-secondary uppercase font-semibold mb-1">Valor de mercado (AVM)</div>
+          <div className="text-xs text-secondary uppercase font-semibold mb-1">Valor de mercado</div>
           <div className="text-xl font-bold">{formatCurrency(val.avm)}</div>
           <div className="text-xs text-secondary">Confiança: {val.avmConfidence}</div>
         </div>
@@ -124,20 +117,12 @@ export default function ValuationCard({
       </div>
 
       <div className="grid grid-cols-5 gap-2 text-xs">
-        {Object.entries(val.valuationFactors).map(([key, value]) => {
-          const labels: Record<string, string> = {
-            basePricePerSqm: "Preço/m²",
-            typeMultiplier: "Tipo",
-            municipalityPremium: "Localização",
-            marketTrend: "Tendência",
-            conditionFactor: "Condição",
-          };
-          return (
-            <div key={key} className="bg-slate-50 p-2 rounded-lg text-center">
-              <div className="text-secondary">{labels[key]}</div>
-              <div className="font-bold">{value}x</div>
-            </div>
-          ))}
+        {Object.entries(val.valuationFactors).map(([key, value]) => (
+          <div key={key} className="bg-slate-50 p-2 rounded-lg text-center">
+            <div className="text-secondary">{valuationFactorLabels[key]}</div>
+            <div className="font-bold">{value}x</div>
+          </div>
+        ))}
       </div>
 
       <details className="text-xs text-secondary">
