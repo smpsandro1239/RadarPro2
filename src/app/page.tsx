@@ -7,36 +7,6 @@ export default async function Home() {
 
   return (
     <main className="min-h-screen">
-      {/* Header */}
-      <nav className="p-6 border-b flex justify-between items-center max-w-7xl mx-auto">
-        <a href="/" className="text-2xl font-bold tracking-tight text-primary">
-          RadarPro <span className="text-foreground">Portugal</span>
-        </a>
-        <div className="flex gap-4 items-center">
-          <a href="/mapa" className="px-4 py-2 text-sm font-medium hover:text-primary">
-            Mapa
-          </a>
-          <a href="/alertas" className="px-4 py-2 text-sm font-medium hover:text-primary">
-            Alertas
-          </a>
-          <a href="/favoritos" className="px-4 py-2 text-sm font-medium hover:text-primary">
-            Favoritos
-          </a>
-          <a href="/comparador" className="px-4 py-2 text-sm font-medium hover:text-primary">
-            Comparar
-          </a>
-          <a href="/como-funciona" className="px-4 py-2 text-sm font-medium hover:text-primary">
-            Como funciona
-          </a>
-          <a href="/precos" className="px-4 py-2 text-sm font-medium hover:text-primary">
-            Preços
-          </a>
-          <a href="/auth" className="bg-primary text-white px-6 py-2 rounded-lg text-sm font-medium hover:opacity-90 transition">
-            Aceder
-          </a>
-        </div>
-      </nav>
-
       {/* Hero */}
       <section className="py-12 px-6 text-center max-w-4xl mx-auto">
         <h1 className="text-5xl md:text-6xl font-extrabold mb-6">

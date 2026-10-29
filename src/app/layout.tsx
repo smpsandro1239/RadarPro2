@@ -3,6 +3,7 @@ import "./globals.css";
 import "leaflet/dist/leaflet.css";
 import CookieBanner from "@/components/CookieBanner";
 import ServiceWorkerRegistration from "@/components/ServiceWorkerRegistration";
+import Navbar from "@/components/Navbar";
 
 export const metadata: Metadata = {
   title: "RadarPro Portugal - Oportunidades Imobiliárias",
@@ -21,6 +22,7 @@ export default function RootLayout({
         <meta name="theme-color" content="#2563eb" />
       </head>
       <body className="antialiased">
+        <Navbar />
         {children}
         <CookieBanner />
         <ServiceWorkerRegistration />

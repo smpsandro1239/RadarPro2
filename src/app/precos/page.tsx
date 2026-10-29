@@ -62,12 +62,6 @@ export default function PrecosPage() {
 
   return (
     <main className="min-h-screen">
-      <nav className="p-6 border-b flex justify-between items-center max-w-7xl mx-auto">
-        <a href="/" className="text-2xl font-bold tracking-tight text-primary">
-          RadarPro <span className="text-foreground">Portugal</span>
-        </a>
-      </nav>
-
       <section className="py-20 px-6 text-center max-w-4xl mx-auto">
         <h1 className="text-4xl font-extrabold mb-4">
           Planos simples, sem surpresas
