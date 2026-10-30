@@ -3,6 +3,7 @@ import { getSession } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import { LogOut } from "lucide-react";
 import PropertyGrid from "@/components/PropertyGrid";
+import { Suspense } from "react";
 
 export default async function OportunidadesPage() {
   const session = await getSession();
@@ -29,7 +30,14 @@ export default async function OportunidadesPage() {
         </form>
       </div>
 
-      <PropertyGrid properties={properties} />
+        <Suspense fallback={<div className="animate-pulse h-96 bg-slate-100 rounded-xl mb-8"></div>}>
+          <PropertyGrid
+            properties={properties}
+            totalCount={properties.length}
+            pageParam={1}
+            perPage={24}
+          />
+        </Suspense>
     </main>
   );
 }

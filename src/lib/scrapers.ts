@@ -1,5 +1,6 @@
 import { createClient } from "@libsql/client";
 import { load as cheerioLoad } from "cheerio";
+import * as Sentry from "@sentry/nextjs";
 
 const c = createClient({
   url: "libsql://radarpro2-smpsandro1239.aws-eu-west-1.turso.io",
@@ -52,6 +53,11 @@ export interface ScrapedProperty {
 
 export async function scrapeCasaSapo(district: string): Promise<ScrapedProperty[]> {
   const results: ScrapedProperty[] = [];
+  Sentry.addBreadcrumb({
+    category: 'scraper',
+    message: `source:Casa Sapo, district:${district}`,
+    level: 'info',
+  });
   try {
     const url = "https://casa.sapo.pt/comprar-apartamentos/" + district.toLowerCase() + "/";
     const res = await fetchWithRetry(url);
@@ -89,6 +95,11 @@ export async function scrapeCasaSapo(district: string): Promise<ScrapedProperty[
 
 export async function scrapeImovirtual(district: string): Promise<ScrapedProperty[]> {
   const results: ScrapedProperty[] = [];
+  Sentry.addBreadcrumb({
+    category: 'scraper',
+    message: `source:Imovirtual, district:${district}`,
+    level: 'info',
+  });
   try {
     const url = "https://www.imovirtual.com/pt/resultados/comprar/apartamento/" + district.toLowerCase() + "/";
     const res = await fetchWithRetry(url);
@@ -126,6 +137,11 @@ export async function scrapeImovirtual(district: string): Promise<ScrapedPropert
 
 export async function scrapeIdealista(district: string): Promise<ScrapedProperty[]> {
   const results: ScrapedProperty[] = [];
+  Sentry.addBreadcrumb({
+    category: 'scraper',
+    message: `source:Idealista, district:${district}`,
+    level: 'info',
+  });
   try {
     const url = "https://www.idealista.pt/comprar-casas/" + district.toLowerCase() + "/";
     const res = await fetchWithRetry(url);
@@ -163,6 +179,11 @@ export async function scrapeIdealista(district: string): Promise<ScrapedProperty
 
 export async function scrapeOLX(district: string): Promise<ScrapedProperty[]> {
   const results: ScrapedProperty[] = [];
+  Sentry.addBreadcrumb({
+    category: 'scraper',
+    message: `source:OLX, district:${district}`,
+    level: 'info',
+  });
   try {
     const url = "https://www.olx.pt/imoveis/apartamento-casa-a-venda/" + district.toLowerCase() + "/q-barato/";
     const res = await fetchWithRetry(url);
@@ -200,6 +221,11 @@ export async function scrapeOLX(district: string): Promise<ScrapedProperty[]> {
 
 export async function scrapeCustoJusto(district: string): Promise<ScrapedProperty[]> {
   const results: ScrapedProperty[] = [];
+  Sentry.addBreadcrumb({
+    category: 'scraper',
+    message: `source:CustoJusto, district:${district}`,
+    level: 'info',
+  });
   try {
     const url = "https://www.custojusto.pt/" + district.toLowerCase() + "/imoveis";
     const res = await fetchWithRetry(url);
@@ -237,6 +263,11 @@ export async function scrapeCustoJusto(district: string): Promise<ScrapedPropert
 
 export async function scrapeELeiloes(district: string): Promise<ScrapedProperty[]> {
   const results: ScrapedProperty[] = [];
+  Sentry.addBreadcrumb({
+    category: 'scraper',
+    message: `source:e-Leiloes, district:${district}`,
+    level: 'info',
+  });
   try {
     const url = "https://www.e-leiloes.pt/leiloes/imoveis/" + district.toLowerCase() + "/";
     const res = await fetchWithRetry(url);
@@ -296,6 +327,11 @@ export async function scrapeAllDistricts(): Promise<ScrapedProperty[]> {
 
 export async function scrapeImobancos(district: string): Promise<ScrapedProperty[]> {
   const results: ScrapedProperty[] = [];
+  Sentry.addBreadcrumb({
+    category: 'scraper',
+    message: `source:Imobancos, district:${district}`,
+    level: 'info',
+  });
   try {
     const url = "https://imobancos.pt/imoveis/" + district.toLowerCase() + "/page/1/";
     const res = await fetchWithRetry(url);
@@ -333,6 +369,11 @@ export async function scrapeImobancos(district: string): Promise<ScrapedProperty
 
 export async function scrapeMillenniumBCP(district: string): Promise<ScrapedProperty[]> {
   const results: ScrapedProperty[] = [];
+  Sentry.addBreadcrumb({
+    category: 'scraper',
+    message: `source:Millennium BCP, district:${district}`,
+    level: 'info',
+  });
   try {
     const url = "https://ind.millenniumbcp.pt/pt/Particulares/viver/Imoveis/Pages/imoveis.aspx";
     const res = await fetchWithRetry(url);
@@ -370,6 +411,11 @@ export async function scrapeMillenniumBCP(district: string): Promise<ScrapedProp
 
 export async function scrapeSantander(district: string): Promise<ScrapedProperty[]> {
   const results: ScrapedProperty[] = [];
+  Sentry.addBreadcrumb({
+    category: 'scraper',
+    message: `source:Santander, district:${district}`,
+    level: 'info',
+  });
   try {
     const url = "https://www.santander.pt/pt-pt/pessoais/casa-imoveis/comprar/" + district.toLowerCase() + "/";
     const res = await fetchWithRetry(url);
@@ -407,6 +453,11 @@ export async function scrapeSantander(district: string): Promise<ScrapedProperty
 
 export async function scrapeMontepio(district: string): Promise<ScrapedProperty[]> {
   const results: ScrapedProperty[] = [];
+  Sentry.addBreadcrumb({
+    category: 'scraper',
+    message: `source:Montepio, district:${district}`,
+    level: 'info',
+  });
   try {
     const url = "https://www.montepio.pt/particulares/imoveis/" + district.toLowerCase() + "/";
     const res = await fetchWithRetry(url);
@@ -444,6 +495,11 @@ export async function scrapeMontepio(district: string): Promise<ScrapedProperty[
 
 export async function scrapeCaixaImobiliario(district: string): Promise<ScrapedProperty[]> {
   const results: ScrapedProperty[] = [];
+  Sentry.addBreadcrumb({
+    category: 'scraper',
+    message: `source:Caixa Imobiliário, district:${district}`,
+    level: 'info',
+  });
   try {
     const url = "https://www.caixaimobiliario.pt/comprar/" + district.toLowerCase() + "/";
     const res = await fetchWithRetry(url);
@@ -481,6 +537,11 @@ export async function scrapeCaixaImobiliario(district: string): Promise<ScrapedP
 
 export async function scrapeCreditoAgricola(district: string): Promise<ScrapedProperty[]> {
   const results: ScrapedProperty[] = [];
+  Sentry.addBreadcrumb({
+    category: 'scraper',
+    message: `source:Crédito Agrícola, district:${district}`,
+    level: 'info',
+  });
   try {
     const url = "https://www.cai.pt/imoveis/" + district.toLowerCase() + "/";
     const res = await fetchWithRetry(url);
@@ -518,6 +579,11 @@ export async function scrapeCreditoAgricola(district: string): Promise<ScrapedPr
 
 export async function scrapeNovoBanco(district: string): Promise<ScrapedProperty[]> {
   const results: ScrapedProperty[] = [];
+  Sentry.addBreadcrumb({
+    category: 'scraper',
+    message: `source:Novo Banco, district:${district}`,
+    level: 'info',
+  });
   try {
     const url = "https://www.novobanco.pt/particulares/imoveis/" + district.toLowerCase() + "/";
     const res = await fetchWithRetry(url);
@@ -555,6 +621,11 @@ export async function scrapeNovoBanco(district: string): Promise<ScrapedProperty
 
 export async function scrapeBPI(district: string): Promise<ScrapedProperty[]> {
   const results: ScrapedProperty[] = [];
+  Sentry.addBreadcrumb({
+    category: 'scraper',
+    message: `source:BPI Expresso, district:${district}`,
+    level: 'info',
+  });
   try {
     const url = "https://www.bpiexpressoimobiliario.pt/imoveis/" + district.toLowerCase() + "/";
     const res = await fetchWithRetry(url);

@@ -1,5 +1,6 @@
 import { inngest } from "../inngest";
 import { processScrapeResults } from "@/lib/ingest";
+import { indexProperty } from "@/lib/typesense";
 import {
   scrapeCasaSapo,
   scrapeImovirtual,
@@ -61,6 +62,46 @@ export const scrapeSource = inngest.createFunction(
 
     const processed = await step.run("ingest", async () => {
       return processScrapeResults(results);
+    });
+
+    await step.run("index-new-properties", async () => {
+      try {
+        const { db } = await import("@/db");
+        const { properties } = await import("@/db/schema");
+        const { eq, and } = await import("drizzle-orm");
+
+        const props = await db
+          .select()
+          .from(properties)
+          .where(and(eq(properties.source, source), eq(properties.isActive, true)));
+
+        for (const prop of props) {
+          await indexProperty({
+            id: prop.id,
+            source: prop.source,
+            source_name: prop.sourceName,
+            url: prop.url,
+            title: prop.title,
+            district: prop.district,
+            municipality: prop.municipality,
+            type: prop.type,
+            price: Math.round(prop.price),
+            market_value: prop.marketValue ? Math.round(prop.marketValue) : null,
+            discount_pct: prop.discountPct ? Math.round(prop.discountPct) : null,
+            score: prop.score ?? 0,
+            rentability: prop.rentability,
+            is_auction: Boolean(prop.isAuction),
+            is_active: Boolean(prop.isActive),
+            created_at: Math.floor(new Date(prop.createdAt ?? new Date()).getTime() / 1000),
+            updated_at: Math.floor(new Date(prop.updatedAt ?? new Date()).getTime() / 1000),
+          });
+        }
+
+        return { indexed: props.length };
+      } catch (err) {
+        console.error("Typesense index-new-properties failed (non-blocking):", err);
+        return { indexed: 0, error: String(err) };
+      }
     });
 
     return { source, district, scraped: results.length, ...processed };

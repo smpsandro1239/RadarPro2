@@ -1,6 +1,6 @@
 import { getLatestProperties } from "@/lib/queries";
 import PropertyGrid from "@/components/PropertyGrid";
-import PropertyImage from "@/components/PropertyImage";
+import { Suspense } from "react";
 
 export default async function Home() {
   const properties = await getLatestProperties();
@@ -40,7 +40,14 @@ export default async function Home() {
           </div>
         </div>
 
-        <PropertyGrid properties={properties} />
+        <Suspense fallback={<div className="animate-pulse h-96 bg-slate-100 rounded-xl mb-8"></div>}>
+          <PropertyGrid
+            properties={properties}
+            totalCount={properties.length}
+            pageParam={1}
+            perPage={24}
+          />
+        </Suspense>
       </section>
 
       {/* Footer CTA */}
