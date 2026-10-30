@@ -87,7 +87,7 @@ export function calculateMaxBid(inputs: AuctionCalculationInputs): AuctionCalcul
     targetMargin = 15,
   } = inputs;
 
-  const config = auctionHouse ? AUCTION_HOUSE_CONFIG[auctionHouse] : DEFAULT_AUCTION_HOUSE;
+  const config = AUCTION_HOUSE_CONFIG[auctionHouse] ?? DEFAULT_AUCTION_HOUSE;
 
   // Custos percentuais aplicados ao valor de mercado
   const commission = Math.round(marketValue * (config.commissionPct / 100));
@@ -112,6 +112,7 @@ export function calculateMaxBid(inputs: AuctionCalculationInputs): AuctionCalcul
     marginPct,
     marketValue,
     totalCosts,
+    additionalCosts,
     commission,
     imt,
     stampDuty,
