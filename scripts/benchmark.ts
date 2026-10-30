@@ -1,10 +1,9 @@
 /**
  * RadarPro Portugal - Benchmark de performance de busca
  *
- * Mede latência de busca nos três modos: db-primary, typesense, db-fallback.
- * Execute com: npx tsx --env-file=.env.local scripts/benchmark.ts
- *
- * Resultados são escritos em benchmarks/YYYY-MM-DD.json
+ * Mede p50/p95/p99 de busca nos modos db-primary, typesense e db-fallback.
+ * Executa com: npx tsx --env-file=.env.local scripts/benchmark.ts
+ * Resultados: benchmarks/YYYY-MM-DD.json
  */
 
 import { db } from "@/db";
@@ -42,10 +41,6 @@ interface BenchmarkReport {
   typesenseConfigured: boolean;
   search: BenchResult[];
   detail: BenchResult;
-  lighthouse?: {
-    homepage: string;
-    detail: string;
-  };
 }
 
 function percentile(sorted: number[], p: number): number {
@@ -68,7 +63,7 @@ async function benchDbSearch(
       errors++;
     }
     const end = process.hrtime.bigint();
-    latencies.push(Number(end - start) / 1_000_000); // ns -> ms
+    latencies.push(Number(end - start) / 1_000_000);
   }
 
   latencies.sort((a, b) => a - b);
@@ -86,20 +81,14 @@ async function benchDbSearch(
   };
 }
 
-async function benchDetail(
-  propertyIds: string[]
-): Promise<BenchResult> {
+async function benchDetail(propertyIds: string[]): Promise<BenchResult> {
   const latencies: number[] = [];
   let errors = 0;
 
   for (const id of propertyIds) {
     const start = process.hrtime.bigint();
     try {
-      await db
-        .select()
-        .from(properties)
-        .where(eq(properties.id, id))
-        .limit(1);
+      await db.select().from(properties).where(eq(properties.id, id)).limit(1);
     } catch {
       errors++;
     }
@@ -125,7 +114,6 @@ async function benchDetail(
 async function main() {
   console.log("=== RadarPro Benchmark ===\n");
 
-  // Contar propriedades
   const totalResult = await db.select({ count: count() }).from(properties);
   const activeResult = await db
     .select({ count: count() })
@@ -139,7 +127,7 @@ async function main() {
   console.log(`Active properties: ${activeProperties}`);
   console.log(`Typesense configured: ${typesenseConfigured}\n`);
 
-  // Gerar queries de busca variadas
+  // 100 queries variadas
   const districts = ["Lisboa", "Porto", "Braga", "Faro", "Setúbal"];
   const types = ["Apartamento", "Moradia", "Terreno"];
   const queries: Array<() => Promise<{ count: number }>> = [];
@@ -157,47 +145,33 @@ async function main() {
       conditions.push(gte(properties.price, minPrice));
       conditions.push(lte(properties.price, maxPrice));
 
-      return await db
-        .select({ count: count() })
-        .from(properties)
-        .where(and(...conditions));
+      return await db.select({ count: count() }).from(properties).where(and(...conditions));
     });
   }
 
-  // Benchmark db-primary (sempre disponível)
   console.log("A fazer benchmark db-primary...");
   const dbPrimary = await benchDbSearch("db-primary", queries);
 
-  // Benchmark typesense (se configurado)
   let typesenseResult: BenchResult | null = null;
   if (typesenseConfigured) {
     console.log("A fazer benchmark typesense...");
-    const tsQueries: Array<() => Promise<{ count: number }>> = queries.map(
-      (_, i) => async () => {
-        const district = districts[i % districts.length];
-        const type = types[i % types.length];
-        const minPrice = i * 10000;
-        const maxPrice = minPrice + 500000;
+    const tsQueries: Array<() => Promise<{ count: number }>> = queries.map((_, i) => async () => {
+      const district = districts[i % districts.length];
+      const type = types[i % types.length];
+      const minPrice = i * 10000;
+      const maxPrice = minPrice + 500000;
 
-        const result = await searchProperties({
-          district,
-          type,
-          minPrice,
-          maxPrice,
-          page: 1,
-          perPage: 20,
-        });
-        return { count: result?.found || 0 };
-      }
-    );
+      const result = await searchProperties({
+        district, type, minPrice, maxPrice, page: 1, perPage: 20,
+      });
+      return { count: result?.found || 0 };
+    });
     typesenseResult = await benchDbSearch("typesense", tsQueries);
   }
 
-  // Benchmark db-fallback (simulado: mesma query que db-primary)
   console.log("A fazer benchmark db-fallback...");
   const dbFallback = await benchDbSearch("db-fallback", queries);
 
-  // Benchmark detalhe
   const allProps = await db
     .select({ id: properties.id })
     .from(properties)
@@ -211,9 +185,7 @@ async function main() {
     totalProperties,
     activeProperties,
     typesenseConfigured,
-    search: [dbPrimary, typesenseResult, dbFallback].filter(
-      (r): r is BenchResult => r !== null
-    ),
+    search: [dbPrimary, typesenseResult, dbFallback].filter((r): r is BenchResult => r !== null),
     detail: detailBench,
   };
 
