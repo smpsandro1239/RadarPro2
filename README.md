@@ -112,3 +112,52 @@ Imprime o modo de busca ativo e se as env vars estão presentes.
 ## Licença
 
 MIT
+
+---
+
+## ⚠️ Sentry — não configurado em produção
+
+O SDK está inicializado, mas `SENTRY_DSN` e `NEXT_PUBLIC_SENTRY_DSN` **não estão definidos nas env vars da Vercel**. Consequência: erros em produção **não são reportados**. Os breadcrumbs dos 14 scrapers e o `captureException` existem no código mas ficam em código morto até o DSN ser configurado.
+
+Para ativar:
+1. Criar projeto Next.js no dashboard Sentry.
+2. Copiar o DSN.
+3. Adicionar `SENTRY_DSN` e `NEXT_PUBLIC_SENTRY_DSN` na Vercel (Production + Preview).
+4. Configurar `SENTRY_ORG`, `SENTRY_PROJECT`, `SENTRY_AUTH_TOKEN` para upload de source maps.
+5. Redeploy.
+
+---
+
+## Benchmarks
+
+Executar `npx tsx scripts/benchmark.ts` para atualizar esta tabela. Enquanto os valores forem "por medir", as metas são aspiração, não facto.
+
+| Métrica | db-primary | typesense | db-fallback | Meta |
+|---------|------------|-----------|-------------|------|
+| Busca p50 | por medir | n/a | por medir | <200ms |
+| Busca p95 | por medir | n/a | por medir | <500ms |
+| LCP homepage | por medir | — | — | <2.5s |
+| LCP detalhe | por medir | — | — | <2.5s |
+| CLS | por medir | — | — | <0.1 |
+| INP | por medir | — | — | <200ms |
+| Lighthouse Performance | por medir | — | — | ≥90 |
+| Lighthouse Accessibility | por medir | — | — | ≥95 |
+
+---
+
+## Limitações conhecidas
+
+### PPR adiado para v2.0
+
+`cacheComponents: true` foi removido de `next.config.ts` porque quebrava rotas dinâmicas. PPR fica adiado para v2.0. **Sem PPR, o LCP em mobile pode exceder 2.5s.**
+
+Plano de reativação:
+1. `cacheComponents: true` em `next.config.ts`.
+2. `'use cache'` + `cacheTag('property-{id}')` + `cacheLife('hours')` em `getPropertyById`.
+3. `<Suspense>` com skeleton em todos os componentes dinâmicos (preço, score, `max_bid`, facets).
+4. `revalidateTag('property-{id}')` no passo `index-new-properties` do Inngest.
+5. Converter por ordem: `/` → `/imovel/[id]` → `/oportunidades`.
+
+### Sentry sem DSN
+
+Ver secção "⚠️ Sentry — não configurado em produção" acima. Erros em produção não são reportados até o DSN ser adicionado.
