@@ -4,8 +4,10 @@ import { redirect } from "next/navigation";
 import { LogOut } from "lucide-react";
 import PropertyGrid from "@/components/PropertyGrid";
 import { Suspense } from "react";
+import { unstable_noStore } from "next/cache";
 
 export default async function OportunidadesPage() {
+  unstable_noStore();
   const session = await getSession();
   if (!session) redirect("/auth");
 

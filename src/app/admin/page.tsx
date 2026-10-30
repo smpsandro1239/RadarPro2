@@ -4,9 +4,12 @@ import { db } from "@/db";
 import { properties, users, searchAlerts, savedProperties } from "@/db/schema";
 import { eq, count, sql, desc } from "drizzle-orm";
 
+import { unstable_noStore } from "next/cache";
+
 const ADMIN_EMAIL = "smpsandro1239@gmail.com";
 
 export default async function AdminPage() {
+  unstable_noStore();
   const session = await getSession();
   if (!session || session.email !== ADMIN_EMAIL) redirect("/");
 
