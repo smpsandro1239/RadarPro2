@@ -2,8 +2,18 @@ import { db } from "@/db";
 import { properties } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import { indexProperties, ensureTypesenseSchema } from "@/lib/typesense";
+import { isTypesenseConfigured } from "@/lib/search-config";
 
 async function main() {
+  if (!isTypesenseConfigured()) {
+    console.info(
+      "Typesense não configurado — nada a indexar. " +
+        "A busca continuará a usar a BD (Turso) como fonte primária. " +
+        "Para ativar Typesense, defina TYPESENSE_HOST e TYPESENSE_API_KEY no .env.local."
+    );
+    process.exit(0);
+  }
+
   await ensureTypesenseSchema();
 
   const activeProperties = await db
@@ -31,12 +41,17 @@ async function main() {
     updated_at: Math.floor(new Date(prop.updatedAt ?? new Date()).getTime() / 1000),
   }));
 
-  await indexProperties(documents);
+  const result = await indexProperties(documents);
 
-  console.log(`Indexadas ${documents.length} propriedades no Typesense`);
+  if (result.error) {
+    console.error("Erro ao indexar propriedades no Typesense:", result.error);
+    process.exit(1);
+  }
+
+  console.log(`Indexadas ${result.indexed} propriedades no Typesense`);
 }
 
 main().catch((err) => {
-  console.error("Erro ao indexar propriedades no Typesense:", err);
+  console.error("Erro inesperado na indexação Typesense:", err);
   process.exit(1);
 });

@@ -1,6 +1,5 @@
 import { inngest } from "../inngest";
 import { processScrapeResults } from "@/lib/ingest";
-import { indexProperty } from "@/lib/typesense";
 import {
   scrapeCasaSapo,
   scrapeImovirtual,
@@ -65,7 +64,15 @@ export const scrapeSource = inngest.createFunction(
     });
 
     await step.run("index-new-properties", async () => {
+      const { isTypesenseConfigured } = await import("@/lib/search-config");
+
+      if (!isTypesenseConfigured()) {
+        console.info("Typesense não configurado — a pular indexação incremental.");
+        return { indexed: 0, mode: "skipped" };
+      }
+
       try {
+        const { indexProperty } = await import("@/lib/typesense");
         const { db } = await import("@/db");
         const { properties } = await import("@/db/schema");
         const { eq, and } = await import("drizzle-orm");
@@ -97,10 +104,10 @@ export const scrapeSource = inngest.createFunction(
           });
         }
 
-        return { indexed: props.length };
+        return { indexed: props.length, mode: "typesense" };
       } catch (err) {
         console.error("Typesense index-new-properties failed (non-blocking):", err);
-        return { indexed: 0, error: String(err) };
+        return { indexed: 0, mode: "failed", error: String(err) };
       }
     });
 

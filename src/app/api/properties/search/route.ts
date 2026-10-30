@@ -3,6 +3,7 @@ import { db } from "@/db";
 import { properties } from "@/db/schema";
 import { eq, and, lt, gt, gte, lte, ilike, or, sql, count } from "drizzle-orm";
 import { searchProperties } from "@/lib/typesense";
+import { isTypesenseConfigured, getSearchModeLabel } from "@/lib/search-config";
 
 export async function GET(request: Request) {
   try {
@@ -22,10 +23,11 @@ export async function GET(request: Request) {
     const perPage = parseInt(searchParams.get("per_page") || "20");
     const sortBy = searchParams.get("sort_by") || "score";
 
-    const useTypesense =
-      !!process.env.TYPESENSE_HOST && !!process.env.TYPESENSE_API_KEY;
+    const configured = isTypesenseConfigured();
+    let searchSource: "typesense" | "db-fallback" | "db-primary" = configured ? "typesense" : "db-primary";
 
-    if (useTypesense) {
+    // ---------- Tenta Typesense primeiro (se configurado) ----------
+    if (configured) {
       try {
         const result = await searchProperties({
           q,
@@ -40,50 +42,55 @@ export async function GET(request: Request) {
           perPage,
         });
 
-        return NextResponse.json({
-          properties: result.hits.map((hit: any) => ({
-            id: hit.id,
-            title: hit.title,
-            district: hit.district,
-            municipality: hit.municipality,
-            sourceName: hit.source_name,
-            source: hit.source,
-            price: hit.price,
-            marketValue: hit.market_value ?? null,
-            discountPct: hit.discount_pct ?? null,
-            score: hit.score,
-            rentability: hit.rentability ?? null,
-            type: hit.type,
-            images: typeof hit.images === "string" ? JSON.parse(hit.images || "[]") : (hit.images || []),
-            isAuction: hit.is_auction,
-            isActive: hit.is_active,
-            currentBid: hit.current_bid ?? null,
-            maxBid: hit.max_bid ?? null,
-            createdAt: hit.created_at ? new Date(hit.created_at * 1000).toISOString() : null,
-            updatedAt: hit.updated_at ? new Date(hit.updated_at * 1000).toISOString() : null,
-          })),
-          total: result.found,
-          page: result.page,
-          perPage: result.perPage,
-          totalPages: Math.ceil(result.found / result.perPage),
-          facets: {
-            districts: (result.facets?.find((f: any) => fieldName(f) === "district")?.stats || []).map((s: any) => ({
-              value: s.value,
-              count: s.count,
-            })) || [],
-            types: (result.facets?.find((f: any) => fieldName(f) === "type")?.stats || []).map((s: any) => ({
-              value: s.value,
-              count: s.count,
-            })) || [],
-            sources: (result.facets?.find((f: any) => fieldName(f) === "source")?.stats || []).map((s: any) => ({
-              value: s.value,
-              count: s.count,
-            })) || [],
-          },
-        });
+        if (result) {
+          return NextResponse.json({
+            properties: result.hits.map((hit: any) => ({
+              id: hit.id,
+              title: hit.title,
+              district: hit.district,
+              municipality: hit.municipality,
+              sourceName: hit.source_name,
+              source: hit.source,
+              price: hit.price,
+              marketValue: hit.market_value ?? null,
+              discountPct: hit.discount_pct ?? null,
+              score: hit.score,
+              rentability: hit.rentability ?? null,
+              type: hit.type,
+              images:
+                typeof hit.images === "string" ? JSON.parse(hit.images || "[]") : (hit.images || []),
+              isAuction: hit.is_auction,
+              isActive: hit.is_active,
+              currentBid: hit.current_bid ?? null,
+              maxBid: hit.max_bid ?? null,
+              createdAt: hit.created_at ? new Date(hit.created_at * 1000).toISOString() : null,
+              updatedAt: hit.updated_at ? new Date(hit.updated_at * 1000).toISOString() : null,
+            })),
+            total: result.found,
+            page: result.page,
+            perPage: result.perPage,
+            totalPages: Math.ceil(result.found / result.perPage),
+            facets: {
+              districts: (result.facets?.find((f: any) => fieldName(f) === "district")?.stats || []).map(
+                (s: any) => ({ value: s.value, count: s.count })
+              ) || [],
+              types: (result.facets?.find((f: any) => fieldName(f) === "type")?.stats || []).map(
+                (s: any) => ({ value: s.value, count: s.count })
+              ) || [],
+              sources: (result.facets?.find((f: any) => fieldName(f) === "source")?.stats || []).map(
+                (s: any) => ({ value: s.value, count: s.count })
+              ) || [],
+            },
+            meta: {
+              searchSource,
+              typesenseConfigured: true,
+              mode: getSearchModeLabel("typesense"),
+            },
+          });
+        }
       } catch (err) {
         console.error("Typesense search failed, falling back to DB:", err);
-        // Fall through to DB fallback
+        searchSource = "db-fallback";
       }
     }
 
@@ -176,6 +183,11 @@ export async function GET(request: Request) {
         districts: districtFacet.map((d: any) => ({ value: d.district, count: Number(d.count) })),
         types: typeFacet.map((t: any) => ({ value: t.type, count: Number(t.count) })),
         sources: sourceFacet.map((s: any) => ({ value: s.source, count: Number(s.count) })),
+      },
+      meta: {
+        searchSource,
+        typesenseConfigured: configured,
+        mode: getSearchModeLabel(searchSource === "typesense" ? "typesense" : "db-primary"),
       },
     });
   } catch (error) {
