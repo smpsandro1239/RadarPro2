@@ -13,6 +13,11 @@ export interface ScrapedProperty {
   isAuction?: boolean;
   auctionEndDate?: number;
   auctionStartDate?: number;
+  auctionHouse?: string;
+  auctionType?: string;
+  currentBid?: number;
+  reservePrice?: number;
+  maxBid?: number;
 }
 
 export async function ingestProperty(prop: ScrapedProperty): Promise<{
@@ -20,6 +25,17 @@ export async function ingestProperty(prop: ScrapedProperty): Promise<{
   id: string;
 }> {
   // Normalize
+  // Desativar leilões fechados imediatamente
+  let isActive = true;
+  if (prop.isAuction && prop.auctionEndDate) {
+    const endDate = typeof prop.auctionEndDate === "number"
+      ? new Date(prop.auctionEndDate * 1000)
+      : new Date(prop.auctionEndDate);
+    if (endDate < new Date()) {
+      isActive = false;
+    }
+  }
+
   const normalized = {
     id: prop.id,
     source: prop.source.toLowerCase().replace(/\s+/g, "-"),
@@ -35,10 +51,15 @@ export async function ingestProperty(prop: ScrapedProperty): Promise<{
     score: Math.round(Math.random() * 20) + 70, // Temporary scoring
     rentability: Math.round((5 + Math.random() * 5) * 10) / 10,
     images: JSON.stringify(prop.images),
-    isActive: true,
+    isActive,
     checkStatus: "pending" as "ok" | "not_found" | "error" | "pending",
     createdAt: new Date(),
     updatedAt: new Date(),
+    auctionHouse: prop.auctionHouse ?? null,
+    auctionType: prop.auctionType ?? null,
+    currentBid: prop.currentBid ?? null,
+    reservePrice: prop.reservePrice ?? null,
+    maxBid: prop.maxBid ?? null,
   };
 
   // Check if property already exists (by source_url)
@@ -61,9 +82,14 @@ export async function ingestProperty(prop: ScrapedProperty): Promise<{
       score: normalized.score,
       rentability: normalized.rentability,
       images: normalized.images,
-      isActive: true,
+      isActive: normalized.isActive,
       checkStatus: "ok",
       updatedAt: new Date(),
+      auctionHouse: normalized.auctionHouse,
+      auctionType: normalized.auctionType,
+      currentBid: normalized.currentBid,
+      reservePrice: normalized.reservePrice,
+      maxBid: normalized.maxBid,
     };
 
     await db.update(properties).set(updatedFields).where(eq(properties.id, existing[0].id));
@@ -71,7 +97,7 @@ export async function ingestProperty(prop: ScrapedProperty): Promise<{
     return { action: "updated", id: existing[0].id };
   }
 
-  await db.insert(properties).values([normalized]);
+  await db.insert(properties).values(normalized as any);
   return { action: "inserted", id: normalized.id };
 }
 

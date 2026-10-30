@@ -6,11 +6,14 @@ import ServiceWorkerRegistration from "@/components/ServiceWorkerRegistration";
 import Navbar from "@/components/Navbar";
 import * as Sentry from "@sentry/nextjs";
 
-Sentry.init({
-  dsn: process.env.NEXT_PUBLIC_SENTRY_DSN,
-  environment: process.env.NODE_ENV || "production",
-  tracesSampleRate: 0.1,
-});
+if (process.env.NODE_ENV === "production" && process.env.NEXT_PUBLIC_SENTRY_DSN) {
+  Sentry.init({
+    dsn: process.env.NEXT_PUBLIC_SENTRY_DSN,
+    environment: process.env.NODE_ENV || "production",
+    tracesSampleRate: 0.1,
+    release: process.env.VERCEL_GIT_COMMIT_SHA,
+  });
+}
 
 export const metadata: Metadata = {
   title: "RadarPro Portugal - Oportunidades Imobiliárias",

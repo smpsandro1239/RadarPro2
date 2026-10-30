@@ -88,6 +88,10 @@ export async function scrapeCasaSapo(district: string): Promise<ScrapedProperty[
       }
     });
   } catch (error) {
+    Sentry.captureException(error, {
+      tags: { source: 'Casa Sapo', district: district },
+      extra: { error: String(error) },
+    });
     console.error("Error scraping Casa Sapo:", error);
   }
   return results;
@@ -130,6 +134,10 @@ export async function scrapeImovirtual(district: string): Promise<ScrapedPropert
       }
     });
   } catch (error) {
+    Sentry.captureException(error, {
+      tags: { source: 'Imovirtual', district: district },
+      extra: { error: String(error) },
+    });
     console.error("Error scraping Imovirtual:", error);
   }
   return results;
@@ -172,6 +180,10 @@ export async function scrapeIdealista(district: string): Promise<ScrapedProperty
       }
     });
   } catch (error) {
+    Sentry.captureException(error, {
+      tags: { source: 'Idealista', district: district },
+      extra: { error: String(error) },
+    });
     console.error("Error scraping Idealista:", error);
   }
   return results;
@@ -214,6 +226,10 @@ export async function scrapeOLX(district: string): Promise<ScrapedProperty[]> {
       }
     });
   } catch (error) {
+    Sentry.captureException(error, {
+      tags: { source: 'OLX', district: district },
+      extra: { error: String(error) },
+    });
     console.error("Error scraping OLX:", error);
   }
   return results;
@@ -256,6 +272,10 @@ export async function scrapeCustoJusto(district: string): Promise<ScrapedPropert
       }
     });
   } catch (error) {
+    Sentry.captureException(error, {
+      tags: { source: 'CustoJusto', district: district },
+      extra: { error: String(error) },
+    });
     console.error("Error scraping CustoJusto:", error);
   }
   return results;
@@ -299,6 +319,10 @@ export async function scrapeELeiloes(district: string): Promise<ScrapedProperty[
       }
     });
   } catch (error) {
+    Sentry.captureException(error, {
+      tags: { source: 'e-Leiloes', district: district },
+      extra: { error: String(error) },
+    });
     console.error("Error scraping e-Leiloes:", error);
   }
   return results;
@@ -362,6 +386,10 @@ export async function scrapeImobancos(district: string): Promise<ScrapedProperty
       }
     });
   } catch (error) {
+    Sentry.captureException(error, {
+      tags: { source: 'Imobancos', district: district },
+      extra: { error: String(error) },
+    });
     console.error("Error scraping Imobancos:", error);
   }
   return results;
@@ -404,6 +432,10 @@ export async function scrapeMillenniumBCP(district: string): Promise<ScrapedProp
       }
     });
   } catch (error) {
+    Sentry.captureException(error, {
+      tags: { source: 'Millennium BCP', district: district },
+      extra: { error: String(error) },
+    });
     console.error("Error scraping Millennium BCP:", error);
   }
   return results;
@@ -446,6 +478,10 @@ export async function scrapeSantander(district: string): Promise<ScrapedProperty
       }
     });
   } catch (error) {
+    Sentry.captureException(error, {
+      tags: { source: 'Santander', district: district },
+      extra: { error: String(error) },
+    });
     console.error("Error scraping Santander:", error);
   }
   return results;
@@ -488,6 +524,10 @@ export async function scrapeMontepio(district: string): Promise<ScrapedProperty[
       }
     });
   } catch (error) {
+    Sentry.captureException(error, {
+      tags: { source: 'Montepio', district: district },
+      extra: { error: String(error) },
+    });
     console.error("Error scraping Montepio:", error);
   }
   return results;
@@ -530,6 +570,10 @@ export async function scrapeCaixaImobiliario(district: string): Promise<ScrapedP
       }
     });
   } catch (error) {
+    Sentry.captureException(error, {
+      tags: { source: 'Caixa Imobiliário', district: district },
+      extra: { error: String(error) },
+    });
     console.error("Error scraping Caixa Imobiliário:", error);
   }
   return results;
@@ -572,6 +616,10 @@ export async function scrapeCreditoAgricola(district: string): Promise<ScrapedPr
       }
     });
   } catch (error) {
+    Sentry.captureException(error, {
+      tags: { source: 'Crédito Agrícola', district: district },
+      extra: { error: String(error) },
+    });
     console.error("Error scraping Crédito Agrícola:", error);
   }
   return results;
@@ -614,6 +662,10 @@ export async function scrapeNovoBanco(district: string): Promise<ScrapedProperty
       }
     });
   } catch (error) {
+    Sentry.captureException(error, {
+      tags: { source: 'Novo Banco', district: district },
+      extra: { error: String(error) },
+    });
     console.error("Error scraping Novo Banco:", error);
   }
   return results;
@@ -656,6 +708,10 @@ export async function scrapeBPI(district: string): Promise<ScrapedProperty[]> {
       }
     });
   } catch (error) {
+    Sentry.captureException(error, {
+      tags: { source: 'BPI Expresso', district: district },
+      extra: { error: String(error) },
+    });
     console.error("Error scraping BPI Expresso:", error);
   }
   return results;

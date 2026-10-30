@@ -196,3 +196,70 @@ export const sendAlerts = inngest.createFunction(
     return result;
   }
 );
+
+// Auction closing soon - runs hourly
+export const auctionClosingSoon = inngest.createFunction(
+  { id: "auction-closing-soon", name: "Auction Closing Soon", triggers: [{ event: "auction.closing.soon" }] },
+  async ({ step }: { step: any }) => {
+    const result = await step.run("check-closing", async () => {
+      const { db } = await import("@/db");
+      const { properties } = await import("@/db/schema");
+      const { and, gte, lt, eq } = await import("drizzle-orm");
+
+      const now = new Date();
+      const in24h = new Date(Date.now() + 24 * 60 * 60 * 1000);
+
+      const closingAuctions = await db
+        .select({
+          id: properties.id,
+          title: properties.title,
+          district: properties.district,
+          municipality: properties.municipality,
+          currentBid: properties.currentBid,
+          auctionEndDate: properties.auctionEndDate,
+        })
+        .from(properties)
+        .where(
+          and(
+            eq(properties.isAuction, true),
+            eq(properties.isActive, true),
+            gte(properties.auctionEndDate, now),
+            lt(properties.auctionEndDate, in24h)
+          )
+        );
+
+      return { closingAuctions: closingAuctions.length, auctions: closingAuctions };
+    });
+
+    return result;
+  }
+);
+
+// Close expired auctions
+export const closeExpiredAuctions = inngest.createFunction(
+  { id: "close-expired-auctions", name: "Close Expired Auctions", triggers: [{ event: "auction.close.expired" }] },
+  async ({ step }: { step: any }) => {
+    const result = await step.run("close", async () => {
+      const { db } = await import("@/db");
+      const { properties } = await import("@/db/schema");
+      const { and, lt, eq } = await import("drizzle-orm");
+
+      const now = new Date();
+
+      const closed = await db
+        .update(properties)
+        .set({ isActive: false, checkStatus: "not_found" })
+        .where(
+          and(
+            eq(properties.isAuction, true),
+            eq(properties.isActive, true),
+            lt(properties.auctionEndDate, now)
+          )
+        );
+
+      return { closed: (closed.rows?.length ?? 0) || 0 };
+    });
+
+    return result;
+  }
+);

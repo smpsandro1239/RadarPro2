@@ -2,9 +2,10 @@ import { db } from "@/db";
 import { properties, priceHistory } from "@/db/schema";
 import { eq, desc } from "drizzle-orm";
 import { notFound } from "next/navigation";
-import { MapPin, TrendingDown, ExternalLink, Heart } from "lucide-react";
+import { MapPin, TrendingDown, ExternalLink, Heart, ChevronDown, Info } from "lucide-react";
 import Image from "next/image";
 import ValuationCard from "@/components/ValuationCard";
+import { calculateMaxBid, getCostBreakdownText } from "@/lib/auction-calculator";
 import FavoriteButton from "@/components/FavoriteButton";
 import PropertyImage from "@/components/PropertyImage";
 import AuctionCountdown from "@/components/AuctionCountdown";
@@ -42,6 +43,20 @@ export default async function PropertyPage({
   const imageUrl = images[0] || null;
   const isVerified = prop.checkStatus === "ok";
   const hasImage = !!(prop.image_url && prop.image_status === "real");
+
+  // Auction max bid calculation
+  let auctionCalculation: any = null;
+  if (prop.isAuction && prop.marketValue) {
+    auctionCalculation = calculateMaxBid({
+      marketValue: prop.marketValue,
+      currentBid: prop.currentBid ?? 0,
+      auctionHouse: prop.auctionHouse ?? undefined,
+      vpt: prop.vpt ?? undefined,
+      condominiumDebt: prop.condominiumDebt ?? 0,
+      renovationEstimate: prop.renovationEstimate ?? 0,
+      targetMargin: 15,
+    });
+  }
 
   // JSON-LD
   const jsonLd = {
@@ -148,6 +163,49 @@ export default async function PropertyPage({
             )}
           </div>
 
+          {prop.isAuction && auctionCalculation && (
+            <div className="mb-6 p-4 bg-orange-50 border border-orange-200 rounded-xl">
+              <div className="flex items-center gap-2 mb-3">
+                <Info size={16} className="text-orange-600" />
+                <h3 className="font-bold text-orange-800 text-sm">
+                  Lance máximo recomendado
+                </h3>
+              </div>
+              <div className="grid grid-cols-2 gap-4 mb-4">
+                <div>
+                  <div className="text-xs text-secondary uppercase font-semibold">
+                    Lance atual
+                  </div>
+                  <div className="text-xl font-bold">
+                    {auctionCalculation.currentBid.toLocaleString("pt-PT")}€
+                  </div>
+                </div>
+                <div>
+                  <div className="text-xs text-secondary uppercase font-semibold">
+                    Máx. lance
+                  </div>
+                  <div className={`text-xl font-bold ${auctionCalculation.currentBidExceedsMax ? "text-red-600" : "text-success"}`}>
+                    {auctionCalculation.maxBid.toLocaleString("pt-PT")}€
+                  </div>
+                </div>
+              </div>
+              <div className={`flex items-center gap-1 text-xs font-medium mb-3 ${auctionCalculation.currentBidExceedsMax ? "text-red-600" : "text-success"}`}>
+                {auctionCalculation.currentBidExceedsMax ? "⚠️ Acima do lance máximo — não recomendado" : "✓ Margem de " + auctionCalculation.headroom.toLocaleString("pt-PT") + "€"}
+              </div>
+              <details className="text-xs text-secondary">
+                <summary className="cursor-pointer hover:text-primary flex items-center gap-1 mb-2">
+                  <ChevronDown size={14} className="transition-transform" />
+                  Como calculámos?
+                </summary>
+                <ul className="list-disc list-inside space-y-1 mt-2 text-xs">
+                  {getCostBreakdownText(auctionCalculation).map((line, i) => (
+                    <li key={i}>{line}</li>
+                  ))}
+                </ul>
+              </details>
+            </div>
+          )}
+
           <div className="flex gap-3 mb-6">
             <a
               href={prop.url}
@@ -182,6 +240,52 @@ export default async function PropertyPage({
             />
           </div>
 
+          {/* AVM transparency */}
+          <div className="mb-6 border border-slate-200 rounded-xl p-4">
+            <details className="group">
+              <summary className="cursor-pointer hover:text-primary flex items-center gap-2 font-bold text-sm">
+                <Info size={16} />
+                Como calculámos este valor?
+              </summary>
+              <div className="mt-4 space-y-3 text-xs text-secondary">
+                <div className="grid grid-cols-2 gap-4 p-3 bg-slate-50 rounded-lg">
+                  <div>
+                    <div className="text-[10px] uppercase font-semibold text-slate-400 mb-1">
+                      Valor de mercado (AVM)
+                    </div>
+                    <div className="font-bold">{prop.marketValue?.toLocaleString("pt-PT") || "—"}€</div>
+                  </div>
+                  <div>
+                    <div className="text-[10px] uppercase font-semibold text-slate-400 mb-1">
+                      Confiança
+                    </div>
+                    <div className="font-bold">{prop.marketValue ? "Alta (valor do anúncio)" : "Média (modelo estatístico)"}</div>
+                  </div>
+                  <div>
+                    <div className="text-[10px] uppercase font-semibold text-slate-400 mb-1">
+                      Preço/m²
+                    </div>
+                    <div className="font-bold">
+                      {prop.marketValue ? Math.round(prop.price / 70) : "—"}€/m²
+                    </div>
+                  </div>
+                  <div>
+                    <div className="text-[10px] uppercase font-semibold text-slate-400 mb-1">
+                      Faixa de confiança
+                    </div>
+                    <div className="font-bold">
+                      {prop.marketValue ? Math.round(prop.marketValue * 0.9).toLocaleString("pt-PT") + "€ – " + Math.round(prop.marketValue * 1.1).toLocaleString("pt-PT") + "€" : "—"}
+                    </div>
+                  </div>
+                </div>
+                <p className="mt-2 text-[10px] italic">
+                  Esta é uma estimativa automática baseada em dados de mercado públicos e não uma avaliação oficial.
+                  Para uma decisão de compra, consulte um profissional certificado.
+                </p>
+              </div>
+            </details>
+          </div>
+
           {/* Commute estimator */}
           {prop.lat && prop.lng && (
             <div className="mb-6">
@@ -208,15 +312,90 @@ export default async function PropertyPage({
           {history.length > 1 && (
             <div className="border-t pt-6 mb-6">
               <h2 className="font-bold mb-3">Histórico de preço</h2>
-              <div className="space-y-2">
-                {history.map((h) => (
-                  <div key={h.id} className="flex justify-between text-sm">
-                    <span className="text-secondary">
-                      {h.recordedAt ? new Date(h.recordedAt).toLocaleDateString("pt-PT") : "—"}
+              <div className="relative h-48 w-full mt-4">
+                <svg className="w-full h-full" viewBox="0 0 600 200" preserveAspectRatio="none">
+                  <defs>
+                    <linearGradient id="priceGradient" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stopColor="#3b82f6" stopOpacity="0.3" />
+                      <stop offset="100%" stopColor="#3b82f6" stopOpacity="0" />
+                    </linearGradient>
+                  </defs>
+                  {/* Grid lines */}
+                  {[0, 25, 50, 75, 100].map((pct) => (
+                    <line
+                      key={pct}
+                      x1="0"
+                      y1={`${pct}%`}
+                      x2="100%"
+                      y2={`${pct}%`}
+                      stroke="#e5e7eb"
+                      strokeWidth={1}
+                    />
+                  ))}
+                  {/* Area */}
+                  <polygon
+                    points={history
+                      .reverse()
+                      .map((h, i) => {
+                        const x = (i / (history.length - 1)) * 100;
+                        const y = 100; // Will be normalized below
+                        return `${x},${y}`;
+                      })
+                      .concat([`${100},100`, `0,100`])
+                      .join(" ")}
+                    fill="url(#priceGradient)"
+                  />
+                  {/* Line */}
+                  <polyline
+                    points={history
+                      .reverse()
+                      .map((h, i) => {
+                        const x = (i / (history.length - 1)) * 100;
+                        return `${x},${100}`;
+                      })
+                      .join(" ")}
+                    fill="none"
+                    stroke="#3b82f6"
+                    strokeWidth={2}
+                  />
+                  {/* Points */}
+                  {history.reverse().map((h, i) => (
+                    <circle
+                      key={h.id}
+                      cx={(i / (history.length - 1)) * 100}
+                      cy={100}
+                      r={3}
+                      fill="#3b82f6"
+                    />
+                  ))}
+                </svg>
+                <div className="flex justify-between text-xs text-secondary mt-2">
+                  {history.map((h, i) => (
+                    <span key={h.id} className={`w-full text-center ${i === 0 || i === history.length - 1 ? "font-medium text-slate-900" : ""}`}>
+                      {h.recordedAt ? new Date(h.recordedAt).toLocaleDateString("pt-PT", { day: "numeric", month: "short" }) : "—"}
                     </span>
-                    <span className="font-medium">{h.price.toLocaleString()}€</span>
-                  </div>
-                ))}
+                  ))}
+                </div>
+                <div className="flex justify-between text-xs text-secondary mt-1">
+                  {history.map((h) => (
+                    <span key={h.id} className="w-full text-right">
+                      {h.price.toLocaleString()}€
+                    </span>
+                  ))}
+                </div>
+              </div>
+              <div className="flex justify-between text-xs text-secondary mt-2">
+                <span>
+                  Primeira: {history[history.length - 1].price.toLocaleString()}€
+                </span>
+                <span>
+                  Atual: {history[0].price.toLocaleString()}€
+                </span>
+                {history.length >= 2 && (
+                  <span className={`font-medium ${history[0].price < history[history.length - 1].price ? "text-success" : "text-red-500"}`}>
+                    {((history[0].price - history[history.length - 1].price) / history[history.length - 1].price * 100).toFixed(0)}% vs inicial
+                  </span>
+                )}
               </div>
             </div>
           )}
