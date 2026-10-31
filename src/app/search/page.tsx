@@ -1,6 +1,8 @@
 "use client";
+export const dynamic = "force-dynamic";
 
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, Suspense } from "react";
+import { useSearchParams } from "next/navigation";
 import {
   MapPin,
   TrendingDown,
@@ -46,7 +48,8 @@ interface Property {
   assetClass?: string | null;
 }
 
-export default function AdvancedSearchPage() {
+function AdvancedSearchPageInner() {
+  const searchParams = useSearchParams();
   const [properties, setProperties] = useState<Property[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -56,6 +59,7 @@ export default function AdvancedSearchPage() {
   const [type, setType] = useState("todos");
   const [source, setSource] = useState("todos");
   const [isAuction, setIsAuction] = useState("todos");
+  const [listingType, setListingType] = useState<string | null>(null);
   const [minScore, setMinScore] = useState(0);
   const [maxPrice, setMaxPrice] = useState("");
   const [minDiscount, setMinDiscount] = useState(0);
@@ -64,13 +68,24 @@ export default function AdvancedSearchPage() {
   const [itemsPerPage] = useState(12);
 
   useEffect(() => {
+    const urlListingType = searchParams.get("listing_type");
+    const urlIsAuction = searchParams.get("is_auction");
+    if (urlListingType) setListingType(urlListingType);
+    if (urlIsAuction === "true") setIsAuction("leilao");
+    else if (urlIsAuction === "false") setIsAuction("venda");
     fetchProperties();
   }, []);
 
   async function fetchProperties() {
     setLoading(true);
     try {
-      const res = await fetch("/api/properties");
+      const params = new URLSearchParams();
+      if (listingType) params.set("listing_type", listingType);
+      if (isAuction === "leilao") params.set("is_auction", "true");
+      else if (isAuction === "venda") params.set("is_auction", "false");
+      const query = params.toString();
+      const url = query ? "/api/properties?" + query : "/api/properties";
+      const res = await fetch(url);
       const data = await res.json();
       setProperties(data.properties || []);
     } catch (error) {
@@ -177,6 +192,7 @@ export default function AdvancedSearchPage() {
   const paginated = filtered.slice((page - 1) * itemsPerPage, page * itemsPerPage);
 
   return (
+    <Suspense fallback={<div className="min-h-screen max-w-7xl mx-auto px-4 py-8 animate-pulse">Carregando filtros...</div>}>
     <main className="min-h-screen max-w-7xl mx-auto px-4 py-8">
       <div className="flex justify-between items-start gap-6 mb-8">
         <div>
@@ -523,5 +539,14 @@ export default function AdvancedSearchPage() {
         </>
       )}
     </main>
+      </Suspense>
+  );
+}
+
+export default function AdvancedSearchPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen max-w-7xl mx-auto px-4 py-8 animate-pulse">Carregando filtros...</div>}>
+      <AdvancedSearchPageInner />
+    </Suspense>
   );
 }

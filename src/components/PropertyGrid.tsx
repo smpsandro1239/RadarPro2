@@ -180,6 +180,8 @@ export default function PropertyGrid({
     const urlMunicipality = searchParams.get("concelho");
     const urlType = searchParams.get("tipo");
     const urlSource = searchParams.get("fonte");
+    const urlListingType = searchParams.get("listing_type");
+    const urlIsAuction = searchParams.get("is_auction");
     const urlAuction = searchParams.get("leilao");
     const urlMinScore = searchParams.get("score_min");
     const urlMaxPrice = searchParams.get("preco_max");
@@ -192,6 +194,8 @@ export default function PropertyGrid({
     if (urlType) setType(urlType);
     if (urlSource) setSource(urlSource);
     if (urlAuction) setAuctionFilter(urlAuction);
+    if (urlListingType === "fixed_price") setAuctionFilter("venda");
+    else if (urlIsAuction === "true") setAuctionFilter("leilao");
     if (urlMinScore) setMinScore(parseInt(urlMinScore));
     if (urlMaxPrice) setMaxPrice(urlMaxPrice);
     if (urlMinDiscount) setMinDiscount(parseInt(urlMinDiscount));
@@ -207,6 +211,16 @@ export default function PropertyGrid({
     if (type && type !== "todos") params.set("tipo", type);
     if (source && source !== "todos") params.set("fonte", source);
     if (auctionFilter && auctionFilter !== "todos") params.set("leilao", auctionFilter);
+    if (auctionFilter === "leilao") {
+      params.set("listing_type", "auction_*");
+      params.set("is_auction", "true");
+    } else if (auctionFilter === "venda") {
+      params.set("listing_type", "fixed_price");
+      params.delete("is_auction");
+    } else {
+      params.delete("listing_type");
+      params.delete("is_auction");
+    }
     if (minScore > 0) params.set("score_min", String(minScore));
     if (maxPrice) params.set("preco_max", maxPrice);
     if (minDiscount > 0) params.set("desconto_min", String(minDiscount));
