@@ -9,6 +9,19 @@ export const properties = sqliteTable("properties", {
   district: text("district").notNull(), 
   municipality: text("municipality").notNull(), 
   type: text("type").notNull(), 
+  /**
+   * Preço de venda.
+   *
+   * - fixed_price: é o asking_price publicado pelo anunciante.
+   * - auction_*: é o current_bid (lance atual). Pode ser muito inferior ao max_bid
+   *   (ex.: vendas da AT começam a 2-5% do valor avaliado).
+   *
+   * Para leilões, o yield e o score usam max_bid (custo real de arrematação),
+   * NÃO este campo. Ver src/lib/valuation/score.ts, ramo listing_type === 'auction'.
+   *
+   * Inconsistência conhecida: currentBid está null para a maioria dos leilões
+   * (o scraper usa price); max_bid é o campo canónico para leilões.
+   */
   price: real("price").notNull(),
   marketValue: real("market_value"),
   discountPct: real("discount_pct"),
@@ -81,6 +94,19 @@ export const searchAlerts = sqliteTable("search_alerts", {
 export const priceHistory = sqliteTable("price_history", {
   id: text("id").primaryKey(),
   propertyId: text("property_id").notNull(),
+  /**
+   * Preço de venda.
+   *
+   * - fixed_price: é o asking_price publicado pelo anunciante.
+   * - auction_*: é o current_bid (lance atual). Pode ser muito inferior ao max_bid
+   *   (ex.: vendas da AT começam a 2-5% do valor avaliado).
+   *
+   * Para leilões, o yield e o score usam max_bid (custo real de arrematação),
+   * NÃO este campo. Ver src/lib/valuation/score.ts, ramo listing_type === 'auction'.
+   *
+   * Inconsistência conhecida: currentBid está null para a maioria dos leilões
+   * (o scraper usa price); max_bid é o campo canónico para leilões.
+   */
   price: real("price").notNull(),
   marketValue: real("market_value"),
   recordedAt: integer("recorded_at", { mode: "timestamp" }).$defaultFn(() => new Date()),

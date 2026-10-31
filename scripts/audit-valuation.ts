@@ -36,6 +36,7 @@ interface AuditRow {
   auctionHouse: string | null;
   currentBid: number | null;
   maxBid: number | null;
+  listingType: string | null;
   vpt: number | null;
   assetClass: string | null;
   valuationEngine: string | null;
@@ -57,11 +58,14 @@ interface AuditRow {
 interface EngineResult {
   id: string;
   title: string;
+  is_auction: boolean | null;
   asset_class: string;
   valuation_engine: string;
   valuation_confidence: string;
   pdm_status: string | null;
   infrastructure: string | null;
+  current_bid: number | null;
+  max_bid: number | null;
   valuation: number | null;
   score: number | null;
   capped: boolean;
@@ -118,6 +122,7 @@ async function main() {
       pdm_status: row.pdmStatus,
       infrastructure: row.infrastructure,
       annualIncome: row.annualIncome, // agora existe na schema após migration
+      is_auction: row.isAuction === true,
       createdAt: row.createdAt ? new Date(row.createdAt).toISOString() : null,
       isActive: row.isActive,
       checkStatus: row.checkStatus,
@@ -128,11 +133,14 @@ async function main() {
       audit.push({
         id: row.id,
         title: row.title,
+        is_auction: property.isAuction ?? false,
         asset_class: property.asset_class ?? "apartment",
         valuation_engine: result.engine,
         valuation_confidence: result.confidence,
         pdm_status: row.pdmStatus,
         infrastructure: row.infrastructure,
+        current_bid: property.currentBid ?? null,
+        max_bid: property.maxBid ?? null,
         valuation: result.valuation ?? null,
         score: result.score,
         capped: result.breakdown?.scoreCapped ?? false,
@@ -145,11 +153,14 @@ async function main() {
       audit.push({
         id: row.id,
         title: row.title,
+        is_auction: property.isAuction ?? false,
         asset_class: property.asset_class ?? "apartment",
         valuation_engine: "error",
         valuation_confidence: "low",
         pdm_status: row.pdmStatus,
         infrastructure: row.infrastructure,
+        current_bid: property.currentBid ?? null,
+        max_bid: property.maxBid ?? null,
         valuation: null,
         score: null,
         capped: false,
@@ -254,6 +265,68 @@ async function main() {
     lines.push(
       `  ${a.score} | ${a.asset_class} | desconto=${sb.discount ?? 0} | preco_m2=${sb.pricePerSqm ?? 0} | yield=${sb.yield ?? 0} | liquidez=${sb.liquidity ?? 0} | confianca=${sb.confidence ?? 0} | ${a.title.slice(0, 50)}`,
     );
+  }
+  lines.push("");
+
+  // Distribuição por tipo (fixed_price vs auction)
+  const fixedPrice = audit.filter((a) => !a.is_auction);
+  const auctions = audit.filter((a) => a.is_auction);
+
+  const bucketDist = (arr: EngineResult[]): Record<string, number> => {
+    const dist: Record<string, number> = { "≥85": 0, "70–84": 0, "55–69": 0, "<55": 0, null: 0 };
+    for (const a of arr) {
+      dist[bucket(a.score)] = (dist[bucket(a.score)] || 0) + 1;
+    }
+    return dist;
+  };
+
+  const fixedDist = bucketDist(fixedPrice);
+  const auctionDist = bucketDist(auctions);
+  const fixedMax = fixedPrice.reduce((m, a) => Math.max(m, a.score ?? 0), 0);
+  const auctionMax = auctions.reduce((m, a) => Math.max(m, a.score ?? 0), 0);
+
+  lines.push("=== Top 10 — Preço Fixo ===");
+  const fixedTop10 = fixedPrice
+    .filter((a) => a.score !== null)
+    .sort((a, b) => b.score! - a.score!)
+    .slice(0, 10);
+  for (const a of fixedTop10) {
+    const sb = a.scoreBreakdown ?? {};
+    lines.push(`  ${a.score} | ${a.asset_class} | yield=${sb.yield ?? 0} | conf=${sb.confidence ?? 0} | ${a.title.slice(0, 55)}`);
+  }
+  lines.push("");
+
+  lines.push("=== Top 10 — Leilões ===");
+  const auctionTop10 = auctions
+    .filter((a) => a.score !== null)
+    .sort((a, b) => b.score! - a.score!)
+    .slice(0, 10);
+  for (const a of auctionTop10) {
+    const sb = a.scoreBreakdown ?? {};
+    const margem = a.max_bid != null && a.current_bid != null ? Math.round(a.max_bid - a.current_bid) : null;
+    lines.push(`  ${a.score} | ${a.asset_class} | cbid=${a.current_bid ?? 0} | mBid=${a.max_bid ?? 0} | margem=${margem ?? "n/d"} | ${a.title.slice(0, 50)}`);
+  }
+  lines.push("");
+
+  lines.push("=== Distribuição de scores por tipo ===");
+  lines.push(`Preço Fixo (${fixedPrice.length}):`);
+  lines.push(`  ≥85: ${fixedDist["≥85"]} | 70–84: ${fixedDist["70–84"]} | 55–69: ${fixedDist["55–69"]} | <55: ${fixedDist["<55"]} | máximo: ${fixedMax}`);
+  lines.push(`Leilões (${auctions.length}):`);
+  lines.push(`  ≥85: ${auctionDist["≥85"]} | 70–84: ${auctionDist["70–84"]} | 55–69: ${auctionDist["55–69"]} | <55: ${auctionDist["<55"]} | máximo: ${auctionMax}`);
+  lines.push("");
+
+  lines.push("=== Diagnóstico ===");
+  const fixedGe70 = fixedDist["70–84"] + fixedDist["≥85"];
+  const auctionGe70 = auctionDist["70–84"] + auctionDist["≥85"];
+  if (fixedGe70 === 0) {
+    lines.push("  ⚠️ ALERTA: Preço fixo com 0 imóveis ≥70 — produto só funciona para leilões");
+  } else {
+    lines.push(`  ✅ Preço fixo: ${fixedGe70} imóveis ≥70`);
+  }
+  if (auctionGe70 === 0) {
+    lines.push("  ⚠️ ALERTA: Leilões com 0 imóveis ≥70");
+  } else {
+    lines.push(`  ✅ Leilões: ${auctionGe70} imóveis ≥70`);
   }
   lines.push("");
 

@@ -262,6 +262,8 @@ Execução: 2026-10-31, contra **212 imóveis ativos** na BD (Turso).
 2. **Dados de mercado insuficientes:** `market-data.ts` cobre apenas algumas freguesias/concelhos; a maioria dos imóveis fica sem mediana de referência, caindo em `medium`/`very_low` confidence.
 3. **Campos de risco não preenchidos:** `pdm_status`, `infrastructure`, `annualIncome` estão null em todos — impossível aplicar cortes específicos de terreno/rural/comercial.
 
+4. **Schema híbrido no campo `price`:** para imóveis de preço fixo, `price` é o asking_price; para leilões, `price` é o current_bid (lance atual, pode ser muito inferior ao max_bid). Para leilões, o yield e o score usam `max_bid`, não `price`. Ver comentário em `src/db/schema.ts`.
+
 ### Próximo passo recomendado
 
 **Preencher dados antes de avançar.** O motor está tecnicamente correto, mas aplicado a dados incompletos produz um ranking inútil (84.4% abaixo de 55, máximo 66). Prioridade:
@@ -269,4 +271,5 @@ Execução: 2026-10-31, contra **212 imóveis ativos** na BD (Turso).
 1. Executar ingestão sobre os 212 imóveis existentes para preencher `asset_class` (inferência de `type`/`title`).
 2. Preencher `valuation_engine` e `valuation_confidence` com base na disponibilidade de mediana de freguesia.
 3. Para terrenos urbanos, preencher `pdm_status` e `infrastructure` (ou marcar como `unknown` e aceitar o corte de score ≤40).
-4. Só depois avançar para Sentry DSN e benchmarks reais.
+4. **Expandir `market-data.ts`** com mais freguesias — só 2 freguesias têm mediana, então `valuation_confidence = high` é estruturalmente impossível para a maioria dos imóveis.
+5. Só depois avançar para Sentry DSN e benchmarks reais.

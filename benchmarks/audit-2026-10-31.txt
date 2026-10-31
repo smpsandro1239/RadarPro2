@@ -1,5 +1,5 @@
 === AUDITORIA DO MOTOR DE AVALIAÇÃO ===
-Data: 2026-10-31T12:07:21.156Z
+Data: 2026-10-31T17:16:00.862Z
 Total de imóveis ativos: 212
 
 --- Distribuição de asset_class ---
@@ -59,6 +59,40 @@ Total de imóveis ativos: 212
   30 | rural_land | desconto=100 | preco_m2=50 | yield=0 | liquidez=55 | confianca=10 | Terreno Rústico Valdreu, Vila Verde
   30 | rural_land | desconto=80 | preco_m2=50 | yield=0 | liquidez=55 | confianca=10 | Terreno Rústico Travassos, Póvoa de Lanhoso
   30 | rural_land | desconto=60 | preco_m2=50 | yield=0 | liquidez=80 | confianca=10 | Terreno Rústico Santo Tirso
+
+=== Top 10 — Preço Fixo ===
+  79 | apartment | yield=100 | conf=70 | Apartamento T0 Alfama (Idealista)
+  79 | apartment | yield=100 | conf=70 | Apartamento T0 Alfama
+  78 | apartment | yield=80 | conf=40 | T2 em Vila Franca de Xira
+  76 | apartment | yield=100 | conf=70 | Apartamento T1 Porto (Idealista)
+  73 | apartment | yield=100 | conf=70 | Apartamento T1 Parque das Nações
+  73 | apartment | yield=100 | conf=70 | Apartamento T1 Santa Maria Maior
+  73 | apartment | yield=100 | conf=70 | Apartamento T2 Penha de França
+  73 | apartment | yield=100 | conf=70 | Apartamento T2 Graça, São Vicente
+  73 | apartment | yield=100 | conf=70 | Apartamento T3 Casal de Cambra, Sintra
+  73 | apartment | yield=100 | conf=70 | Apartamento T2 Lisboa (ERA)
+
+=== Top 10 — Leilões ===
+  86 | apartment | cbid=0 | mBid=116320 | margem=n/d | Apartamento T2 Lisboa (Leilão)
+  86 | apartment | cbid=0 | mBid=109050 | margem=n/d | Apartamento T1 Lisboa (Martelo)
+  83 | apartment | cbid=0 | mBid=87240 | margem=n/d | Apartamento Ramalde (Execução Fiscal AT)
+  83 | apartment | cbid=0 | mBid=61795 | margem=n/d | Imóvel Porto (Execução Fiscal AT)
+  80 | apartment | cbid=0 | mBid=101780 | margem=n/d | Apartamento T1 Lisboa (Leilosoc)
+  80 | apartment | cbid=0 | mBid=123590 | margem=n/d | Apartamento T2 Lisboa (Hasta Pública)
+  79 | apartment | cbid=0 | mBid=109050 | margem=n/d | Apartamento Maximinos (Execução Fiscal AT)
+  74 | apartment | cbid=0 | mBid=254450 | margem=n/d | Apartamento Parque das Nações (Execução Fiscal)
+  70 | apartment | cbid=0 | mBid=305340 | margem=n/d | Apartamento Lumiar, Lisboa
+  67 | apartment | cbid=0 | mBid=216588 | margem=n/d | T1 em Sesimbra
+
+=== Distribuição de scores por tipo ===
+Preço Fixo (176):
+  ≥85: 0 | 70–84: 27 | 55–69: 46 | <55: 103 | máximo: 79
+Leilões (36):
+  ≥85: 2 | 70–84: 7 | 55–69: 3 | <55: 24 | máximo: 86
+
+=== Diagnóstico ===
+  ✅ Preço fixo: 27 imóveis ≥70
+  ✅ Leilões: 9 imóveis ≥70
 
 --- Alertas ---
   OK confiança very_low: 22.6%
