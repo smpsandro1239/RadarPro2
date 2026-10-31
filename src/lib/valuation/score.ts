@@ -87,17 +87,28 @@ function yieldScore(property: any, valuation: any): number {
   if (!yieldPct || yieldPct <= 0) {
     // Calcular a partir do annual_income guardado na BD (backfill de rendas)
     const annualIncome = property.annualIncome ?? property.annual_income ?? 0;
-    const price = property.price ?? 0;
-    if (annualIncome > 0 && price > 0) {
-      yieldPct = Math.round((annualIncome / price) * 100);
+    const isAuction =
+      property.isAuction === true ||
+      property.listing_type === "auction_judicial" ||
+      property.listing_type === "auction_fiscal" ||
+      property.listing_type === "auction_private";
+    // Para leilões, usar max_bid (custo real com comissão+IMT+selo) como denominador.
+    // Para preço fixo, usar price.
+    const denominator = isAuction && property.maxBid ? property.maxBid : property.price;
+    if (annualIncome > 0 && denominator > 0) {
+      yieldPct = (annualIncome / denominator) * 100;
     }
   }
   if (!yieldPct || yieldPct <= 0) return 0;
+  // Escala calibrada para o mercado português 2026:
+  // Lisboa 3–4%, Porto 4–5%, interior 6–7%. Yields de 8%+ são excecionais.
   if (yieldPct >= 8) return 100;
-  if (yieldPct >= 6) return 75;
-  if (yieldPct >= 4) return 50;
-  if (yieldPct >= 2) return 25;
-  return 10;
+  if (yieldPct >= 6) return 95;
+  if (yieldPct >= 5) return 80;
+  if (yieldPct >= 4) return 60;
+  if (yieldPct >= 3) return 40;
+  if (yieldPct >= 2) return 20;
+  return 0;
 }
 
 /** 0-100: liquidez da zona/tipo */

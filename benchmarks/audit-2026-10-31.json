@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-31T11:42:40.061Z",
+  "generatedAt": "2026-10-31T12:07:21.156Z",
   "totalImoveis": 212,
   "assetClass": {
     "apartment": 128,
@@ -20,9 +20,9 @@
   },
   "scoreDistribution": {
     "≥85": 2,
-    "70–84": 31,
-    "55–69": 45,
-    "<55": 134,
+    "70–84": 34,
+    "55–69": 49,
+    "<55": 127,
     "null": 0
   },
   "top10": [
@@ -224,14 +224,14 @@
       "pdm_status": null,
       "infrastructure": null,
       "valuation": 378420,
-      "score": 77,
+      "score": 78,
       "capped": false,
       "badges": [],
       "maxScore": 100,
       "scoreBreakdown": {
         "discount": 100,
         "pricePerSqm": 50,
-        "yield": 75,
+        "yield": 80,
         "liquidity": 100,
         "confidence": 40
       }
@@ -566,14 +566,14 @@
       "pdm_status": null,
       "infrastructure": null,
       "valuation": 309400,
-      "score": 62,
+      "score": 66,
       "capped": false,
       "badges": [],
       "maxScore": 100,
       "scoreBreakdown": {
         "discount": 40,
         "pricePerSqm": 50,
-        "yield": 75,
+        "yield": 95,
         "liquidity": 100,
         "confidence": 70
       }
@@ -587,14 +587,14 @@
       "pdm_status": null,
       "infrastructure": null,
       "valuation": 265335,
-      "score": 65,
+      "score": 66,
       "capped": false,
       "badges": [],
       "maxScore": 100,
       "scoreBreakdown": {
         "discount": 60,
         "pricePerSqm": 50,
-        "yield": 75,
+        "yield": 80,
         "liquidity": 80,
         "confidence": 70
       }
@@ -608,14 +608,14 @@
       "pdm_status": null,
       "infrastructure": null,
       "valuation": 237405,
-      "score": 54,
+      "score": 56,
       "capped": false,
       "badges": [],
       "maxScore": 100,
       "scoreBreakdown": {
         "discount": 40,
         "pricePerSqm": 50,
-        "yield": 50,
+        "yield": 60,
         "liquidity": 80,
         "confidence": 70
       }
@@ -629,14 +629,14 @@
       "pdm_status": null,
       "infrastructure": null,
       "valuation": 237405,
-      "score": 60,
+      "score": 62,
       "capped": false,
       "badges": [],
       "maxScore": 100,
       "scoreBreakdown": {
         "discount": 60,
         "pricePerSqm": 50,
-        "yield": 50,
+        "yield": 60,
         "liquidity": 80,
         "confidence": 70
       }
@@ -650,14 +650,14 @@
       "pdm_status": null,
       "infrastructure": null,
       "valuation": 237405,
-      "score": 54,
+      "score": 56,
       "capped": false,
       "badges": [],
       "maxScore": 100,
       "scoreBreakdown": {
         "discount": 40,
         "pricePerSqm": 50,
-        "yield": 50,
+        "yield": 60,
         "liquidity": 80,
         "confidence": 70
       }
@@ -671,14 +671,14 @@
       "pdm_status": null,
       "infrastructure": null,
       "valuation": 265335,
-      "score": 60,
+      "score": 66,
       "capped": false,
       "badges": [],
       "maxScore": 100,
       "scoreBreakdown": {
         "discount": 60,
         "pricePerSqm": 50,
-        "yield": 50,
+        "yield": 80,
         "liquidity": 80,
         "confidence": 70
       }
@@ -692,14 +692,14 @@
       "pdm_status": null,
       "infrastructure": null,
       "valuation": 237405,
-      "score": 60,
+      "score": 62,
       "capped": false,
       "badges": [],
       "maxScore": 100,
       "scoreBreakdown": {
         "discount": 60,
         "pricePerSqm": 50,
-        "yield": 50,
+        "yield": 60,
         "liquidity": 80,
         "confidence": 70
       }
@@ -713,14 +713,14 @@
       "pdm_status": null,
       "infrastructure": null,
       "valuation": 279300,
-      "score": 65,
+      "score": 69,
       "capped": false,
       "badges": [],
       "maxScore": 100,
       "scoreBreakdown": {
         "discount": 60,
         "pricePerSqm": 50,
-        "yield": 75,
+        "yield": 95,
         "liquidity": 80,
         "confidence": 70
       }
@@ -734,14 +734,14 @@
       "pdm_status": null,
       "infrastructure": null,
       "valuation": 265335,
-      "score": 54,
+      "score": 56,
       "capped": false,
       "badges": [],
       "maxScore": 100,
       "scoreBreakdown": {
         "discount": 40,
         "pricePerSqm": 50,
-        "yield": 50,
+        "yield": 60,
         "liquidity": 80,
         "confidence": 70
       }
@@ -755,14 +755,14 @@
       "pdm_status": null,
       "infrastructure": null,
       "valuation": 160888,
-      "score": 45,
+      "score": 48,
       "capped": false,
       "badges": [],
       "maxScore": 100,
       "scoreBreakdown": {
         "discount": 40,
         "pricePerSqm": 50,
-        "yield": 25,
+        "yield": 40,
         "liquidity": 55,
         "confidence": 70
       }
@@ -776,14 +776,14 @@
       "pdm_status": null,
       "infrastructure": null,
       "valuation": 179816,
-      "score": 50,
+      "score": 52,
       "capped": false,
       "badges": [],
       "maxScore": 100,
       "scoreBreakdown": {
         "discount": 40,
         "pricePerSqm": 50,
-        "yield": 50,
+        "yield": 60,
         "liquidity": 55,
         "confidence": 70
       }
@@ -806,7 +806,7 @@
       "scoreBreakdown": {
         "discount": 40,
         "pricePerSqm": 50,
-        "yield": 50,
+        "yield": 60,
         "liquidity": 55,
         "confidence": 10
       }
@@ -820,14 +820,14 @@
       "pdm_status": null,
       "infrastructure": null,
       "valuation": 160888,
-      "score": 45,
+      "score": 48,
       "capped": false,
       "badges": [],
       "maxScore": 100,
       "scoreBreakdown": {
         "discount": 40,
         "pricePerSqm": 50,
-        "yield": 25,
+        "yield": 40,
         "liquidity": 55,
         "confidence": 70
       }
@@ -841,7 +841,7 @@
       "pdm_status": null,
       "infrastructure": null,
       "valuation": 40560,
-      "score": 39,
+      "score": 40,
       "capped": true,
       "badges": [
         "Confiança muito baixa"
@@ -850,7 +850,7 @@
       "scoreBreakdown": {
         "discount": 40,
         "pricePerSqm": 50,
-        "yield": 25,
+        "yield": 40,
         "liquidity": 55,
         "confidence": 10
       }
@@ -864,14 +864,14 @@
       "pdm_status": null,
       "infrastructure": null,
       "valuation": 160888,
-      "score": 45,
+      "score": 48,
       "capped": false,
       "badges": [],
       "maxScore": 100,
       "scoreBreakdown": {
         "discount": 40,
         "pricePerSqm": 50,
-        "yield": 25,
+        "yield": 40,
         "liquidity": 55,
         "confidence": 70
       }
@@ -885,14 +885,14 @@
       "pdm_status": null,
       "infrastructure": null,
       "valuation": 160888,
-      "score": 45,
+      "score": 48,
       "capped": false,
       "badges": [],
       "maxScore": 100,
       "scoreBreakdown": {
         "discount": 40,
         "pricePerSqm": 50,
-        "yield": 25,
+        "yield": 40,
         "liquidity": 55,
         "confidence": 70
       }
@@ -906,7 +906,7 @@
       "pdm_status": null,
       "infrastructure": null,
       "valuation": 40560,
-      "score": 39,
+      "score": 40,
       "capped": true,
       "badges": [
         "Confiança muito baixa"
@@ -915,7 +915,7 @@
       "scoreBreakdown": {
         "discount": 40,
         "pricePerSqm": 50,
-        "yield": 25,
+        "yield": 40,
         "liquidity": 55,
         "confidence": 10
       }
@@ -929,14 +929,14 @@
       "pdm_status": null,
       "infrastructure": null,
       "valuation": 160888,
-      "score": 51,
+      "score": 54,
       "capped": false,
       "badges": [],
       "maxScore": 100,
       "scoreBreakdown": {
         "discount": 60,
         "pricePerSqm": 50,
-        "yield": 25,
+        "yield": 40,
         "liquidity": 55,
         "confidence": 70
       }
@@ -950,14 +950,14 @@
       "pdm_status": null,
       "infrastructure": null,
       "valuation": 226100,
-      "score": 54,
+      "score": 56,
       "capped": false,
       "badges": [],
       "maxScore": 100,
       "scoreBreakdown": {
         "discount": 40,
         "pricePerSqm": 50,
-        "yield": 50,
+        "yield": 60,
         "liquidity": 80,
         "confidence": 70
       }
@@ -980,7 +980,7 @@
       "scoreBreakdown": {
         "discount": 60,
         "pricePerSqm": 50,
-        "yield": 50,
+        "yield": 60,
         "liquidity": 100,
         "confidence": 10
       }
@@ -1068,7 +1068,7 @@
       "scoreBreakdown": {
         "discount": 60,
         "pricePerSqm": 50,
-        "yield": 50,
+        "yield": 60,
         "liquidity": 100,
         "confidence": 10
       }
@@ -1091,7 +1091,7 @@
       "scoreBreakdown": {
         "discount": 60,
         "pricePerSqm": 50,
-        "yield": 75,
+        "yield": 95,
         "liquidity": 100,
         "confidence": 10
       }
@@ -1151,14 +1151,14 @@
       "pdm_status": null,
       "infrastructure": null,
       "valuation": 466830,
-      "score": 68,
+      "score": 69,
       "capped": false,
       "badges": [],
       "maxScore": 100,
       "scoreBreakdown": {
         "discount": 60,
         "pricePerSqm": 50,
-        "yield": 75,
+        "yield": 80,
         "liquidity": 100,
         "confidence": 70
       }
@@ -1249,7 +1249,7 @@
       "scoreBreakdown": {
         "discount": 80,
         "pricePerSqm": 50,
-        "yield": 100,
+        "yield": 95,
         "liquidity": 80,
         "confidence": 10
       }
@@ -1272,7 +1272,7 @@
       "scoreBreakdown": {
         "discount": 80,
         "pricePerSqm": 50,
-        "yield": 100,
+        "yield": 95,
         "liquidity": 80,
         "confidence": 10
       }
@@ -1295,7 +1295,7 @@
       "scoreBreakdown": {
         "discount": 80,
         "pricePerSqm": 50,
-        "yield": 100,
+        "yield": 95,
         "liquidity": 80,
         "confidence": 10
       }
@@ -1318,7 +1318,7 @@
       "scoreBreakdown": {
         "discount": 80,
         "pricePerSqm": 50,
-        "yield": 75,
+        "yield": 80,
         "liquidity": 80,
         "confidence": 10
       }
@@ -1537,14 +1537,14 @@
       "pdm_status": null,
       "infrastructure": null,
       "valuation": 345800,
-      "score": 68,
+      "score": 72,
       "capped": false,
       "badges": [],
       "maxScore": 100,
       "scoreBreakdown": {
         "discount": 60,
         "pricePerSqm": 50,
-        "yield": 75,
+        "yield": 95,
         "liquidity": 100,
         "confidence": 70
       }
@@ -1558,14 +1558,14 @@
       "pdm_status": null,
       "infrastructure": null,
       "valuation": 279300,
-      "score": 65,
+      "score": 69,
       "capped": false,
       "badges": [],
       "maxScore": 100,
       "scoreBreakdown": {
         "discount": 60,
         "pricePerSqm": 50,
-        "yield": 75,
+        "yield": 95,
         "liquidity": 80,
         "confidence": 70
       }
@@ -1579,14 +1579,14 @@
       "pdm_status": null,
       "infrastructure": null,
       "valuation": 179816,
-      "score": 50,
+      "score": 52,
       "capped": false,
       "badges": [],
       "maxScore": 100,
       "scoreBreakdown": {
         "discount": 40,
         "pricePerSqm": 50,
-        "yield": 50,
+        "yield": 60,
         "liquidity": 55,
         "confidence": 70
       }
@@ -1621,14 +1621,14 @@
       "pdm_status": null,
       "infrastructure": null,
       "valuation": 265335,
-      "score": 60,
+      "score": 66,
       "capped": false,
       "badges": [],
       "maxScore": 100,
       "scoreBreakdown": {
         "discount": 60,
         "pricePerSqm": 50,
-        "yield": 50,
+        "yield": 80,
         "liquidity": 80,
         "confidence": 70
       }
@@ -1642,14 +1642,14 @@
       "pdm_status": null,
       "infrastructure": null,
       "valuation": 189280,
-      "score": 66,
+      "score": 65,
       "capped": false,
       "badges": [],
       "maxScore": 100,
       "scoreBreakdown": {
         "discount": 60,
         "pricePerSqm": 50,
-        "yield": 100,
+        "yield": 95,
         "liquidity": 55,
         "confidence": 70
       }
@@ -1707,14 +1707,14 @@
       "pdm_status": null,
       "infrastructure": null,
       "valuation": 189280,
-      "score": 61,
+      "score": 65,
       "capped": false,
       "badges": [],
       "maxScore": 100,
       "scoreBreakdown": {
         "discount": 60,
         "pricePerSqm": 50,
-        "yield": 75,
+        "yield": 95,
         "liquidity": 55,
         "confidence": 70
       }
@@ -1728,14 +1728,14 @@
       "pdm_status": null,
       "infrastructure": null,
       "valuation": 345800,
-      "score": 68,
+      "score": 72,
       "capped": false,
       "badges": [],
       "maxScore": 100,
       "scoreBreakdown": {
         "discount": 60,
         "pricePerSqm": 50,
-        "yield": 75,
+        "yield": 95,
         "liquidity": 100,
         "confidence": 70
       }
@@ -1749,14 +1749,14 @@
       "pdm_status": null,
       "infrastructure": null,
       "valuation": 279300,
-      "score": 65,
+      "score": 69,
       "capped": false,
       "badges": [],
       "maxScore": 100,
       "scoreBreakdown": {
         "discount": 60,
         "pricePerSqm": 50,
-        "yield": 75,
+        "yield": 95,
         "liquidity": 80,
         "confidence": 70
       }
@@ -1793,14 +1793,14 @@
       "pdm_status": null,
       "infrastructure": null,
       "valuation": 364000,
-      "score": 68,
+      "score": 72,
       "capped": false,
       "badges": [],
       "maxScore": 100,
       "scoreBreakdown": {
         "discount": 60,
         "pricePerSqm": 50,
-        "yield": 75,
+        "yield": 95,
         "liquidity": 100,
         "confidence": 70
       }
@@ -1814,14 +1814,14 @@
       "pdm_status": null,
       "infrastructure": null,
       "valuation": 307230,
-      "score": 65,
+      "score": 69,
       "capped": false,
       "badges": [],
       "maxScore": 100,
       "scoreBreakdown": {
         "discount": 60,
         "pricePerSqm": 50,
-        "yield": 75,
+        "yield": 95,
         "liquidity": 80,
         "confidence": 70
       }
@@ -1856,14 +1856,14 @@
       "pdm_status": null,
       "infrastructure": null,
       "valuation": 293930,
-      "score": 67,
+      "score": 66,
       "capped": false,
       "badges": [],
       "maxScore": 100,
       "scoreBreakdown": {
         "discount": 40,
         "pricePerSqm": 50,
-        "yield": 100,
+        "yield": 95,
         "liquidity": 100,
         "confidence": 70
       }
@@ -1877,14 +1877,14 @@
       "pdm_status": null,
       "infrastructure": null,
       "valuation": 279300,
-      "score": 65,
+      "score": 69,
       "capped": false,
       "badges": [],
       "maxScore": 100,
       "scoreBreakdown": {
         "discount": 60,
         "pricePerSqm": 50,
-        "yield": 75,
+        "yield": 95,
         "liquidity": 80,
         "confidence": 70
       }
@@ -1898,14 +1898,14 @@
       "pdm_status": null,
       "infrastructure": null,
       "valuation": 179816,
-      "score": 61,
+      "score": 62,
       "capped": false,
       "badges": [],
       "maxScore": 100,
       "scoreBreakdown": {
         "discount": 60,
         "pricePerSqm": 50,
-        "yield": 75,
+        "yield": 80,
         "liquidity": 55,
         "confidence": 70
       }
@@ -1940,14 +1940,14 @@
       "pdm_status": null,
       "infrastructure": null,
       "valuation": 265335,
-      "score": 65,
+      "score": 69,
       "capped": false,
       "badges": [],
       "maxScore": 100,
       "scoreBreakdown": {
         "discount": 60,
         "pricePerSqm": 50,
-        "yield": 75,
+        "yield": 95,
         "liquidity": 80,
         "confidence": 70
       }
@@ -1961,14 +1961,14 @@
       "pdm_status": null,
       "infrastructure": null,
       "valuation": 160888,
-      "score": 61,
+      "score": 62,
       "capped": false,
       "badges": [],
       "maxScore": 100,
       "scoreBreakdown": {
         "discount": 60,
         "pricePerSqm": 50,
-        "yield": 75,
+        "yield": 80,
         "liquidity": 55,
         "confidence": 70
       }
@@ -1982,14 +1982,14 @@
       "pdm_status": null,
       "infrastructure": null,
       "valuation": 309400,
-      "score": 68,
+      "score": 72,
       "capped": false,
       "badges": [],
       "maxScore": 100,
       "scoreBreakdown": {
         "discount": 60,
         "pricePerSqm": 50,
-        "yield": 75,
+        "yield": 95,
         "liquidity": 100,
         "confidence": 70
       }
@@ -2003,14 +2003,14 @@
       "pdm_status": null,
       "infrastructure": null,
       "valuation": 265335,
-      "score": 65,
+      "score": 66,
       "capped": false,
       "badges": [],
       "maxScore": 100,
       "scoreBreakdown": {
         "discount": 60,
         "pricePerSqm": 50,
-        "yield": 75,
+        "yield": 80,
         "liquidity": 80,
         "confidence": 70
       }
@@ -2024,14 +2024,14 @@
       "pdm_status": null,
       "infrastructure": null,
       "valuation": 189280,
-      "score": 66,
+      "score": 65,
       "capped": false,
       "badges": [],
       "maxScore": 100,
       "scoreBreakdown": {
         "discount": 60,
         "pricePerSqm": 50,
-        "yield": 100,
+        "yield": 95,
         "liquidity": 55,
         "confidence": 70
       }
@@ -2089,14 +2089,14 @@
       "pdm_status": null,
       "infrastructure": null,
       "valuation": 179816,
-      "score": 61,
+      "score": 65,
       "capped": false,
       "badges": [],
       "maxScore": 100,
       "scoreBreakdown": {
         "discount": 60,
         "pricePerSqm": 50,
-        "yield": 75,
+        "yield": 95,
         "liquidity": 55,
         "confidence": 70
       }
@@ -2131,14 +2131,14 @@
       "pdm_status": null,
       "infrastructure": null,
       "valuation": 279300,
-      "score": 65,
+      "score": 69,
       "capped": false,
       "badges": [],
       "maxScore": 100,
       "scoreBreakdown": {
         "discount": 60,
         "pricePerSqm": 50,
-        "yield": 75,
+        "yield": 95,
         "liquidity": 80,
         "confidence": 70
       }
@@ -2175,14 +2175,14 @@
       "pdm_status": null,
       "infrastructure": null,
       "valuation": 345800,
-      "score": 67,
+      "score": 66,
       "capped": false,
       "badges": [],
       "maxScore": 100,
       "scoreBreakdown": {
         "discount": 40,
         "pricePerSqm": 50,
-        "yield": 100,
+        "yield": 95,
         "liquidity": 100,
         "confidence": 70
       }
@@ -2196,14 +2196,14 @@
       "pdm_status": null,
       "infrastructure": null,
       "valuation": 279300,
-      "score": 70,
+      "score": 69,
       "capped": false,
       "badges": [],
       "maxScore": 100,
       "scoreBreakdown": {
         "discount": 60,
         "pricePerSqm": 50,
-        "yield": 100,
+        "yield": 95,
         "liquidity": 80,
         "confidence": 70
       }
@@ -2337,7 +2337,7 @@
       "scoreBreakdown": {
         "discount": 100,
         "pricePerSqm": 50,
-        "yield": 75,
+        "yield": 60,
         "liquidity": 80,
         "confidence": 10
       }
@@ -2571,14 +2571,14 @@
       "pdm_status": null,
       "infrastructure": null,
       "valuation": 305340,
-      "score": 64,
+      "score": 70,
       "capped": false,
       "badges": [],
       "maxScore": 100,
       "scoreBreakdown": {
         "discount": 60,
         "pricePerSqm": 50,
-        "yield": 50,
+        "yield": 80,
         "liquidity": 100,
         "confidence": 70
       }
@@ -2699,14 +2699,14 @@
       "pdm_status": null,
       "infrastructure": null,
       "valuation": 237405,
-      "score": 60,
+      "score": 62,
       "capped": false,
       "badges": [],
       "maxScore": 100,
       "scoreBreakdown": {
         "discount": 60,
         "pricePerSqm": 50,
-        "yield": 50,
+        "yield": 60,
         "liquidity": 80,
         "confidence": 70
       }
@@ -2720,14 +2720,14 @@
       "pdm_status": null,
       "infrastructure": null,
       "valuation": 237405,
-      "score": 60,
+      "score": 58,
       "capped": false,
       "badges": [],
       "maxScore": 100,
       "scoreBreakdown": {
         "discount": 60,
         "pricePerSqm": 50,
-        "yield": 50,
+        "yield": 40,
         "liquidity": 80,
         "confidence": 70
       }
@@ -2741,14 +2741,14 @@
       "pdm_status": null,
       "infrastructure": null,
       "valuation": 279300,
-      "score": 65,
+      "score": 69,
       "capped": false,
       "badges": [],
       "maxScore": 100,
       "scoreBreakdown": {
         "discount": 60,
         "pricePerSqm": 50,
-        "yield": 75,
+        "yield": 95,
         "liquidity": 80,
         "confidence": 70
       }
@@ -2762,14 +2762,14 @@
       "pdm_status": null,
       "infrastructure": null,
       "valuation": 237405,
-      "score": 54,
+      "score": 52,
       "capped": false,
       "badges": [],
       "maxScore": 100,
       "scoreBreakdown": {
         "discount": 40,
         "pricePerSqm": 50,
-        "yield": 50,
+        "yield": 40,
         "liquidity": 80,
         "confidence": 70
       }
@@ -2783,14 +2783,14 @@
       "pdm_status": null,
       "infrastructure": null,
       "valuation": 265335,
-      "score": 54,
+      "score": 56,
       "capped": false,
       "badges": [],
       "maxScore": 100,
       "scoreBreakdown": {
         "discount": 40,
         "pricePerSqm": 50,
-        "yield": 50,
+        "yield": 60,
         "liquidity": 80,
         "confidence": 70
       }
@@ -2804,14 +2804,14 @@
       "pdm_status": null,
       "infrastructure": null,
       "valuation": 345800,
-      "score": 62,
+      "score": 66,
       "capped": false,
       "badges": [],
       "maxScore": 100,
       "scoreBreakdown": {
         "discount": 40,
         "pricePerSqm": 50,
-        "yield": 75,
+        "yield": 95,
         "liquidity": 100,
         "confidence": 70
       }
@@ -2825,14 +2825,14 @@
       "pdm_status": null,
       "infrastructure": null,
       "valuation": 345800,
-      "score": 62,
+      "score": 66,
       "capped": false,
       "badges": [],
       "maxScore": 100,
       "scoreBreakdown": {
         "discount": 40,
         "pricePerSqm": 50,
-        "yield": 75,
+        "yield": 95,
         "liquidity": 100,
         "confidence": 70
       }
@@ -2846,14 +2846,14 @@
       "pdm_status": null,
       "infrastructure": null,
       "valuation": 309400,
-      "score": 62,
+      "score": 66,
       "capped": false,
       "badges": [],
       "maxScore": 100,
       "scoreBreakdown": {
         "discount": 40,
         "pricePerSqm": 50,
-        "yield": 75,
+        "yield": 95,
         "liquidity": 100,
         "confidence": 70
       }
@@ -2867,14 +2867,14 @@
       "pdm_status": null,
       "infrastructure": null,
       "valuation": 160888,
-      "score": 45,
+      "score": 48,
       "capped": false,
       "badges": [],
       "maxScore": 100,
       "scoreBreakdown": {
         "discount": 40,
         "pricePerSqm": 50,
-        "yield": 25,
+        "yield": 40,
         "liquidity": 55,
         "confidence": 70
       }
@@ -2888,14 +2888,14 @@
       "pdm_status": null,
       "infrastructure": null,
       "valuation": 179816,
-      "score": 50,
+      "score": 52,
       "capped": false,
       "badges": [],
       "maxScore": 100,
       "scoreBreakdown": {
         "discount": 40,
         "pricePerSqm": 50,
-        "yield": 50,
+        "yield": 60,
         "liquidity": 55,
         "confidence": 70
       }
@@ -2909,14 +2909,14 @@
       "pdm_status": null,
       "infrastructure": null,
       "valuation": 160888,
-      "score": 45,
+      "score": 48,
       "capped": false,
       "badges": [],
       "maxScore": 100,
       "scoreBreakdown": {
         "discount": 40,
         "pricePerSqm": 50,
-        "yield": 25,
+        "yield": 40,
         "liquidity": 55,
         "confidence": 70
       }
@@ -3179,14 +3179,14 @@
       "pdm_status": null,
       "infrastructure": null,
       "valuation": 146430,
-      "score": 48,
+      "score": 51,
       "capped": false,
       "badges": [],
       "maxScore": 100,
       "scoreBreakdown": {
         "discount": 60,
         "pricePerSqm": 50,
-        "yield": 25,
+        "yield": 40,
         "liquidity": 55,
         "confidence": 40
       }
@@ -3244,14 +3244,14 @@
       "pdm_status": null,
       "infrastructure": null,
       "valuation": 189280,
-      "score": 61,
+      "score": 65,
       "capped": false,
       "badges": [],
       "maxScore": 100,
       "scoreBreakdown": {
         "discount": 60,
         "pricePerSqm": 50,
-        "yield": 75,
+        "yield": 95,
         "liquidity": 55,
         "confidence": 70
       }
@@ -3673,14 +3673,14 @@
       "pdm_status": null,
       "infrastructure": null,
       "valuation": 280280,
-      "score": 57,
+      "score": 58,
       "capped": false,
       "badges": [],
       "maxScore": 100,
       "scoreBreakdown": {
         "discount": 40,
         "pricePerSqm": 50,
-        "yield": 75,
+        "yield": 80,
         "liquidity": 70,
         "confidence": 70
       }
@@ -3855,14 +3855,14 @@
       "pdm_status": null,
       "infrastructure": null,
       "valuation": 378420,
-      "score": 77,
+      "score": 78,
       "capped": false,
       "badges": [],
       "maxScore": 100,
       "scoreBreakdown": {
         "discount": 100,
         "pricePerSqm": 50,
-        "yield": 75,
+        "yield": 80,
         "liquidity": 100,
         "confidence": 40
       }
@@ -4037,14 +4037,14 @@
       "pdm_status": null,
       "infrastructure": null,
       "valuation": 364663,
-      "score": 55,
+      "score": 64,
       "capped": false,
       "badges": [],
       "maxScore": 100,
       "scoreBreakdown": {
         "discount": 40,
         "pricePerSqm": 50,
-        "yield": 50,
+        "yield": 95,
         "liquidity": 80,
         "confidence": 70
       }
@@ -4058,14 +4058,14 @@
       "pdm_status": null,
       "infrastructure": null,
       "valuation": 250173,
-      "score": 58,
+      "score": 61,
       "capped": false,
       "badges": [],
       "maxScore": 100,
       "scoreBreakdown": {
         "discount": 80,
         "pricePerSqm": 50,
-        "yield": 25,
+        "yield": 40,
         "liquidity": 80,
         "confidence": 40
       }
@@ -4088,7 +4088,7 @@
       "scoreBreakdown": {
         "discount": 80,
         "pricePerSqm": 50,
-        "yield": 75,
+        "yield": 95,
         "liquidity": 80,
         "confidence": 10
       }
@@ -4102,14 +4102,14 @@
       "pdm_status": null,
       "infrastructure": null,
       "valuation": 240065,
-      "score": 70,
+      "score": 69,
       "capped": false,
       "badges": [],
       "maxScore": 100,
       "scoreBreakdown": {
         "discount": 60,
         "pricePerSqm": 50,
-        "yield": 100,
+        "yield": 95,
         "liquidity": 80,
         "confidence": 70
       }
@@ -4282,14 +4282,14 @@
       "pdm_status": null,
       "infrastructure": null,
       "valuation": 216588,
-      "score": 69,
+      "score": 67,
       "capped": false,
       "badges": [],
       "maxScore": 100,
       "scoreBreakdown": {
         "discount": 100,
         "pricePerSqm": 50,
-        "yield": 50,
+        "yield": 40,
         "liquidity": 55,
         "confidence": 70
       }
@@ -4349,14 +4349,14 @@
       "pdm_status": null,
       "infrastructure": null,
       "valuation": 106782,
-      "score": 51,
+      "score": 57,
       "capped": false,
       "badges": [],
       "maxScore": 100,
       "scoreBreakdown": {
         "discount": 40,
         "pricePerSqm": 50,
-        "yield": 50,
+        "yield": 80,
         "liquidity": 55,
         "confidence": 70
       }
@@ -4393,14 +4393,14 @@
       "pdm_status": null,
       "infrastructure": null,
       "valuation": 250705,
-      "score": 62,
+      "score": 68,
       "capped": false,
       "badges": [],
       "maxScore": 100,
       "scoreBreakdown": {
         "discount": 80,
         "pricePerSqm": 50,
-        "yield": 50,
+        "yield": 80,
         "liquidity": 55,
         "confidence": 70
       }
@@ -5004,14 +5004,14 @@
       "pdm_status": null,
       "infrastructure": null,
       "valuation": 265335,
-      "score": 65,
+      "score": 66,
       "capped": false,
       "badges": [],
       "maxScore": 100,
       "scoreBreakdown": {
         "discount": 60,
         "pricePerSqm": 50,
-        "yield": 75,
+        "yield": 80,
         "liquidity": 80,
         "confidence": 70
       }
@@ -5025,14 +5025,14 @@
       "pdm_status": null,
       "infrastructure": null,
       "valuation": 237405,
-      "score": 54,
+      "score": 56,
       "capped": false,
       "badges": [],
       "maxScore": 100,
       "scoreBreakdown": {
         "discount": 40,
         "pricePerSqm": 50,
-        "yield": 50,
+        "yield": 60,
         "liquidity": 80,
         "confidence": 70
       }
@@ -5046,14 +5046,14 @@
       "pdm_status": null,
       "infrastructure": null,
       "valuation": 237405,
-      "score": 60,
+      "score": 62,
       "capped": false,
       "badges": [],
       "maxScore": 100,
       "scoreBreakdown": {
         "discount": 60,
         "pricePerSqm": 50,
-        "yield": 50,
+        "yield": 60,
         "liquidity": 80,
         "confidence": 70
       }
@@ -5067,14 +5067,14 @@
       "pdm_status": null,
       "infrastructure": null,
       "valuation": 160888,
-      "score": 45,
+      "score": 48,
       "capped": false,
       "badges": [],
       "maxScore": 100,
       "scoreBreakdown": {
         "discount": 40,
         "pricePerSqm": 50,
-        "yield": 25,
+        "yield": 40,
         "liquidity": 55,
         "confidence": 70
       }
@@ -5088,14 +5088,14 @@
       "pdm_status": null,
       "infrastructure": null,
       "valuation": 179816,
-      "score": 50,
+      "score": 52,
       "capped": false,
       "badges": [],
       "maxScore": 100,
       "scoreBreakdown": {
         "discount": 40,
         "pricePerSqm": 50,
-        "yield": 50,
+        "yield": 60,
         "liquidity": 55,
         "confidence": 70
       }
@@ -5109,14 +5109,14 @@
       "pdm_status": null,
       "infrastructure": null,
       "valuation": 160888,
-      "score": 45,
+      "score": 48,
       "capped": false,
       "badges": [],
       "maxScore": 100,
       "scoreBreakdown": {
         "discount": 40,
         "pricePerSqm": 50,
-        "yield": 25,
+        "yield": 40,
         "liquidity": 55,
         "confidence": 70
       }

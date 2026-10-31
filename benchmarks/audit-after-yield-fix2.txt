@@ -1,0 +1,74 @@
+A ler imóveis ativos da BD...
+Total de imóveis ativos: 212
+
+=== AUDITORIA DO MOTOR DE AVALIAÇÃO ===
+Data: 2026-10-31T12:05:15.296Z
+Total de imóveis ativos: 212
+
+--- Distribuição de asset_class ---
+  apartment: 128 (60.4%)
+  house: 29 (13.7%)
+  garage: 19 (9.0%)
+  commercial: 17 (8.0%)
+  mixed: 14 (6.6%)
+  rural_land: 3 (1.4%)
+  urban_land: 2 (0.9%)
+
+--- Distribuição de valuation_confidence ---
+  medium: 139 (65.6%)
+  very_low: 48 (22.6%)
+  low: 25 (11.8%)
+
+--- Distribuição de pdm_status (apenas urban_land: ${urbanLand.length}) ---
+  unknown: 2 (100.0%)
+
+--- Distribuição de scores ---
+  ≥85: 2 (0.9%)
+  70–84: 35 (16.5%)
+  55–69: 47 (22.2%)
+  <55: 128 (60.4%)
+  null: 0 (0.0%)
+
+--- Top 10 scores mais altos ---
+  86 | apartment | medium | Apartamento T2 Lisboa (Leilão)
+  86 | apartment | medium | Apartamento T1 Lisboa (Martelo)
+  83 | apartment | medium | Apartamento Ramalde (Execução Fiscal AT)
+  83 | apartment | medium | Imóvel Porto (Execução Fiscal AT)
+  80 | apartment | medium | Apartamento T1 Lisboa (Leilosoc)
+  80 | apartment | medium | Apartamento T2 Lisboa (Hasta Pública)
+  79 | apartment | medium | Apartamento T0 Alfama (Idealista)
+  79 | apartment | medium | Apartamento Maximinos (Execução Fiscal AT)
+  79 | apartment | medium | Apartamento T0 Alfama
+  78 | apartment | low | T2 em Vila Franca de Xira
+
+--- Top 10 scores mais baixos ---
+  30 | rural_land | low | Terreno Rústico Valdreu, Vila Verde
+  30 | rural_land | low | Terreno Rústico Travassos, Póvoa de Lanhoso
+  30 | rural_land | low | Terreno Rústico Santo Tirso
+  32 | apartment | medium | T2 em Ribeira Grande
+  32 | apartment | very_low | T1 em Alter do Chão
+  32 | apartment | very_low | T3 em Guarda
+  32 | apartment | medium | T2 em Vendas Novas
+  32 | apartment | very_low | T2 em Beja
+  33 | apartment | very_low | T0 em Vila Real
+  33 | house | very_low | V3 em Valpaços
+
+--- Top 3 breakdown de score (porque o maximo e baixo) ---
+  1º 86 | apartment | desconto=100 | preco_m2=50 | yield=100 | liquidez=100 | confianca=70 | Apartamento T2 Lisboa (Leilão)
+  1º 86 | apartment | desconto=100 | preco_m2=50 | yield=100 | liquidez=100 | confianca=70 | Apartamento T1 Lisboa (Martelo)
+  1º 83 | apartment | desconto=100 | preco_m2=50 | yield=100 | liquidez=80 | confianca=70 | Apartamento Ramalde (Execução Fiscal AT)
+
+--- Bottom 3 breakdown de score ---
+  30 | rural_land | desconto=100 | preco_m2=50 | yield=0 | liquidez=55 | confianca=10 | Terreno Rústico Valdreu, Vila Verde
+  30 | rural_land | desconto=80 | preco_m2=50 | yield=0 | liquidez=55 | confianca=10 | Terreno Rústico Travassos, Póvoa de Lanhoso
+  30 | rural_land | desconto=60 | preco_m2=50 | yield=0 | liquidez=80 | confianca=10 | Terreno Rústico Santo Tirso
+
+--- Alertas ---
+  OK confiança very_low: 22.6%
+  OK confiança low: 11.8%
+  ⚠️ 100.0% dos terrenos urbanos sem PDM (>50%) — score cortado em 40
+  ⚠️ 60.4% dos imóveis com score null ou <55 (>40%) — ranking perde valor
+  OK score 100: 0 imóveis
+
+JSON escrito em: C:\Users\smpsa\RadarPro\benchmarks\audit-2026-10-31.json
+TXT escrito em: C:\Users\smpsa\RadarPro\benchmarks\audit-2026-10-31.txt

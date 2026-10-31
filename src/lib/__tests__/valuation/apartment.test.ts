@@ -24,8 +24,8 @@ describe("apartamento - motor hedónico", () => {
     expect(r.valuation).toBeGreaterThan(140_000);
     expect(r.valuation).toBeLessThan(150_000);
     expect(r.confidence).toBe("medium");
-    // yield 4–5% → yieldScore = 50
-    expect(r.breakdown.scoreBreakdown.yield).toBe(50);
+    // yield 4.5% → yieldScore = 60 (escala calibrada PT: 4% → 60, 5% → 80)
+    expect(r.breakdown.scoreBreakdown.yield).toBe(60);
   });
 
   it("asset_class = 'apartment' produz engine 'hedonic'", () => {

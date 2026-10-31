@@ -1,5 +1,5 @@
 === AUDITORIA DO MOTOR DE AVALIAÇÃO ===
-Data: 2026-10-31T11:42:40.060Z
+Data: 2026-10-31T12:07:21.156Z
 Total de imóveis ativos: 212
 
 --- Distribuição de asset_class ---
@@ -21,9 +21,9 @@ Total de imóveis ativos: 212
 
 --- Distribuição de scores ---
   ≥85: 2 (0.9%)
-  70–84: 31 (14.6%)
-  55–69: 45 (21.2%)
-  <55: 134 (63.2%)
+  70–84: 34 (16.0%)
+  55–69: 49 (23.1%)
+  <55: 127 (59.9%)
   null: 0 (0.0%)
 
 --- Top 10 scores mais altos ---
@@ -36,7 +36,7 @@ Total de imóveis ativos: 212
   79 | apartment | medium | Apartamento T0 Alfama (Idealista)
   79 | apartment | medium | Apartamento Maximinos (Execução Fiscal AT)
   79 | apartment | medium | Apartamento T0 Alfama
-  77 | apartment | low | T2 em Vila Franca de Xira
+  78 | apartment | low | T2 em Vila Franca de Xira
 
 --- Top 10 scores mais baixos ---
   30 | rural_land | low | Terreno Rústico Valdreu, Vila Verde
@@ -64,5 +64,5 @@ Total de imóveis ativos: 212
   OK confiança very_low: 22.6%
   OK confiança low: 11.8%
   ⚠️ 100.0% dos terrenos urbanos sem PDM (>50%) — score cortado em 40
-  ⚠️ 63.2% dos imóveis com score null ou <55 (>40%) — ranking perde valor
+  ⚠️ 59.9% dos imóveis com score null ou <55 (>40%) — ranking perde valor
   OK score 100: 0 imóveis

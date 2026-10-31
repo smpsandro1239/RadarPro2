@@ -1,0 +1,50 @@
+A ler leilões activos da BD...
+Leilões activos sem max_bid: 36
+
+  Apartamento T2 Lisboa (Leilão): current_bid=€null → max_bid=€116320 (casa: ?)
+  Moradia V3 Porto (Leilão): current_bid=€null → max_bid=€130860 (casa: ?)
+  Terreno Braga (Leilão): current_bid=€null → max_bid=€47255 (casa: ?)
+  Apartamento T1 Lisboa (Leilosoc): current_bid=€null → max_bid=€101780 (casa: ?)
+  Garagem Porto (Leilosoc): current_bid=€null → max_bid=€15994 (casa: ?)
+  Moradia V2 Braga (Leilosoc): current_bid=€null → max_bid=€116320 (casa: ?)
+  Apartamento T2 Lisboa (Hasta Pública): current_bid=€null → max_bid=€123590 (casa: ?)
+  Terreno Porto (Hasta Pública): current_bid=€null → max_bid=€58160 (casa: ?)
+  Loja Braga (Hasta Pública): current_bid=€null → max_bid=€47255 (casa: ?)
+  Apartamento T1 Lisboa (Martelo): current_bid=€null → max_bid=€109050 (casa: ?)
+  Moradia V2 Porto (Martelo): current_bid=€null → max_bid=€127225 (casa: ?)
+  Terreno Braga (Martelo): current_bid=€null → max_bid=€39985 (casa: ?)
+  Apartamento Lumiar, Lisboa: current_bid=€null → max_bid=€305340 (casa: ?)
+  Apartamento Parque das Nações (Execução Fiscal): current_bid=€null → max_bid=€254450 (casa: ?)
+  Apartamento Ramalde (Execução Fiscal AT): current_bid=€null → max_bid=€87240 (casa: ?)
+  Imóvel Porto (Execução Fiscal AT): current_bid=€null → max_bid=€61795 (casa: ?)
+  Apartamento Maximinos (Execução Fiscal AT): current_bid=€null → max_bid=€109050 (casa: ?)
+  Loja Braga (Execução Fiscal): current_bid=€null → max_bid=€79970 (casa: ?)
+  Terreno em Estarreja: current_bid=€null → max_bid=€102071 (casa: ?)
+  Loja em Serpa: current_bid=€null → max_bid=€56997 (casa: ?)
+  Armazém em Miranda do Douro: current_bid=€null → max_bid=€30534 (casa: ?)
+  T2 em Macedo de Cavaleiros: current_bid=€null → max_bid=€70228 (casa: ?)
+  T0 em Vinhais: current_bid=€null → max_bid=€68345 (casa: ?)
+  T2 em Vendas Novas: current_bid=€null → max_bid=€108759 (casa: ?)
+  T3 em Elvas: current_bid=€null → max_bid=€84208 (casa: ?)
+  T4 em Porto: current_bid=€null → max_bid=€364663 (casa: ?)
+  Garagem em Vila Nova de Gaia: current_bid=€null → max_bid=€6216 (casa: ?)
+  T3 em Tomar: current_bid=€null → max_bid=€67655 (casa: ?)
+  T1 em Sesimbra: current_bid=€null → max_bid=€216588 (casa: ?)
+  T0 em Sesimbra: current_bid=€null → max_bid=€106782 (casa: ?)
+  V4 em Viana do Castelo: current_bid=€null → max_bid=€346844 (casa: ?)
+  V2 em Nelas: current_bid=€null → max_bid=€170554 (casa: ?)
+  T2 em Ribeira Grande: current_bid=€null → max_bid=€100326 (casa: ?)
+  T3 em Ponta Delgada: current_bid=€null → max_bid=€116756 (casa: ?)
+  Terreno em Ponta Delgada: current_bid=€null → max_bid=€37804 (casa: ?)
+  T4 em Funchal: current_bid=€null → max_bid=€190532 (casa: ?)
+=== BACKFILL DE MAX_BID PARA LEILÕES ===
+Data: 2026-10-31T12:06:03.486Z
+Leilões activos sem max_bid: 36
+Atualizados: 36
+Saltos (sem current_bid): 0
+
+--- Por casa leiloeira ---
+  desconhecida: 36/36
+
+
+JSON escrito em: C:\Users\smpsa\RadarPro\benchmarks\backfill-maxbid-2026-10-31.json
