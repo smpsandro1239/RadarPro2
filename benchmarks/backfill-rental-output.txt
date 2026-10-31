@@ -1,0 +1,44 @@
+A ler imóveis ativos da BD...
+Total de imóveis ativos: 212
+
+=== BACKFILL DE ESTIMATIVAS DE RENDAS ===
+Data: 2026-10-31T11:37:42.217Z
+Total de imóveis ativos: 212
+Atualizados com rendas: 118
+Já tinham annual_income: 0
+Sem estimativa de renda disponível: 94
+
+--- Por distrito ---
+  Porto: 43/51 (84.3%)
+  Lisboa: 41/44 (93.2%)
+  Braga: 27/43 (62.8%)
+  Setúbal: 3/6 (50.0%)
+  Aveiro: 2/6 (33.3%)
+  Coimbra: 1/5 (20.0%)
+  Faro: 1/5 (20.0%)
+  Beja: 0/4 (0.0%)
+  Bragança: 0/4 (0.0%)
+  Castelo Branco: 0/3 (0.0%)
+  Évora: 0/3 (0.0%)
+  Guarda: 0/3 (0.0%)
+  Leiria: 0/3 (0.0%)
+  Portalegre: 0/5 (0.0%)
+  Santarém: 0/5 (0.0%)
+  Viana do Castelo: 0/5 (0.0%)
+  Vila Real: 0/5 (0.0%)
+  Viseu: 0/3 (0.0%)
+  Açores: 0/5 (0.0%)
+  Madeira: 0/4 (0.0%)
+
+--- Tipos preenchidos ---
+  T1: 36
+  T0: 30
+  T2: 26
+  Garagem: 10
+  T3: 7
+  Loja: 4
+  T4: 4
+  Armazém: 1
+
+
+JSON escrito em: C:\Users\smpsa\RadarPro\benchmarks\backfill-rental-2026-10-31.json

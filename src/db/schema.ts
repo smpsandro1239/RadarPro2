@@ -29,6 +29,7 @@ export const properties = sqliteTable("properties", {
   vpt: real("vpt"), // Valor Patrimonial Tributário
   condominiumDebt: real("condominium_debt"), // Condomínio em atraso
   renovationEstimate: real("renovation_estimate"), // Estimativa de obras
+  annualIncome: real("annual_income"), // Rendimento anual estimado (EUR/ano)
   maxBidCalculation: text("max_bid_calculation"), // JSON com breakdown dos custos
   assetClass: text("asset_class"), // apartment | house | urban_land | rural_land | commercial | garage | mixed
   valuationEngine: text("valuation_engine"), // hedonic | land_urban | land_rural | income | auction
@@ -44,6 +45,16 @@ export const properties = sqliteTable("properties", {
   checkStatus: text("check_status").$type<"ok" | "not_found" | "error" | "pending">().default("pending"),
   createdAt: integer("created_at", { mode: "timestamp" }).$defaultFn(() => new Date()),
   updatedAt: integer("updated_at", { mode: "timestamp" }).$defaultFn(() => new Date()),
+});
+
+export const rentalEstimates = sqliteTable("rental_estimates", {
+  id: text("id").primaryKey(),
+  district: text("district").notNull(),
+  municipality: text("municipality").notNull(),
+  type: text("type").notNull(), // T0, T1, T2, T3, T4, V2, V3, V4, V5, Loja, Armazém
+  monthly_rent: real("monthly_rent").notNull(), // EUR/mês
+  source: text("source").notNull(), // Idealista, INE, Confidencial Imobiliário
+  as_of: text("as_of").notNull(), // YYYY-MM
 });
 
 export const users = sqliteTable("users", {
