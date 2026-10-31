@@ -1,9 +1,12 @@
 import { NextResponse } from "next/server";
 import { getAllActiveProperties } from "@/lib/queries";
 
-export async function GET() {
+export async function GET(request: Request) {
   try {
-    const properties = await getAllActiveProperties();
+    const { searchParams } = new URL(request.url);
+    const listingType = searchParams.get("listing_type") || undefined;
+    const isAuction = searchParams.get("is_auction") || undefined;
+    const properties = await getAllActiveProperties(listingType, isAuction);
     return NextResponse.json({ properties });
   } catch (error) {
     console.error(error);

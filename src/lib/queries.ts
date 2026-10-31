@@ -26,10 +26,25 @@ export async function getPropertiesByDistrict(district: string) {
     .where(and(eq(properties.district, district), eq(properties.isActive, true)));
 }
 
-export async function getAllActiveProperties() {
+export async function getAllActiveProperties(listingType?: string, isAuction?: string) {
+  const conditions = [eq(properties.isActive, true)];
+
+  if (isAuction === "true") {
+    conditions.push(eq(properties.isAuction, true));
+  } else if (isAuction === "false") {
+    conditions.push(eq(properties.isAuction, false));
+  }
+
+  if (listingType && listingType.startsWith("auction_")) {
+    conditions.push(eq(properties.isAuction, true));
+    if (listingType !== "auction_\*") {
+      conditions.push(eq(properties.auctionType, listingType.replace("auction_", "") as any));
+    }
+  }
+
   return await db
     .select()
     .from(properties)
-    .where(eq(properties.isActive, true))
+    .where(and(...conditions))
     .orderBy(desc(properties.score));
 }
