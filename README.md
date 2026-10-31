@@ -209,3 +209,64 @@ Leilões e preço fixo **não aparecem no mesmo ranking**. O search route aceita
 ### Dados de mercado (`src/lib/market-data.ts`)
 
 Tabela de medianas €/m² por freguesia/concelho com fonte (INE / Confidencial Imobiliário) e data de referência. Ordem de preferência: paróquia > concelho > distrito. Valores são referência, não a base única do AVM.
+
+---
+
+## Auditoria do motor de avaliação
+
+Execução: 2026-10-31, contra **212 imóveis ativos** na BD (Turso).
+
+### Distribuição de asset_class
+
+| Tipo | Contagem | % |
+|------|----------|---|
+| apartment | 212 | 100.0% |
+
+**Nota crítica:** `asset_class`, `valuation_engine` e `valuation_confidence` estão **não preenchidos (null) em 100% dos imóveis**. O motor faz fallback para `"apartment"` em todos, incluindo terrenos (`Terreno`), lojas (`Loja`), armazéns (`Armazém`), garagens (`Garagem`) e prédios (`Prédio`). A inferência em `src/lib/ingest.ts` só se aplica a novos imóveis em ingestão, não aos já existentes.
+
+### Distribuição de scores
+
+| Bucket | Contagem | % |
+|--------|----------|---|
+| ≥85 | 0 | 0.0% |
+| 70–84 | 0 | 0.0% |
+| 55–69 | 33 | 15.6% |
+| <55 | 179 | 84.4% |
+| null | 0 | 0.0% |
+
+**Score máximo observado: 66.** Nenhum imóvel atinge a faixa de "boa oportunidade" (≥70) ou "excelente" (≥85).
+
+### Distribuição de valuation_confidence
+
+| Nível | Contagem | % |
+|-------|----------|---|
+| medium | 144 | 67.9% |
+| very_low | 38 | 17.9% |
+| low | 30 | 14.2% |
+| high | 0 | 0.0% |
+
+### Leilões
+
+- Leilões (`isAuction=true`): **36** de 212
+- Todos os leilões também são classificados como `apartment` (fallback), sem `auction_type` específico a determinar `auction_judicial` / `auction_fiscal` / `auction_private`.
+
+### Alertas
+
+- ⚠️ **84.4% dos imóveis com score <55** (>40%) — o ranking perde valor diferencial; a maioria está esmagada na faixa baixa.
+- ⚠️ **100% dos imóveis sem `asset_class` preenchido** — terrenos, lojas e armazéns são avaliados com o motor hedónico de apartamento, produzindo valorizações incorretas.
+- ⚠️ **0 imóveis com `valuation_confidence = high`** — não há mediana de freguesia suficiente para elevar a confiança.
+
+### Lacunas principais
+
+1. **Classificação em falta:** nenhum imóvel tem `asset_class` na BD. O motor não consegue distinguir apartamento de terreno, loja ou garagem.
+2. **Dados de mercado insuficientes:** `market-data.ts` cobre apenas algumas freguesias/concelhos; a maioria dos imóveis fica sem mediana de referência, caindo em `medium`/`very_low` confidence.
+3. **Campos de risco não preenchidos:** `pdm_status`, `infrastructure`, `annualIncome` estão null em todos — impossível aplicar cortes específicos de terreno/rural/comercial.
+
+### Próximo passo recomendado
+
+**Preencher dados antes de avançar.** O motor está tecnicamente correto, mas aplicado a dados incompletos produz um ranking inútil (84.4% abaixo de 55, máximo 66). Prioridade:
+
+1. Executar ingestão sobre os 212 imóveis existentes para preencher `asset_class` (inferência de `type`/`title`).
+2. Preencher `valuation_engine` e `valuation_confidence` com base na disponibilidade de mediana de freguesia.
+3. Para terrenos urbanos, preencher `pdm_status` e `infrastructure` (ou marcar como `unknown` e aceitar o corte de score ≤40).
+4. Só depois avançar para Sentry DSN e benchmarks reais.
