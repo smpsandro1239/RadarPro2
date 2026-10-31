@@ -59,6 +59,8 @@ interface EngineResult {
   id: string;
   title: string;
   is_auction: boolean | null;
+  district: string;
+  price: number;
   asset_class: string;
   valuation_engine: string;
   valuation_confidence: string;
@@ -111,7 +113,7 @@ async function main() {
       isAuction: row.isAuction === true,
       auctionType: row.auctionType,
       auctionHouse: row.auctionHouse,
-      currentBid: row.currentBid,
+      currentBid: row.currentBid ?? row.price, // schema híbrido: para leilões, price = current_bid
       maxBid: row.maxBid,
       vpt: row.vpt,
       condominiumDebt: row.condominiumDebt,
@@ -133,13 +135,15 @@ async function main() {
       audit.push({
         id: row.id,
         title: row.title,
+        district: property.district,
+        price: property.price,
         is_auction: property.isAuction ?? false,
         asset_class: property.asset_class ?? "apartment",
         valuation_engine: result.engine,
         valuation_confidence: result.confidence,
         pdm_status: row.pdmStatus,
         infrastructure: row.infrastructure,
-        current_bid: property.currentBid ?? null,
+        current_bid: property.isAuction && !property.currentBid ? property.price : property.currentBid ?? null,
         max_bid: property.maxBid ?? null,
         valuation: result.valuation ?? null,
         score: result.score,
@@ -153,13 +157,15 @@ async function main() {
       audit.push({
         id: row.id,
         title: row.title,
+        district: property.district,
+        price: property.price,
         is_auction: property.isAuction ?? false,
         asset_class: property.asset_class ?? "apartment",
         valuation_engine: "error",
         valuation_confidence: "low",
         pdm_status: row.pdmStatus,
         infrastructure: row.infrastructure,
-        current_bid: property.currentBid ?? null,
+        current_bid: property.isAuction && !property.currentBid ? property.price : property.currentBid ?? null,
         max_bid: property.maxBid ?? null,
         valuation: null,
         score: null,
@@ -286,15 +292,24 @@ async function main() {
   const auctionMax = auctions.reduce((m, a) => Math.max(m, a.score ?? 0), 0);
 
   lines.push("=== Top 10 — Preço Fixo ===");
-  const fixedTop10 = fixedPrice
+  // Dedupe por (title, district, price) antes de ordenar
+  const seenFixed = new Map<string, string>();
+  const fixedDeduped = fixedPrice.filter((a) => {
+    const key = `${a.title}|${a.district}|${a.price}`;
+    if (seenFixed.has(key)) return false;
+    seenFixed.set(key, a.id);
+    return true;
+  });
+  const fixedTop10 = fixedDeduped
     .filter((a) => a.score !== null)
     .sort((a, b) => b.score! - a.score!)
     .slice(0, 10);
+  const fixedTotalDups = fixedPrice.length - fixedDeduped.length;
   for (const a of fixedTop10) {
     const sb = a.scoreBreakdown ?? {};
     lines.push(`  ${a.score} | ${a.asset_class} | yield=${sb.yield ?? 0} | conf=${sb.confidence ?? 0} | ${a.title.slice(0, 55)}`);
   }
-  lines.push("");
+  lines.push(`  (${fixedTotalDups} duplicados removidos no top preço fixo)`);
 
   lines.push("=== Top 10 — Leilões ===");
   const auctionTop10 = auctions
@@ -303,8 +318,9 @@ async function main() {
     .slice(0, 10);
   for (const a of auctionTop10) {
     const sb = a.scoreBreakdown ?? {};
-    const margem = a.max_bid != null && a.current_bid != null ? Math.round(a.max_bid - a.current_bid) : null;
-    lines.push(`  ${a.score} | ${a.asset_class} | cbid=${a.current_bid ?? 0} | mBid=${a.max_bid ?? 0} | margem=${margem ?? "n/d"} | ${a.title.slice(0, 50)}`);
+    const cbid = a.current_bid ?? null; // para leilões, current_bid pode estar null; usar price do property se disponível
+    const margem = a.max_bid != null && cbid != null ? Math.round(a.max_bid - cbid) : null;
+    lines.push(`  ${a.score} | ${a.asset_class} | cbid=${cbid ?? "n/d"} | mBid=${a.max_bid ?? "n/d"} | margem=${margem ?? "n/d"} | ${a.title.slice(0, 50)}`);
   }
   lines.push("");
 
