@@ -35,7 +35,9 @@ export async function getAllActiveProperties(listingType?: string, isAuction?: s
     conditions.push(eq(properties.isAuction, false));
   }
 
-  if (listingType && listingType.startsWith("auction_")) {
+  if (listingType === "fixed_price") {
+    conditions.push(eq(properties.isAuction, false));
+  } else if (listingType && listingType.startsWith("auction_")) {
     conditions.push(eq(properties.isAuction, true));
     if (listingType !== "auction_\*") {
       conditions.push(eq(properties.auctionType, listingType.replace("auction_", "") as any));
