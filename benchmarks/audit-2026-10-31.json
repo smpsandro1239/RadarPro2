@@ -1,20 +1,28 @@
 {
-  "generatedAt": "2026-10-31T02:15:48.791Z",
+  "generatedAt": "2026-10-31T11:28:33.126Z",
   "totalImoveis": 212,
   "assetClass": {
-    "apartment": 212
+    "apartment": 128,
+    "garage": 19,
+    "commercial": 17,
+    "mixed": 14,
+    "rural_land": 3,
+    "urban_land": 2,
+    "house": 29
   },
   "valuationConfidence": {
-    "medium": 144,
-    "low": 30,
-    "very_low": 38
+    "medium": 139,
+    "very_low": 48,
+    "low": 25
   },
-  "pdmStatusUrbanLand": {},
+  "pdmStatusUrbanLand": {
+    "unknown": 2
+  },
   "scoreDistribution": {
     "≥85": 0,
     "70–84": 0,
-    "55–69": 33,
-    "<55": 179,
+    "55–69": 12,
+    "<55": 200,
     "null": 0
   },
   "top10": [
@@ -30,7 +38,14 @@
       "score": 66,
       "capped": false,
       "badges": [],
-      "maxScore": 100
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": 100,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 100,
+        "confidence": 70
+      }
     },
     {
       "id": "mart-lis-1",
@@ -44,49 +59,14 @@
       "score": 66,
       "capped": false,
       "badges": [],
-      "maxScore": 100
-    },
-    {
-      "id": "ls-por-1",
-      "title": "Garagem Porto (Leilosoc)",
-      "asset_class": "apartment",
-      "valuation_engine": "auction",
-      "valuation_confidence": "medium",
-      "pdm_status": null,
-      "infrastructure": null,
-      "valuation": 15994,
-      "score": 63,
-      "capped": false,
-      "badges": [],
-      "maxScore": 100
-    },
-    {
-      "id": "est-por-1",
-      "title": "Terreno Porto (Hasta Pública)",
-      "asset_class": "apartment",
-      "valuation_engine": "auction",
-      "valuation_confidence": "medium",
-      "pdm_status": null,
-      "infrastructure": null,
-      "valuation": 58160,
-      "score": 63,
-      "capped": false,
-      "badges": [],
-      "maxScore": 100
-    },
-    {
-      "id": "mart-por-1",
-      "title": "Moradia V2 Porto (Martelo)",
-      "asset_class": "apartment",
-      "valuation_engine": "auction",
-      "valuation_confidence": "medium",
-      "pdm_status": null,
-      "infrastructure": null,
-      "valuation": 127225,
-      "score": 63,
-      "capped": false,
-      "badges": [],
-      "maxScore": 100
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": 100,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 100,
+        "confidence": 70
+      }
     },
     {
       "id": "bidizi-por-1",
@@ -100,7 +80,14 @@
       "score": 63,
       "capped": false,
       "badges": [],
-      "maxScore": 100
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": 100,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 80,
+        "confidence": 70
+      }
     },
     {
       "id": "bidizi-por-2",
@@ -114,7 +101,14 @@
       "score": 63,
       "capped": false,
       "badges": [],
-      "maxScore": 100
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": 100,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 80,
+        "confidence": 70
+      }
     },
     {
       "id": "gen-lisboa-1041",
@@ -128,7 +122,14 @@
       "score": 62,
       "capped": false,
       "badges": [],
-      "maxScore": 100
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": 100,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 100,
+        "confidence": 40
+      }
     },
     {
       "id": "ls-lis-1",
@@ -142,7 +143,14 @@
       "score": 60,
       "capped": false,
       "badges": [],
-      "maxScore": 100
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": 80,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 100,
+        "confidence": 70
+      }
     },
     {
       "id": "est-lis-1",
@@ -156,10 +164,175 @@
       "score": 60,
       "capped": false,
       "badges": [],
-      "maxScore": 100
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": 80,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 100,
+        "confidence": 70
+      }
+    },
+    {
+      "id": "id-lis-1",
+      "title": "Apartamento T0 Alfama (Idealista)",
+      "asset_class": "apartment",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "medium",
+      "pdm_status": null,
+      "infrastructure": null,
+      "valuation": 309400,
+      "score": 59,
+      "capped": false,
+      "badges": [],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": 80,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 100,
+        "confidence": 70
+      }
+    },
+    {
+      "id": "bidizi-bra-1",
+      "title": "Apartamento Maximinos (Execução Fiscal AT)",
+      "asset_class": "apartment",
+      "valuation_engine": "auction",
+      "valuation_confidence": "medium",
+      "pdm_status": null,
+      "infrastructure": null,
+      "valuation": 109050,
+      "score": 59,
+      "capped": false,
+      "badges": [],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": 100,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 55,
+        "confidence": 70
+      }
+    },
+    {
+      "id": "gen-setúbal-1060",
+      "title": "T1 em Sesimbra",
+      "asset_class": "apartment",
+      "valuation_engine": "auction",
+      "valuation_confidence": "medium",
+      "pdm_status": null,
+      "infrastructure": null,
+      "valuation": 216588,
+      "score": 59,
+      "capped": false,
+      "badges": [],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": 100,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 55,
+        "confidence": 70
+      }
     }
   ],
   "bottom10": [
+    {
+      "id": "ib-bra-6",
+      "title": "Terreno Rústico Valdreu, Vila Verde",
+      "asset_class": "rural_land",
+      "valuation_engine": "land_rural",
+      "valuation_confidence": "low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "valuation": null,
+      "score": 30,
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa",
+        "Sem rendimento demonstrável"
+      ],
+      "maxScore": 30,
+      "scoreBreakdown": {
+        "discount": 100,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 55,
+        "confidence": 10
+      }
+    },
+    {
+      "id": "ib-bra-5",
+      "title": "Terreno Rústico Travassos, Póvoa de Lanhoso",
+      "asset_class": "rural_land",
+      "valuation_engine": "land_rural",
+      "valuation_confidence": "low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "valuation": null,
+      "score": 30,
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa",
+        "Sem rendimento demonstrável"
+      ],
+      "maxScore": 30,
+      "scoreBreakdown": {
+        "discount": 80,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 55,
+        "confidence": 10
+      }
+    },
+    {
+      "id": "ib-por-2",
+      "title": "Terreno Rústico Santo Tirso",
+      "asset_class": "rural_land",
+      "valuation_engine": "land_rural",
+      "valuation_confidence": "low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "valuation": null,
+      "score": 30,
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa",
+        "Sem rendimento demonstrável"
+      ],
+      "maxScore": 30,
+      "scoreBreakdown": {
+        "discount": 60,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 80,
+        "confidence": 10
+      }
+    },
+    {
+      "id": "gen-açores-1080",
+      "title": "T2 em Ribeira Grande",
+      "asset_class": "apartment",
+      "valuation_engine": "auction",
+      "valuation_confidence": "medium",
+      "pdm_status": null,
+      "infrastructure": null,
+      "valuation": 100326,
+      "score": 32,
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa"
+      ],
+      "maxScore": 40,
+      "scoreBreakdown": {
+        "discount": 40,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 55,
+        "confidence": 10
+      }
+    },
     {
       "id": "gen-portalegre-1048",
       "title": "T1 em Alter do Chão",
@@ -170,9 +343,18 @@
       "infrastructure": null,
       "valuation": null,
       "score": 32,
-      "capped": false,
-      "badges": [],
-      "maxScore": 100
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa"
+      ],
+      "maxScore": 40,
+      "scoreBreakdown": {
+        "discount": 40,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 40,
+        "confidence": 10
+      }
     },
     {
       "id": "gen-guarda-1036",
@@ -184,9 +366,41 @@
       "infrastructure": null,
       "valuation": null,
       "score": 32,
-      "capped": false,
-      "badges": [],
-      "maxScore": 100
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa"
+      ],
+      "maxScore": 40,
+      "scoreBreakdown": {
+        "discount": 40,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 40,
+        "confidence": 10
+      }
+    },
+    {
+      "id": "gen-évora-1027",
+      "title": "T2 em Vendas Novas",
+      "asset_class": "apartment",
+      "valuation_engine": "auction",
+      "valuation_confidence": "medium",
+      "pdm_status": null,
+      "infrastructure": null,
+      "valuation": 108759,
+      "score": 32,
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa"
+      ],
+      "maxScore": 40,
+      "scoreBreakdown": {
+        "discount": 40,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 55,
+        "confidence": 10
+      }
     },
     {
       "id": "gen-beja-1009",
@@ -198,9 +412,18 @@
       "infrastructure": null,
       "valuation": null,
       "score": 32,
-      "capped": false,
-      "badges": [],
-      "maxScore": 100
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa"
+      ],
+      "maxScore": 40,
+      "scoreBreakdown": {
+        "discount": 40,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 40,
+        "confidence": 10
+      }
     },
     {
       "id": "gen-vilareal-1074",
@@ -212,93 +435,41 @@
       "infrastructure": null,
       "valuation": null,
       "score": 33,
-      "capped": false,
-      "badges": [],
-      "maxScore": 100
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa"
+      ],
+      "maxScore": 40,
+      "scoreBreakdown": {
+        "discount": 40,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 50,
+        "confidence": 10
+      }
     },
     {
       "id": "gen-vilareal-1071",
       "title": "V3 em Valpaços",
-      "asset_class": "apartment",
+      "asset_class": "house",
       "valuation_engine": "hedonic",
       "valuation_confidence": "very_low",
       "pdm_status": null,
       "infrastructure": null,
       "valuation": null,
       "score": 33,
-      "capped": false,
-      "badges": [],
-      "maxScore": 100
-    },
-    {
-      "id": "gen-vianadocastelo-1068",
-      "title": "T2 em Valença",
-      "asset_class": "apartment",
-      "valuation_engine": "hedonic",
-      "valuation_confidence": "very_low",
-      "pdm_status": null,
-      "infrastructure": null,
-      "valuation": null,
-      "score": 34,
-      "capped": false,
-      "badges": [],
-      "maxScore": 100
-    },
-    {
-      "id": "gen-santarém-1059",
-      "title": "V2 em Rio Maior",
-      "asset_class": "apartment",
-      "valuation_engine": "hedonic",
-      "valuation_confidence": "very_low",
-      "pdm_status": null,
-      "infrastructure": null,
-      "valuation": null,
-      "score": 34,
-      "capped": false,
-      "badges": [],
-      "maxScore": 100
-    },
-    {
-      "id": "gen-leiria-1040",
-      "title": "Loja em Nazaré",
-      "asset_class": "apartment",
-      "valuation_engine": "hedonic",
-      "valuation_confidence": "very_low",
-      "pdm_status": null,
-      "infrastructure": null,
-      "valuation": null,
-      "score": 34,
-      "capped": false,
-      "badges": [],
-      "maxScore": 100
-    },
-    {
-      "id": "gen-castelobranco-1021",
-      "title": "V4 em Fundão",
-      "asset_class": "apartment",
-      "valuation_engine": "hedonic",
-      "valuation_confidence": "very_low",
-      "pdm_status": null,
-      "infrastructure": null,
-      "valuation": null,
-      "score": 38,
-      "capped": false,
-      "badges": [],
-      "maxScore": 100
-    },
-    {
-      "id": "gen-beja-1006",
-      "title": "Armazém em Odemira",
-      "asset_class": "apartment",
-      "valuation_engine": "hedonic",
-      "valuation_confidence": "very_low",
-      "pdm_status": null,
-      "infrastructure": null,
-      "valuation": null,
-      "score": 38,
-      "capped": false,
-      "badges": [],
-      "maxScore": 100
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa"
+      ],
+      "maxScore": 40,
+      "scoreBreakdown": {
+        "discount": 40,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 50,
+        "confidence": 10
+      }
     }
   ],
   "results": [
@@ -314,7 +485,14 @@
       "score": 53,
       "capped": false,
       "badges": [],
-      "maxScore": 100
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": 60,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 100,
+        "confidence": 70
+      }
     },
     {
       "id": "cs-lis-2",
@@ -328,7 +506,14 @@
       "score": 53,
       "capped": false,
       "badges": [],
-      "maxScore": 100
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": 60,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 100,
+        "confidence": 70
+      }
     },
     {
       "id": "cs-lis-3",
@@ -342,7 +527,14 @@
       "score": 53,
       "capped": false,
       "badges": [],
-      "maxScore": 100
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": 60,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 100,
+        "confidence": 70
+      }
     },
     {
       "id": "cs-lis-4",
@@ -356,7 +548,14 @@
       "score": 53,
       "capped": false,
       "badges": [],
-      "maxScore": 100
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": 60,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 100,
+        "confidence": 70
+      }
     },
     {
       "id": "cs-lis-5",
@@ -370,7 +569,14 @@
       "score": 47,
       "capped": false,
       "badges": [],
-      "maxScore": 100
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": 40,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 100,
+        "confidence": 70
+      }
     },
     {
       "id": "cs-por-1",
@@ -384,7 +590,14 @@
       "score": 50,
       "capped": false,
       "badges": [],
-      "maxScore": 100
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": 60,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 80,
+        "confidence": 70
+      }
     },
     {
       "id": "cs-por-2",
@@ -398,7 +611,14 @@
       "score": 44,
       "capped": false,
       "badges": [],
-      "maxScore": 100
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": 40,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 80,
+        "confidence": 70
+      }
     },
     {
       "id": "cs-por-3",
@@ -412,7 +632,14 @@
       "score": 50,
       "capped": false,
       "badges": [],
-      "maxScore": 100
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": 60,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 80,
+        "confidence": 70
+      }
     },
     {
       "id": "cs-por-4",
@@ -426,7 +653,14 @@
       "score": 44,
       "capped": false,
       "badges": [],
-      "maxScore": 100
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": 40,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 80,
+        "confidence": 70
+      }
     },
     {
       "id": "cs-por-5",
@@ -440,7 +674,14 @@
       "score": 50,
       "capped": false,
       "badges": [],
-      "maxScore": 100
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": 60,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 80,
+        "confidence": 70
+      }
     },
     {
       "id": "cs-por-6",
@@ -454,7 +695,14 @@
       "score": 50,
       "capped": false,
       "badges": [],
-      "maxScore": 100
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": 60,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 80,
+        "confidence": 70
+      }
     },
     {
       "id": "cs-por-7",
@@ -468,7 +716,14 @@
       "score": 50,
       "capped": false,
       "badges": [],
-      "maxScore": 100
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": 60,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 80,
+        "confidence": 70
+      }
     },
     {
       "id": "cs-por-8",
@@ -482,7 +737,14 @@
       "score": 44,
       "capped": false,
       "badges": [],
-      "maxScore": 100
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": 40,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 80,
+        "confidence": 70
+      }
     },
     {
       "id": "cs-bra-1",
@@ -496,7 +758,14 @@
       "score": 40,
       "capped": false,
       "badges": [],
-      "maxScore": 100
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": 40,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 55,
+        "confidence": 70
+      }
     },
     {
       "id": "cs-bra-2",
@@ -510,21 +779,37 @@
       "score": 40,
       "capped": false,
       "badges": [],
-      "maxScore": 100
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": 40,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 55,
+        "confidence": 70
+      }
     },
     {
       "id": "cs-bra-3",
       "title": "Apartamento T1 São Víctor (garagem)",
-      "asset_class": "apartment",
+      "asset_class": "garage",
       "valuation_engine": "hedonic",
       "valuation_confidence": "medium",
       "pdm_status": null,
       "infrastructure": null,
-      "valuation": 179816,
-      "score": 40,
-      "capped": false,
-      "badges": [],
-      "maxScore": 100
+      "valuation": 40560,
+      "score": 34,
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa"
+      ],
+      "maxScore": 40,
+      "scoreBreakdown": {
+        "discount": 40,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 55,
+        "confidence": 10
+      }
     },
     {
       "id": "cs-bra-4",
@@ -538,21 +823,37 @@
       "score": 40,
       "capped": false,
       "badges": [],
-      "maxScore": 100
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": 40,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 55,
+        "confidence": 70
+      }
     },
     {
       "id": "cs-bra-5",
       "title": "Apartamento T0 Ferreiros (garagem)",
-      "asset_class": "apartment",
+      "asset_class": "garage",
       "valuation_engine": "hedonic",
       "valuation_confidence": "medium",
       "pdm_status": null,
       "infrastructure": null,
-      "valuation": 160888,
-      "score": 40,
-      "capped": false,
-      "badges": [],
-      "maxScore": 100
+      "valuation": 40560,
+      "score": 34,
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa"
+      ],
+      "maxScore": 40,
+      "scoreBreakdown": {
+        "discount": 40,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 55,
+        "confidence": 10
+      }
     },
     {
       "id": "cs-bra-6",
@@ -566,7 +867,14 @@
       "score": 40,
       "capped": false,
       "badges": [],
-      "maxScore": 100
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": 40,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 55,
+        "confidence": 70
+      }
     },
     {
       "id": "cs-bra-7",
@@ -580,21 +888,37 @@
       "score": 40,
       "capped": false,
       "badges": [],
-      "maxScore": 100
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": 40,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 55,
+        "confidence": 70
+      }
     },
     {
       "id": "cs-bra-8",
       "title": "Apartamento T0 São José (garagem)",
-      "asset_class": "apartment",
+      "asset_class": "garage",
       "valuation_engine": "hedonic",
       "valuation_confidence": "medium",
       "pdm_status": null,
       "infrastructure": null,
-      "valuation": 160888,
-      "score": 40,
-      "capped": false,
-      "badges": [],
-      "maxScore": 100
+      "valuation": 40560,
+      "score": 34,
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa"
+      ],
+      "maxScore": 40,
+      "scoreBreakdown": {
+        "discount": 40,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 55,
+        "confidence": 10
+      }
     },
     {
       "id": "cs-bra-9",
@@ -608,7 +932,14 @@
       "score": 46,
       "capped": false,
       "badges": [],
-      "maxScore": 100
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": 60,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 55,
+        "confidence": 70
+      }
     },
     {
       "id": "iv-por-1",
@@ -622,21 +953,37 @@
       "score": 44,
       "capped": false,
       "badges": [],
-      "maxScore": 100
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": 40,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 80,
+        "confidence": 70
+      }
     },
     {
       "id": "ib-lis-1",
       "title": "Loja Carnide, Lisboa",
-      "asset_class": "apartment",
-      "valuation_engine": "hedonic",
-      "valuation_confidence": "medium",
+      "asset_class": "commercial",
+      "valuation_engine": "commercial",
+      "valuation_confidence": "very_low",
       "pdm_status": null,
       "infrastructure": null,
-      "valuation": 364000,
-      "score": 53,
-      "capped": false,
-      "badges": [],
-      "maxScore": 100
+      "valuation": null,
+      "score": 40,
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa"
+      ],
+      "maxScore": 40,
+      "scoreBreakdown": {
+        "discount": 60,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 100,
+        "confidence": 10
+      }
     },
     {
       "id": "ib-lis-2",
@@ -650,21 +997,37 @@
       "score": 53,
       "capped": false,
       "badges": [],
-      "maxScore": 100
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": 60,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 100,
+        "confidence": 70
+      }
     },
     {
       "id": "ib-lis-3",
       "title": "Loja Cacém, Sintra",
-      "asset_class": "apartment",
-      "valuation_engine": "hedonic",
-      "valuation_confidence": "medium",
+      "asset_class": "commercial",
+      "valuation_engine": "commercial",
+      "valuation_confidence": "very_low",
       "pdm_status": null,
       "infrastructure": null,
-      "valuation": 345800,
-      "score": 53,
-      "capped": false,
-      "badges": [],
-      "maxScore": 100
+      "valuation": null,
+      "score": 40,
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa"
+      ],
+      "maxScore": 40,
+      "scoreBreakdown": {
+        "discount": 60,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 100,
+        "confidence": 10
+      }
     },
     {
       "id": "ib-lis-4",
@@ -678,63 +1041,106 @@
       "score": 44,
       "capped": false,
       "badges": [],
-      "maxScore": 100
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": 40,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 100,
+        "confidence": 40
+      }
     },
     {
       "id": "ib-lis-5",
       "title": "Garagem Mafra",
-      "asset_class": "apartment",
+      "asset_class": "garage",
       "valuation_engine": "hedonic",
       "valuation_confidence": "low",
       "pdm_status": null,
       "infrastructure": null,
-      "valuation": 378420,
-      "score": 50,
-      "capped": false,
-      "badges": [],
-      "maxScore": 100
+      "valuation": 81090,
+      "score": 40,
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa"
+      ],
+      "maxScore": 40,
+      "scoreBreakdown": {
+        "discount": 60,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 100,
+        "confidence": 10
+      }
     },
     {
       "id": "ib-lis-6",
       "title": "Garagem Mafra (pequena)",
-      "asset_class": "apartment",
+      "asset_class": "garage",
       "valuation_engine": "hedonic",
       "valuation_confidence": "low",
       "pdm_status": null,
       "infrastructure": null,
-      "valuation": 378420,
-      "score": 50,
-      "capped": false,
-      "badges": [],
-      "maxScore": 100
+      "valuation": 81090,
+      "score": 40,
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa"
+      ],
+      "maxScore": 40,
+      "scoreBreakdown": {
+        "discount": 60,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 100,
+        "confidence": 10
+      }
     },
     {
       "id": "ib-lis-7",
       "title": "Loja Ramada, Odivelas",
-      "asset_class": "apartment",
-      "valuation_engine": "hedonic",
-      "valuation_confidence": "low",
+      "asset_class": "commercial",
+      "valuation_engine": "commercial",
+      "valuation_confidence": "very_low",
       "pdm_status": null,
       "infrastructure": null,
-      "valuation": 378420,
-      "score": 50,
-      "capped": false,
-      "badges": [],
-      "maxScore": 100
+      "valuation": null,
+      "score": 40,
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa"
+      ],
+      "maxScore": 40,
+      "scoreBreakdown": {
+        "discount": 60,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 100,
+        "confidence": 10
+      }
     },
     {
       "id": "ib-lis-8",
       "title": "Prédio Alcoentre, Azambuja",
-      "asset_class": "apartment",
+      "asset_class": "mixed",
       "valuation_engine": "hedonic",
       "valuation_confidence": "low",
       "pdm_status": null,
       "infrastructure": null,
       "valuation": 378420,
-      "score": 50,
-      "capped": false,
-      "badges": [],
-      "maxScore": 100
+      "score": 40,
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa"
+      ],
+      "maxScore": 40,
+      "scoreBreakdown": {
+        "discount": 60,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 100,
+        "confidence": 10
+      }
     },
     {
       "id": "ib-lis-9",
@@ -748,35 +1154,61 @@
       "score": 53,
       "capped": false,
       "badges": [],
-      "maxScore": 100
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": 60,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 100,
+        "confidence": 70
+      }
     },
     {
       "id": "ib-por-1",
       "title": "Garagem Maia",
-      "asset_class": "apartment",
+      "asset_class": "garage",
       "valuation_engine": "hedonic",
       "valuation_confidence": "medium",
       "pdm_status": null,
       "infrastructure": null,
-      "valuation": 252700,
-      "score": 56,
-      "capped": false,
-      "badges": [],
-      "maxScore": 100
+      "valuation": 54150,
+      "score": 40,
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa"
+      ],
+      "maxScore": 40,
+      "scoreBreakdown": {
+        "discount": 80,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 80,
+        "confidence": 10
+      }
     },
     {
       "id": "ib-por-2",
       "title": "Terreno Rústico Santo Tirso",
-      "asset_class": "apartment",
-      "valuation_engine": "hedonic",
+      "asset_class": "rural_land",
+      "valuation_engine": "land_rural",
       "valuation_confidence": "low",
       "pdm_status": null,
       "infrastructure": null,
-      "valuation": 263340,
-      "score": 47,
-      "capped": false,
-      "badges": [],
-      "maxScore": 100
+      "valuation": null,
+      "score": 30,
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa",
+        "Sem rendimento demonstrável"
+      ],
+      "maxScore": 30,
+      "scoreBreakdown": {
+        "discount": 60,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 80,
+        "confidence": 10
+      }
     },
     {
       "id": "ib-por-3",
@@ -790,63 +1222,106 @@
       "score": 50,
       "capped": false,
       "badges": [],
-      "maxScore": 100
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": 60,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 80,
+        "confidence": 70
+      }
     },
     {
       "id": "ib-por-4",
       "title": "Garagem Porto (Cedofeita)",
-      "asset_class": "apartment",
+      "asset_class": "garage",
       "valuation_engine": "hedonic",
       "valuation_confidence": "medium",
       "pdm_status": null,
       "infrastructure": null,
-      "valuation": 279300,
-      "score": 56,
-      "capped": false,
-      "badges": [],
-      "maxScore": 100
+      "valuation": 59850,
+      "score": 40,
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa"
+      ],
+      "maxScore": 40,
+      "scoreBreakdown": {
+        "discount": 80,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 80,
+        "confidence": 10
+      }
     },
     {
       "id": "ib-por-5",
       "title": "Garagem Porto (Cedofeita) 2",
-      "asset_class": "apartment",
+      "asset_class": "garage",
       "valuation_engine": "hedonic",
       "valuation_confidence": "medium",
       "pdm_status": null,
       "infrastructure": null,
-      "valuation": 279300,
-      "score": 56,
-      "capped": false,
-      "badges": [],
-      "maxScore": 100
+      "valuation": 59850,
+      "score": 40,
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa"
+      ],
+      "maxScore": 40,
+      "scoreBreakdown": {
+        "discount": 80,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 80,
+        "confidence": 10
+      }
     },
     {
       "id": "ib-por-6",
       "title": "Garagem Porto (Cedofeita) 3",
-      "asset_class": "apartment",
+      "asset_class": "garage",
       "valuation_engine": "hedonic",
       "valuation_confidence": "medium",
       "pdm_status": null,
       "infrastructure": null,
-      "valuation": 279300,
-      "score": 56,
-      "capped": false,
-      "badges": [],
-      "maxScore": 100
+      "valuation": 59850,
+      "score": 40,
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa"
+      ],
+      "maxScore": 40,
+      "scoreBreakdown": {
+        "discount": 80,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 80,
+        "confidence": 10
+      }
     },
     {
       "id": "ib-por-7",
       "title": "Garagem Porto (Cedofeita) 4",
-      "asset_class": "apartment",
+      "asset_class": "garage",
       "valuation_engine": "hedonic",
       "valuation_confidence": "medium",
       "pdm_status": null,
       "infrastructure": null,
-      "valuation": 279300,
-      "score": 56,
-      "capped": false,
-      "badges": [],
-      "maxScore": 100
+      "valuation": 59850,
+      "score": 40,
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa"
+      ],
+      "maxScore": 40,
+      "scoreBreakdown": {
+        "discount": 80,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 80,
+        "confidence": 10
+      }
     },
     {
       "id": "ib-por-8",
@@ -860,35 +1335,60 @@
       "score": 47,
       "capped": false,
       "badges": [],
-      "maxScore": 100
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": 60,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 80,
+        "confidence": 40
+      }
     },
     {
       "id": "ib-por-9",
       "title": "Espaço Comercial Maia",
-      "asset_class": "apartment",
-      "valuation_engine": "hedonic",
-      "valuation_confidence": "medium",
+      "asset_class": "commercial",
+      "valuation_engine": "commercial",
+      "valuation_confidence": "very_low",
       "pdm_status": null,
       "infrastructure": null,
-      "valuation": 252700,
-      "score": 50,
-      "capped": false,
-      "badges": [],
-      "maxScore": 100
+      "valuation": null,
+      "score": 40,
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa"
+      ],
+      "maxScore": 40,
+      "scoreBreakdown": {
+        "discount": 60,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 80,
+        "confidence": 10
+      }
     },
     {
       "id": "ib-por-10",
       "title": "Terreno Urbano Santo Tirso",
-      "asset_class": "apartment",
-      "valuation_engine": "hedonic",
-      "valuation_confidence": "low",
-      "pdm_status": null,
-      "infrastructure": null,
-      "valuation": 263340,
-      "score": 47,
-      "capped": false,
-      "badges": [],
-      "maxScore": 100
+      "asset_class": "urban_land",
+      "valuation_engine": "land_urban",
+      "valuation_confidence": "very_low",
+      "pdm_status": "unknown",
+      "infrastructure": "unknown",
+      "valuation": null,
+      "score": 40,
+      "capped": true,
+      "badges": [
+        "PDM não edificável ou desconhecido"
+      ],
+      "maxScore": 40,
+      "scoreBreakdown": {
+        "discount": 60,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 80,
+        "confidence": 40
+      }
     },
     {
       "id": "ib-bra-1",
@@ -902,77 +1402,131 @@
       "score": 43,
       "capped": false,
       "badges": [],
-      "maxScore": 100
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": 60,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 55,
+        "confidence": 40
+      }
     },
     {
       "id": "ib-bra-2",
       "title": "Arrecadação Vila Nova de Famalicão",
-      "asset_class": "apartment",
+      "asset_class": "mixed",
       "valuation_engine": "hedonic",
       "valuation_confidence": "low",
       "pdm_status": null,
       "infrastructure": null,
       "valuation": 172270,
-      "score": 55,
-      "capped": false,
-      "badges": [],
-      "maxScore": 100
+      "score": 40,
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa"
+      ],
+      "maxScore": 40,
+      "scoreBreakdown": {
+        "discount": 100,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 55,
+        "confidence": 10
+      }
     },
     {
       "id": "ib-bra-3",
       "title": "Lote Terreno Carreira e Bente",
-      "asset_class": "apartment",
-      "valuation_engine": "hedonic",
-      "valuation_confidence": "low",
-      "pdm_status": null,
-      "infrastructure": null,
-      "valuation": 172270,
-      "score": 43,
-      "capped": false,
-      "badges": [],
-      "maxScore": 100
+      "asset_class": "urban_land",
+      "valuation_engine": "land_urban",
+      "valuation_confidence": "very_low",
+      "pdm_status": "unknown",
+      "infrastructure": "unknown",
+      "valuation": null,
+      "score": 40,
+      "capped": true,
+      "badges": [
+        "PDM não edificável ou desconhecido"
+      ],
+      "maxScore": 40,
+      "scoreBreakdown": {
+        "discount": 60,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 55,
+        "confidence": 40
+      }
     },
     {
       "id": "ib-bra-4",
       "title": "Armazém Urgezes, Guimarães",
-      "asset_class": "apartment",
-      "valuation_engine": "hedonic",
-      "valuation_confidence": "medium",
+      "asset_class": "commercial",
+      "valuation_engine": "commercial",
+      "valuation_confidence": "very_low",
       "pdm_status": null,
       "infrastructure": null,
-      "valuation": 172900,
-      "score": 46,
-      "capped": false,
-      "badges": [],
-      "maxScore": 100
+      "valuation": null,
+      "score": 40,
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa"
+      ],
+      "maxScore": 40,
+      "scoreBreakdown": {
+        "discount": 60,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 55,
+        "confidence": 10
+      }
     },
     {
       "id": "ib-bra-5",
       "title": "Terreno Rústico Travassos, Póvoa de Lanhoso",
-      "asset_class": "apartment",
-      "valuation_engine": "hedonic",
+      "asset_class": "rural_land",
+      "valuation_engine": "land_rural",
       "valuation_confidence": "low",
       "pdm_status": null,
       "infrastructure": null,
-      "valuation": 172270,
-      "score": 49,
-      "capped": false,
-      "badges": [],
-      "maxScore": 100
+      "valuation": null,
+      "score": 30,
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa",
+        "Sem rendimento demonstrável"
+      ],
+      "maxScore": 30,
+      "scoreBreakdown": {
+        "discount": 80,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 55,
+        "confidence": 10
+      }
     },
     {
       "id": "ib-bra-6",
       "title": "Terreno Rústico Valdreu, Vila Verde",
-      "asset_class": "apartment",
-      "valuation_engine": "hedonic",
+      "asset_class": "rural_land",
+      "valuation_engine": "land_rural",
       "valuation_confidence": "low",
       "pdm_status": null,
       "infrastructure": null,
-      "valuation": 172270,
-      "score": 55,
-      "capped": false,
-      "badges": [],
-      "maxScore": 100
+      "valuation": null,
+      "score": 30,
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa",
+        "Sem rendimento demonstrável"
+      ],
+      "maxScore": 30,
+      "scoreBreakdown": {
+        "discount": 100,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 55,
+        "confidence": 10
+      }
     },
     {
       "id": "remax-lis-1",
@@ -986,7 +1540,14 @@
       "score": 53,
       "capped": false,
       "badges": [],
-      "maxScore": 100
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": 60,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 100,
+        "confidence": 70
+      }
     },
     {
       "id": "remax-por-1",
@@ -1000,7 +1561,14 @@
       "score": 50,
       "capped": false,
       "badges": [],
-      "maxScore": 100
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": 60,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 80,
+        "confidence": 70
+      }
     },
     {
       "id": "remax-bra-1",
@@ -1014,7 +1582,14 @@
       "score": 40,
       "capped": false,
       "badges": [],
-      "maxScore": 100
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": 40,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 55,
+        "confidence": 70
+      }
     },
     {
       "id": "era-lis-1",
@@ -1028,7 +1603,14 @@
       "score": 53,
       "capped": false,
       "badges": [],
-      "maxScore": 100
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": 60,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 100,
+        "confidence": 70
+      }
     },
     {
       "id": "era-por-1",
@@ -1042,7 +1624,14 @@
       "score": 50,
       "capped": false,
       "badges": [],
-      "maxScore": 100
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": 60,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 80,
+        "confidence": 70
+      }
     },
     {
       "id": "era-bra-1",
@@ -1056,7 +1645,14 @@
       "score": 46,
       "capped": false,
       "badges": [],
-      "maxScore": 100
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": 60,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 55,
+        "confidence": 70
+      }
     },
     {
       "id": "c21-lis-1",
@@ -1070,21 +1666,37 @@
       "score": 53,
       "capped": false,
       "badges": [],
-      "maxScore": 100
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": 60,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 100,
+        "confidence": 70
+      }
     },
     {
       "id": "c21-por-1",
       "title": "Moradia V3 Porto (C21)",
-      "asset_class": "apartment",
+      "asset_class": "house",
       "valuation_engine": "hedonic",
       "valuation_confidence": "medium",
       "pdm_status": null,
       "infrastructure": null,
       "valuation": 349125,
-      "score": 50,
-      "capped": false,
-      "badges": [],
-      "maxScore": 100
+      "score": 40,
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa"
+      ],
+      "maxScore": 40,
+      "scoreBreakdown": {
+        "discount": 60,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 80,
+        "confidence": 10
+      }
     },
     {
       "id": "c21-bra-1",
@@ -1098,7 +1710,14 @@
       "score": 46,
       "capped": false,
       "badges": [],
-      "maxScore": 100
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": 60,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 55,
+        "confidence": 70
+      }
     },
     {
       "id": "kw-lis-1",
@@ -1112,7 +1731,14 @@
       "score": 53,
       "capped": false,
       "badges": [],
-      "maxScore": 100
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": 60,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 100,
+        "confidence": 70
+      }
     },
     {
       "id": "kw-por-1",
@@ -1126,21 +1752,37 @@
       "score": 50,
       "capped": false,
       "badges": [],
-      "maxScore": 100
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": 60,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 80,
+        "confidence": 70
+      }
     },
     {
       "id": "kw-bra-1",
       "title": "Moradia V4 Braga (KW)",
-      "asset_class": "apartment",
+      "asset_class": "house",
       "valuation_engine": "hedonic",
       "valuation_confidence": "medium",
       "pdm_status": null,
       "infrastructure": null,
       "valuation": 255528,
-      "score": 46,
-      "capped": false,
-      "badges": [],
-      "maxScore": 100
+      "score": 40,
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa"
+      ],
+      "maxScore": 40,
+      "scoreBreakdown": {
+        "discount": 60,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 55,
+        "confidence": 10
+      }
     },
     {
       "id": "cb-lis-1",
@@ -1154,7 +1796,14 @@
       "score": 53,
       "capped": false,
       "badges": [],
-      "maxScore": 100
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": 60,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 100,
+        "confidence": 70
+      }
     },
     {
       "id": "cb-por-1",
@@ -1168,7 +1817,14 @@
       "score": 50,
       "capped": false,
       "badges": [],
-      "maxScore": 100
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": 60,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 80,
+        "confidence": 70
+      }
     },
     {
       "id": "olx-lis-1",
@@ -1182,7 +1838,14 @@
       "score": 53,
       "capped": false,
       "badges": [],
-      "maxScore": 100
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": 60,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 100,
+        "confidence": 70
+      }
     },
     {
       "id": "olx-lis-2",
@@ -1196,7 +1859,14 @@
       "score": 47,
       "capped": false,
       "badges": [],
-      "maxScore": 100
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": 40,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 100,
+        "confidence": 70
+      }
     },
     {
       "id": "olx-por-1",
@@ -1210,7 +1880,14 @@
       "score": 50,
       "capped": false,
       "badges": [],
-      "maxScore": 100
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": 60,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 80,
+        "confidence": 70
+      }
     },
     {
       "id": "olx-bra-1",
@@ -1224,7 +1901,14 @@
       "score": 46,
       "capped": false,
       "badges": [],
-      "maxScore": 100
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": 60,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 55,
+        "confidence": 70
+      }
     },
     {
       "id": "cj-lis-1",
@@ -1238,7 +1922,14 @@
       "score": 53,
       "capped": false,
       "badges": [],
-      "maxScore": 100
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": 60,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 100,
+        "confidence": 70
+      }
     },
     {
       "id": "cj-por-1",
@@ -1252,7 +1943,14 @@
       "score": 50,
       "capped": false,
       "badges": [],
-      "maxScore": 100
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": 60,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 80,
+        "confidence": 70
+      }
     },
     {
       "id": "cj-bra-1",
@@ -1266,7 +1964,14 @@
       "score": 46,
       "capped": false,
       "badges": [],
-      "maxScore": 100
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": 60,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 55,
+        "confidence": 70
+      }
     },
     {
       "id": "sc-lis-1",
@@ -1280,7 +1985,14 @@
       "score": 53,
       "capped": false,
       "badges": [],
-      "maxScore": 100
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": 60,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 100,
+        "confidence": 70
+      }
     },
     {
       "id": "sc-por-1",
@@ -1294,7 +2006,14 @@
       "score": 50,
       "capped": false,
       "badges": [],
-      "maxScore": 100
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": 60,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 80,
+        "confidence": 70
+      }
     },
     {
       "id": "sc-bra-1",
@@ -1308,7 +2027,14 @@
       "score": 46,
       "capped": false,
       "badges": [],
-      "maxScore": 100
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": 60,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 55,
+        "confidence": 70
+      }
     },
     {
       "id": "bpi-lis-1",
@@ -1322,21 +2048,37 @@
       "score": 53,
       "capped": false,
       "badges": [],
-      "maxScore": 100
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": 60,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 100,
+        "confidence": 70
+      }
     },
     {
       "id": "bpi-por-1",
       "title": "Moradia V3 Porto (BPI)",
-      "asset_class": "apartment",
+      "asset_class": "house",
       "valuation_engine": "hedonic",
       "valuation_confidence": "medium",
       "pdm_status": null,
       "infrastructure": null,
       "valuation": 349125,
-      "score": 50,
-      "capped": false,
-      "badges": [],
-      "maxScore": 100
+      "score": 40,
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa"
+      ],
+      "maxScore": 40,
+      "scoreBreakdown": {
+        "discount": 60,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 80,
+        "confidence": 10
+      }
     },
     {
       "id": "bpi-bra-1",
@@ -1350,7 +2092,14 @@
       "score": 46,
       "capped": false,
       "badges": [],
-      "maxScore": 100
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": 60,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 55,
+        "confidence": 70
+      }
     },
     {
       "id": "nb-lis-1",
@@ -1364,7 +2113,14 @@
       "score": 53,
       "capped": false,
       "badges": [],
-      "maxScore": 100
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": 60,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 100,
+        "confidence": 70
+      }
     },
     {
       "id": "nb-por-1",
@@ -1378,21 +2134,37 @@
       "score": 50,
       "capped": false,
       "badges": [],
-      "maxScore": 100
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": 60,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 80,
+        "confidence": 70
+      }
     },
     {
       "id": "nb-bra-1",
       "title": "Moradia V3 Braga (Novo Banco)",
-      "asset_class": "apartment",
+      "asset_class": "house",
       "valuation_engine": "hedonic",
       "valuation_confidence": "medium",
       "pdm_status": null,
       "infrastructure": null,
       "valuation": 236600,
-      "score": 46,
-      "capped": false,
-      "badges": [],
-      "maxScore": 100
+      "score": 40,
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa"
+      ],
+      "maxScore": 40,
+      "scoreBreakdown": {
+        "discount": 60,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 55,
+        "confidence": 10
+      }
     },
     {
       "id": "mp-lis-1",
@@ -1406,7 +2178,14 @@
       "score": 47,
       "capped": false,
       "badges": [],
-      "maxScore": 100
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": 40,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 100,
+        "confidence": 70
+      }
     },
     {
       "id": "mp-por-1",
@@ -1420,21 +2199,37 @@
       "score": 50,
       "capped": false,
       "badges": [],
-      "maxScore": 100
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": 60,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 80,
+        "confidence": 70
+      }
     },
     {
       "id": "mp-bra-1",
       "title": "Terreno Braga (Montepio)",
-      "asset_class": "apartment",
+      "asset_class": "mixed",
       "valuation_engine": "hedonic",
       "valuation_confidence": "medium",
       "pdm_status": null,
       "infrastructure": null,
       "valuation": 189280,
-      "score": 52,
-      "capped": false,
-      "badges": [],
-      "maxScore": 100
+      "score": 40,
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa"
+      ],
+      "maxScore": 40,
+      "scoreBreakdown": {
+        "discount": 80,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 55,
+        "confidence": 10
+      }
     },
     {
       "id": "el-lis-1",
@@ -1448,35 +2243,60 @@
       "score": 66,
       "capped": false,
       "badges": [],
-      "maxScore": 100
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": 100,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 100,
+        "confidence": 70
+      }
     },
     {
       "id": "el-por-1",
       "title": "Moradia V3 Porto (Leilão)",
-      "asset_class": "apartment",
+      "asset_class": "house",
       "valuation_engine": "auction",
       "valuation_confidence": "medium",
       "pdm_status": null,
       "infrastructure": null,
       "valuation": 130860,
-      "score": 57,
-      "capped": false,
-      "badges": [],
-      "maxScore": 100
+      "score": 40,
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa"
+      ],
+      "maxScore": 40,
+      "scoreBreakdown": {
+        "discount": 80,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 80,
+        "confidence": 10
+      }
     },
     {
       "id": "el-bra-1",
       "title": "Terreno Braga (Leilão)",
-      "asset_class": "apartment",
+      "asset_class": "mixed",
       "valuation_engine": "auction",
       "valuation_confidence": "medium",
       "pdm_status": null,
       "infrastructure": null,
       "valuation": 47255,
-      "score": 59,
-      "capped": false,
-      "badges": [],
-      "maxScore": 100
+      "score": 40,
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa"
+      ],
+      "maxScore": 40,
+      "scoreBreakdown": {
+        "discount": 100,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 55,
+        "confidence": 10
+      }
     },
     {
       "id": "ls-lis-1",
@@ -1490,35 +2310,60 @@
       "score": 60,
       "capped": false,
       "badges": [],
-      "maxScore": 100
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": 80,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 100,
+        "confidence": 70
+      }
     },
     {
       "id": "ls-por-1",
       "title": "Garagem Porto (Leilosoc)",
-      "asset_class": "apartment",
+      "asset_class": "garage",
       "valuation_engine": "auction",
       "valuation_confidence": "medium",
       "pdm_status": null,
       "infrastructure": null,
       "valuation": 15994,
-      "score": 63,
-      "capped": false,
-      "badges": [],
-      "maxScore": 100
+      "score": 40,
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa"
+      ],
+      "maxScore": 40,
+      "scoreBreakdown": {
+        "discount": 100,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 80,
+        "confidence": 10
+      }
     },
     {
       "id": "ls-bra-1",
       "title": "Moradia V2 Braga (Leilosoc)",
-      "asset_class": "apartment",
+      "asset_class": "house",
       "valuation_engine": "auction",
       "valuation_confidence": "medium",
       "pdm_status": null,
       "infrastructure": null,
       "valuation": 116320,
-      "score": 59,
-      "capped": false,
-      "badges": [],
-      "maxScore": 100
+      "score": 40,
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa"
+      ],
+      "maxScore": 40,
+      "scoreBreakdown": {
+        "discount": 100,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 55,
+        "confidence": 10
+      }
     },
     {
       "id": "est-lis-1",
@@ -1532,35 +2377,60 @@
       "score": 60,
       "capped": false,
       "badges": [],
-      "maxScore": 100
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": 80,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 100,
+        "confidence": 70
+      }
     },
     {
       "id": "est-por-1",
       "title": "Terreno Porto (Hasta Pública)",
-      "asset_class": "apartment",
+      "asset_class": "mixed",
       "valuation_engine": "auction",
       "valuation_confidence": "medium",
       "pdm_status": null,
       "infrastructure": null,
       "valuation": 58160,
-      "score": 63,
-      "capped": false,
-      "badges": [],
-      "maxScore": 100
+      "score": 40,
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa"
+      ],
+      "maxScore": 40,
+      "scoreBreakdown": {
+        "discount": 100,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 80,
+        "confidence": 10
+      }
     },
     {
       "id": "est-bra-1",
       "title": "Loja Braga (Hasta Pública)",
-      "asset_class": "apartment",
+      "asset_class": "commercial",
       "valuation_engine": "auction",
       "valuation_confidence": "medium",
       "pdm_status": null,
       "infrastructure": null,
       "valuation": 47255,
-      "score": 59,
-      "capped": false,
-      "badges": [],
-      "maxScore": 100
+      "score": 40,
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa"
+      ],
+      "maxScore": 40,
+      "scoreBreakdown": {
+        "discount": 100,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 55,
+        "confidence": 10
+      }
     },
     {
       "id": "id-lis-1",
@@ -1574,7 +2444,14 @@
       "score": 59,
       "capped": false,
       "badges": [],
-      "maxScore": 100
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": 80,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 100,
+        "confidence": 70
+      }
     },
     {
       "id": "id-por-1",
@@ -1588,7 +2465,14 @@
       "score": 56,
       "capped": false,
       "badges": [],
-      "maxScore": 100
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": 80,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 80,
+        "confidence": 70
+      }
     },
     {
       "id": "id-bra-1",
@@ -1602,7 +2486,14 @@
       "score": 52,
       "capped": false,
       "badges": [],
-      "maxScore": 100
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": 80,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 55,
+        "confidence": 70
+      }
     },
     {
       "id": "mart-lis-1",
@@ -1616,35 +2507,60 @@
       "score": 66,
       "capped": false,
       "badges": [],
-      "maxScore": 100
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": 100,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 100,
+        "confidence": 70
+      }
     },
     {
       "id": "mart-por-1",
       "title": "Moradia V2 Porto (Martelo)",
-      "asset_class": "apartment",
+      "asset_class": "house",
       "valuation_engine": "auction",
       "valuation_confidence": "medium",
       "pdm_status": null,
       "infrastructure": null,
       "valuation": 127225,
-      "score": 63,
-      "capped": false,
-      "badges": [],
-      "maxScore": 100
+      "score": 40,
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa"
+      ],
+      "maxScore": 40,
+      "scoreBreakdown": {
+        "discount": 100,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 80,
+        "confidence": 10
+      }
     },
     {
       "id": "mart-bra-1",
       "title": "Terreno Braga (Martelo)",
-      "asset_class": "apartment",
+      "asset_class": "mixed",
       "valuation_engine": "auction",
       "valuation_confidence": "medium",
       "pdm_status": null,
       "infrastructure": null,
       "valuation": 39985,
-      "score": 59,
-      "capped": false,
-      "badges": [],
-      "maxScore": 100
+      "score": 40,
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa"
+      ],
+      "maxScore": 40,
+      "scoreBreakdown": {
+        "discount": 100,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 55,
+        "confidence": 10
+      }
     },
     {
       "id": "bidizi-lis-1",
@@ -1658,7 +2574,14 @@
       "score": 54,
       "capped": false,
       "badges": [],
-      "maxScore": 100
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": 60,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 100,
+        "confidence": 70
+      }
     },
     {
       "id": "bidizi-lis-2",
@@ -1672,7 +2595,14 @@
       "score": 54,
       "capped": false,
       "badges": [],
-      "maxScore": 100
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": 60,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 100,
+        "confidence": 70
+      }
     },
     {
       "id": "bidizi-por-1",
@@ -1686,7 +2616,14 @@
       "score": 63,
       "capped": false,
       "badges": [],
-      "maxScore": 100
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": 100,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 80,
+        "confidence": 70
+      }
     },
     {
       "id": "bidizi-por-2",
@@ -1700,7 +2637,14 @@
       "score": 63,
       "capped": false,
       "badges": [],
-      "maxScore": 100
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": 100,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 80,
+        "confidence": 70
+      }
     },
     {
       "id": "bidizi-bra-1",
@@ -1714,21 +2658,37 @@
       "score": 59,
       "capped": false,
       "badges": [],
-      "maxScore": 100
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": 100,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 55,
+        "confidence": 70
+      }
     },
     {
       "id": "bidizi-bra-2",
       "title": "Loja Braga (Execução Fiscal)",
-      "asset_class": "apartment",
+      "asset_class": "commercial",
       "valuation_engine": "auction",
       "valuation_confidence": "medium",
       "pdm_status": null,
       "infrastructure": null,
       "valuation": 79970,
-      "score": 53,
-      "capped": false,
-      "badges": [],
-      "maxScore": 100
+      "score": 40,
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa"
+      ],
+      "maxScore": 40,
+      "scoreBreakdown": {
+        "discount": 80,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 55,
+        "confidence": 10
+      }
     },
     {
       "id": "cs-por-9",
@@ -1742,7 +2702,14 @@
       "score": 50,
       "capped": false,
       "badges": [],
-      "maxScore": 100
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": 60,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 80,
+        "confidence": 70
+      }
     },
     {
       "id": "cs-por-10",
@@ -1756,7 +2723,14 @@
       "score": 50,
       "capped": false,
       "badges": [],
-      "maxScore": 100
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": 60,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 80,
+        "confidence": 70
+      }
     },
     {
       "id": "cs-por-11",
@@ -1770,7 +2744,14 @@
       "score": 50,
       "capped": false,
       "badges": [],
-      "maxScore": 100
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": 60,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 80,
+        "confidence": 70
+      }
     },
     {
       "id": "cs-por-12",
@@ -1784,7 +2765,14 @@
       "score": 44,
       "capped": false,
       "badges": [],
-      "maxScore": 100
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": 40,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 80,
+        "confidence": 70
+      }
     },
     {
       "id": "cs-por-13",
@@ -1798,7 +2786,14 @@
       "score": 44,
       "capped": false,
       "badges": [],
-      "maxScore": 100
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": 40,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 80,
+        "confidence": 70
+      }
     },
     {
       "id": "cs-lis-6",
@@ -1812,7 +2807,14 @@
       "score": 47,
       "capped": false,
       "badges": [],
-      "maxScore": 100
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": 40,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 100,
+        "confidence": 70
+      }
     },
     {
       "id": "cs-lis-7",
@@ -1826,7 +2828,14 @@
       "score": 47,
       "capped": false,
       "badges": [],
-      "maxScore": 100
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": 40,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 100,
+        "confidence": 70
+      }
     },
     {
       "id": "cs-lis-8",
@@ -1840,7 +2849,14 @@
       "score": 47,
       "capped": false,
       "badges": [],
-      "maxScore": 100
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": 40,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 100,
+        "confidence": 70
+      }
     },
     {
       "id": "cs-bra-10",
@@ -1854,7 +2870,14 @@
       "score": 40,
       "capped": false,
       "badges": [],
-      "maxScore": 100
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": 40,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 55,
+        "confidence": 70
+      }
     },
     {
       "id": "cs-bra-11",
@@ -1868,7 +2891,14 @@
       "score": 40,
       "capped": false,
       "badges": [],
-      "maxScore": 100
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": 40,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 55,
+        "confidence": 70
+      }
     },
     {
       "id": "cs-bra-12",
@@ -1882,7 +2912,14 @@
       "score": 40,
       "capped": false,
       "badges": [],
-      "maxScore": 100
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": 40,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 55,
+        "confidence": 70
+      }
     },
     {
       "id": "gen-aveiro-1000",
@@ -1896,63 +2933,106 @@
       "score": 44,
       "capped": false,
       "badges": [],
-      "maxScore": 100
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": 60,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 60,
+        "confidence": 40
+      }
     },
     {
       "id": "gen-aveiro-1001",
       "title": "V3 em Oliveira de Azeméis",
-      "asset_class": "apartment",
+      "asset_class": "house",
       "valuation_engine": "hedonic",
       "valuation_confidence": "low",
       "pdm_status": null,
       "infrastructure": null,
       "valuation": 218400,
-      "score": 50,
-      "capped": false,
-      "badges": [],
-      "maxScore": 100
+      "score": 40,
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa"
+      ],
+      "maxScore": 40,
+      "scoreBreakdown": {
+        "discount": 80,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 60,
+        "confidence": 10
+      }
     },
     {
       "id": "gen-aveiro-1002",
       "title": "Terreno em Estarreja",
-      "asset_class": "apartment",
+      "asset_class": "mixed",
       "valuation_engine": "auction",
       "valuation_confidence": "medium",
       "pdm_status": null,
       "infrastructure": null,
       "valuation": 102071,
-      "score": 54,
-      "capped": false,
-      "badges": [],
-      "maxScore": 100
+      "score": 40,
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa"
+      ],
+      "maxScore": 40,
+      "scoreBreakdown": {
+        "discount": 80,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 60,
+        "confidence": 10
+      }
     },
     {
       "id": "gen-aveiro-1003",
       "title": "V4 em Ovar",
-      "asset_class": "apartment",
+      "asset_class": "house",
       "valuation_engine": "hedonic",
       "valuation_confidence": "low",
       "pdm_status": null,
       "infrastructure": null,
       "valuation": 235872,
-      "score": 38,
-      "capped": false,
-      "badges": [],
-      "maxScore": 100
+      "score": 35,
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa"
+      ],
+      "maxScore": 40,
+      "scoreBreakdown": {
+        "discount": 40,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 60,
+        "confidence": 10
+      }
     },
     {
       "id": "gen-aveiro-1004",
       "title": "V4 em Ovar",
-      "asset_class": "apartment",
+      "asset_class": "house",
       "valuation_engine": "hedonic",
       "valuation_confidence": "low",
       "pdm_status": null,
       "infrastructure": null,
       "valuation": 235872,
-      "score": 56,
-      "capped": false,
-      "badges": [],
-      "maxScore": 100
+      "score": 40,
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa"
+      ],
+      "maxScore": 40,
+      "scoreBreakdown": {
+        "discount": 100,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 60,
+        "confidence": 10
+      }
     },
     {
       "id": "gen-aveiro-1005",
@@ -1966,21 +3046,37 @@
       "score": 44,
       "capped": false,
       "badges": [],
-      "maxScore": 100
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": 60,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 60,
+        "confidence": 40
+      }
     },
     {
       "id": "gen-beja-1006",
       "title": "Armazém em Odemira",
-      "asset_class": "apartment",
-      "valuation_engine": "hedonic",
+      "asset_class": "commercial",
+      "valuation_engine": "commercial",
       "valuation_confidence": "very_low",
       "pdm_status": null,
       "infrastructure": null,
       "valuation": null,
       "score": 38,
-      "capped": false,
-      "badges": [],
-      "maxScore": 100
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa"
+      ],
+      "maxScore": 40,
+      "scoreBreakdown": {
+        "discount": 60,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 40,
+        "confidence": 10
+      }
     },
     {
       "id": "gen-beja-1007",
@@ -1991,24 +3087,42 @@
       "pdm_status": null,
       "infrastructure": null,
       "valuation": null,
-      "score": 50,
-      "capped": false,
-      "badges": [],
-      "maxScore": 100
+      "score": 40,
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa"
+      ],
+      "maxScore": 40,
+      "scoreBreakdown": {
+        "discount": 100,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 40,
+        "confidence": 10
+      }
     },
     {
       "id": "gen-beja-1008",
       "title": "Loja em Serpa",
-      "asset_class": "apartment",
+      "asset_class": "commercial",
       "valuation_engine": "auction",
       "valuation_confidence": "medium",
       "pdm_status": null,
       "infrastructure": null,
       "valuation": 56997,
-      "score": 45,
-      "capped": false,
-      "badges": [],
-      "maxScore": 100
+      "score": 36,
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa"
+      ],
+      "maxScore": 40,
+      "scoreBreakdown": {
+        "discount": 60,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 40,
+        "confidence": 10
+      }
     },
     {
       "id": "gen-beja-1009",
@@ -2020,23 +3134,41 @@
       "infrastructure": null,
       "valuation": null,
       "score": 32,
-      "capped": false,
-      "badges": [],
-      "maxScore": 100
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa"
+      ],
+      "maxScore": 40,
+      "scoreBreakdown": {
+        "discount": 40,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 40,
+        "confidence": 10
+      }
     },
     {
       "id": "gen-braga-1010",
       "title": "Loja em Braga",
-      "asset_class": "apartment",
-      "valuation_engine": "hedonic",
-      "valuation_confidence": "medium",
+      "asset_class": "commercial",
+      "valuation_engine": "commercial",
+      "valuation_confidence": "very_low",
       "pdm_status": null,
       "infrastructure": null,
-      "valuation": 189280,
-      "score": 40,
-      "capped": false,
-      "badges": [],
-      "maxScore": 100
+      "valuation": null,
+      "score": 34,
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa"
+      ],
+      "maxScore": 40,
+      "scoreBreakdown": {
+        "discount": 40,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 55,
+        "confidence": 10
+      }
     },
     {
       "id": "gen-braga-1011",
@@ -2050,7 +3182,14 @@
       "score": 43,
       "capped": false,
       "badges": [],
-      "maxScore": 100
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": 60,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 55,
+        "confidence": 40
+      }
     },
     {
       "id": "gen-braga-1012",
@@ -2064,21 +3203,37 @@
       "score": 43,
       "capped": false,
       "badges": [],
-      "maxScore": 100
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": 60,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 55,
+        "confidence": 40
+      }
     },
     {
       "id": "gen-braga-1013",
       "title": "V4 em Vila Nova de Famalicão",
-      "asset_class": "apartment",
+      "asset_class": "house",
       "valuation_engine": "hedonic",
       "valuation_confidence": "low",
       "pdm_status": null,
       "infrastructure": null,
       "valuation": 232565,
-      "score": 49,
-      "capped": false,
-      "badges": [],
-      "maxScore": 100
+      "score": 40,
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa"
+      ],
+      "maxScore": 40,
+      "scoreBreakdown": {
+        "discount": 80,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 55,
+        "confidence": 10
+      }
     },
     {
       "id": "gen-braga-1014",
@@ -2092,21 +3247,37 @@
       "score": 46,
       "capped": false,
       "badges": [],
-      "maxScore": 100
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": 60,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 55,
+        "confidence": 70
+      }
     },
     {
       "id": "gen-bragança-1015",
       "title": "Armazém em Miranda do Douro",
-      "asset_class": "apartment",
+      "asset_class": "commercial",
       "valuation_engine": "auction",
       "valuation_confidence": "medium",
       "pdm_status": null,
       "infrastructure": null,
       "valuation": 30534,
-      "score": 53,
-      "capped": false,
-      "badges": [],
-      "maxScore": 100
+      "score": 40,
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa"
+      ],
+      "maxScore": 40,
+      "scoreBreakdown": {
+        "discount": 80,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 55,
+        "confidence": 10
+      }
     },
     {
       "id": "gen-bragança-1016",
@@ -2117,24 +3288,40 @@
       "pdm_status": null,
       "infrastructure": null,
       "valuation": 70228,
-      "score": 41,
+      "score": 36,
       "capped": false,
       "badges": [],
-      "maxScore": 100
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": 40,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 55,
+        "confidence": 40
+      }
     },
     {
       "id": "gen-bragança-1017",
       "title": "Terreno em Macedo de Cavaleiros",
-      "asset_class": "apartment",
+      "asset_class": "mixed",
       "valuation_engine": "hedonic",
       "valuation_confidence": "low",
       "pdm_status": null,
       "infrastructure": null,
       "valuation": 101920,
-      "score": 43,
-      "capped": false,
-      "badges": [],
-      "maxScore": 100
+      "score": 40,
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa"
+      ],
+      "maxScore": 40,
+      "scoreBreakdown": {
+        "discount": 60,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 55,
+        "confidence": 10
+      }
     },
     {
       "id": "gen-bragança-1018",
@@ -2145,108 +3332,178 @@
       "pdm_status": null,
       "infrastructure": null,
       "valuation": 68345,
-      "score": 53,
+      "score": 48,
       "capped": false,
       "badges": [],
-      "maxScore": 100
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": 80,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 55,
+        "confidence": 40
+      }
     },
     {
       "id": "gen-castelobranco-1019",
       "title": "Garagem em Fundão",
-      "asset_class": "apartment",
+      "asset_class": "garage",
       "valuation_engine": "hedonic",
       "valuation_confidence": "very_low",
       "pdm_status": null,
       "infrastructure": null,
       "valuation": null,
-      "score": 44,
-      "capped": false,
-      "badges": [],
-      "maxScore": 100
+      "score": 40,
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa"
+      ],
+      "maxScore": 40,
+      "scoreBreakdown": {
+        "discount": 80,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 40,
+        "confidence": 10
+      }
     },
     {
       "id": "gen-castelobranco-1020",
       "title": "Armazém em Castelo Branco",
-      "asset_class": "apartment",
-      "valuation_engine": "hedonic",
+      "asset_class": "commercial",
+      "valuation_engine": "commercial",
       "valuation_confidence": "very_low",
       "pdm_status": null,
       "infrastructure": null,
       "valuation": null,
-      "score": 44,
-      "capped": false,
-      "badges": [],
-      "maxScore": 100
+      "score": 40,
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa"
+      ],
+      "maxScore": 40,
+      "scoreBreakdown": {
+        "discount": 80,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 40,
+        "confidence": 10
+      }
     },
     {
       "id": "gen-castelobranco-1021",
       "title": "V4 em Fundão",
-      "asset_class": "apartment",
+      "asset_class": "house",
       "valuation_engine": "hedonic",
       "valuation_confidence": "very_low",
       "pdm_status": null,
       "infrastructure": null,
       "valuation": null,
       "score": 38,
-      "capped": false,
-      "badges": [],
-      "maxScore": 100
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa"
+      ],
+      "maxScore": 40,
+      "scoreBreakdown": {
+        "discount": 60,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 40,
+        "confidence": 10
+      }
     },
     {
       "id": "gen-coimbra-1022",
       "title": "Terreno em Coimbra",
-      "asset_class": "apartment",
+      "asset_class": "mixed",
       "valuation_engine": "hedonic",
       "valuation_confidence": "medium",
       "pdm_status": null,
       "infrastructure": null,
       "valuation": 160160,
-      "score": 52,
-      "capped": false,
-      "badges": [],
-      "maxScore": 100
+      "score": 40,
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa"
+      ],
+      "maxScore": 40,
+      "scoreBreakdown": {
+        "discount": 80,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 55,
+        "confidence": 10
+      }
     },
     {
       "id": "gen-coimbra-1023",
       "title": "V2 em Lousã",
-      "asset_class": "apartment",
+      "asset_class": "house",
       "valuation_engine": "hedonic",
       "valuation_confidence": "low",
       "pdm_status": null,
       "infrastructure": null,
       "valuation": 184184,
-      "score": 55,
-      "capped": false,
-      "badges": [],
-      "maxScore": 100
+      "score": 40,
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa"
+      ],
+      "maxScore": 40,
+      "scoreBreakdown": {
+        "discount": 100,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 55,
+        "confidence": 10
+      }
     },
     {
       "id": "gen-coimbra-1024",
       "title": "Garagem em Figueira da Foz",
-      "asset_class": "apartment",
+      "asset_class": "garage",
       "valuation_engine": "hedonic",
       "valuation_confidence": "low",
       "pdm_status": null,
       "infrastructure": null,
-      "valuation": 160160,
-      "score": 49,
-      "capped": false,
-      "badges": [],
-      "maxScore": 100
+      "valuation": 34320,
+      "score": 40,
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa"
+      ],
+      "maxScore": 40,
+      "scoreBreakdown": {
+        "discount": 80,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 55,
+        "confidence": 10
+      }
     },
     {
       "id": "gen-coimbra-1025",
       "title": "Armazém em Lousã",
-      "asset_class": "apartment",
-      "valuation_engine": "hedonic",
-      "valuation_confidence": "low",
+      "asset_class": "commercial",
+      "valuation_engine": "commercial",
+      "valuation_confidence": "very_low",
       "pdm_status": null,
       "infrastructure": null,
-      "valuation": 160160,
-      "score": 55,
-      "capped": false,
-      "badges": [],
-      "maxScore": 100
+      "valuation": null,
+      "score": 40,
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa"
+      ],
+      "maxScore": 40,
+      "scoreBreakdown": {
+        "discount": 100,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 55,
+        "confidence": 10
+      }
     },
     {
       "id": "gen-coimbra-1026",
@@ -2260,7 +3517,14 @@
       "score": 52,
       "capped": false,
       "badges": [],
-      "maxScore": 100
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": 80,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 55,
+        "confidence": 70
+      }
     },
     {
       "id": "gen-évora-1027",
@@ -2271,80 +3535,134 @@
       "pdm_status": null,
       "infrastructure": null,
       "valuation": 108759,
-      "score": 41,
-      "capped": false,
-      "badges": [],
-      "maxScore": 100
+      "score": 32,
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa"
+      ],
+      "maxScore": 40,
+      "scoreBreakdown": {
+        "discount": 40,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 55,
+        "confidence": 10
+      }
     },
     {
       "id": "gen-évora-1028",
       "title": "V3 em Estremoz",
-      "asset_class": "apartment",
+      "asset_class": "house",
       "valuation_engine": "hedonic",
       "valuation_confidence": "very_low",
       "pdm_status": null,
       "infrastructure": null,
       "valuation": null,
       "score": 40,
-      "capped": false,
-      "badges": [],
-      "maxScore": 100
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa"
+      ],
+      "maxScore": 40,
+      "scoreBreakdown": {
+        "discount": 60,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 55,
+        "confidence": 10
+      }
     },
     {
       "id": "gen-évora-1029",
       "title": "Terreno em Reguengos de Monsaraz",
-      "asset_class": "apartment",
+      "asset_class": "mixed",
       "valuation_engine": "hedonic",
       "valuation_confidence": "very_low",
       "pdm_status": null,
       "infrastructure": null,
       "valuation": null,
       "score": 40,
-      "capped": false,
-      "badges": [],
-      "maxScore": 100
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa"
+      ],
+      "maxScore": 40,
+      "scoreBreakdown": {
+        "discount": 60,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 55,
+        "confidence": 10
+      }
     },
     {
       "id": "gen-faro-1030",
       "title": "V3 em Loulé",
-      "asset_class": "apartment",
+      "asset_class": "house",
       "valuation_engine": "hedonic",
       "valuation_confidence": "medium",
       "pdm_status": null,
       "infrastructure": null,
       "valuation": 428750,
-      "score": 54,
-      "capped": false,
-      "badges": [],
-      "maxScore": 100
+      "score": 40,
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa"
+      ],
+      "maxScore": 40,
+      "scoreBreakdown": {
+        "discount": 80,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 70,
+        "confidence": 10
+      }
     },
     {
       "id": "gen-faro-1031",
       "title": "V2 em Albufeira",
-      "asset_class": "apartment",
+      "asset_class": "house",
       "valuation_engine": "hedonic",
       "valuation_confidence": "medium",
       "pdm_status": null,
       "infrastructure": null,
       "valuation": 334880,
-      "score": 48,
-      "capped": false,
-      "badges": [],
-      "maxScore": 100
+      "score": 40,
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa"
+      ],
+      "maxScore": 40,
+      "scoreBreakdown": {
+        "discount": 60,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 70,
+        "confidence": 10
+      }
     },
     {
       "id": "gen-faro-1032",
       "title": "Terreno em Tavira",
-      "asset_class": "apartment",
+      "asset_class": "mixed",
       "valuation_engine": "hedonic",
       "valuation_confidence": "medium",
       "pdm_status": null,
       "infrastructure": null,
       "valuation": 268800,
-      "score": 42,
-      "capped": false,
-      "badges": [],
-      "maxScore": 100
+      "score": 36,
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa"
+      ],
+      "maxScore": 40,
+      "scoreBreakdown": {
+        "discount": 40,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 70,
+        "confidence": 10
+      }
     },
     {
       "id": "gen-faro-1033",
@@ -2358,35 +3676,60 @@
       "score": 42,
       "capped": false,
       "badges": [],
-      "maxScore": 100
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": 40,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 70,
+        "confidence": 70
+      }
     },
     {
       "id": "gen-faro-1034",
       "title": "Garagem em Portimão",
-      "asset_class": "apartment",
+      "asset_class": "garage",
       "valuation_engine": "hedonic",
       "valuation_confidence": "low",
       "pdm_status": null,
       "infrastructure": null,
-      "valuation": 292740,
-      "score": 39,
-      "capped": false,
-      "badges": [],
-      "maxScore": 100
+      "valuation": 62730,
+      "score": 36,
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa"
+      ],
+      "maxScore": 40,
+      "scoreBreakdown": {
+        "discount": 40,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 70,
+        "confidence": 10
+      }
     },
     {
       "id": "gen-guarda-1035",
       "title": "V2 em Trancoso",
-      "asset_class": "apartment",
+      "asset_class": "house",
       "valuation_engine": "hedonic",
       "valuation_confidence": "very_low",
       "pdm_status": null,
       "infrastructure": null,
       "valuation": null,
-      "score": 44,
-      "capped": false,
-      "badges": [],
-      "maxScore": 100
+      "score": 40,
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa"
+      ],
+      "maxScore": 40,
+      "scoreBreakdown": {
+        "discount": 80,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 40,
+        "confidence": 10
+      }
     },
     {
       "id": "gen-guarda-1036",
@@ -2398,37 +3741,64 @@
       "infrastructure": null,
       "valuation": null,
       "score": 32,
-      "capped": false,
-      "badges": [],
-      "maxScore": 100
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa"
+      ],
+      "maxScore": 40,
+      "scoreBreakdown": {
+        "discount": 40,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 40,
+        "confidence": 10
+      }
     },
     {
       "id": "gen-guarda-1037",
       "title": "V3 em Gouveia",
-      "asset_class": "apartment",
+      "asset_class": "house",
       "valuation_engine": "hedonic",
       "valuation_confidence": "very_low",
       "pdm_status": null,
       "infrastructure": null,
       "valuation": null,
-      "score": 44,
-      "capped": false,
-      "badges": [],
-      "maxScore": 100
+      "score": 40,
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa"
+      ],
+      "maxScore": 40,
+      "scoreBreakdown": {
+        "discount": 80,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 40,
+        "confidence": 10
+      }
     },
     {
       "id": "gen-leiria-1038",
       "title": "Terreno em Peniche",
-      "asset_class": "apartment",
+      "asset_class": "mixed",
       "valuation_engine": "hedonic",
       "valuation_confidence": "very_low",
       "pdm_status": null,
       "infrastructure": null,
       "valuation": null,
-      "score": 52,
-      "capped": false,
-      "badges": [],
-      "maxScore": 100
+      "score": 40,
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa"
+      ],
+      "maxScore": 40,
+      "scoreBreakdown": {
+        "discount": 100,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 55,
+        "confidence": 10
+      }
     },
     {
       "id": "gen-leiria-1039",
@@ -2440,23 +3810,41 @@
       "infrastructure": null,
       "valuation": null,
       "score": 40,
-      "capped": false,
-      "badges": [],
-      "maxScore": 100
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa"
+      ],
+      "maxScore": 40,
+      "scoreBreakdown": {
+        "discount": 60,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 55,
+        "confidence": 10
+      }
     },
     {
       "id": "gen-leiria-1040",
       "title": "Loja em Nazaré",
-      "asset_class": "apartment",
-      "valuation_engine": "hedonic",
+      "asset_class": "commercial",
+      "valuation_engine": "commercial",
       "valuation_confidence": "very_low",
       "pdm_status": null,
       "infrastructure": null,
       "valuation": null,
       "score": 34,
-      "capped": false,
-      "badges": [],
-      "maxScore": 100
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa"
+      ],
+      "maxScore": 40,
+      "scoreBreakdown": {
+        "discount": 40,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 55,
+        "confidence": 10
+      }
     },
     {
       "id": "gen-lisboa-1041",
@@ -2470,49 +3858,83 @@
       "score": 62,
       "capped": false,
       "badges": [],
-      "maxScore": 100
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": 100,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 100,
+        "confidence": 40
+      }
     },
     {
       "id": "gen-lisboa-1042",
       "title": "Garagem em Sintra",
-      "asset_class": "apartment",
+      "asset_class": "garage",
       "valuation_engine": "hedonic",
       "valuation_confidence": "medium",
       "pdm_status": null,
       "infrastructure": null,
-      "valuation": 345800,
-      "score": 53,
-      "capped": false,
-      "badges": [],
-      "maxScore": 100
+      "valuation": 74100,
+      "score": 40,
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa"
+      ],
+      "maxScore": 40,
+      "scoreBreakdown": {
+        "discount": 60,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 100,
+        "confidence": 10
+      }
     },
     {
       "id": "gen-lisboa-1043",
       "title": "V3 em Amadora",
-      "asset_class": "apartment",
+      "asset_class": "house",
       "valuation_engine": "hedonic",
       "valuation_confidence": "medium",
       "pdm_status": null,
       "infrastructure": null,
       "valuation": 386750,
-      "score": 47,
-      "capped": false,
-      "badges": [],
-      "maxScore": 100
+      "score": 40,
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa"
+      ],
+      "maxScore": 40,
+      "scoreBreakdown": {
+        "discount": 40,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 100,
+        "confidence": 10
+      }
     },
     {
       "id": "gen-portalegre-1044",
       "title": "V2 em Campo Maior",
-      "asset_class": "apartment",
+      "asset_class": "house",
       "valuation_engine": "hedonic",
       "valuation_confidence": "very_low",
       "pdm_status": null,
       "infrastructure": null,
       "valuation": null,
-      "score": 50,
-      "capped": false,
-      "badges": [],
-      "maxScore": 100
+      "score": 40,
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa"
+      ],
+      "maxScore": 40,
+      "scoreBreakdown": {
+        "discount": 100,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 40,
+        "confidence": 10
+      }
     },
     {
       "id": "gen-portalegre-1045",
@@ -2523,24 +3945,42 @@
       "pdm_status": null,
       "infrastructure": null,
       "valuation": null,
-      "score": 44,
-      "capped": false,
-      "badges": [],
-      "maxScore": 100
+      "score": 40,
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa"
+      ],
+      "maxScore": 40,
+      "scoreBreakdown": {
+        "discount": 80,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 40,
+        "confidence": 10
+      }
     },
     {
       "id": "gen-portalegre-1046",
       "title": "Garagem em Campo Maior",
-      "asset_class": "apartment",
+      "asset_class": "garage",
       "valuation_engine": "hedonic",
       "valuation_confidence": "very_low",
       "pdm_status": null,
       "infrastructure": null,
       "valuation": null,
-      "score": 44,
-      "capped": false,
-      "badges": [],
-      "maxScore": 100
+      "score": 40,
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa"
+      ],
+      "maxScore": 40,
+      "scoreBreakdown": {
+        "discount": 80,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 40,
+        "confidence": 10
+      }
     },
     {
       "id": "gen-portalegre-1047",
@@ -2551,10 +3991,19 @@
       "pdm_status": null,
       "infrastructure": null,
       "valuation": 84208,
-      "score": 51,
-      "capped": false,
-      "badges": [],
-      "maxScore": 100
+      "score": 40,
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa"
+      ],
+      "maxScore": 40,
+      "scoreBreakdown": {
+        "discount": 80,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 40,
+        "confidence": 10
+      }
     },
     {
       "id": "gen-portalegre-1048",
@@ -2566,9 +4015,18 @@
       "infrastructure": null,
       "valuation": null,
       "score": 32,
-      "capped": false,
-      "badges": [],
-      "maxScore": 100
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa"
+      ],
+      "maxScore": 40,
+      "scoreBreakdown": {
+        "discount": 40,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 40,
+        "confidence": 10
+      }
     },
     {
       "id": "gen-porto-1049",
@@ -2582,7 +4040,14 @@
       "score": 45,
       "capped": false,
       "badges": [],
-      "maxScore": 100
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": 40,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 80,
+        "confidence": 70
+      }
     },
     {
       "id": "gen-porto-1050",
@@ -2596,21 +4061,37 @@
       "score": 53,
       "capped": false,
       "badges": [],
-      "maxScore": 100
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": 80,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 80,
+        "confidence": 40
+      }
     },
     {
       "id": "gen-porto-1051",
       "title": "Armazém em Vila do Conde",
-      "asset_class": "apartment",
-      "valuation_engine": "hedonic",
-      "valuation_confidence": "low",
+      "asset_class": "commercial",
+      "valuation_engine": "commercial",
+      "valuation_confidence": "very_low",
       "pdm_status": null,
       "infrastructure": null,
-      "valuation": 263340,
-      "score": 53,
-      "capped": false,
-      "badges": [],
-      "maxScore": 100
+      "valuation": null,
+      "score": 40,
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa"
+      ],
+      "maxScore": 40,
+      "scoreBreakdown": {
+        "discount": 80,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 80,
+        "confidence": 10
+      }
     },
     {
       "id": "gen-porto-1052",
@@ -2624,7 +4105,14 @@
       "score": 50,
       "capped": false,
       "badges": [],
-      "maxScore": 100
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": 60,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 80,
+        "confidence": 70
+      }
     },
     {
       "id": "gen-porto-1053",
@@ -2638,63 +4126,106 @@
       "score": 50,
       "capped": false,
       "badges": [],
-      "maxScore": 100
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": 60,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 80,
+        "confidence": 70
+      }
     },
     {
       "id": "gen-porto-1054",
       "title": "Garagem em Vila Nova de Gaia",
-      "asset_class": "apartment",
+      "asset_class": "garage",
       "valuation_engine": "auction",
       "valuation_confidence": "medium",
       "pdm_status": null,
       "infrastructure": null,
       "valuation": 6216,
-      "score": 57,
-      "capped": false,
-      "badges": [],
-      "maxScore": 100
+      "score": 40,
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa"
+      ],
+      "maxScore": 40,
+      "scoreBreakdown": {
+        "discount": 80,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 80,
+        "confidence": 10
+      }
     },
     {
       "id": "gen-santarém-1055",
       "title": "V4 em Santarém",
-      "asset_class": "apartment",
+      "asset_class": "house",
       "valuation_engine": "hedonic",
       "valuation_confidence": "very_low",
       "pdm_status": null,
       "infrastructure": null,
       "valuation": null,
       "score": 40,
-      "capped": false,
-      "badges": [],
-      "maxScore": 100
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa"
+      ],
+      "maxScore": 40,
+      "scoreBreakdown": {
+        "discount": 60,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 55,
+        "confidence": 10
+      }
     },
     {
       "id": "gen-santarém-1056",
       "title": "Loja em Entroncamento",
-      "asset_class": "apartment",
+      "asset_class": "commercial",
+      "valuation_engine": "commercial",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "valuation": null,
+      "score": 40,
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa"
+      ],
+      "maxScore": 40,
+      "scoreBreakdown": {
+        "discount": 60,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 55,
+        "confidence": 10
+      }
+    },
+    {
+      "id": "gen-santarém-1057",
+      "title": "V3 em Abrantes",
+      "asset_class": "house",
       "valuation_engine": "hedonic",
       "valuation_confidence": "very_low",
       "pdm_status": null,
       "infrastructure": null,
       "valuation": null,
       "score": 40,
-      "capped": false,
-      "badges": [],
-      "maxScore": 100
-    },
-    {
-      "id": "gen-santarém-1057",
-      "title": "V3 em Abrantes",
-      "asset_class": "apartment",
-      "valuation_engine": "hedonic",
-      "valuation_confidence": "very_low",
-      "pdm_status": null,
-      "infrastructure": null,
-      "valuation": null,
-      "score": 52,
-      "capped": false,
-      "badges": [],
-      "maxScore": 100
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa"
+      ],
+      "maxScore": 40,
+      "scoreBreakdown": {
+        "discount": 100,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 55,
+        "confidence": 10
+      }
     },
     {
       "id": "gen-santarém-1058",
@@ -2705,24 +4236,42 @@
       "pdm_status": null,
       "infrastructure": null,
       "valuation": 67655,
-      "score": 53,
-      "capped": false,
-      "badges": [],
-      "maxScore": 100
+      "score": 40,
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa"
+      ],
+      "maxScore": 40,
+      "scoreBreakdown": {
+        "discount": 80,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 55,
+        "confidence": 10
+      }
     },
     {
       "id": "gen-santarém-1059",
       "title": "V2 em Rio Maior",
-      "asset_class": "apartment",
+      "asset_class": "house",
       "valuation_engine": "hedonic",
       "valuation_confidence": "very_low",
       "pdm_status": null,
       "infrastructure": null,
       "valuation": null,
       "score": 34,
-      "capped": false,
-      "badges": [],
-      "maxScore": 100
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa"
+      ],
+      "maxScore": 40,
+      "scoreBreakdown": {
+        "discount": 40,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 55,
+        "confidence": 10
+      }
     },
     {
       "id": "gen-setúbal-1060",
@@ -2736,35 +4285,60 @@
       "score": 59,
       "capped": false,
       "badges": [],
-      "maxScore": 100
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": 100,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 55,
+        "confidence": 70
+      }
     },
     {
       "id": "gen-setúbal-1061",
       "title": "V4 em Setúbal",
-      "asset_class": "apartment",
+      "asset_class": "house",
       "valuation_engine": "hedonic",
       "valuation_confidence": "medium",
       "pdm_status": null,
       "infrastructure": null,
       "valuation": 309960,
-      "score": 52,
-      "capped": false,
-      "badges": [],
-      "maxScore": 100
+      "score": 40,
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa"
+      ],
+      "maxScore": 40,
+      "scoreBreakdown": {
+        "discount": 80,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 55,
+        "confidence": 10
+      }
     },
     {
       "id": "gen-setúbal-1062",
       "title": "V4 em Almada",
-      "asset_class": "apartment",
+      "asset_class": "house",
       "valuation_engine": "hedonic",
       "valuation_confidence": "medium",
       "pdm_status": null,
       "infrastructure": null,
       "valuation": 341145,
-      "score": 40,
-      "capped": false,
-      "badges": [],
-      "maxScore": 100
+      "score": 34,
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa"
+      ],
+      "maxScore": 40,
+      "scoreBreakdown": {
+        "discount": 40,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 55,
+        "confidence": 10
+      }
     },
     {
       "id": "gen-setúbal-1063",
@@ -2778,21 +4352,37 @@
       "score": 41,
       "capped": false,
       "badges": [],
-      "maxScore": 100
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": 40,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 55,
+        "confidence": 70
+      }
     },
     {
       "id": "gen-setúbal-1064",
       "title": "V2 em Moita",
-      "asset_class": "apartment",
+      "asset_class": "house",
       "valuation_engine": "hedonic",
       "valuation_confidence": "low",
       "pdm_status": null,
       "infrastructure": null,
       "valuation": 286017,
-      "score": 55,
-      "capped": false,
-      "badges": [],
-      "maxScore": 100
+      "score": 40,
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa"
+      ],
+      "maxScore": 40,
+      "scoreBreakdown": {
+        "discount": 100,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 55,
+        "confidence": 10
+      }
     },
     {
       "id": "gen-setúbal-1065",
@@ -2806,7 +4396,14 @@
       "score": 52,
       "capped": false,
       "badges": [],
-      "maxScore": 100
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": 80,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 55,
+        "confidence": 70
+      }
     },
     {
       "id": "gen-vianadocastelo-1066",
@@ -2818,23 +4415,41 @@
       "infrastructure": null,
       "valuation": null,
       "score": 40,
-      "capped": false,
-      "badges": [],
-      "maxScore": 100
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa"
+      ],
+      "maxScore": 40,
+      "scoreBreakdown": {
+        "discount": 60,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 55,
+        "confidence": 10
+      }
     },
     {
       "id": "gen-vianadocastelo-1067",
       "title": "Terreno em Melgaço",
-      "asset_class": "apartment",
+      "asset_class": "mixed",
       "valuation_engine": "hedonic",
       "valuation_confidence": "very_low",
       "pdm_status": null,
       "infrastructure": null,
       "valuation": null,
-      "score": 46,
-      "capped": false,
-      "badges": [],
-      "maxScore": 100
+      "score": 40,
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa"
+      ],
+      "maxScore": 40,
+      "scoreBreakdown": {
+        "discount": 80,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 55,
+        "confidence": 10
+      }
     },
     {
       "id": "gen-vianadocastelo-1068",
@@ -2846,65 +4461,110 @@
       "infrastructure": null,
       "valuation": null,
       "score": 34,
-      "capped": false,
-      "badges": [],
-      "maxScore": 100
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa"
+      ],
+      "maxScore": 40,
+      "scoreBreakdown": {
+        "discount": 40,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 55,
+        "confidence": 10
+      }
     },
     {
       "id": "gen-vianadocastelo-1069",
       "title": "Garagem em Caminha",
-      "asset_class": "apartment",
+      "asset_class": "garage",
       "valuation_engine": "hedonic",
       "valuation_confidence": "very_low",
       "pdm_status": null,
       "infrastructure": null,
       "valuation": null,
       "score": 40,
-      "capped": false,
-      "badges": [],
-      "maxScore": 100
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa"
+      ],
+      "maxScore": 40,
+      "scoreBreakdown": {
+        "discount": 60,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 55,
+        "confidence": 10
+      }
     },
     {
       "id": "gen-vianadocastelo-1070",
       "title": "V4 em Viana do Castelo",
-      "asset_class": "apartment",
+      "asset_class": "house",
       "valuation_engine": "auction",
       "valuation_confidence": "medium",
       "pdm_status": null,
       "infrastructure": null,
       "valuation": 346844,
-      "score": 47,
-      "capped": false,
-      "badges": [],
-      "maxScore": 100
+      "score": 38,
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa"
+      ],
+      "maxScore": 40,
+      "scoreBreakdown": {
+        "discount": 60,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 55,
+        "confidence": 10
+      }
     },
     {
       "id": "gen-vilareal-1071",
       "title": "V3 em Valpaços",
-      "asset_class": "apartment",
+      "asset_class": "house",
       "valuation_engine": "hedonic",
       "valuation_confidence": "very_low",
       "pdm_status": null,
       "infrastructure": null,
       "valuation": null,
       "score": 33,
-      "capped": false,
-      "badges": [],
-      "maxScore": 100
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa"
+      ],
+      "maxScore": 40,
+      "scoreBreakdown": {
+        "discount": 40,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 50,
+        "confidence": 10
+      }
     },
     {
       "id": "gen-vilareal-1072",
       "title": "Garagem em Vila Real",
-      "asset_class": "apartment",
+      "asset_class": "garage",
       "valuation_engine": "hedonic",
       "valuation_confidence": "very_low",
       "pdm_status": null,
       "infrastructure": null,
       "valuation": null,
       "score": 39,
-      "capped": false,
-      "badges": [],
-      "maxScore": 100
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa"
+      ],
+      "maxScore": 40,
+      "scoreBreakdown": {
+        "discount": 60,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 50,
+        "confidence": 10
+      }
     },
     {
       "id": "gen-vilareal-1073",
@@ -2916,9 +4576,18 @@
       "infrastructure": null,
       "valuation": null,
       "score": 39,
-      "capped": false,
-      "badges": [],
-      "maxScore": 100
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa"
+      ],
+      "maxScore": 40,
+      "scoreBreakdown": {
+        "discount": 60,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 50,
+        "confidence": 10
+      }
     },
     {
       "id": "gen-vilareal-1074",
@@ -2930,9 +4599,18 @@
       "infrastructure": null,
       "valuation": null,
       "score": 33,
-      "capped": false,
-      "badges": [],
-      "maxScore": 100
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa"
+      ],
+      "maxScore": 40,
+      "scoreBreakdown": {
+        "discount": 40,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 50,
+        "confidence": 10
+      }
     },
     {
       "id": "gen-vilareal-1075",
@@ -2944,9 +4622,18 @@
       "infrastructure": null,
       "valuation": null,
       "score": 39,
-      "capped": false,
-      "badges": [],
-      "maxScore": 100
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa"
+      ],
+      "maxScore": 40,
+      "scoreBreakdown": {
+        "discount": 60,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 50,
+        "confidence": 10
+      }
     },
     {
       "id": "gen-viseu-1076",
@@ -2958,23 +4645,41 @@
       "infrastructure": null,
       "valuation": null,
       "score": 39,
-      "capped": false,
-      "badges": [],
-      "maxScore": 100
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa"
+      ],
+      "maxScore": 40,
+      "scoreBreakdown": {
+        "discount": 60,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 50,
+        "confidence": 10
+      }
     },
     {
       "id": "gen-viseu-1077",
       "title": "V2 em Nelas",
-      "asset_class": "apartment",
+      "asset_class": "house",
       "valuation_engine": "auction",
       "valuation_confidence": "medium",
       "pdm_status": null,
       "infrastructure": null,
       "valuation": 170554,
-      "score": 46,
-      "capped": false,
-      "badges": [],
-      "maxScore": 100
+      "score": 37,
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa"
+      ],
+      "maxScore": 40,
+      "scoreBreakdown": {
+        "discount": 60,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 50,
+        "confidence": 10
+      }
     },
     {
       "id": "gen-viseu-1078",
@@ -2985,24 +4690,42 @@
       "pdm_status": null,
       "infrastructure": null,
       "valuation": null,
-      "score": 45,
-      "capped": false,
-      "badges": [],
-      "maxScore": 100
+      "score": 40,
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa"
+      ],
+      "maxScore": 40,
+      "scoreBreakdown": {
+        "discount": 80,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 50,
+        "confidence": 10
+      }
     },
     {
       "id": "gen-açores-1079",
       "title": "Armazém em Lagoa",
-      "asset_class": "apartment",
-      "valuation_engine": "hedonic",
+      "asset_class": "commercial",
+      "valuation_engine": "commercial",
       "valuation_confidence": "very_low",
       "pdm_status": null,
       "infrastructure": null,
       "valuation": null,
       "score": 40,
-      "capped": false,
-      "badges": [],
-      "maxScore": 100
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa"
+      ],
+      "maxScore": 40,
+      "scoreBreakdown": {
+        "discount": 60,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 55,
+        "confidence": 10
+      }
     },
     {
       "id": "gen-açores-1080",
@@ -3013,10 +4736,19 @@
       "pdm_status": null,
       "infrastructure": null,
       "valuation": 100326,
-      "score": 41,
-      "capped": false,
-      "badges": [],
-      "maxScore": 100
+      "score": 32,
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa"
+      ],
+      "maxScore": 40,
+      "scoreBreakdown": {
+        "discount": 40,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 55,
+        "confidence": 10
+      }
     },
     {
       "id": "gen-açores-1081",
@@ -3027,10 +4759,19 @@
       "pdm_status": null,
       "infrastructure": null,
       "valuation": 116756,
-      "score": 53,
-      "capped": false,
-      "badges": [],
-      "maxScore": 100
+      "score": 40,
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa"
+      ],
+      "maxScore": 40,
+      "scoreBreakdown": {
+        "discount": 80,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 55,
+        "confidence": 10
+      }
     },
     {
       "id": "gen-açores-1082",
@@ -3041,24 +4782,42 @@
       "pdm_status": null,
       "infrastructure": null,
       "valuation": null,
-      "score": 46,
-      "capped": false,
-      "badges": [],
-      "maxScore": 100
+      "score": 40,
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa"
+      ],
+      "maxScore": 40,
+      "scoreBreakdown": {
+        "discount": 80,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 55,
+        "confidence": 10
+      }
     },
     {
       "id": "gen-açores-1083",
       "title": "Terreno em Ponta Delgada",
-      "asset_class": "apartment",
+      "asset_class": "mixed",
       "valuation_engine": "auction",
       "valuation_confidence": "medium",
       "pdm_status": null,
       "infrastructure": null,
       "valuation": 37804,
-      "score": 59,
-      "capped": false,
-      "badges": [],
-      "maxScore": 100
+      "score": 40,
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa"
+      ],
+      "maxScore": 40,
+      "scoreBreakdown": {
+        "discount": 100,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 55,
+        "confidence": 10
+      }
     },
     {
       "id": "gen-madeira-1084",
@@ -3069,10 +4828,19 @@
       "pdm_status": null,
       "infrastructure": null,
       "valuation": 190532,
-      "score": 46,
-      "capped": false,
-      "badges": [],
-      "maxScore": 100
+      "score": 37,
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa"
+      ],
+      "maxScore": 40,
+      "scoreBreakdown": {
+        "discount": 60,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 50,
+        "confidence": 10
+      }
     },
     {
       "id": "gen-madeira-1085",
@@ -3083,10 +4851,19 @@
       "pdm_status": null,
       "infrastructure": null,
       "valuation": null,
-      "score": 51,
-      "capped": false,
-      "badges": [],
-      "maxScore": 100
+      "score": 40,
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa"
+      ],
+      "maxScore": 40,
+      "scoreBreakdown": {
+        "discount": 100,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 50,
+        "confidence": 10
+      }
     },
     {
       "id": "gen-madeira-1086",
@@ -3098,9 +4875,18 @@
       "infrastructure": null,
       "valuation": null,
       "score": 39,
-      "capped": false,
-      "badges": [],
-      "maxScore": 100
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa"
+      ],
+      "maxScore": 40,
+      "scoreBreakdown": {
+        "discount": 60,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 50,
+        "confidence": 10
+      }
     },
     {
       "id": "gen-madeira-1087",
@@ -3112,9 +4898,18 @@
       "infrastructure": null,
       "valuation": null,
       "score": 39,
-      "capped": false,
-      "badges": [],
-      "maxScore": 100
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa"
+      ],
+      "maxScore": 40,
+      "scoreBreakdown": {
+        "discount": 60,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 50,
+        "confidence": 10
+      }
     },
     {
       "id": "cs-lis-real-1",
@@ -3128,7 +4923,14 @@
       "score": 53,
       "capped": false,
       "badges": [],
-      "maxScore": 100
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": 60,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 100,
+        "confidence": 70
+      }
     },
     {
       "id": "cs-lis-real-2",
@@ -3142,7 +4944,14 @@
       "score": 53,
       "capped": false,
       "badges": [],
-      "maxScore": 100
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": 60,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 100,
+        "confidence": 70
+      }
     },
     {
       "id": "cs-lis-real-3",
@@ -3156,7 +4965,14 @@
       "score": 53,
       "capped": false,
       "badges": [],
-      "maxScore": 100
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": 60,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 100,
+        "confidence": 70
+      }
     },
     {
       "id": "cs-lis-real-4",
@@ -3170,7 +4986,14 @@
       "score": 53,
       "capped": false,
       "badges": [],
-      "maxScore": 100
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": 60,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 100,
+        "confidence": 70
+      }
     },
     {
       "id": "cs-por-real-1",
@@ -3184,7 +5007,14 @@
       "score": 50,
       "capped": false,
       "badges": [],
-      "maxScore": 100
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": 60,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 80,
+        "confidence": 70
+      }
     },
     {
       "id": "cs-por-real-2",
@@ -3198,7 +5028,14 @@
       "score": 44,
       "capped": false,
       "badges": [],
-      "maxScore": 100
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": 40,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 80,
+        "confidence": 70
+      }
     },
     {
       "id": "cs-por-real-3",
@@ -3212,7 +5049,14 @@
       "score": 50,
       "capped": false,
       "badges": [],
-      "maxScore": 100
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": 60,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 80,
+        "confidence": 70
+      }
     },
     {
       "id": "cs-bra-real-1",
@@ -3226,7 +5070,14 @@
       "score": 40,
       "capped": false,
       "badges": [],
-      "maxScore": 100
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": 40,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 55,
+        "confidence": 70
+      }
     },
     {
       "id": "cs-bra-real-2",
@@ -3240,7 +5091,14 @@
       "score": 40,
       "capped": false,
       "badges": [],
-      "maxScore": 100
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": 40,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 55,
+        "confidence": 70
+      }
     },
     {
       "id": "cs-bra-real-3",
@@ -3254,7 +5112,14 @@
       "score": 40,
       "capped": false,
       "badges": [],
-      "maxScore": 100
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": 40,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 55,
+        "confidence": 70
+      }
     },
     {
       "id": "iv-lis-1",
@@ -3268,7 +5133,14 @@
       "score": 59,
       "capped": false,
       "badges": [],
-      "maxScore": 100
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": 80,
+        "pricePerSqm": 50,
+        "yield": 0,
+        "liquidity": 100,
+        "confidence": 70
+      }
     }
   ]
 }

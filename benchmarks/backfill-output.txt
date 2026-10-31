@@ -1,0 +1,30 @@
+A ler imóveis ativos da BD...
+Total de imóveis ativos: 212
+
+=== BACKFILL DE CLASSIFICAÇÃO ===
+Data: 2026-10-31T11:27:07.751Z
+Total de imóveis ativos: 212
+Novamente classificados (eram null): 212
+Já tinham asset_class preenchido: 0
+
+--- Distribuição de asset_class APÓS backfill ---
+  apartment: 128 (60.4%)
+  house: 29 (13.7%)
+  garage: 19 (9.0%)
+  commercial: 17 (8.0%)
+  mixed: 14 (6.6%)
+  rural_land: 3 (1.4%)
+  urban_land: 2 (0.9%)
+
+--- pending_review (mixed): 14 ---
+
+--- Leilões reclassificados (eram apartment, agora outro tipo) ---
+  house | V3 | Moradia V3 Porto (Leilão)
+  mixed | Terreno | Terreno Braga (Leilão)
+  garage | Garagem | Garagem Porto (Leilosoc)
+  house | V2 | Moradia V2 Braga (Leilosoc)
+  mixed | Terreno | Terreno Porto (Hasta Pública)
+  ... e mais 11
+
+
+JSON escrito em: C:\Users\smpsa\RadarPro\benchmarks\backfill-2026-10-31.json

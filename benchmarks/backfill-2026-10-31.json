@@ -1,0 +1,3936 @@
+{
+  "generatedAt": "2026-10-31T11:27:07.751Z",
+  "totalImoveis": 212,
+  "newlyClassified": 212,
+  "alreadyClassified": 0,
+  "assetClassAfter": {
+    "apartment": 128,
+    "garage": 19,
+    "commercial": 17,
+    "mixed": 14,
+    "rural_land": 3,
+    "urban_land": 2,
+    "house": 29
+  },
+  "pendingReviewCount": 14,
+  "auctionReclassifications": [
+    {
+      "id": "el-por-1",
+      "title": "Moradia V3 Porto (Leilão)",
+      "type": "V3",
+      "newAssetClass": "house"
+    },
+    {
+      "id": "el-bra-1",
+      "title": "Terreno Braga (Leilão)",
+      "type": "Terreno",
+      "newAssetClass": "mixed"
+    },
+    {
+      "id": "ls-por-1",
+      "title": "Garagem Porto (Leilosoc)",
+      "type": "Garagem",
+      "newAssetClass": "garage"
+    },
+    {
+      "id": "ls-bra-1",
+      "title": "Moradia V2 Braga (Leilosoc)",
+      "type": "V2",
+      "newAssetClass": "house"
+    },
+    {
+      "id": "est-por-1",
+      "title": "Terreno Porto (Hasta Pública)",
+      "type": "Terreno",
+      "newAssetClass": "mixed"
+    },
+    {
+      "id": "est-bra-1",
+      "title": "Loja Braga (Hasta Pública)",
+      "type": "Loja",
+      "newAssetClass": "commercial"
+    },
+    {
+      "id": "mart-por-1",
+      "title": "Moradia V2 Porto (Martelo)",
+      "type": "V2",
+      "newAssetClass": "house"
+    },
+    {
+      "id": "mart-bra-1",
+      "title": "Terreno Braga (Martelo)",
+      "type": "Terreno",
+      "newAssetClass": "mixed"
+    },
+    {
+      "id": "bidizi-bra-2",
+      "title": "Loja Braga (Execução Fiscal)",
+      "type": "Loja",
+      "newAssetClass": "commercial"
+    },
+    {
+      "id": "gen-aveiro-1002",
+      "title": "Terreno em Estarreja",
+      "type": "Terreno",
+      "newAssetClass": "mixed"
+    },
+    {
+      "id": "gen-beja-1008",
+      "title": "Loja em Serpa",
+      "type": "Loja",
+      "newAssetClass": "commercial"
+    },
+    {
+      "id": "gen-bragança-1015",
+      "title": "Armazém em Miranda do Douro",
+      "type": "Armazém",
+      "newAssetClass": "commercial"
+    },
+    {
+      "id": "gen-porto-1054",
+      "title": "Garagem em Vila Nova de Gaia",
+      "type": "Garagem",
+      "newAssetClass": "garage"
+    },
+    {
+      "id": "gen-vianadocastelo-1070",
+      "title": "V4 em Viana do Castelo",
+      "type": "V4",
+      "newAssetClass": "house"
+    },
+    {
+      "id": "gen-viseu-1077",
+      "title": "V2 em Nelas",
+      "type": "V2",
+      "newAssetClass": "house"
+    },
+    {
+      "id": "gen-açores-1083",
+      "title": "Terreno em Ponta Delgada",
+      "type": "Terreno",
+      "newAssetClass": "mixed"
+    }
+  ],
+  "changes": [
+    {
+      "id": "cs-lis-1",
+      "title": "Apartamento T1 Parque das Nações",
+      "type": "T1",
+      "district": "Lisboa",
+      "municipality": "Lisboa",
+      "oldAssetClass": null,
+      "newAssetClass": "apartment",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "medium",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "cs-lis-2",
+      "title": "Apartamento T1 Santa Maria Maior",
+      "type": "T1",
+      "district": "Lisboa",
+      "municipality": "Lisboa",
+      "oldAssetClass": null,
+      "newAssetClass": "apartment",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "medium",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "cs-lis-3",
+      "title": "Apartamento T2 Penha de França",
+      "type": "T2",
+      "district": "Lisboa",
+      "municipality": "Lisboa",
+      "oldAssetClass": null,
+      "newAssetClass": "apartment",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "medium",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "cs-lis-4",
+      "title": "Apartamento T2 Graça, São Vicente",
+      "type": "T2",
+      "district": "Lisboa",
+      "municipality": "Lisboa",
+      "oldAssetClass": null,
+      "newAssetClass": "apartment",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "medium",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "cs-lis-5",
+      "title": "Apartamento T0 Penha de França",
+      "type": "T0",
+      "district": "Lisboa",
+      "municipality": "Lisboa",
+      "oldAssetClass": null,
+      "newAssetClass": "apartment",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "medium",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "cs-por-1",
+      "title": "Apartamento T1 Paranhos",
+      "type": "T1",
+      "district": "Porto",
+      "municipality": "Porto",
+      "oldAssetClass": null,
+      "newAssetClass": "apartment",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "medium",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "cs-por-2",
+      "title": "Apartamento T0 Campanhã",
+      "type": "T0",
+      "district": "Porto",
+      "municipality": "Porto",
+      "oldAssetClass": null,
+      "newAssetClass": "apartment",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "medium",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "cs-por-3",
+      "title": "Apartamento Bonfim",
+      "type": "T0",
+      "district": "Porto",
+      "municipality": "Porto",
+      "oldAssetClass": null,
+      "newAssetClass": "apartment",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "medium",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "cs-por-4",
+      "title": "Apartamento T0 Cedofeita",
+      "type": "T0",
+      "district": "Porto",
+      "municipality": "Porto",
+      "oldAssetClass": null,
+      "newAssetClass": "apartment",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "medium",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "cs-por-5",
+      "title": "Apartamento T1 Bonfim",
+      "type": "T1",
+      "district": "Porto",
+      "municipality": "Porto",
+      "oldAssetClass": null,
+      "newAssetClass": "apartment",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "medium",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "cs-por-6",
+      "title": "Apartamento T0 Bonfim",
+      "type": "T0",
+      "district": "Porto",
+      "municipality": "Porto",
+      "oldAssetClass": null,
+      "newAssetClass": "apartment",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "medium",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "cs-por-7",
+      "title": "Apartamento T2 Campanhã",
+      "type": "T2",
+      "district": "Porto",
+      "municipality": "Porto",
+      "oldAssetClass": null,
+      "newAssetClass": "apartment",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "medium",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "cs-por-8",
+      "title": "Apartamento T1 Ramalde",
+      "type": "T1",
+      "district": "Porto",
+      "municipality": "Porto",
+      "oldAssetClass": null,
+      "newAssetClass": "apartment",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "medium",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "cs-bra-1",
+      "title": "Apartamento T0 Centro Braga",
+      "type": "T0",
+      "district": "Braga",
+      "municipality": "Braga",
+      "oldAssetClass": null,
+      "newAssetClass": "apartment",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "medium",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "cs-bra-2",
+      "title": "Apartamento T1 São Víctor",
+      "type": "T1",
+      "district": "Braga",
+      "municipality": "Braga",
+      "oldAssetClass": null,
+      "newAssetClass": "apartment",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "medium",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "cs-bra-3",
+      "title": "Apartamento T1 São Víctor (garagem)",
+      "type": "T1",
+      "district": "Braga",
+      "municipality": "Braga",
+      "oldAssetClass": null,
+      "newAssetClass": "garage",
+      "oldValEngine": null,
+      "newValEngine": "income",
+      "oldValConf": null,
+      "newValConf": "very_low",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "cs-bra-4",
+      "title": "Apartamento T0 Centro Braga (novo)",
+      "type": "T0",
+      "district": "Braga",
+      "municipality": "Braga",
+      "oldAssetClass": null,
+      "newAssetClass": "apartment",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "medium",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "cs-bra-5",
+      "title": "Apartamento T0 Ferreiros (garagem)",
+      "type": "T0",
+      "district": "Braga",
+      "municipality": "Braga",
+      "oldAssetClass": null,
+      "newAssetClass": "garage",
+      "oldValEngine": null,
+      "newValEngine": "income",
+      "oldValConf": null,
+      "newValConf": "very_low",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "cs-bra-6",
+      "title": "Apartamento T0 Real, Dume e Semelhe",
+      "type": "T0",
+      "district": "Braga",
+      "municipality": "Braga",
+      "oldAssetClass": null,
+      "newAssetClass": "apartment",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "medium",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "cs-bra-7",
+      "title": "Apartamento T0 São Vicente",
+      "type": "T0",
+      "district": "Braga",
+      "municipality": "Braga",
+      "oldAssetClass": null,
+      "newAssetClass": "apartment",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "medium",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "cs-bra-8",
+      "title": "Apartamento T0 São José (garagem)",
+      "type": "T0",
+      "district": "Braga",
+      "municipality": "Braga",
+      "oldAssetClass": null,
+      "newAssetClass": "garage",
+      "oldValEngine": null,
+      "newValEngine": "income",
+      "oldValConf": null,
+      "newValConf": "very_low",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "cs-bra-9",
+      "title": "Apartamento T0 Gualtar",
+      "type": "T0",
+      "district": "Braga",
+      "municipality": "Braga",
+      "oldAssetClass": null,
+      "newAssetClass": "apartment",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "medium",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "iv-por-1",
+      "title": "Apartamento T2 Rio Tinto, Gondomar",
+      "type": "T2",
+      "district": "Porto",
+      "municipality": "Gondomar",
+      "oldAssetClass": null,
+      "newAssetClass": "apartment",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "medium",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "ib-lis-1",
+      "title": "Loja Carnide, Lisboa",
+      "type": "Loja",
+      "district": "Lisboa",
+      "municipality": "Lisboa",
+      "oldAssetClass": null,
+      "newAssetClass": "commercial",
+      "oldValEngine": null,
+      "newValEngine": "income",
+      "oldValConf": null,
+      "newValConf": "very_low",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "ib-lis-2",
+      "title": "Apartamento T3 Casal de Cambra, Sintra",
+      "type": "T3",
+      "district": "Lisboa",
+      "municipality": "Sintra",
+      "oldAssetClass": null,
+      "newAssetClass": "apartment",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "medium",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "ib-lis-3",
+      "title": "Loja Cacém, Sintra",
+      "type": "Loja",
+      "district": "Lisboa",
+      "municipality": "Sintra",
+      "oldAssetClass": null,
+      "newAssetClass": "commercial",
+      "oldValEngine": null,
+      "newValEngine": "income",
+      "oldValConf": null,
+      "newValConf": "very_low",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "ib-lis-4",
+      "title": "Moradia T3 Alverca do Ribatejo",
+      "type": "V3",
+      "district": "Lisboa",
+      "municipality": "Vila Franca de Xira",
+      "oldAssetClass": null,
+      "newAssetClass": "apartment",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "low",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "ib-lis-5",
+      "title": "Garagem Mafra",
+      "type": "Garagem",
+      "district": "Lisboa",
+      "municipality": "Mafra",
+      "oldAssetClass": null,
+      "newAssetClass": "garage",
+      "oldValEngine": null,
+      "newValEngine": "income",
+      "oldValConf": null,
+      "newValConf": "very_low",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "ib-lis-6",
+      "title": "Garagem Mafra (pequena)",
+      "type": "Garagem",
+      "district": "Lisboa",
+      "municipality": "Mafra",
+      "oldAssetClass": null,
+      "newAssetClass": "garage",
+      "oldValEngine": null,
+      "newValEngine": "income",
+      "oldValConf": null,
+      "newValConf": "very_low",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "ib-lis-7",
+      "title": "Loja Ramada, Odivelas",
+      "type": "Loja",
+      "district": "Lisboa",
+      "municipality": "Odivelas",
+      "oldAssetClass": null,
+      "newAssetClass": "commercial",
+      "oldValEngine": null,
+      "newValEngine": "income",
+      "oldValConf": null,
+      "newValConf": "very_low",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "ib-lis-8",
+      "title": "Prédio Alcoentre, Azambuja",
+      "type": "Prédio",
+      "district": "Lisboa",
+      "municipality": "Azambuja",
+      "oldAssetClass": null,
+      "newAssetClass": "mixed",
+      "oldValEngine": null,
+      "newValEngine": "pending_review",
+      "oldValConf": null,
+      "newValConf": "very_low",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "ib-lis-9",
+      "title": "Apartamento T1 Cascais",
+      "type": "T1",
+      "district": "Lisboa",
+      "municipality": "Cascais",
+      "oldAssetClass": null,
+      "newAssetClass": "apartment",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "medium",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "ib-por-1",
+      "title": "Garagem Maia",
+      "type": "Garagem",
+      "district": "Porto",
+      "municipality": "Maia",
+      "oldAssetClass": null,
+      "newAssetClass": "garage",
+      "oldValEngine": null,
+      "newValEngine": "income",
+      "oldValConf": null,
+      "newValConf": "very_low",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "ib-por-2",
+      "title": "Terreno Rústico Santo Tirso",
+      "type": "Terreno",
+      "district": "Porto",
+      "municipality": "Santo Tirso",
+      "oldAssetClass": null,
+      "newAssetClass": "rural_land",
+      "oldValEngine": null,
+      "newValEngine": "land_rural",
+      "oldValConf": null,
+      "newValConf": "very_low",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "ib-por-3",
+      "title": "Apartamento T3 Maia (Gueifães)",
+      "type": "T3",
+      "district": "Porto",
+      "municipality": "Maia",
+      "oldAssetClass": null,
+      "newAssetClass": "apartment",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "medium",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "ib-por-4",
+      "title": "Garagem Porto (Cedofeita)",
+      "type": "Garagem",
+      "district": "Porto",
+      "municipality": "Porto",
+      "oldAssetClass": null,
+      "newAssetClass": "garage",
+      "oldValEngine": null,
+      "newValEngine": "income",
+      "oldValConf": null,
+      "newValConf": "very_low",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "ib-por-5",
+      "title": "Garagem Porto (Cedofeita) 2",
+      "type": "Garagem",
+      "district": "Porto",
+      "municipality": "Porto",
+      "oldAssetClass": null,
+      "newAssetClass": "garage",
+      "oldValEngine": null,
+      "newValEngine": "income",
+      "oldValConf": null,
+      "newValConf": "very_low",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "ib-por-6",
+      "title": "Garagem Porto (Cedofeita) 3",
+      "type": "Garagem",
+      "district": "Porto",
+      "municipality": "Porto",
+      "oldAssetClass": null,
+      "newAssetClass": "garage",
+      "oldValEngine": null,
+      "newValEngine": "income",
+      "oldValConf": null,
+      "newValConf": "very_low",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "ib-por-7",
+      "title": "Garagem Porto (Cedofeita) 4",
+      "type": "Garagem",
+      "district": "Porto",
+      "municipality": "Porto",
+      "oldAssetClass": null,
+      "newAssetClass": "garage",
+      "oldValEngine": null,
+      "newValEngine": "income",
+      "oldValConf": null,
+      "newValConf": "very_low",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "ib-por-8",
+      "title": "Moradia T2 Felgueiras",
+      "type": "V2",
+      "district": "Porto",
+      "municipality": "Felgueiras",
+      "oldAssetClass": null,
+      "newAssetClass": "apartment",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "low",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "ib-por-9",
+      "title": "Espaço Comercial Maia",
+      "type": "Loja",
+      "district": "Porto",
+      "municipality": "Maia",
+      "oldAssetClass": null,
+      "newAssetClass": "commercial",
+      "oldValEngine": null,
+      "newValEngine": "income",
+      "oldValConf": null,
+      "newValConf": "very_low",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "ib-por-10",
+      "title": "Terreno Urbano Santo Tirso",
+      "type": "Terreno",
+      "district": "Porto",
+      "municipality": "Santo Tirso",
+      "oldAssetClass": null,
+      "newAssetClass": "urban_land",
+      "oldValEngine": null,
+      "newValEngine": "land_urban",
+      "oldValConf": null,
+      "newValConf": "low",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence",
+        "pdm_status",
+        "infrastructure"
+      ]
+    },
+    {
+      "id": "ib-bra-1",
+      "title": "Moradia T3 Louro, Vila Nova de Famalicão",
+      "type": "V3",
+      "district": "Braga",
+      "municipality": "Vila Nova de Famalicão",
+      "oldAssetClass": null,
+      "newAssetClass": "apartment",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "low",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "ib-bra-2",
+      "title": "Arrecadação Vila Nova de Famalicão",
+      "type": "Arrecadação",
+      "district": "Braga",
+      "municipality": "Vila Nova de Famalicão",
+      "oldAssetClass": null,
+      "newAssetClass": "mixed",
+      "oldValEngine": null,
+      "newValEngine": "pending_review",
+      "oldValConf": null,
+      "newValConf": "very_low",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "ib-bra-3",
+      "title": "Lote Terreno Carreira e Bente",
+      "type": "Terreno",
+      "district": "Braga",
+      "municipality": "Vila Nova de Famalicão",
+      "oldAssetClass": null,
+      "newAssetClass": "urban_land",
+      "oldValEngine": null,
+      "newValEngine": "land_urban",
+      "oldValConf": null,
+      "newValConf": "low",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence",
+        "pdm_status",
+        "infrastructure"
+      ]
+    },
+    {
+      "id": "ib-bra-4",
+      "title": "Armazém Urgezes, Guimarães",
+      "type": "Armazém",
+      "district": "Braga",
+      "municipality": "Guimarães",
+      "oldAssetClass": null,
+      "newAssetClass": "commercial",
+      "oldValEngine": null,
+      "newValEngine": "income",
+      "oldValConf": null,
+      "newValConf": "very_low",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "ib-bra-5",
+      "title": "Terreno Rústico Travassos, Póvoa de Lanhoso",
+      "type": "Terreno",
+      "district": "Braga",
+      "municipality": "Póvoa de Lanhoso",
+      "oldAssetClass": null,
+      "newAssetClass": "rural_land",
+      "oldValEngine": null,
+      "newValEngine": "land_rural",
+      "oldValConf": null,
+      "newValConf": "very_low",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "ib-bra-6",
+      "title": "Terreno Rústico Valdreu, Vila Verde",
+      "type": "Terreno",
+      "district": "Braga",
+      "municipality": "Vila Verde",
+      "oldAssetClass": null,
+      "newAssetClass": "rural_land",
+      "oldValEngine": null,
+      "newValEngine": "land_rural",
+      "oldValConf": null,
+      "newValConf": "very_low",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "remax-lis-1",
+      "title": "Apartamento T1 Lisboa (RE/MAX)",
+      "type": "T1",
+      "district": "Lisboa",
+      "municipality": "Lisboa",
+      "oldAssetClass": null,
+      "newAssetClass": "apartment",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "medium",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "remax-por-1",
+      "title": "Apartamento T2 Porto (RE/MAX)",
+      "type": "T2",
+      "district": "Porto",
+      "municipality": "Porto",
+      "oldAssetClass": null,
+      "newAssetClass": "apartment",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "medium",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "remax-bra-1",
+      "title": "Apartamento T1 Braga (RE/MAX)",
+      "type": "T1",
+      "district": "Braga",
+      "municipality": "Braga",
+      "oldAssetClass": null,
+      "newAssetClass": "apartment",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "medium",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "era-lis-1",
+      "title": "Apartamento T2 Lisboa (ERA)",
+      "type": "T2",
+      "district": "Lisboa",
+      "municipality": "Lisboa",
+      "oldAssetClass": null,
+      "newAssetClass": "apartment",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "medium",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "era-por-1",
+      "title": "Apartamento T1 Porto (ERA)",
+      "type": "T1",
+      "district": "Porto",
+      "municipality": "Porto",
+      "oldAssetClass": null,
+      "newAssetClass": "apartment",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "medium",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "era-bra-1",
+      "title": "Apartamento T2 Braga (ERA)",
+      "type": "T2",
+      "district": "Braga",
+      "municipality": "Braga",
+      "oldAssetClass": null,
+      "newAssetClass": "apartment",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "medium",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "c21-lis-1",
+      "title": "Apartamento T3 Lisboa (C21)",
+      "type": "T3",
+      "district": "Lisboa",
+      "municipality": "Lisboa",
+      "oldAssetClass": null,
+      "newAssetClass": "apartment",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "medium",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "c21-por-1",
+      "title": "Moradia V3 Porto (C21)",
+      "type": "V3",
+      "district": "Porto",
+      "municipality": "Porto",
+      "oldAssetClass": null,
+      "newAssetClass": "house",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "very_low",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "c21-bra-1",
+      "title": "Apartamento T2 Braga (C21)",
+      "type": "T2",
+      "district": "Braga",
+      "municipality": "Braga",
+      "oldAssetClass": null,
+      "newAssetClass": "apartment",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "medium",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "kw-lis-1",
+      "title": "Apartamento T1 Lisboa (KW)",
+      "type": "T1",
+      "district": "Lisboa",
+      "municipality": "Lisboa",
+      "oldAssetClass": null,
+      "newAssetClass": "apartment",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "medium",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "kw-por-1",
+      "title": "Apartamento T2 Porto (KW)",
+      "type": "T2",
+      "district": "Porto",
+      "municipality": "Porto",
+      "oldAssetClass": null,
+      "newAssetClass": "apartment",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "medium",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "kw-bra-1",
+      "title": "Moradia V4 Braga (KW)",
+      "type": "V4",
+      "district": "Braga",
+      "municipality": "Braga",
+      "oldAssetClass": null,
+      "newAssetClass": "house",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "very_low",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "cb-lis-1",
+      "title": "Apartamento T2 Lisboa (CB)",
+      "type": "T2",
+      "district": "Lisboa",
+      "municipality": "Lisboa",
+      "oldAssetClass": null,
+      "newAssetClass": "apartment",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "medium",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "cb-por-1",
+      "title": "Apartamento T3 Porto (CB)",
+      "type": "T3",
+      "district": "Porto",
+      "municipality": "Porto",
+      "oldAssetClass": null,
+      "newAssetClass": "apartment",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "medium",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "olx-lis-1",
+      "title": "Apartamento T0 Santa Maria Maior (OLX)",
+      "type": "T0",
+      "district": "Lisboa",
+      "municipality": "Lisboa",
+      "oldAssetClass": null,
+      "newAssetClass": "apartment",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "medium",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "olx-lis-2",
+      "title": "Apartamento T1 Amadora (OLX)",
+      "type": "T1",
+      "district": "Lisboa",
+      "municipality": "Amadora",
+      "oldAssetClass": null,
+      "newAssetClass": "apartment",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "medium",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "olx-por-1",
+      "title": "Apartamento T2 Porto (OLX)",
+      "type": "T2",
+      "district": "Porto",
+      "municipality": "Porto",
+      "oldAssetClass": null,
+      "newAssetClass": "apartment",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "medium",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "olx-bra-1",
+      "title": "Apartamento T1 Braga (OLX)",
+      "type": "T1",
+      "district": "Braga",
+      "municipality": "Braga",
+      "oldAssetClass": null,
+      "newAssetClass": "apartment",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "medium",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "cj-lis-1",
+      "title": "Apartamento T2 Lisboa (CustoJusto)",
+      "type": "T2",
+      "district": "Lisboa",
+      "municipality": "Lisboa",
+      "oldAssetClass": null,
+      "newAssetClass": "apartment",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "medium",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "cj-por-1",
+      "title": "Apartamento T1 Porto (CustoJusto)",
+      "type": "T1",
+      "district": "Porto",
+      "municipality": "Porto",
+      "oldAssetClass": null,
+      "newAssetClass": "apartment",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "medium",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "cj-bra-1",
+      "title": "Apartamento T0 Braga (CustoJusto)",
+      "type": "T0",
+      "district": "Braga",
+      "municipality": "Braga",
+      "oldAssetClass": null,
+      "newAssetClass": "apartment",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "medium",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "sc-lis-1",
+      "title": "Apartamento T0 Santa Maria Maior (SuperCasa)",
+      "type": "T0",
+      "district": "Lisboa",
+      "municipality": "Lisboa",
+      "oldAssetClass": null,
+      "newAssetClass": "apartment",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "medium",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "sc-por-1",
+      "title": "Apartamento T1 Porto (SuperCasa)",
+      "type": "T1",
+      "district": "Porto",
+      "municipality": "Porto",
+      "oldAssetClass": null,
+      "newAssetClass": "apartment",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "medium",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "sc-bra-1",
+      "title": "Apartamento T2 Braga (SuperCasa)",
+      "type": "T2",
+      "district": "Braga",
+      "municipality": "Braga",
+      "oldAssetClass": null,
+      "newAssetClass": "apartment",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "medium",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "bpi-lis-1",
+      "title": "Apartamento T2 Lisboa (BPI)",
+      "type": "T2",
+      "district": "Lisboa",
+      "municipality": "Lisboa",
+      "oldAssetClass": null,
+      "newAssetClass": "apartment",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "medium",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "bpi-por-1",
+      "title": "Moradia V3 Porto (BPI)",
+      "type": "V3",
+      "district": "Porto",
+      "municipality": "Porto",
+      "oldAssetClass": null,
+      "newAssetClass": "house",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "very_low",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "bpi-bra-1",
+      "title": "Apartamento T1 Braga (BPI)",
+      "type": "T1",
+      "district": "Braga",
+      "municipality": "Braga",
+      "oldAssetClass": null,
+      "newAssetClass": "apartment",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "medium",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "nb-lis-1",
+      "title": "Apartamento T3 Lisboa (Novo Banco)",
+      "type": "T3",
+      "district": "Lisboa",
+      "municipality": "Lisboa",
+      "oldAssetClass": null,
+      "newAssetClass": "apartment",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "medium",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "nb-por-1",
+      "title": "Apartamento T2 Porto (Novo Banco)",
+      "type": "T2",
+      "district": "Porto",
+      "municipality": "Porto",
+      "oldAssetClass": null,
+      "newAssetClass": "apartment",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "medium",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "nb-bra-1",
+      "title": "Moradia V3 Braga (Novo Banco)",
+      "type": "V3",
+      "district": "Braga",
+      "municipality": "Braga",
+      "oldAssetClass": null,
+      "newAssetClass": "house",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "very_low",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "mp-lis-1",
+      "title": "Apartamento T1 Lisboa (Montepio)",
+      "type": "T1",
+      "district": "Lisboa",
+      "municipality": "Lisboa",
+      "oldAssetClass": null,
+      "newAssetClass": "apartment",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "medium",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "mp-por-1",
+      "title": "Apartamento T2 Porto (Montepio)",
+      "type": "T2",
+      "district": "Porto",
+      "municipality": "Porto",
+      "oldAssetClass": null,
+      "newAssetClass": "apartment",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "medium",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "mp-bra-1",
+      "title": "Terreno Braga (Montepio)",
+      "type": "Terreno",
+      "district": "Braga",
+      "municipality": "Braga",
+      "oldAssetClass": null,
+      "newAssetClass": "mixed",
+      "oldValEngine": null,
+      "newValEngine": "pending_review",
+      "oldValConf": null,
+      "newValConf": "very_low",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "el-lis-1",
+      "title": "Apartamento T2 Lisboa (Leilão)",
+      "type": "T2",
+      "district": "Lisboa",
+      "municipality": "Lisboa",
+      "oldAssetClass": null,
+      "newAssetClass": "apartment",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "medium",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "el-por-1",
+      "title": "Moradia V3 Porto (Leilão)",
+      "type": "V3",
+      "district": "Porto",
+      "municipality": "Porto",
+      "oldAssetClass": null,
+      "newAssetClass": "house",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "very_low",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "el-bra-1",
+      "title": "Terreno Braga (Leilão)",
+      "type": "Terreno",
+      "district": "Braga",
+      "municipality": "Braga",
+      "oldAssetClass": null,
+      "newAssetClass": "mixed",
+      "oldValEngine": null,
+      "newValEngine": "pending_review",
+      "oldValConf": null,
+      "newValConf": "very_low",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "ls-lis-1",
+      "title": "Apartamento T1 Lisboa (Leilosoc)",
+      "type": "T1",
+      "district": "Lisboa",
+      "municipality": "Lisboa",
+      "oldAssetClass": null,
+      "newAssetClass": "apartment",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "medium",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "ls-por-1",
+      "title": "Garagem Porto (Leilosoc)",
+      "type": "Garagem",
+      "district": "Porto",
+      "municipality": "Porto",
+      "oldAssetClass": null,
+      "newAssetClass": "garage",
+      "oldValEngine": null,
+      "newValEngine": "income",
+      "oldValConf": null,
+      "newValConf": "very_low",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "ls-bra-1",
+      "title": "Moradia V2 Braga (Leilosoc)",
+      "type": "V2",
+      "district": "Braga",
+      "municipality": "Braga",
+      "oldAssetClass": null,
+      "newAssetClass": "house",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "very_low",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "est-lis-1",
+      "title": "Apartamento T2 Lisboa (Hasta Pública)",
+      "type": "T2",
+      "district": "Lisboa",
+      "municipality": "Lisboa",
+      "oldAssetClass": null,
+      "newAssetClass": "apartment",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "medium",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "est-por-1",
+      "title": "Terreno Porto (Hasta Pública)",
+      "type": "Terreno",
+      "district": "Porto",
+      "municipality": "Porto",
+      "oldAssetClass": null,
+      "newAssetClass": "mixed",
+      "oldValEngine": null,
+      "newValEngine": "pending_review",
+      "oldValConf": null,
+      "newValConf": "very_low",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "est-bra-1",
+      "title": "Loja Braga (Hasta Pública)",
+      "type": "Loja",
+      "district": "Braga",
+      "municipality": "Braga",
+      "oldAssetClass": null,
+      "newAssetClass": "commercial",
+      "oldValEngine": null,
+      "newValEngine": "income",
+      "oldValConf": null,
+      "newValConf": "very_low",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "id-lis-1",
+      "title": "Apartamento T0 Alfama (Idealista)",
+      "type": "T0",
+      "district": "Lisboa",
+      "municipality": "Lisboa",
+      "oldAssetClass": null,
+      "newAssetClass": "apartment",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "medium",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "id-por-1",
+      "title": "Apartamento T1 Porto (Idealista)",
+      "type": "T1",
+      "district": "Porto",
+      "municipality": "Porto",
+      "oldAssetClass": null,
+      "newAssetClass": "apartment",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "medium",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "id-bra-1",
+      "title": "Apartamento T0 Braga (Idealista)",
+      "type": "T0",
+      "district": "Braga",
+      "municipality": "Braga",
+      "oldAssetClass": null,
+      "newAssetClass": "apartment",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "medium",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "mart-lis-1",
+      "title": "Apartamento T1 Lisboa (Martelo)",
+      "type": "T1",
+      "district": "Lisboa",
+      "municipality": "Lisboa",
+      "oldAssetClass": null,
+      "newAssetClass": "apartment",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "medium",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "mart-por-1",
+      "title": "Moradia V2 Porto (Martelo)",
+      "type": "V2",
+      "district": "Porto",
+      "municipality": "Porto",
+      "oldAssetClass": null,
+      "newAssetClass": "house",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "very_low",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "mart-bra-1",
+      "title": "Terreno Braga (Martelo)",
+      "type": "Terreno",
+      "district": "Braga",
+      "municipality": "Braga",
+      "oldAssetClass": null,
+      "newAssetClass": "mixed",
+      "oldValEngine": null,
+      "newValEngine": "pending_review",
+      "oldValConf": null,
+      "newValConf": "very_low",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "bidizi-lis-1",
+      "title": "Apartamento Lumiar, Lisboa",
+      "type": "T2",
+      "district": "Lisboa",
+      "municipality": "Lisboa",
+      "oldAssetClass": null,
+      "newAssetClass": "apartment",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "medium",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "bidizi-lis-2",
+      "title": "Apartamento Parque das Nações (Execução Fiscal)",
+      "type": "T3",
+      "district": "Lisboa",
+      "municipality": "Lisboa",
+      "oldAssetClass": null,
+      "newAssetClass": "apartment",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "medium",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "bidizi-por-1",
+      "title": "Apartamento Ramalde (Execução Fiscal AT)",
+      "type": "T2",
+      "district": "Porto",
+      "municipality": "Porto",
+      "oldAssetClass": null,
+      "newAssetClass": "apartment",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "medium",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "bidizi-por-2",
+      "title": "Imóvel Porto (Execução Fiscal AT)",
+      "type": "T1",
+      "district": "Porto",
+      "municipality": "Porto",
+      "oldAssetClass": null,
+      "newAssetClass": "apartment",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "medium",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "bidizi-bra-1",
+      "title": "Apartamento Maximinos (Execução Fiscal AT)",
+      "type": "T2",
+      "district": "Braga",
+      "municipality": "Braga",
+      "oldAssetClass": null,
+      "newAssetClass": "apartment",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "medium",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "bidizi-bra-2",
+      "title": "Loja Braga (Execução Fiscal)",
+      "type": "Loja",
+      "district": "Braga",
+      "municipality": "Braga",
+      "oldAssetClass": null,
+      "newAssetClass": "commercial",
+      "oldValEngine": null,
+      "newValEngine": "income",
+      "oldValConf": null,
+      "newValConf": "very_low",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "cs-por-9",
+      "title": "Apartamento T0 Bonfim (novo)",
+      "type": "T0",
+      "district": "Porto",
+      "municipality": "Porto",
+      "oldAssetClass": null,
+      "newAssetClass": "apartment",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "medium",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "cs-por-10",
+      "title": "Apartamento T0 Bonfim (construção)",
+      "type": "T0",
+      "district": "Porto",
+      "municipality": "Porto",
+      "oldAssetClass": null,
+      "newAssetClass": "apartment",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "medium",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "cs-por-11",
+      "title": "Apartamento T2 Campanhã (investimento)",
+      "type": "T2",
+      "district": "Porto",
+      "municipality": "Porto",
+      "oldAssetClass": null,
+      "newAssetClass": "apartment",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "medium",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "cs-por-12",
+      "title": "Apartamento T0 Cedofeita (escritório)",
+      "type": "T0",
+      "district": "Porto",
+      "municipality": "Porto",
+      "oldAssetClass": null,
+      "newAssetClass": "apartment",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "medium",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "cs-por-13",
+      "title": "Apartamento T1 Ramalde (novo)",
+      "type": "T1",
+      "district": "Porto",
+      "municipality": "Porto",
+      "oldAssetClass": null,
+      "newAssetClass": "apartment",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "medium",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "cs-lis-6",
+      "title": "Apartamento T1 Santa Maria Maior (obras)",
+      "type": "T1",
+      "district": "Lisboa",
+      "municipality": "Lisboa",
+      "oldAssetClass": null,
+      "newAssetClass": "apartment",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "medium",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "cs-lis-7",
+      "title": "Apartamento T1 Olivais (investimento)",
+      "type": "T1",
+      "district": "Lisboa",
+      "municipality": "Lisboa",
+      "oldAssetClass": null,
+      "newAssetClass": "apartment",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "medium",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "cs-lis-8",
+      "title": "Apartamento T0 Penha de França (vitalícia)",
+      "type": "T0",
+      "district": "Lisboa",
+      "municipality": "Lisboa",
+      "oldAssetClass": null,
+      "newAssetClass": "apartment",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "medium",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "cs-bra-10",
+      "title": "Apartamento T0 Centro Braga (histórico)",
+      "type": "T0",
+      "district": "Braga",
+      "municipality": "Braga",
+      "oldAssetClass": null,
+      "newAssetClass": "apartment",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "medium",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "cs-bra-11",
+      "title": "Apartamento T1 São Víctor (funcional)",
+      "type": "T1",
+      "district": "Braga",
+      "municipality": "Braga",
+      "oldAssetClass": null,
+      "newAssetClass": "apartment",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "medium",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "cs-bra-12",
+      "title": "Apartamento T0 Ferreiros (condomínio)",
+      "type": "T0",
+      "district": "Braga",
+      "municipality": "Braga",
+      "oldAssetClass": null,
+      "newAssetClass": "apartment",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "medium",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "gen-aveiro-1000",
+      "title": "T1 em Oliveira de Azeméis",
+      "type": "T1",
+      "district": "Aveiro",
+      "municipality": "Oliveira de Azeméis",
+      "oldAssetClass": null,
+      "newAssetClass": "apartment",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "low",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "gen-aveiro-1001",
+      "title": "V3 em Oliveira de Azeméis",
+      "type": "V3",
+      "district": "Aveiro",
+      "municipality": "Oliveira de Azeméis",
+      "oldAssetClass": null,
+      "newAssetClass": "house",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "very_low",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "gen-aveiro-1002",
+      "title": "Terreno em Estarreja",
+      "type": "Terreno",
+      "district": "Aveiro",
+      "municipality": "Estarreja",
+      "oldAssetClass": null,
+      "newAssetClass": "mixed",
+      "oldValEngine": null,
+      "newValEngine": "pending_review",
+      "oldValConf": null,
+      "newValConf": "very_low",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "gen-aveiro-1003",
+      "title": "V4 em Ovar",
+      "type": "V4",
+      "district": "Aveiro",
+      "municipality": "Ovar",
+      "oldAssetClass": null,
+      "newAssetClass": "house",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "very_low",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "gen-aveiro-1004",
+      "title": "V4 em Ovar",
+      "type": "V4",
+      "district": "Aveiro",
+      "municipality": "Ovar",
+      "oldAssetClass": null,
+      "newAssetClass": "house",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "very_low",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "gen-aveiro-1005",
+      "title": "T4 em Santa Maria da Feira",
+      "type": "T4",
+      "district": "Aveiro",
+      "municipality": "Santa Maria da Feira",
+      "oldAssetClass": null,
+      "newAssetClass": "apartment",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "low",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "gen-beja-1006",
+      "title": "Armazém em Odemira",
+      "type": "Armazém",
+      "district": "Beja",
+      "municipality": "Odemira",
+      "oldAssetClass": null,
+      "newAssetClass": "commercial",
+      "oldValEngine": null,
+      "newValEngine": "income",
+      "oldValConf": null,
+      "newValConf": "very_low",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "gen-beja-1007",
+      "title": "T4 em Serpa",
+      "type": "T4",
+      "district": "Beja",
+      "municipality": "Serpa",
+      "oldAssetClass": null,
+      "newAssetClass": "apartment",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "very_low",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "gen-beja-1008",
+      "title": "Loja em Serpa",
+      "type": "Loja",
+      "district": "Beja",
+      "municipality": "Serpa",
+      "oldAssetClass": null,
+      "newAssetClass": "commercial",
+      "oldValEngine": null,
+      "newValEngine": "income",
+      "oldValConf": null,
+      "newValConf": "very_low",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "gen-beja-1009",
+      "title": "T2 em Beja",
+      "type": "T2",
+      "district": "Beja",
+      "municipality": "Beja",
+      "oldAssetClass": null,
+      "newAssetClass": "apartment",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "very_low",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "gen-braga-1010",
+      "title": "Loja em Braga",
+      "type": "Loja",
+      "district": "Braga",
+      "municipality": "Braga",
+      "oldAssetClass": null,
+      "newAssetClass": "commercial",
+      "oldValEngine": null,
+      "newValEngine": "income",
+      "oldValConf": null,
+      "newValConf": "very_low",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "gen-braga-1011",
+      "title": "T0 em Póvoa de Lanhoso",
+      "type": "T0",
+      "district": "Braga",
+      "municipality": "Póvoa de Lanhoso",
+      "oldAssetClass": null,
+      "newAssetClass": "apartment",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "low",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "gen-braga-1012",
+      "title": "T4 em Póvoa de Lanhoso",
+      "type": "T4",
+      "district": "Braga",
+      "municipality": "Póvoa de Lanhoso",
+      "oldAssetClass": null,
+      "newAssetClass": "apartment",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "low",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "gen-braga-1013",
+      "title": "V4 em Vila Nova de Famalicão",
+      "type": "V4",
+      "district": "Braga",
+      "municipality": "Vila Nova de Famalicão",
+      "oldAssetClass": null,
+      "newAssetClass": "house",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "very_low",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "gen-braga-1014",
+      "title": "T2 em Braga",
+      "type": "T2",
+      "district": "Braga",
+      "municipality": "Braga",
+      "oldAssetClass": null,
+      "newAssetClass": "apartment",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "medium",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "gen-bragança-1015",
+      "title": "Armazém em Miranda do Douro",
+      "type": "Armazém",
+      "district": "Bragança",
+      "municipality": "Miranda do Douro",
+      "oldAssetClass": null,
+      "newAssetClass": "commercial",
+      "oldValEngine": null,
+      "newValEngine": "income",
+      "oldValConf": null,
+      "newValConf": "very_low",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "gen-bragança-1016",
+      "title": "T2 em Macedo de Cavaleiros",
+      "type": "T2",
+      "district": "Bragança",
+      "municipality": "Macedo de Cavaleiros",
+      "oldAssetClass": null,
+      "newAssetClass": "apartment",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "low",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "gen-bragança-1017",
+      "title": "Terreno em Macedo de Cavaleiros",
+      "type": "Terreno",
+      "district": "Bragança",
+      "municipality": "Macedo de Cavaleiros",
+      "oldAssetClass": null,
+      "newAssetClass": "mixed",
+      "oldValEngine": null,
+      "newValEngine": "pending_review",
+      "oldValConf": null,
+      "newValConf": "very_low",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "gen-bragança-1018",
+      "title": "T0 em Vinhais",
+      "type": "T0",
+      "district": "Bragança",
+      "municipality": "Vinhais",
+      "oldAssetClass": null,
+      "newAssetClass": "apartment",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "low",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "gen-castelobranco-1019",
+      "title": "Garagem em Fundão",
+      "type": "Garagem",
+      "district": "Castelo Branco",
+      "municipality": "Fundão",
+      "oldAssetClass": null,
+      "newAssetClass": "garage",
+      "oldValEngine": null,
+      "newValEngine": "income",
+      "oldValConf": null,
+      "newValConf": "very_low",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "gen-castelobranco-1020",
+      "title": "Armazém em Castelo Branco",
+      "type": "Armazém",
+      "district": "Castelo Branco",
+      "municipality": "Castelo Branco",
+      "oldAssetClass": null,
+      "newAssetClass": "commercial",
+      "oldValEngine": null,
+      "newValEngine": "income",
+      "oldValConf": null,
+      "newValConf": "very_low",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "gen-castelobranco-1021",
+      "title": "V4 em Fundão",
+      "type": "V4",
+      "district": "Castelo Branco",
+      "municipality": "Fundão",
+      "oldAssetClass": null,
+      "newAssetClass": "house",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "very_low",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "gen-coimbra-1022",
+      "title": "Terreno em Coimbra",
+      "type": "Terreno",
+      "district": "Coimbra",
+      "municipality": "Coimbra",
+      "oldAssetClass": null,
+      "newAssetClass": "mixed",
+      "oldValEngine": null,
+      "newValEngine": "pending_review",
+      "oldValConf": null,
+      "newValConf": "very_low",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "gen-coimbra-1023",
+      "title": "V2 em Lousã",
+      "type": "V2",
+      "district": "Coimbra",
+      "municipality": "Lousã",
+      "oldAssetClass": null,
+      "newAssetClass": "house",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "very_low",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "gen-coimbra-1024",
+      "title": "Garagem em Figueira da Foz",
+      "type": "Garagem",
+      "district": "Coimbra",
+      "municipality": "Figueira da Foz",
+      "oldAssetClass": null,
+      "newAssetClass": "garage",
+      "oldValEngine": null,
+      "newValEngine": "income",
+      "oldValConf": null,
+      "newValConf": "very_low",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "gen-coimbra-1025",
+      "title": "Armazém em Lousã",
+      "type": "Armazém",
+      "district": "Coimbra",
+      "municipality": "Lousã",
+      "oldAssetClass": null,
+      "newAssetClass": "commercial",
+      "oldValEngine": null,
+      "newValEngine": "income",
+      "oldValConf": null,
+      "newValConf": "very_low",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "gen-coimbra-1026",
+      "title": "T1 em Coimbra",
+      "type": "T1",
+      "district": "Coimbra",
+      "municipality": "Coimbra",
+      "oldAssetClass": null,
+      "newAssetClass": "apartment",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "medium",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "gen-évora-1027",
+      "title": "T2 em Vendas Novas",
+      "type": "T2",
+      "district": "Évora",
+      "municipality": "Vendas Novas",
+      "oldAssetClass": null,
+      "newAssetClass": "apartment",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "very_low",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "gen-évora-1028",
+      "title": "V3 em Estremoz",
+      "type": "V3",
+      "district": "Évora",
+      "municipality": "Estremoz",
+      "oldAssetClass": null,
+      "newAssetClass": "house",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "very_low",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "gen-évora-1029",
+      "title": "Terreno em Reguengos de Monsaraz",
+      "type": "Terreno",
+      "district": "Évora",
+      "municipality": "Reguengos de Monsaraz",
+      "oldAssetClass": null,
+      "newAssetClass": "mixed",
+      "oldValEngine": null,
+      "newValEngine": "pending_review",
+      "oldValConf": null,
+      "newValConf": "very_low",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "gen-faro-1030",
+      "title": "V3 em Loulé",
+      "type": "V3",
+      "district": "Faro",
+      "municipality": "Loulé",
+      "oldAssetClass": null,
+      "newAssetClass": "house",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "very_low",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "gen-faro-1031",
+      "title": "V2 em Albufeira",
+      "type": "V2",
+      "district": "Faro",
+      "municipality": "Albufeira",
+      "oldAssetClass": null,
+      "newAssetClass": "house",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "very_low",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "gen-faro-1032",
+      "title": "Terreno em Tavira",
+      "type": "Terreno",
+      "district": "Faro",
+      "municipality": "Tavira",
+      "oldAssetClass": null,
+      "newAssetClass": "mixed",
+      "oldValEngine": null,
+      "newValEngine": "pending_review",
+      "oldValConf": null,
+      "newValConf": "very_low",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "gen-faro-1033",
+      "title": "T3 em Faro",
+      "type": "T3",
+      "district": "Faro",
+      "municipality": "Faro",
+      "oldAssetClass": null,
+      "newAssetClass": "apartment",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "medium",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "gen-faro-1034",
+      "title": "Garagem em Portimão",
+      "type": "Garagem",
+      "district": "Faro",
+      "municipality": "Portimão",
+      "oldAssetClass": null,
+      "newAssetClass": "garage",
+      "oldValEngine": null,
+      "newValEngine": "income",
+      "oldValConf": null,
+      "newValConf": "very_low",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "gen-guarda-1035",
+      "title": "V2 em Trancoso",
+      "type": "V2",
+      "district": "Guarda",
+      "municipality": "Trancoso",
+      "oldAssetClass": null,
+      "newAssetClass": "house",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "very_low",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "gen-guarda-1036",
+      "title": "T3 em Guarda",
+      "type": "T3",
+      "district": "Guarda",
+      "municipality": "Guarda",
+      "oldAssetClass": null,
+      "newAssetClass": "apartment",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "very_low",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "gen-guarda-1037",
+      "title": "V3 em Gouveia",
+      "type": "V3",
+      "district": "Guarda",
+      "municipality": "Gouveia",
+      "oldAssetClass": null,
+      "newAssetClass": "house",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "very_low",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "gen-leiria-1038",
+      "title": "Terreno em Peniche",
+      "type": "Terreno",
+      "district": "Leiria",
+      "municipality": "Peniche",
+      "oldAssetClass": null,
+      "newAssetClass": "mixed",
+      "oldValEngine": null,
+      "newValEngine": "pending_review",
+      "oldValConf": null,
+      "newValConf": "very_low",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "gen-leiria-1039",
+      "title": "T1 em Peniche",
+      "type": "T1",
+      "district": "Leiria",
+      "municipality": "Peniche",
+      "oldAssetClass": null,
+      "newAssetClass": "apartment",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "very_low",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "gen-leiria-1040",
+      "title": "Loja em Nazaré",
+      "type": "Loja",
+      "district": "Leiria",
+      "municipality": "Nazaré",
+      "oldAssetClass": null,
+      "newAssetClass": "commercial",
+      "oldValEngine": null,
+      "newValEngine": "income",
+      "oldValConf": null,
+      "newValConf": "very_low",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "gen-lisboa-1041",
+      "title": "T2 em Vila Franca de Xira",
+      "type": "T2",
+      "district": "Lisboa",
+      "municipality": "Vila Franca de Xira",
+      "oldAssetClass": null,
+      "newAssetClass": "apartment",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "low",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "gen-lisboa-1042",
+      "title": "Garagem em Sintra",
+      "type": "Garagem",
+      "district": "Lisboa",
+      "municipality": "Sintra",
+      "oldAssetClass": null,
+      "newAssetClass": "garage",
+      "oldValEngine": null,
+      "newValEngine": "income",
+      "oldValConf": null,
+      "newValConf": "very_low",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "gen-lisboa-1043",
+      "title": "V3 em Amadora",
+      "type": "V3",
+      "district": "Lisboa",
+      "municipality": "Amadora",
+      "oldAssetClass": null,
+      "newAssetClass": "house",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "very_low",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "gen-portalegre-1044",
+      "title": "V2 em Campo Maior",
+      "type": "V2",
+      "district": "Portalegre",
+      "municipality": "Campo Maior",
+      "oldAssetClass": null,
+      "newAssetClass": "house",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "very_low",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "gen-portalegre-1045",
+      "title": "T4 em Ponte de Sor",
+      "type": "T4",
+      "district": "Portalegre",
+      "municipality": "Ponte de Sor",
+      "oldAssetClass": null,
+      "newAssetClass": "apartment",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "very_low",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "gen-portalegre-1046",
+      "title": "Garagem em Campo Maior",
+      "type": "Garagem",
+      "district": "Portalegre",
+      "municipality": "Campo Maior",
+      "oldAssetClass": null,
+      "newAssetClass": "garage",
+      "oldValEngine": null,
+      "newValEngine": "income",
+      "oldValConf": null,
+      "newValConf": "very_low",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "gen-portalegre-1047",
+      "title": "T3 em Elvas",
+      "type": "T3",
+      "district": "Portalegre",
+      "municipality": "Elvas",
+      "oldAssetClass": null,
+      "newAssetClass": "apartment",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "very_low",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "gen-portalegre-1048",
+      "title": "T1 em Alter do Chão",
+      "type": "T1",
+      "district": "Portalegre",
+      "municipality": "Alter do Chão",
+      "oldAssetClass": null,
+      "newAssetClass": "apartment",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "very_low",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "gen-porto-1049",
+      "title": "T4 em Porto",
+      "type": "T4",
+      "district": "Porto",
+      "municipality": "Porto",
+      "oldAssetClass": null,
+      "newAssetClass": "apartment",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "medium",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "gen-porto-1050",
+      "title": "T1 em Póvoa de Varzim",
+      "type": "T1",
+      "district": "Porto",
+      "municipality": "Póvoa de Varzim",
+      "oldAssetClass": null,
+      "newAssetClass": "apartment",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "low",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "gen-porto-1051",
+      "title": "Armazém em Vila do Conde",
+      "type": "Armazém",
+      "district": "Porto",
+      "municipality": "Vila do Conde",
+      "oldAssetClass": null,
+      "newAssetClass": "commercial",
+      "oldValEngine": null,
+      "newValEngine": "income",
+      "oldValConf": null,
+      "newValConf": "very_low",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "gen-porto-1052",
+      "title": "T1 em Maia",
+      "type": "T1",
+      "district": "Porto",
+      "municipality": "Maia",
+      "oldAssetClass": null,
+      "newAssetClass": "apartment",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "medium",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "gen-porto-1053",
+      "title": "T4 em Porto",
+      "type": "T4",
+      "district": "Porto",
+      "municipality": "Porto",
+      "oldAssetClass": null,
+      "newAssetClass": "apartment",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "medium",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "gen-porto-1054",
+      "title": "Garagem em Vila Nova de Gaia",
+      "type": "Garagem",
+      "district": "Porto",
+      "municipality": "Vila Nova de Gaia",
+      "oldAssetClass": null,
+      "newAssetClass": "garage",
+      "oldValEngine": null,
+      "newValEngine": "income",
+      "oldValConf": null,
+      "newValConf": "very_low",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "gen-santarém-1055",
+      "title": "V4 em Santarém",
+      "type": "V4",
+      "district": "Santarém",
+      "municipality": "Santarém",
+      "oldAssetClass": null,
+      "newAssetClass": "house",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "very_low",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "gen-santarém-1056",
+      "title": "Loja em Entroncamento",
+      "type": "Loja",
+      "district": "Santarém",
+      "municipality": "Entroncamento",
+      "oldAssetClass": null,
+      "newAssetClass": "commercial",
+      "oldValEngine": null,
+      "newValEngine": "income",
+      "oldValConf": null,
+      "newValConf": "very_low",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "gen-santarém-1057",
+      "title": "V3 em Abrantes",
+      "type": "V3",
+      "district": "Santarém",
+      "municipality": "Abrantes",
+      "oldAssetClass": null,
+      "newAssetClass": "house",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "very_low",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "gen-santarém-1058",
+      "title": "T3 em Tomar",
+      "type": "T3",
+      "district": "Santarém",
+      "municipality": "Tomar",
+      "oldAssetClass": null,
+      "newAssetClass": "apartment",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "very_low",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "gen-santarém-1059",
+      "title": "V2 em Rio Maior",
+      "type": "V2",
+      "district": "Santarém",
+      "municipality": "Rio Maior",
+      "oldAssetClass": null,
+      "newAssetClass": "house",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "very_low",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "gen-setúbal-1060",
+      "title": "T1 em Sesimbra",
+      "type": "T1",
+      "district": "Setúbal",
+      "municipality": "Sesimbra",
+      "oldAssetClass": null,
+      "newAssetClass": "apartment",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "medium",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "gen-setúbal-1061",
+      "title": "V4 em Setúbal",
+      "type": "V4",
+      "district": "Setúbal",
+      "municipality": "Setúbal",
+      "oldAssetClass": null,
+      "newAssetClass": "house",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "very_low",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "gen-setúbal-1062",
+      "title": "V4 em Almada",
+      "type": "V4",
+      "district": "Setúbal",
+      "municipality": "Almada",
+      "oldAssetClass": null,
+      "newAssetClass": "house",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "very_low",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "gen-setúbal-1063",
+      "title": "T0 em Sesimbra",
+      "type": "T0",
+      "district": "Setúbal",
+      "municipality": "Sesimbra",
+      "oldAssetClass": null,
+      "newAssetClass": "apartment",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "medium",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "gen-setúbal-1064",
+      "title": "V2 em Moita",
+      "type": "V2",
+      "district": "Setúbal",
+      "municipality": "Moita",
+      "oldAssetClass": null,
+      "newAssetClass": "house",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "very_low",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "gen-setúbal-1065",
+      "title": "T1 em Sesimbra",
+      "type": "T1",
+      "district": "Setúbal",
+      "municipality": "Sesimbra",
+      "oldAssetClass": null,
+      "newAssetClass": "apartment",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "medium",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "gen-vianadocastelo-1066",
+      "title": "T0 em Ponte de Lima",
+      "type": "T0",
+      "district": "Viana do Castelo",
+      "municipality": "Ponte de Lima",
+      "oldAssetClass": null,
+      "newAssetClass": "apartment",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "very_low",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "gen-vianadocastelo-1067",
+      "title": "Terreno em Melgaço",
+      "type": "Terreno",
+      "district": "Viana do Castelo",
+      "municipality": "Melgaço",
+      "oldAssetClass": null,
+      "newAssetClass": "mixed",
+      "oldValEngine": null,
+      "newValEngine": "pending_review",
+      "oldValConf": null,
+      "newValConf": "very_low",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "gen-vianadocastelo-1068",
+      "title": "T2 em Valença",
+      "type": "T2",
+      "district": "Viana do Castelo",
+      "municipality": "Valença",
+      "oldAssetClass": null,
+      "newAssetClass": "apartment",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "very_low",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "gen-vianadocastelo-1069",
+      "title": "Garagem em Caminha",
+      "type": "Garagem",
+      "district": "Viana do Castelo",
+      "municipality": "Caminha",
+      "oldAssetClass": null,
+      "newAssetClass": "garage",
+      "oldValEngine": null,
+      "newValEngine": "income",
+      "oldValConf": null,
+      "newValConf": "very_low",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "gen-vianadocastelo-1070",
+      "title": "V4 em Viana do Castelo",
+      "type": "V4",
+      "district": "Viana do Castelo",
+      "municipality": "Viana do Castelo",
+      "oldAssetClass": null,
+      "newAssetClass": "house",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "very_low",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "gen-vilareal-1071",
+      "title": "V3 em Valpaços",
+      "type": "V3",
+      "district": "Vila Real",
+      "municipality": "Valpaços",
+      "oldAssetClass": null,
+      "newAssetClass": "house",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "very_low",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "gen-vilareal-1072",
+      "title": "Garagem em Vila Real",
+      "type": "Garagem",
+      "district": "Vila Real",
+      "municipality": "Vila Real",
+      "oldAssetClass": null,
+      "newAssetClass": "garage",
+      "oldValEngine": null,
+      "newValEngine": "income",
+      "oldValConf": null,
+      "newValConf": "very_low",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "gen-vilareal-1073",
+      "title": "T1 em Chaves",
+      "type": "T1",
+      "district": "Vila Real",
+      "municipality": "Chaves",
+      "oldAssetClass": null,
+      "newAssetClass": "apartment",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "very_low",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "gen-vilareal-1074",
+      "title": "T0 em Vila Real",
+      "type": "T0",
+      "district": "Vila Real",
+      "municipality": "Vila Real",
+      "oldAssetClass": null,
+      "newAssetClass": "apartment",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "very_low",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "gen-vilareal-1075",
+      "title": "T1 em Chaves",
+      "type": "T1",
+      "district": "Vila Real",
+      "municipality": "Chaves",
+      "oldAssetClass": null,
+      "newAssetClass": "apartment",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "very_low",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "gen-viseu-1076",
+      "title": "T0 em Nelas",
+      "type": "T0",
+      "district": "Viseu",
+      "municipality": "Nelas",
+      "oldAssetClass": null,
+      "newAssetClass": "apartment",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "very_low",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "gen-viseu-1077",
+      "title": "V2 em Nelas",
+      "type": "V2",
+      "district": "Viseu",
+      "municipality": "Nelas",
+      "oldAssetClass": null,
+      "newAssetClass": "house",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "very_low",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "gen-viseu-1078",
+      "title": "T0 em Lamego",
+      "type": "T0",
+      "district": "Viseu",
+      "municipality": "Lamego",
+      "oldAssetClass": null,
+      "newAssetClass": "apartment",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "very_low",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "gen-açores-1079",
+      "title": "Armazém em Lagoa",
+      "type": "Armazém",
+      "district": "Açores",
+      "municipality": "Lagoa",
+      "oldAssetClass": null,
+      "newAssetClass": "commercial",
+      "oldValEngine": null,
+      "newValEngine": "income",
+      "oldValConf": null,
+      "newValConf": "very_low",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "gen-açores-1080",
+      "title": "T2 em Ribeira Grande",
+      "type": "T2",
+      "district": "Açores",
+      "municipality": "Ribeira Grande",
+      "oldAssetClass": null,
+      "newAssetClass": "apartment",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "very_low",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "gen-açores-1081",
+      "title": "T3 em Ponta Delgada",
+      "type": "T3",
+      "district": "Açores",
+      "municipality": "Ponta Delgada",
+      "oldAssetClass": null,
+      "newAssetClass": "apartment",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "very_low",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "gen-açores-1082",
+      "title": "T0 em Ponta Delgada",
+      "type": "T0",
+      "district": "Açores",
+      "municipality": "Ponta Delgada",
+      "oldAssetClass": null,
+      "newAssetClass": "apartment",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "very_low",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "gen-açores-1083",
+      "title": "Terreno em Ponta Delgada",
+      "type": "Terreno",
+      "district": "Açores",
+      "municipality": "Ponta Delgada",
+      "oldAssetClass": null,
+      "newAssetClass": "mixed",
+      "oldValEngine": null,
+      "newValEngine": "pending_review",
+      "oldValConf": null,
+      "newValConf": "very_low",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "gen-madeira-1084",
+      "title": "T4 em Funchal",
+      "type": "T4",
+      "district": "Madeira",
+      "municipality": "Funchal",
+      "oldAssetClass": null,
+      "newAssetClass": "apartment",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "very_low",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "gen-madeira-1085",
+      "title": "T4 em Calheta",
+      "type": "T4",
+      "district": "Madeira",
+      "municipality": "Calheta",
+      "oldAssetClass": null,
+      "newAssetClass": "apartment",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "very_low",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "gen-madeira-1086",
+      "title": "T3 em Câmara de Lobos",
+      "type": "T3",
+      "district": "Madeira",
+      "municipality": "Câmara de Lobos",
+      "oldAssetClass": null,
+      "newAssetClass": "apartment",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "very_low",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "gen-madeira-1087",
+      "title": "T0 em Funchal",
+      "type": "T0",
+      "district": "Madeira",
+      "municipality": "Funchal",
+      "oldAssetClass": null,
+      "newAssetClass": "apartment",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "very_low",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "cs-lis-real-1",
+      "title": "Apartamento T1 Parque das Nações",
+      "type": "T1",
+      "district": "Lisboa",
+      "municipality": "Lisboa",
+      "oldAssetClass": null,
+      "newAssetClass": "apartment",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "medium",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "cs-lis-real-2",
+      "title": "Apartamento T1 Santa Maria Maior",
+      "type": "T1",
+      "district": "Lisboa",
+      "municipality": "Lisboa",
+      "oldAssetClass": null,
+      "newAssetClass": "apartment",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "medium",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "cs-lis-real-3",
+      "title": "Apartamento T2 Penha de França",
+      "type": "T2",
+      "district": "Lisboa",
+      "municipality": "Lisboa",
+      "oldAssetClass": null,
+      "newAssetClass": "apartment",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "medium",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "cs-lis-real-4",
+      "title": "Apartamento T2 Graça, São Vicente",
+      "type": "T2",
+      "district": "Lisboa",
+      "municipality": "Lisboa",
+      "oldAssetClass": null,
+      "newAssetClass": "apartment",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "medium",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "cs-por-real-1",
+      "title": "Apartamento T1 Paranhos",
+      "type": "T1",
+      "district": "Porto",
+      "municipality": "Porto",
+      "oldAssetClass": null,
+      "newAssetClass": "apartment",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "medium",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "cs-por-real-2",
+      "title": "Apartamento T0 Campanhã",
+      "type": "T0",
+      "district": "Porto",
+      "municipality": "Porto",
+      "oldAssetClass": null,
+      "newAssetClass": "apartment",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "medium",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "cs-por-real-3",
+      "title": "Apartamento Bonfim",
+      "type": "T0",
+      "district": "Porto",
+      "municipality": "Porto",
+      "oldAssetClass": null,
+      "newAssetClass": "apartment",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "medium",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "cs-bra-real-1",
+      "title": "Apartamento T2 Centro Braga",
+      "type": "T0",
+      "district": "Braga",
+      "municipality": "Braga",
+      "oldAssetClass": null,
+      "newAssetClass": "apartment",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "medium",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "cs-bra-real-2",
+      "title": "Apartamento T1 São Víctor",
+      "type": "T1",
+      "district": "Braga",
+      "municipality": "Braga",
+      "oldAssetClass": null,
+      "newAssetClass": "apartment",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "medium",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "cs-bra-real-3",
+      "title": "Apartamento T0 Ferreiros",
+      "type": "T0",
+      "district": "Braga",
+      "municipality": "Braga",
+      "oldAssetClass": null,
+      "newAssetClass": "apartment",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "medium",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    },
+    {
+      "id": "iv-lis-1",
+      "title": "Apartamento T0 Alfama",
+      "type": "T0",
+      "district": "Lisboa",
+      "municipality": "Lisboa",
+      "oldAssetClass": null,
+      "newAssetClass": "apartment",
+      "oldValEngine": null,
+      "newValEngine": "hedonic",
+      "oldValConf": null,
+      "newValConf": "medium",
+      "changed": [
+        "asset_class",
+        "valuation_engine",
+        "valuation_confidence"
+      ]
+    }
+  ]
+}

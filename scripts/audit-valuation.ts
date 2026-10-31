@@ -67,6 +67,7 @@ interface EngineResult {
   capped: boolean;
   badges: string[];
   maxScore: number;
+  scoreBreakdown: Record<string, number> | null;
 }
 
 function bucket(score: number | null): string {
@@ -137,6 +138,7 @@ async function main() {
         capped: result.breakdown?.scoreCapped ?? false,
         badges: result.breakdown?.scoreBadges ?? [],
         maxScore: result.breakdown?.scoreMax ?? 100,
+        scoreBreakdown: result.breakdown?.scoreBreakdown ?? null,
       });
     } catch (err) {
       console.error(`Erro a avaliar ${row.id} (${row.title}):`, err);
@@ -153,6 +155,7 @@ async function main() {
         capped: false,
         badges: ["erro de avaliação"],
         maxScore: 0,
+        scoreBreakdown: null,
       });
     }
   }
@@ -231,6 +234,26 @@ async function main() {
   lines.push("--- Top 10 scores mais baixos ---");
   for (const a of bottom10) {
     lines.push(`  ${a.score} | ${a.asset_class} | ${a.valuation_confidence} | ${a.title.slice(0, 60)}`);
+  }
+  lines.push("");
+
+  lines.push("--- Top 3 breakdown de score (porque o maximo e baixo) ---");
+  const top3 = withScore.slice(0, 3);
+  for (const a of top3) {
+    const sb = a.scoreBreakdown ?? {};
+    lines.push(
+      `  1º ${a.score} | ${a.asset_class} | desconto=${sb.discount ?? 0} | preco_m2=${sb.pricePerSqm ?? 0} | yield=${sb.yield ?? 0} | liquidez=${sb.liquidity ?? 0} | confianca=${sb.confidence ?? 0} | ${a.title.slice(0, 50)}`,
+    );
+  }
+  lines.push("");
+
+  lines.push("--- Bottom 3 breakdown de score ---");
+  const bottom3 = withScore.slice(-3).reverse();
+  for (const a of bottom3) {
+    const sb = a.scoreBreakdown ?? {};
+    lines.push(
+      `  ${a.score} | ${a.asset_class} | desconto=${sb.discount ?? 0} | preco_m2=${sb.pricePerSqm ?? 0} | yield=${sb.yield ?? 0} | liquidez=${sb.liquidity ?? 0} | confianca=${sb.confidence ?? 0} | ${a.title.slice(0, 50)}`,
+    );
   }
   lines.push("");
 
