@@ -17,10 +17,6 @@
       "schedule": "0 6 * * *"
     },
     {
-      "path": "/api/cron/scrape-auctions",
-      "schedule": "0 */6 * * *"
-    },
-    {
       "path": "/api/cron/alerts",
       "schedule": "0 8 * * *"
     }
