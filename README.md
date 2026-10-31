@@ -161,3 +161,51 @@ Plano de reativação:
 ### Sentry sem DSN
 
 Ver secção "⚠️ Sentry — não configurado em produção" acima. Erros em produção não são reportados até o DSN ser adicionado.
+
+---
+
+## Motor de avaliação — análise de mercado por tipo de ativo
+
+O RadarPro avalia cada imóvel com um motor específico para a sua classe de ativo e modalidade. Nenhum imóvel é avaliado sem primeiro ser classificado em duas dimensões independentes:
+
+| Dimensão | Valores |
+|---|---|
+| **Tipo de ativo** (`asset_class`) | `apartment`, `house`, `urban_land`, `rural_land`, `commercial`, `garage`, `mixed` |
+| **Modalidade** (`listing_type`) | `fixed_price`, `auction_judicial`, `auction_private`, `auction_fiscal` |
+
+### Motores de avaliação (`src/lib/valuation/`)
+
+| Motor | Para | Base |
+|---|---|---|
+| `hedonic` | apartamento, moradia | Mediana €/m² da freguesia + ajustamentos (tipologia, andar, orientação, estado, cert. energética, garagem, elevador, vista) |
+| `land_urban` | terreno urbano | €/m² de lote urbanizável + PDM + infraestrutura + topografia + frente de estrada |
+| `land_rural` | terreno rústico | Método do rendimento (renda agro-florestal ÷ taxa de capitalização) |
+| `income` | comercial | €/m² comercial + yield |
+| `auction` | leilão | Lance máximo sustentável (`max_bid`) com custos da leiloeira + IMT + Selo |
+
+### Cortes de score (regras obrigatórias)
+
+| Condição | Score máximo |
+|---|---|
+| `valuation_confidence = 'very_low'` | 40 |
+| Terreno urbano com `pdm_status` = `non_buildable` ou `unknown` | 40 |
+| Terreno rural sem rendimento demonstrável | 30 |
+| Leilão com `current_bid >= max_bid` | 30 (badge vermelho "Acima do lance máximo") |
+
+### Pesos do score por tipo de ativo
+
+| Dimensão | Apartment | Urban land | Rural land | Auction |
+|---|---:|---:|---:|---:|
+| Desconto vs AVM | 30% | 25% | 20% | 30% |
+| Preço/m² vs mediana | 25% | 30% | 35% | 20% |
+| Yield / rendimento | 20% | 10% | 25% | 20% |
+| Liquidez | 15% | 20% | 10% | 15% |
+| Confiança / risco | 10% | 15% | 10% | 15% |
+
+### Leilões separados do preço fixo
+
+Leilões e preço fixo **não aparecem no mesmo ranking**. O search route aceita o filtro `listing_type` e as páginas de listagem têm dois separadores: "Preço fixo" e "Leilões". No separador de leilões, a ordenação é por margem (`max_bid - current_bid DESC`), não por desconto bruto. No card de leilão é mostrado `current_bid`, `max_bid` e a margem em €.
+
+### Dados de mercado (`src/lib/market-data.ts`)
+
+Tabela de medianas €/m² por freguesia/concelho com fonte (INE / Confidencial Imobiliário) e data de referência. Ordem de preferência: paróquia > concelho > distrito. Valores são referência, não a base única do AVM.

@@ -30,6 +30,11 @@ export const properties = sqliteTable("properties", {
   condominiumDebt: real("condominium_debt"), // Condomínio em atraso
   renovationEstimate: real("renovation_estimate"), // Estimativa de obras
   maxBidCalculation: text("max_bid_calculation"), // JSON com breakdown dos custos
+  assetClass: text("asset_class"), // apartment | house | urban_land | rural_land | commercial | garage | mixed
+  valuationEngine: text("valuation_engine"), // hedonic | land_urban | land_rural | income | auction
+  valuationConfidence: text("valuation_confidence"), // high | medium | low | very_low
+  pdmStatus: text("pdm_status"), // buildable | restricted | non_buildable | unknown
+  infrastructure: text("infrastructure"), // full | partial | none | unknown
   lat: real("lat"),
   lng: real("lng"),
   geoQuality: text("geo_quality").$type<"exact" | "street" | "parish" | "district" | "NA">(),

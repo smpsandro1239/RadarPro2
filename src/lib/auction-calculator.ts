@@ -91,10 +91,11 @@ export function calculateMaxBid(inputs: AuctionCalculationInputs): AuctionCalcul
 
   const config = AUCTION_HOUSE_CONFIG[auctionHouse ?? ""] ?? DEFAULT_AUCTION_HOUSE;
 
-  // Custos percentuais aplicados ao valor de mercado
+  // Base de tributação: impostos (IMT, Selo) incidem sobre max(valor de mercado, VPT)
+  const taxBase = Math.max(marketValue, vpt ?? 0);
   const commission = Math.round(marketValue * (config.commissionPct / 100));
-  const imt = Math.round(marketValue * (config.imtPct / 100));
-  const stampDuty = Math.round(marketValue * (config.stampDutyPct / 100));
+  const imt = Math.round(taxBase * (config.imtPct / 100));
+  const stampDuty = Math.round(taxBase * (config.stampDutyPct / 100));
 
   const additionalCosts = condominiumDebt + renovationEstimate;
   const totalCosts = commission + imt + stampDuty + additionalCosts;

@@ -2,7 +2,7 @@ import { db } from "@/db";
 import { properties, priceHistory } from "@/db/schema";
 import { eq, desc } from "drizzle-orm";
 import { notFound } from "next/navigation";
-import { MapPin, TrendingDown, ExternalLink, Heart, ChevronDown, Info } from "lucide-react";
+import { MapPin, TrendingDown, ExternalLink, Heart, ChevronDown, Info, AlertTriangle, Gavel } from "lucide-react";
 import Image from "next/image";
 import ValuationCard from "@/components/ValuationCard";
 import { calculateMaxBid, getCostBreakdownText } from "@/lib/auction-calculator";
@@ -106,7 +106,11 @@ export default async function PropertyPage({
 
         <div>
           <div className="flex items-center gap-3 mb-4">
-            <span className="bg-primary text-white px-3 py-1 rounded-lg text-sm font-bold">
+            <span className={`px-3 py-1 rounded-lg text-sm font-bold ${
+              prop.valuationConfidence === "very_low"
+                ? "bg-red-50 text-red-700 border border-red-100"
+                : "bg-primary text-white"
+            }`}>
               {prop.score}/100
             </span>
             <span className="bg-slate-100 px-3 py-1 rounded-lg text-sm font-medium">
@@ -117,6 +121,15 @@ export default async function PropertyPage({
               score={prop.score || 0}
             />
           </div>
+
+          {prop.valuationConfidence === "very_low" && (
+            <div className="mb-4 p-3 bg-red-50 border border-red-100 rounded-xl flex items-center gap-2">
+              <AlertTriangle size={16} className="text-red-600" />
+              <span className="text-sm text-red-700 font-medium">
+                Confiança muito baixa na avaliação — score limitado a 40
+              </span>
+            </div>
+          )}
 
           <h1 className="text-3xl font-bold mb-2">{prop.title}</h1>
           <div className="flex items-center text-secondary mb-6">
@@ -203,6 +216,144 @@ export default async function PropertyPage({
                   ))}
                 </ul>
               </details>
+            </div>
+          )}
+
+          {/* Análise de leilão — breakdown de custos e regra do VPT */}
+          {prop.isAuction && auctionCalculation && (
+            <div className="mb-6 border border-slate-200 rounded-xl p-6 bg-white">
+              <h2 className="font-bold text-lg mb-4 flex items-center gap-2">
+                <Gavel size={20} className="text-orange-600" />
+                Análise de leilão
+              </h2>
+
+              {/* Regra do VPT */}
+              <div className="mb-4 p-3 bg-amber-50 border border-amber-100 rounded-lg">
+                <div className="flex items-start gap-2 mb-2">
+                  <Info size={14} className="text-amber-600 mt-0.5" />
+                  <span className="text-sm text-amber-800 font-medium">
+                    Regra do VPT:
+                  </span>
+                </div>
+                <p className="text-sm text-amber-700">
+                  Os impostos (IMT e Imposto do Selo) incidem sobre o maior entre o valor de
+                  mercado e o VPT: <strong>max(lance, VPT)</strong>.
+                  {" "}
+                  {prop.vpt && (
+                    <>
+                      VPT deste imóvel:{" "}
+                      <span className="font-bold">{prop.vpt.toLocaleString("pt-PT")}€</span>.
+                    </>
+                  )}
+                </p>
+              </div>
+
+              {/* Breakdown de custos */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                <div className="bg-slate-50 p-4 rounded-lg border border-slate-100">
+                  <h3 className="text-xs font-bold text-slate-500 uppercase mb-3">Custos de aquisição</h3>
+                  <div className="space-y-2 text-sm">
+                    <div className="flex justify-between text-secondary">
+                      <span>Comissão da leiloeira</span>
+                      <span className="font-medium">{auctionCalculation.auctionHouseConfig.commissionPct}%</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-slate-600">Valor</span>
+                      <span className="font-bold text-red-600">-{auctionCalculation.commission.toLocaleString("pt-PT")}€</span>
+                    </div>
+                    <div className="flex justify-between text-secondary">
+                      <span>IMT estimado</span>
+                      <span className="font-medium">{auctionCalculation.auctionHouseConfig.imtPct}%</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-slate-600">Valor</span>
+                      <span className="font-bold text-red-600">-{auctionCalculation.imt.toLocaleString("pt-PT")}€</span>
+                    </div>
+                    <div className="flex justify-between text-secondary">
+                      <span>Imposto do Selo</span>
+                      <span className="font-medium">{auctionCalculation.auctionHouseConfig.stampDutyPct}%</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-slate-600">Valor</span>
+                      <span className="font-bold text-red-600">-{auctionCalculation.stampDuty.toLocaleString("pt-PT")}€</span>
+                    </div>
+                  </div>
+                </div>
+                <div className="bg-slate-50 p-4 rounded-lg border border-slate-100">
+                  <h3 className="text-xs font-bold text-slate-500 uppercase mb-3">Custos adicionais</h3>
+                  <div className="space-y-2 text-sm">
+                    <div className="flex justify-between">
+                      <span className="text-slate-600">Dívida de condomínio</span>
+                      <span className="font-bold text-red-600">-{auctionCalculation.condominiumDebt.toLocaleString("pt-PT")}€</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-slate-600">Renovação estimada</span>
+                      <span className="font-bold text-red-600">-{auctionCalculation.renovationEstimate.toLocaleString("pt-PT")}€</span>
+                    </div>
+                    <div className="flex justify-between text-secondary">
+                      <span>Registo e custas</span>
+                      <span className="font-medium">incluído nos custos</span>
+                    </div>
+                    <div className="pt-2 border-t border-slate-200 flex justify-between font-bold mt-2">
+                      <span>Custos totais</span>
+                      <span className="text-red-600">-{auctionCalculation.totalCosts.toLocaleString("pt-PT")}€</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Base de tributação */}
+              <div className="bg-slate-50 p-4 rounded-lg border border-slate-100 mb-4">
+                <h3 className="text-xs font-bold text-slate-500 uppercase mb-3">Base de tributação (VPT)</h3>
+                <div className="text-sm space-y-1">
+                  <div className="flex justify-between">
+                    <span className="text-secondary">Valor de mercado</span>
+                    <span className="font-mono">{prop.marketValue?.toLocaleString("pt-PT")}€</span>
+                  </div>
+                  {prop.vpt && (
+                    <div className="flex justify-between">
+                      <span className="text-secondary">VPT</span>
+                      <span className="font-mono">{prop.vpt.toLocaleString("pt-PT")}€</span>
+                    </div>
+                  )}
+                  <div className="pt-2 border-t border-slate-200 flex justify-between font-bold">
+                    <span>Base de imposto (max)</span>
+                    <span className="font-mono text-orange-600">
+                      {Math.max(prop.marketValue ?? 0, prop.vpt ?? 0).toLocaleString("pt-PT")}€
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Resumo */}
+              <div className="bg-orange-50 p-4 rounded-lg border border-orange-100">
+                <h3 className="text-xs font-bold text-orange-800 uppercase mb-3">Resumo do lance máximo</h3>
+                <div className="space-y-2 text-sm">
+                  <div className="flex justify-between">
+                    <span className="text-secondary">Valor de mercado</span>
+                    <span className="font-mono">{auctionCalculation.marketValue.toLocaleString("pt-PT")}€</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-secondary">Margem de segurança (15%)</span>
+                    <span className="font-mono text-red-600">-{Math.round(auctionCalculation.marketValue * 0.15).toLocaleString("pt-PT")}€</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-secondary">Custos totais</span>
+                    <span className="font-mono text-red-600">-{auctionCalculation.totalCosts.toLocaleString("pt-PT")}€</span>
+                  </div>
+                  <div className="pt-2 border-t border-orange-200 flex justify-between font-bold text-lg">
+                    <span>Lance máximo recomendado</span>
+                    <span className={`text-orange-700 ${auctionCalculation.currentBidExceedsMax ? "text-red-600" : ""}`}>
+                      {auctionCalculation.maxBid.toLocaleString("pt-PT")}€
+                    </span>
+                  </div>
+                  <div className={`flex items-center gap-1 text-xs font-medium mt-2 ${auctionCalculation.currentBidExceedsMax ? "text-red-600" : "text-green-600"}`}>
+                    {auctionCalculation.currentBidExceedsMax
+                      ? `⚠️ Lance atual (${auctionCalculation.currentBid.toLocaleString("pt-PT")}€) excede o máximo recomendado`
+                      : `✓ Margem disponível: ${auctionCalculation.headroom.toLocaleString("pt-PT")}€`}
+                  </div>
+                </div>
+              </div>
             </div>
           )}
 
@@ -338,7 +489,7 @@ export default async function PropertyPage({
                       .reverse()
                       .map((h, i) => {
                         const x = (i / (history.length - 1)) * 100;
-                        const y = 100; // Will be normalized below
+                        const y = 100;
                         return `${x},${y}`;
                       })
                       .concat([`${100},100`, `0,100`])

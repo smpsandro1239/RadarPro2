@@ -19,6 +19,7 @@ export async function GET(request: Request) {
     const minScore = searchParams.get("min_score") || undefined;
     const minDiscount = searchParams.get("min_discount") || undefined;
     const isAuction = searchParams.get("is_auction") || undefined;
+    const listingType = searchParams.get("listing_type") || undefined;
     const page = parseInt(searchParams.get("page") || "1");
     const perPage = parseInt(searchParams.get("per_page") || "20");
     const sortBy = searchParams.get("sort_by") || "score";
@@ -121,6 +122,16 @@ export async function GET(request: Request) {
       conditions.push(gte(properties.discountPct, parseInt(minDiscount)));
     if (isAuction === "true") conditions.push(eq(properties.isAuction, true));
     if (isAuction === "false") conditions.push(eq(properties.isAuction, false));
+    if (listingType) {
+      if (listingType.startsWith("auction_")) {
+        conditions.push(eq(properties.isAuction, true));
+        if (listingType !== "auction_*") {
+          conditions.push(eq(properties.auctionType, listingType.replace("auction_", "") as any));
+        }
+      } else {
+        conditions.push(eq(properties.isAuction, false));
+      }
+    }
 
     // Fetch properties
     const results = await db
@@ -134,7 +145,9 @@ export async function GET(request: Request) {
             ? sql`${properties.price} DESC`
             : sortBy === "discount_desc"
               ? sql`${properties.discountPct} DESC`
-              : sql`${properties.score} DESC`
+              : listingType && listingType.startsWith("auction_")
+                ? sql`${properties.maxBid} - ${properties.currentBid} DESC`
+                : sql`${properties.score} DESC`
       )
       .limit(perPage)
       .offset(offset);

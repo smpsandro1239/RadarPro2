@@ -40,6 +40,10 @@ interface Property {
   auctionEndDate: number | Date | null;
   lat?: number | null;
   lng?: number | null;
+  currentBid?: number | null;
+  maxBid?: number | null;
+  valuationConfidence?: string | null;
+  assetClass?: string | null;
 }
 
 export default function AdvancedSearchPage() {
@@ -417,8 +421,12 @@ export default function AdvancedSearchPage() {
                     <div className="absolute top-4 left-4 bg-white px-3 py-1 rounded-lg text-xs font-bold shadow-sm z-10">
                       {prop.sourceName}
                     </div>
-                    <div className="absolute top-4 right-4 bg-primary text-white px-3 py-1 rounded-lg text-xs font-bold z-10">
-                      {prop.score}/100
+                    <div className={`absolute top-4 right-4 px-3 py-1 rounded-lg text-xs font-bold z-10 border ${
+                      prop.valuationConfidence === "very_low"
+                        ? "bg-red-50 text-red-700 border-red-100"
+                        : "bg-primary text-white"
+                    }`}>
+                      {prop.score !== null ? prop.score : "--"}/100
                     </div>
                     {prop.isAuction && (
                       <div className="absolute bottom-4 left-4 bg-orange-500 text-white px-2 py-1 rounded-lg text-xs font-bold z-10 flex items-center gap-1">
@@ -428,6 +436,11 @@ export default function AdvancedSearchPage() {
                     {prop.isAuction && prop.auctionEndDate && (
                       <div className="absolute bottom-4 right-4 bg-white px-2 py-1 rounded-lg text-xs font-bold text-orange-600 z-10">
                         <AuctionCountdown endDate={typeof prop.auctionEndDate === "number" ? prop.auctionEndDate : Math.floor(new Date(prop.auctionEndDate).getTime() / 1000)} compact />
+                      </div>
+                    )}
+                    {prop.valuationConfidence === "very_low" && (
+                      <div className="absolute bottom-4 left-4 bg-red-500 text-white px-2 py-1 rounded-lg text-xs font-bold z-10 flex items-center gap-1">
+                        Confiança baixa
                       </div>
                     )}
                   </div>
@@ -460,6 +473,25 @@ export default function AdvancedSearchPage() {
                         Rentabilidade: {prop.rentability}%
                       </div>
                     </div>
+
+                    {/* Badges de leilão */}
+                    {prop.isAuction && prop.currentBid != null && prop.maxBid != null && prop.currentBid >= prop.maxBid && (
+                      <div className="mb-2 inline-flex items-center gap-1.5 px-2 py-1 rounded bg-red-50 text-red-700 text-xs font-bold border border-red-100">
+                        <X size={12} /> Acima do lance máximo
+                      </div>
+                    )}
+                    {prop.isAuction && prop.currentBid != null && prop.maxBid != null && prop.maxBid > 0 && prop.currentBid < prop.maxBid && (
+                      <div className="mb-2 inline-flex items-center gap-1.5 px-2 py-1 rounded bg-green-50 text-green-700 text-xs font-bold border border-green-100">
+                        Margem: {(prop.maxBid - prop.currentBid).toLocaleString("pt-PT")}€
+                      </div>
+                    )}
+
+                    {/* Confiança muito baixa */}
+                    {prop.valuationConfidence === "very_low" && (
+                      <div className="mb-2 inline-flex items-center gap-1.5 px-2 py-1 rounded bg-red-50 text-red-700 text-xs font-bold border border-red-100">
+                        Confiança muito baixa
+                      </div>
+                    )}
                   </div>
                 </Link>
               );

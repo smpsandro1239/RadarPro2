@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import PropertyCard from "@/components/PropertyCard";
+import ListingTabs from "@/components/ListingTabs";
 
 interface Property {
   id: string;
@@ -33,6 +34,8 @@ interface Property {
   currentBid: number | null;
   maxBid: number | null;
   sqm?: number | null;
+  valuationConfidence?: string | null;
+  assetClass?: string | null;
 }
 
 interface MunicipalityOption {
@@ -216,7 +219,6 @@ export default function PropertyGrid({
     if (district === "todos") return [];
     const fromMap = MUNICIPALITIES_BY_DISTRICT[district];
     if (fromMap) return fromMap;
-    // Distrito sem concelhos mapeados: retorna vazio (utilizador filtra apenas por distrito)
     return [];
   }, [district]);
 
@@ -503,6 +505,8 @@ export default function PropertyGrid({
             currentBid={prop.currentBid}
             maxBid={prop.maxBid}
             sqm={prop.sqm}
+            valuationConfidence={prop.valuationConfidence}
+            assetClass={prop.assetClass}
           />
         ))}
       </div>

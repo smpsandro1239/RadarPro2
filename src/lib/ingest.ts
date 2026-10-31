@@ -20,6 +20,40 @@ export interface ScrapedProperty {
   maxBid?: number;
 }
 
+
+/**
+ * Infere asset_class a partir de type e title.
+ * Regras:
+ *  apartamento/T0-T4 -> apartment
+ *  moradia/V2-V5 -> house
+ *  terreno urbano/lote -> urban_land
+ *  terreno rústico -> rural_land
+ *  loja/armazém/escritório -> commercial
+ *  garagem/box -> garage
+ *  ambíguo -> mixed + confidence='low'
+ */
+export function inferAssetClass(type: string | null, title: string | null): { assetClass: string; confidence: 'high' | 'medium' | 'low' } {
+  const t = (type || '').toLowerCase();
+  const titleLower = (title || '').toLowerCase();
+  const text = t + ' ' + titleLower;
+
+  const garageKw = ['garagem', 'box', 'garage', 'lugar de estacionamento', 'estacionamento'];
+  const apartmentKw = ['apartamento', 't0', 't1', 't2', 't3', 't4', 'apt', 'apartament'];
+  const houseKw = ['moradia', 'v2', 'v3', 'v4', 'v5', 'vivenda', 'casa '];
+  const urbanLandKw = ['terreno urbano', 'lote', 'terreno de construção', 'edificável', 'construção'];
+  const ruralLandKw = ['terreno rústico', 'rústico', 'floresta', 'agricola', 'agrícola', 'olival', 'vinha'];
+  const commercialKw = ['loja', 'armazem', 'armazém', 'escritório', 'escritorio', 'comercial'];
+
+  if (garageKw.some(k => text.includes(k))) return { assetClass: 'garage', confidence: 'high' };
+  if (apartmentKw.some(k => text.includes(k))) return { assetClass: 'apartment', confidence: 'high' };
+  if (houseKw.some(k => text.includes(k))) return { assetClass: 'house', confidence: 'high' };
+  if (urbanLandKw.some(k => text.includes(k))) return { assetClass: 'urban_land', confidence: 'high' };
+  if (ruralLandKw.some(k => text.includes(k))) return { assetClass: 'rural_land', confidence: 'high' };
+  if (commercialKw.some(k => text.includes(k))) return { assetClass: 'commercial', confidence: 'medium' };
+
+  return { assetClass: 'mixed', confidence: 'low' };
+}
+
 export async function ingestProperty(prop: ScrapedProperty): Promise<{
   action: "inserted" | "updated" | "skipped";
   id: string;
@@ -48,8 +82,8 @@ export async function ingestProperty(prop: ScrapedProperty): Promise<{
     price: prop.price,
     marketValue: Math.round(prop.price * 1.2), // Estimate market value
     discountPct: Math.round(((Math.round(prop.price * 1.2) || prop.price * 1.2) - prop.price) / Math.round(prop.price * 1.2) * 100) || 0,
-    score: Math.round(Math.random() * 20) + 70, // Temporary scoring
-    rentability: Math.round((5 + Math.random() * 5) * 10) / 10,
+    score: undefined,
+    rentability: undefined,
     images: JSON.stringify(prop.images),
     isActive,
     checkStatus: "pending" as "ok" | "not_found" | "error" | "pending",
@@ -95,6 +129,16 @@ export async function ingestProperty(prop: ScrapedProperty): Promise<{
     await db.update(properties).set(updatedFields).where(eq(properties.id, existing[0].id));
 
     return { action: "updated", id: existing[0].id };
+  }
+
+  // Inferir asset_class a partir de type e title
+  const { assetClass, confidence } = inferAssetClass(normalized.type, normalized.title);
+  (normalized as any).assetClass = assetClass;
+  (normalized as any).valuationConfidence = confidence;
+
+  // Se confiança baixa → pending_review, não calcular score final
+  if (confidence === 'low') {
+    normalized.checkStatus = 'pending';
   }
 
   await db.insert(properties).values(normalized as any);

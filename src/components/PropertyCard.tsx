@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { MapPin, Gavel, CheckCircle, TrendingDown } from "lucide-react";
+import { MapPin, Gavel, CheckCircle, TrendingDown, AlertTriangle, ChevronDown } from "lucide-react";
 import PropertyImage from "@/components/PropertyImage";
 
 interface PropertyCardProps {
@@ -23,13 +23,24 @@ interface PropertyCardProps {
   currentBid: number | null;
   maxBid: number | null;
   sqm?: number | null;
+  valuationConfidence?: string | null;
+  assetClass?: string | null;
 }
 
-function getScoreColor(score: number | null): string {
+function getScoreColor(score: number | null, confidence?: string | null): string {
   if (score === null) return "text-slate-400";
+  if (confidence === "very_low") return "text-red-500 font-extrabold";
   if (score >= 85) return "text-success font-extrabold";
   if (score >= 70) return "text-warning font-bold";
   return "text-muted font-semibold";
+}
+
+function getScoreBadgeVariant(score: number | null, confidence?: string | null): string {
+  if (score === null) return "bg-slate-100 text-slate-500";
+  if (confidence === "very_low") return "bg-red-50 text-red-700 border border-red-100";
+  if (score >= 85) return "bg-success/10 text-success border border-success/20";
+  if (score >= 70) return "bg-warning/10 text-warning border border-warning/20";
+  return "bg-slate-50 text-slate-600 border border-slate-200";
 }
 
 function getScoreLabel(score: number | null): string {
@@ -58,6 +69,8 @@ export default function PropertyCard({
   currentBid,
   maxBid,
   sqm,
+  valuationConfidence,
+  assetClass,
 }: PropertyCardProps) {
   const imageList = images ? (typeof images === "string" ? JSON.parse(images) : images) : [];
   const imageUrl = imageList[0] || null;
@@ -71,6 +84,10 @@ export default function PropertyCard({
     const now = Date.now();
     auctionDaysLeft = Math.max(0, Math.ceil((end - now) / (1000 * 60 * 60 * 24)));
   }
+
+  // Badge de margem do leilão
+  const auctionMargin = currentBid !== null && maxBid !== null && maxBid > 0 ? maxBid - currentBid : null;
+  const auctionAboveMax = currentBid !== null && maxBid !== null && currentBid >= maxBid;
 
   return (
     <Link
@@ -101,8 +118,16 @@ export default function PropertyCard({
           </div>
         )}
 
+        {/* Confiança muito baixa */}
+        {valuationConfidence === "very_low" && (
+          <div className="absolute bottom-4 left-4 bg-red-500 text-white px-2.5 py-1 rounded-lg text-xs font-bold z-10 flex items-center gap-1.5">
+            <AlertTriangle size={12} />
+            Confiança baixa
+          </div>
+        )}
+
         {/* Score */}
-        <div className="absolute top-4 right-4 bg-primary text-white px-3 py-1.5 rounded-lg text-xs font-bold z-10">
+        <div className={`absolute top-4 right-4 px-3 py-1.5 rounded-lg text-xs font-bold z-10 ${getScoreBadgeVariant(score, valuationConfidence)} border`}>
           {score !== null ? score : "--"}<span className="text-[10px] opacity-80 ml-0.5">/100</span>
         </div>
       </div>
@@ -136,6 +161,18 @@ export default function PropertyCard({
           )}
         </div>
 
+        {/* Badges de leilão (margem ou acima do máximo) */}
+        {isAuction && auctionAboveMax && (
+          <div className="mb-2 inline-flex items-center gap-1.5 px-2 py-1 rounded bg-red-50 text-red-700 text-xs font-bold border border-red-100">
+            <AlertTriangle size={12} /> Acima do lance máximo
+          </div>
+        )}
+        {isAuction && auctionMargin !== null && auctionMargin > 0 && !auctionAboveMax && (
+          <div className="mb-2 inline-flex items-center gap-1.5 px-2 py-1 rounded bg-green-50 text-green-700 text-xs font-bold border border-green-100">
+            Margem: {auctionMargin.toLocaleString("pt-PT")}€
+          </div>
+        )}
+
         {/* Linha de 3 factos */}
         <div className="flex items-center justify-between text-xs text-secondary mb-3">
           <span className="flex items-center gap-1">
@@ -150,11 +187,16 @@ export default function PropertyCard({
         </div>
 
         {/* Score único com cor semântica */}
-        <div className="flex items-center gap-2">
-          <span className={`text-xs font-bold ${getScoreColor(score)}`}>
+        <div className="flex items-center gap-2 mb-3">
+          <span className={`text-xs font-bold ${getScoreColor(score, valuationConfidence)}`}>
             {getScoreLabel(score)}
           </span>
           <span className="text-[10px] text-slate-400">{score !== null ? score + "/100" : "—"}</span>
+          {valuationConfidence === "very_low" && (
+            <span className="text-[10px] text-red-500 font-medium ml-1">
+              Confiança muito baixa
+            </span>
+          )}
         </div>
 
         <div className="mt-3">
