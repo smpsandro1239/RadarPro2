@@ -50,7 +50,7 @@ function percentile(sorted: number[], p: number): number {
 
 async function benchDbSearch(
   label: string,
-  queries: Array<() => Promise<{ count: number }>>
+  queries: Array<() => Promise<unknown>>
 ): Promise<BenchResult> {
   const latencies: number[] = [];
   let errors = 0;
@@ -130,7 +130,7 @@ async function main() {
   // 100 queries variadas
   const districts = ["Lisboa", "Porto", "Braga", "Faro", "Setúbal"];
   const types = ["Apartamento", "Moradia", "Terreno"];
-  const queries: Array<() => Promise<{ count: number }>> = [];
+  const queries: Array<() => Promise<{ count: number }[]>> = [];
 
   for (let i = 0; i < 100; i++) {
     const district = districts[i % districts.length];

@@ -56,6 +56,8 @@ export interface AuctionCalculationResult {
   marketValue: number;
   /** Custos totais adicionais (comissão + IMT + selo + condomínio + renovação) */
   totalCosts: number;
+  /** Custos adicionais (condomínio + renovação) */
+  additionalCosts: number;
   /** Comissão da leiloeira em € */
   commission: number;
   /** IMT estimado em € */
@@ -87,7 +89,7 @@ export function calculateMaxBid(inputs: AuctionCalculationInputs): AuctionCalcul
     targetMargin = 15,
   } = inputs;
 
-  const config = AUCTION_HOUSE_CONFIG[auctionHouse] ?? DEFAULT_AUCTION_HOUSE;
+  const config = AUCTION_HOUSE_CONFIG[auctionHouse ?? ""] ?? DEFAULT_AUCTION_HOUSE;
 
   // Custos percentuais aplicados ao valor de mercado
   const commission = Math.round(marketValue * (config.commissionPct / 100));

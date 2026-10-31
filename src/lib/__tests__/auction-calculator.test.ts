@@ -178,7 +178,6 @@ describe("calculateMaxBid", () => {
       targetMargin: 15,
       condominiumDebt: 0,
       renovationEstimate: 0,
-      vpt: null,
     });
 
     // 100.000 - (0 + 6.500 + 800 + 15.000) = 77.700€
@@ -196,7 +195,6 @@ describe("calculateMaxBid", () => {
       targetMargin: 15,
       condominiumDebt: 3_000,
       renovationEstimate: 5_000,
-      vpt: null,
     });
 
     // 100.000 - (0 + 6.500 + 800 + 15.000 + 3.000 + 5.000) = 69.700€
