@@ -102,7 +102,7 @@ async function main() {
       marketValue: row.marketValue,
       discountPct: row.discountPct,
       rentability: row.rentability,
-      sqm: row.lat != null || row.lng != null ? (row.sqm ?? null) : null,
+      sqm: null, // campo de área não existe no schema — lacuna documentada (valor sempre null)
       isAuction: row.isAuction === true,
       auctionType: row.auctionType,
       auctionHouse: row.auctionHouse,
@@ -116,7 +116,7 @@ async function main() {
       valuation_confidence: row.valuationConfidence,
       pdm_status: row.pdmStatus,
       infrastructure: row.infrastructure,
-      annualIncome: row.annualIncome,
+      annualIncome: null, // campo de rendimento não existe no schema — lacuna documentada (valor sempre null)
       createdAt: row.createdAt ? new Date(row.createdAt).toISOString() : null,
       isActive: row.isActive,
       checkStatus: row.checkStatus,
