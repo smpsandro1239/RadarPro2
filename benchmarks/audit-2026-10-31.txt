@@ -1,5 +1,5 @@
 === AUDITORIA DO MOTOR DE AVALIAÇÃO ===
-Data: 2026-10-31T11:28:33.125Z
+Data: 2026-10-31T11:42:40.060Z
 Total de imóveis ativos: 212
 
 --- Distribuição de asset_class ---
@@ -20,23 +20,23 @@ Total de imóveis ativos: 212
   unknown: 2 (100.0%)
 
 --- Distribuição de scores ---
-  ≥85: 0 (0.0%)
-  70–84: 0 (0.0%)
-  55–69: 12 (5.7%)
-  <55: 200 (94.3%)
+  ≥85: 2 (0.9%)
+  70–84: 31 (14.6%)
+  55–69: 45 (21.2%)
+  <55: 134 (63.2%)
   null: 0 (0.0%)
 
 --- Top 10 scores mais altos ---
-  66 | apartment | medium | Apartamento T2 Lisboa (Leilão)
-  66 | apartment | medium | Apartamento T1 Lisboa (Martelo)
-  63 | apartment | medium | Apartamento Ramalde (Execução Fiscal AT)
-  63 | apartment | medium | Imóvel Porto (Execução Fiscal AT)
-  62 | apartment | low | T2 em Vila Franca de Xira
-  60 | apartment | medium | Apartamento T1 Lisboa (Leilosoc)
-  60 | apartment | medium | Apartamento T2 Lisboa (Hasta Pública)
-  59 | apartment | medium | Apartamento T0 Alfama (Idealista)
-  59 | apartment | medium | Apartamento Maximinos (Execução Fiscal AT)
-  59 | apartment | medium | T1 em Sesimbra
+  86 | apartment | medium | Apartamento T2 Lisboa (Leilão)
+  86 | apartment | medium | Apartamento T1 Lisboa (Martelo)
+  83 | apartment | medium | Apartamento Ramalde (Execução Fiscal AT)
+  83 | apartment | medium | Imóvel Porto (Execução Fiscal AT)
+  80 | apartment | medium | Apartamento T1 Lisboa (Leilosoc)
+  80 | apartment | medium | Apartamento T2 Lisboa (Hasta Pública)
+  79 | apartment | medium | Apartamento T0 Alfama (Idealista)
+  79 | apartment | medium | Apartamento Maximinos (Execução Fiscal AT)
+  79 | apartment | medium | Apartamento T0 Alfama
+  77 | apartment | low | T2 em Vila Franca de Xira
 
 --- Top 10 scores mais baixos ---
   30 | rural_land | low | Terreno Rústico Valdreu, Vila Verde
@@ -51,9 +51,9 @@ Total de imóveis ativos: 212
   33 | house | very_low | V3 em Valpaços
 
 --- Top 3 breakdown de score (porque o maximo e baixo) ---
-  1º 66 | apartment | desconto=100 | preco_m2=50 | yield=0 | liquidez=100 | confianca=70 | Apartamento T2 Lisboa (Leilão)
-  1º 66 | apartment | desconto=100 | preco_m2=50 | yield=0 | liquidez=100 | confianca=70 | Apartamento T1 Lisboa (Martelo)
-  1º 63 | apartment | desconto=100 | preco_m2=50 | yield=0 | liquidez=80 | confianca=70 | Apartamento Ramalde (Execução Fiscal AT)
+  1º 86 | apartment | desconto=100 | preco_m2=50 | yield=100 | liquidez=100 | confianca=70 | Apartamento T2 Lisboa (Leilão)
+  1º 86 | apartment | desconto=100 | preco_m2=50 | yield=100 | liquidez=100 | confianca=70 | Apartamento T1 Lisboa (Martelo)
+  1º 83 | apartment | desconto=100 | preco_m2=50 | yield=100 | liquidez=80 | confianca=70 | Apartamento Ramalde (Execução Fiscal AT)
 
 --- Bottom 3 breakdown de score ---
   30 | rural_land | desconto=100 | preco_m2=50 | yield=0 | liquidez=55 | confianca=10 | Terreno Rústico Valdreu, Vila Verde
@@ -64,5 +64,5 @@ Total de imóveis ativos: 212
   OK confiança very_low: 22.6%
   OK confiança low: 11.8%
   ⚠️ 100.0% dos terrenos urbanos sem PDM (>50%) — score cortado em 40
-  ⚠️ 94.3% dos imóveis com score null ou <55 (>40%) — ranking perde valor
+  ⚠️ 63.2% dos imóveis com score null ou <55 (>40%) — ranking perde valor
   OK score 100: 0 imóveis

@@ -83,7 +83,15 @@ function pricePerSqmScore(property: any, valuation: any): number {
 
 /** 0-100: yield/rendimento estimado */
 function yieldScore(property: any, valuation: any): number {
-  const yieldPct = property.yieldPct ?? valuation.yieldPct ?? 0;
+  let yieldPct = property.yieldPct ?? valuation.yieldPct ?? 0;
+  if (!yieldPct || yieldPct <= 0) {
+    // Calcular a partir do annual_income guardado na BD (backfill de rendas)
+    const annualIncome = property.annualIncome ?? property.annual_income ?? 0;
+    const price = property.price ?? 0;
+    if (annualIncome > 0 && price > 0) {
+      yieldPct = Math.round((annualIncome / price) * 100);
+    }
+  }
   if (!yieldPct || yieldPct <= 0) return 0;
   if (yieldPct >= 8) return 100;
   if (yieldPct >= 6) return 75;

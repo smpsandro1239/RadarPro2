@@ -117,7 +117,7 @@ async function main() {
       valuation_confidence: row.valuationConfidence,
       pdm_status: row.pdmStatus,
       infrastructure: row.infrastructure,
-      annualIncome: null, // campo de rendimento não existe no schema — lacuna documentada (valor sempre null)
+      annualIncome: row.annualIncome, // agora existe na schema após migration
       createdAt: row.createdAt ? new Date(row.createdAt).toISOString() : null,
       isActive: row.isActive,
       checkStatus: row.checkStatus,
