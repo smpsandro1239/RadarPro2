@@ -1,10 +1,6 @@
 import { db } from "../src/db/index";
 import { properties } from "../src/db/schema";
 import { eq } from "drizzle-orm";
-import { exec } from "child_process";
-import { promisify } from "util";
-
-const exec = promisify(require("child_process").exec);
 
 async function main() {
   console.log("A ler imóveis ativos da BD...");
@@ -16,7 +12,7 @@ async function main() {
   let skipped = 0;
   let failed = 0;
 
-  // Grupos de fontes para processar em ordem de prioridade
+  // Grupos de fontes para processar em ordem de prioridade (quem tem mais imóveis sem imagem primeiro)
   const prioritySources = ["Casa Sapo", "Imovirtual", "Bidizi", "Idealista", "OLX", "Martelo.pt", "RE/MAX", "Century 21", "KW Portugal", "e-Leilões", "SuperCasa", "BPI Expresso"];
 
   for (const source of prioritySources) {
@@ -32,35 +28,45 @@ async function main() {
       }
 
       try {
-        // Usar curl com headers de navegador para burlar proteções anti-bot
-        const { stdout, stderr } = await exec(
-          `curl -s -L -A "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36" -H "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8" -H "Accept-Language: pt-PT,pt;q=0.9" -H "Referer: https://www.google.com/" -o /tmp/curl_image.html "${row.url}"`,
-          { timeout: 15000 }
-        );
+        const res = await fetch(row.url, {
+          headers: {
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+            "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
+            "Accept-Language": "pt-PT,pt;q=0.9",
+            "Referer": "https://www.google.com/",
+          },
+        });
 
-        if (stderr.includes("403") || stderr.includes("429") || stderr.includes("401")) {
+        if (!res.ok) {
           skipped++;
           continue;
         }
 
-        // Procurar og:image no HTML
-        const html = stdout.toString();
-        const ogImageMatch = html.match(/<meta[^>]*property=["\']og:image["\'][^>]*content=["\']([^"'\s>]+)/i);
+        const html = await res.text();
+        const cheerio = await import("cheerio");
+        const $ = cheerio.load(html);
+
+        let image_url: string | null = null;
+
+        // Tentar og:image primeiro
+        const ogImage = $('meta[property="og:image"]').attr("content");
         if (ogImage) {
-          const imageUrl = ogImage[1];
-          await db
-            .update(properties)
-            .set({ image_url: image_url, updatedAt: new Date() })
-            .where(eq(properties.id, row.id));
-          updated++;
-          console.log(`✓ ${row.title}: ${image_url.substring(0, 80)}...`);
-          continue;
+          image_url = ogImage.startsWith("http") ? ogImage : new URL(ogImage, row.url).href;
         }
 
         // Se não tiver og:image, tentar primeira imagem com src
-        const imgMatch = html.match(/<img[^>]+src=["\']([^"'\s>]+)/i);
-        if (imgMatch && imgMatch[1] && imgMatch[1].startsWith("http")) {
-          const image_url = imgMatch[1].startsWith("http") ? imgMatch[1] : new URL(imgMatch[1], row.url).href;
+        if (!image_url) {
+          $("img").each((_, img) => {
+            if (!image_url) {
+              const src = $(img).attr("src") || $(img).attr("data-src");
+              if (src && src.startsWith("http") && !src.includes("placeholder")) {
+                image_url = src.startsWith("http") ? src : new URL(src, row.url).href;
+              }
+            }
+          });
+        }
+
+        if (image_url) {
           await db
             .update(properties)
             .set({ image_url, updatedAt: new Date() })
