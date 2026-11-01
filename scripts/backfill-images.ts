@@ -1,18 +1,18 @@
 import { db } from "../src/db/index";
 import { properties } from "../src/db/schema";
-import { eq, and, isNotNull } from "drizzle-orm";
-import { createClient } from "@libsql/client";
+import { eq } from "drizzle-orm";
 
 async function main() {
   console.log("A ler imóveis ativos da BD...");
   const rows = await db.select().from(properties).where(eq(properties.isActive, true));
-  console.log(`Total de imóveis ativos: ${rows.length}`);
+  const withoutImg = rows.filter(r => !r.image_url || r.image_url.length < 10);
+  console.log(`Imóveis sem imagem: ${withoutImg.length}`);
 
   let updated = 0;
+  let failed = 0;
   let skipped = 0;
-  let errors = 0;
 
-  for (const row of rows) {
+  for (const row of withoutImg) {
     if (!row.url || !row.url.startsWith("http")) {
       skipped++;
       continue;
@@ -22,14 +22,12 @@ async function main() {
       const res = await fetch(row.url, {
         headers: {
           "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-          Accept: "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
-          "Accept-Language": "pt-PT,pt;q=0.9",
+          "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
         },
       });
 
       if (!res.ok) {
-        console.warn(`Falhou ${row.url}: ${res.status}`);
-        errors++;
+        failed++;
         continue;
       }
 
@@ -50,7 +48,7 @@ async function main() {
         $("img").each((_, img) => {
           if (!image_url) {
             const src = $(img).attr("src") || $(img).attr("data-src");
-            if (src && src.startsWith("http") && !src.includes("placeholder") && !src.includes("svg")) {
+            if (src && src.startsWith("http") && !src.includes("placeholder")) {
               image_url = src.startsWith("http") ? src : new URL(src, row.url).href;
             }
           }
@@ -60,27 +58,27 @@ async function main() {
       if (image_url) {
         await db
           .update(properties)
-          .set({ image_url, image_status: "real", updatedAt: new Date() })
+          .set({ image_url, updatedAt: new Date() })
           .where(eq(properties.id, row.id));
         updated++;
         console.log(`✓ ${row.title}: ${image_url.substring(0, 80)}...`);
       } else {
         skipped++;
       }
-    } catch (err: unknown) {
-      console.error(`Erro ${row.url}:`, (err as Error).message);
-      errors++;
+    } catch (err: any) {
+      failed++;
+      console.error(`Erro ${row.url}:`, err.message);
     }
   }
 
   console.log(`\nResultado:`);
-  console.log(`  Total: ${rows.length}`);
+  console.log(`  Total sem imagem: ${withoutImg.length}`);
   console.log(`  Atualizados: ${updated}`);
   console.log(`  Sem imagem encontrada: ${skipped}`);
-  console.log(`  Erros: ${errors}`);
+  console.log(`  Erros: ${failed}`);
 }
 
 main().catch((err) => {
-  console.error("Erro fatal:", err);
+  console.error("Erro:", err);
   process.exit(1);
 });
