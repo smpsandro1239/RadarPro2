@@ -1,5 +1,5 @@
 === AUDITORIA DO MOTOR DE AVALIAÇÃO ===
-Data: 2026-10-31T17:46:33.691Z
+Data: 2026-10-31T17:52:53.055Z
 Total de imóveis ativos: 212
 
 --- Distribuição de asset_class ---

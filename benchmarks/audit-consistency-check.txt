@@ -1,0 +1,108 @@
+A ler imóveis ativos da BD...
+Total de imóveis ativos: 212
+
+=== AUDITORIA DO MOTOR DE AVALIAÇÃO ===
+Data: 2026-10-31T17:52:53.055Z
+Total de imóveis ativos: 212
+
+--- Distribuição de asset_class ---
+  apartment: 128 (60.4%)
+  house: 29 (13.7%)
+  garage: 19 (9.0%)
+  commercial: 17 (8.0%)
+  mixed: 14 (6.6%)
+  rural_land: 3 (1.4%)
+  urban_land: 2 (0.9%)
+
+--- Distribuição de valuation_confidence ---
+  medium: 139 (65.6%)
+  very_low: 48 (22.6%)
+  low: 25 (11.8%)
+
+--- Distribuição de pdm_status (apenas urban_land: ${urbanLand.length}) ---
+  unknown: 2 (100.0%)
+
+--- Distribuição de scores ---
+  ≥85: 2 (0.9%)
+  70–84: 32 (15.1%)
+  55–69: 47 (22.2%)
+  <55: 131 (61.8%)
+  null: 0 (0.0%)
+
+--- Top 10 scores mais altos ---
+  86 | apartment | medium | Apartamento T2 Lisboa (Leilão)
+  86 | apartment | medium | Apartamento T1 Lisboa (Martelo)
+  83 | apartment | medium | Apartamento Ramalde (Execução Fiscal AT)
+  83 | apartment | medium | Imóvel Porto (Execução Fiscal AT)
+  80 | apartment | medium | Apartamento T1 Lisboa (Leilosoc)
+  80 | apartment | medium | Apartamento T2 Lisboa (Hasta Pública)
+  79 | apartment | medium | Apartamento T0 Alfama (Idealista)
+  79 | apartment | medium | Apartamento Maximinos (Execução Fiscal AT)
+  79 | apartment | medium | Apartamento T0 Alfama
+  78 | apartment | low | T2 em Vila Franca de Xira
+
+--- Top 10 scores mais baixos ---
+  30 | apartment | medium | T4 em Funchal
+  30 | apartment | medium | T2 em Ribeira Grande
+  30 | house | medium | V2 em Nelas
+  30 | apartment | medium | T0 em Sesimbra
+  30 | apartment | medium | T4 em Porto
+  30 | apartment | medium | T2 em Vendas Novas
+  30 | apartment | medium | T2 em Macedo de Cavaleiros
+  30 | commercial | medium | Loja em Serpa
+  30 | apartment | medium | Apartamento Parque das Nações (Execução Fiscal)
+  30 | apartment | medium | Apartamento Lumiar, Lisboa
+
+--- Top 3 breakdown de score (porque o maximo e baixo) ---
+  1º 86 | apartment | desconto=100 | preco_m2=50 | yield=100 | liquidez=100 | confianca=70 | Apartamento T2 Lisboa (Leilão)
+  1º 86 | apartment | desconto=100 | preco_m2=50 | yield=100 | liquidez=100 | confianca=70 | Apartamento T1 Lisboa (Martelo)
+  1º 83 | apartment | desconto=100 | preco_m2=50 | yield=100 | liquidez=80 | confianca=70 | Apartamento Ramalde (Execução Fiscal AT)
+
+--- Bottom 3 breakdown de score ---
+  30 | apartment | desconto=60 | preco_m2=50 | yield=0 | liquidez=50 | confianca=10 | T4 em Funchal
+  30 | apartment | desconto=40 | preco_m2=50 | yield=0 | liquidez=55 | confianca=10 | T2 em Ribeira Grande
+  30 | house | desconto=60 | preco_m2=50 | yield=0 | liquidez=50 | confianca=10 | V2 em Nelas
+
+=== Top 10 — Preço Fixo ===
+  79 | apartment | yield=100 | conf=70 | Apartamento T0 Alfama (Idealista)
+  79 | apartment | yield=100 | conf=70 | Apartamento T0 Alfama
+  78 | apartment | yield=80 | conf=40 | T2 em Vila Franca de Xira
+  76 | apartment | yield=100 | conf=70 | Apartamento T1 Porto (Idealista)
+  73 | apartment | yield=100 | conf=70 | Apartamento T1 Parque das Nações
+  73 | apartment | yield=100 | conf=70 | Apartamento T1 Santa Maria Maior
+  73 | apartment | yield=100 | conf=70 | Apartamento T2 Penha de França
+  73 | apartment | yield=100 | conf=70 | Apartamento T2 Graça, São Vicente
+  73 | apartment | yield=100 | conf=70 | Apartamento T3 Casal de Cambra, Sintra
+  73 | apartment | yield=100 | conf=70 | Apartamento T2 Lisboa (ERA)
+  (8 duplicados removidos no top preço fixo)
+=== Top 10 — Leilões ===
+  86 | apartment | cbid=95000 | mBid=116320 | margem=21320 | Apartamento T2 Lisboa (Leilão)
+  86 | apartment | cbid=90000 | mBid=109050 | margem=19050 | Apartamento T1 Lisboa (Martelo)
+  83 | apartment | cbid=2901 | mBid=87240 | margem=84339 | Apartamento Ramalde (Execução Fiscal AT)
+  83 | apartment | cbid=13534 | mBid=61795 | margem=48261 | Imóvel Porto (Execução Fiscal AT)
+  80 | apartment | cbid=85000 | mBid=101780 | margem=16780 | Apartamento T1 Lisboa (Leilosoc)
+  80 | apartment | cbid=105000 | mBid=123590 | margem=18590 | Apartamento T2 Lisboa (Hasta Pública)
+  79 | apartment | cbid=90592 | mBid=109050 | margem=18458 | Apartamento Maximinos (Execução Fiscal AT)
+  67 | apartment | cbid=178752 | mBid=216588 | margem=37836 | T1 em Sesimbra
+  48 | apartment | cbid=59226 | mBid=68345 | margem=9119 | T0 em Vinhais
+  40 | house | cbid=110000 | mBid=130860 | margem=20860 | Moradia V3 Porto (Leilão)
+
+=== Distribuição de scores por tipo ===
+Preço Fixo (176):
+  ≥85: 0 | 70–84: 27 | 55–69: 46 | <55: 103 | máximo: 79
+Leilões (36):
+  ≥85: 2 | 70–84: 5 | 55–69: 1 | <55: 28 | máximo: 86
+
+=== Diagnóstico ===
+  ✅ Preço fixo: 27 imóveis ≥70
+  ✅ Leilões: 7 imóveis ≥70
+
+--- Alertas ---
+  OK confiança very_low: 22.6%
+  OK confiança low: 11.8%
+  ⚠️ 100.0% dos terrenos urbanos sem PDM (>50%) — score cortado em 40
+  ⚠️ 61.8% dos imóveis com score null ou <55 (>40%) — ranking perde valor
+  OK score 100: 0 imóveis
+
+JSON escrito em: C:\Users\smpsa\RadarPro\benchmarks\audit-2026-10-31.json
+TXT escrito em: C:\Users\smpsa\RadarPro\benchmarks\audit-2026-10-31.txt

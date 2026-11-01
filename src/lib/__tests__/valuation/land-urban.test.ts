@@ -9,7 +9,7 @@ describe("terreno urbano", () => {
   const base = {
     asset_class: "urban_land",
     district: "Aveiro",
-    municipality: "Estarreja",
+    municipality: "Aveiro",
     sqm: 500,
     infrastructure: "full",
     topography: "flat",

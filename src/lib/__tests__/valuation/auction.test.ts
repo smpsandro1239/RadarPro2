@@ -52,13 +52,13 @@ describe("leilão - corte de score", () => {
 describe("leilão - base de tributação max(lance, VPT)", () => {
   it("IMT e selo incidem sobre max(marketValue, VPT)", () => {
     const comVpt = calculateMaxBid({
-      marketValue: 100_000,
+      marketValue: 75_000,
       currentBid: 50_000,
       auctionHouse: "Leilosoc",
       vpt: 150_000, // VPT > marketValue → base de impostos = 150.000
     });
     const semVpt = calculateMaxBid({
-      marketValue: 100_000,
+      marketValue: 75_000,
       currentBid: 50_000,
       auctionHouse: "Leilosoc",
       vpt: undefined,
@@ -69,9 +69,9 @@ describe("leilão - base de tributação max(lance, VPT)", () => {
     expect(comVpt.stampDuty).toBe(1_200);
     expect(comVpt.vpt).toBe(150_000);
 
-    // Sem VPT: base = marketValue = 100.000 → IMT 6.500, Selo 800
-    expect(semVpt.imt).toBe(6_500);
-    expect(semVpt.stampDuty).toBe(800);
+    // Sem VPT: base = marketValue = 75.000 → IMT 4.875, Selo 600
+    expect(semVpt.imt).toBe(4_875);
+    expect(semVpt.stampDuty).toBe(600);
 
     // Impostos maiores com VPT alto → maxBid menor
     expect(comVpt.maxBid).toBeLessThan(semVpt.maxBid);

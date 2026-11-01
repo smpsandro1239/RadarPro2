@@ -91,9 +91,16 @@ export function calculateMaxBid(inputs: AuctionCalculationInputs): AuctionCalcul
 
   const config = AUCTION_HOUSE_CONFIG[auctionHouse ?? ""] ?? DEFAULT_AUCTION_HOUSE;
 
+  // Validar marketValue: não pode ser mais de 50% acima do preço/lance atual.
+  // Se estiver, usar price * 1.2 como valor de mercado máximo razoável.
+  // Isto evita que AVMs inflacionados (ex.: mercado de distrito aplicado a zona barata)
+  // inflem o maxBid.
+  const maxAllowedMarketValue = currentBid * 1.5;
+  const validatedMarketValue = marketValue > maxAllowedMarketValue ? maxAllowedMarketValue : marketValue;
+
   // Base de tributação: impostos (IMT, Selo) incidem sobre max(valor de mercado, VPT)
-  const taxBase = Math.max(marketValue, vpt ?? 0);
-  const commission = Math.round(marketValue * (config.commissionPct / 100));
+  const taxBase = Math.max(validatedMarketValue, vpt ?? 0);
+  const commission = Math.round(validatedMarketValue * (config.commissionPct / 100));
   const imt = Math.round(taxBase * (config.imtPct / 100));
   const stampDuty = Math.round(taxBase * (config.stampDutyPct / 100));
 
@@ -102,18 +109,18 @@ export function calculateMaxBid(inputs: AuctionCalculationInputs): AuctionCalcul
 
   // O lance máximo é o valor de mercado menos a margem de segurança,
   // menos todos os custos associados
-  const safetyMargin = marketValue * (targetMargin / 100);
-  const maxBid = Math.max(0, Math.round(marketValue - safetyMargin - totalCosts));
+  const safetyMargin = validatedMarketValue * (targetMargin / 100);
+  const maxBid = Math.max(0, Math.round(validatedMarketValue - safetyMargin - totalCosts));
 
   const currentBidExceedsMax = currentBid > maxBid;
   const headroom = maxBid - currentBid;
-  const marginPct = marketValue > 0 ? Math.round(((maxBid / marketValue) * 100) * 10) / 10 : 0;
+  const marginPct = validatedMarketValue > 0 ? Math.round(((maxBid / validatedMarketValue) * 100) * 10) / 10 : 0;
 
   return {
     maxBid,
     currentBid,
     marginPct,
-    marketValue,
+    marketValue: validatedMarketValue,
     totalCosts,
     additionalCosts,
     commission,

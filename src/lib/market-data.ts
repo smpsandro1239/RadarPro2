@@ -121,7 +121,7 @@ export function findMarketData(params: {
     return { pricePerSqm: munMatch.pricePerSqm, source: munMatch.source, asOf: munMatch.asOf, level: "municipality" };
   }
 
-  // 3. Fallback: média simples do distrito (marcar como baixa confiança)
-  const avg = Math.round(pool.reduce((sum, d) => sum + d.pricePerSqm, 0) / pool.length);
-  return { pricePerSqm: avg, source: "média distrito", asOf: "2026-05", level: "district" };
+  // 3. Sem mediana de freguesia nem de concelho — não usar distrito como fallback.
+  // O distrito é demasiado agregado (ex.: Lisboa distrito inclui VFX com preços 3× menores).
+  return null;
 }
