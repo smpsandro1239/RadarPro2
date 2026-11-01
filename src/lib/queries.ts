@@ -1,7 +1,7 @@
 import { drizzle } from "drizzle-orm/libsql";
 import { createClient } from "@libsql/client";
 import { properties } from "@/db/schema";
-import { desc, eq, and } from "drizzle-orm";
+import { desc, eq, and, sql } from "drizzle-orm";
 
 const client = createClient({
   url: process.env.TURSO_DATABASE_URL!,
@@ -49,4 +49,23 @@ export async function getAllActiveProperties(listingType?: string, isAuction?: s
     .from(properties)
     .where(and(...conditions))
     .orderBy(desc(properties.score));
+}
+
+export async function getTotalActiveProperties() {
+  const result = await db
+    .select({ count: sql`count(*)`.mapWith(Number) })
+    .from(properties)
+    .where(eq(properties.isActive, true));
+
+  return Number(result[0]?.count || 0);
+}
+
+export async function getDistinctSourceCount() {
+  const result = await db
+    .select({ sourceName: properties.sourceName })
+    .from(properties)
+    .where(eq(properties.isActive, true))
+    .groupBy(properties.sourceName);
+
+  return result.length;
 }

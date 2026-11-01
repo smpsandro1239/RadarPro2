@@ -1,9 +1,13 @@
-import { getLatestProperties } from "@/lib/queries";
+import { getLatestProperties, getTotalActiveProperties, getDistinctSourceCount } from "@/lib/queries";
 import PropertyGrid from "@/components/PropertyGrid";
 import { Suspense } from "react";
 
 export default async function Home() {
   const properties = await getLatestProperties();
+  const totalActive = await getTotalActiveProperties();
+  const sourceCount = await getDistinctSourceCount();
+
+  const allDistricts = ["Aveiro", "Beja", "Braga", "Bragança", "Castelo Branco", "Coimbra", "Évora", "Faro", "Guarda", "Leiria", "Lisboa", "Portalegre", "Porto", "Santarém", "Setúbal", "Viana do Castelo", "Vila Real", "Viseu", "Açores", "Madeira"];
 
   return (
     <main className="min-h-screen">
@@ -17,12 +21,12 @@ export default async function Home() {
           Analisamos anúncios de bancos, portais e leilões em Portugal e selecionamos apenas os que valem a pena.
         </p>
 
-        <div className="flex flex-wrap justify-center gap-3 mb-8">
-          {["Lisboa", "Porto", "Braga"].map((city) => (
+        <div className="flex flex-wrap justify-center gap-2 mb-8">
+          {allDistricts.map((city) => (
             <a
               key={city}
-              href={`/oportunidades/${city.toLowerCase()}`}
-              className="px-4 py-2 bg-slate-100 rounded-full text-sm font-medium hover:bg-primary/10 hover:text-primary transition"
+              href={`/oportunidades/${city.toLowerCase().replace(/[^a-z0-9]/gi, "-")}`}
+              className="px-3 py-2 bg-slate-100 rounded-full text-sm font-medium hover:bg-primary/10 hover:text-primary transition"
             >
               {city}
             </a>
@@ -36,7 +40,7 @@ export default async function Home() {
           <h2 className="text-2xl font-bold">Oportunidades detectadas</h2>
           <div className="text-sm text-secondary">
             <span className="inline-block w-2 h-2 bg-success rounded-full mr-2 animate-pulse"></span>
-            {properties.length} imóveis de 7 fontes
+            {totalActive} imóveis de {sourceCount} fontes
           </div>
         </div>
 
