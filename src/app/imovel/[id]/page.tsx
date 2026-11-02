@@ -6,6 +6,7 @@ import { MapPin, TrendingDown, ExternalLink, Heart, ChevronDown, Info, AlertTria
 import Image from "next/image";
 import ValuationCard from "@/components/ValuationCard";
 import { calculateMaxBid, getCostBreakdownText } from "@/lib/auction-calculator";
+import { formatEuros, formatOptional, formatScore, formatScoreOutOf100 } from "@/lib/format";
 import FavoriteButton from "@/components/FavoriteButton";
 import PropertyImage from "@/components/PropertyImage";
 import AuctionCountdown from "@/components/AuctionCountdown";
@@ -111,14 +112,14 @@ export default async function PropertyPage({
                 ? "bg-red-50 text-red-700 border border-red-100"
                 : "bg-primary text-white"
             }`}>
-              {prop.score}/100
+              {formatScoreOutOf100(prop.score)}
             </span>
             <span className="bg-slate-100 px-3 py-1 rounded-lg text-sm font-medium">
               {prop.type}
             </span>
             <SourceReliabilityBadge
               sourceName={prop.sourceName}
-              score={prop.score || 0}
+              score={prop.score}
             />
           </div>
 
@@ -149,7 +150,7 @@ export default async function PropertyPage({
                 Valor de mercado
               </div>
               <div className="text-2xl font-bold text-success">
-                {prop.marketValue?.toLocaleString()}€
+                {formatEuros(prop.marketValue)}
               </div>
             </div>
           </div>
@@ -163,11 +164,11 @@ export default async function PropertyPage({
           <div className="flex items-center gap-6 mb-6 text-sm flex-wrap">
             <div className="flex items-center gap-1">
               <TrendingDown size={18} className="text-primary" />
-              <span className="font-bold text-primary">-{prop.discountPct}%</span>
+              <span className="font-bold text-primary">{formatOptional(prop.discountPct === null ? null : -prop.discountPct, "%")}</span>
               <span className="text-secondary">abaixo do mercado</span>
             </div>
             <div className="text-secondary">
-              Rentabilidade: <span className="font-bold">{prop.rentability}%</span>
+              Rentabilidade: <span className="font-bold">{formatOptional(prop.rentability, "%")}</span>
             </div>
             {priceChange !== 0 && (
               <div className={`font-bold ${priceChange < 0 ? "text-success" : "text-red-500"}`}>
@@ -308,7 +309,7 @@ export default async function PropertyPage({
                 <div className="text-sm space-y-1">
                   <div className="flex justify-between">
                     <span className="text-secondary">Valor de mercado</span>
-                    <span className="font-mono">{prop.marketValue?.toLocaleString("pt-PT")}€</span>
+                    <span className="font-mono">{formatEuros(prop.marketValue)}</span>
                   </div>
                   {prop.vpt && (
                     <div className="flex justify-between">
@@ -404,7 +405,7 @@ export default async function PropertyPage({
                     <div className="text-[10px] uppercase font-semibold text-slate-400 mb-1">
                       Valor de mercado (AVM)
                     </div>
-                    <div className="font-bold">{prop.marketValue?.toLocaleString("pt-PT") || "—"}€</div>
+                    <div className="font-bold">{formatEuros(prop.marketValue)}</div>
                   </div>
                   <div>
                     <div className="text-[10px] uppercase font-semibold text-slate-400 mb-1">

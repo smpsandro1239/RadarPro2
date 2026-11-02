@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { MapPin, TrendingDown, Star, X, Plus } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
+import { formatOptional, formatScore, formatScoreOutOf100 } from "@/lib/format";
 
 interface Property {
   id: string;
@@ -121,7 +122,7 @@ export default function ComparadorPage() {
                 <td className="p-3 font-medium text-sm border bg-slate-50">Desconto</td>
                 {selected.map((p) => (
                   <td key={p.id} className="p-3 text-center border text-primary font-bold">
-                    -{p.discountPct}%
+                    {formatOptional(p.discountPct === null ? null : -p.discountPct, "%")}
                   </td>
                 ))}
               </tr>
@@ -130,7 +131,7 @@ export default function ComparadorPage() {
                 {selected.map((p) => (
                   <td key={p.id} className="p-3 text-center border">
                     <span className="bg-primary text-white px-2 py-1 rounded text-xs font-bold">
-                      {p.score}/100
+                      {formatScoreOutOf100(p.score)}
                     </span>
                   </td>
                 ))}
@@ -139,7 +140,7 @@ export default function ComparadorPage() {
                 <td className="p-3 font-medium text-sm border bg-slate-50">Rentabilidade</td>
                 {selected.map((p) => (
                   <td key={p.id} className="p-3 text-center border">
-                    {p.rentability}%
+                    {formatOptional(p.rentability, "%")}
                   </td>
                 ))}
               </tr>

@@ -2,6 +2,7 @@ import { db } from "@/db";
 import { properties } from "@/db/schema";
 import { eq, sql, count, avg, min, max } from "drizzle-orm";
 import { getAllActiveProperties } from "@/lib/queries";
+import { formatOptional, formatScore, formatScoreOutOf100 } from "@/lib/format";
 
 export default async function EstatisticasPage() {
   const properties = await getAllActiveProperties();
@@ -183,7 +184,7 @@ export default async function EstatisticasPage() {
             </div>
             <div className="text-right">
               <div className="font-bold">{p.price.toLocaleString()}€</div>
-              <div className="text-sm text-primary">-{p.discountPct}% · {p.score}/100</div>
+              <div className="text-sm text-primary">{formatOptional(p.discountPct === null ? null : -p.discountPct, "%")} · {formatScoreOutOf100(p.score)}</div>
             </div>
           </a>
         ))}

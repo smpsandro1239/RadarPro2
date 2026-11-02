@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
+import { formatOptional, formatScore, formatScoreOutOf100 } from "@/lib/format";
 
 const MapContainer = dynamic(
   () => import("react-leaflet").then((m) => m.MapContainer),
@@ -182,7 +183,7 @@ export default function MapView({ properties }: { properties: Property[] }) {
                   </p>
                   {prop.score && (
                     <p className="text-xs mt-1">
-                      Score: {prop.score}/100 | -{prop.discountPct}%
+                      Score: {formatScoreOutOf100(prop.score)} | {formatOptional(prop.discountPct === null ? null : -prop.discountPct, "%")}
                     </p>
                   )}
                   <a

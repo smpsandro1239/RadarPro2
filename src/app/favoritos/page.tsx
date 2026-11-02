@@ -5,6 +5,7 @@ import { Heart, Trash2, MapPin, TrendingDown } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import PropertyImage from "@/components/PropertyImage";
+import { formatEuros, formatOptional, formatScore, formatScoreOutOf100 } from "@/lib/format";
 
 interface Property {
   id: string;
@@ -79,7 +80,7 @@ export default function FavoritosPage() {
                       {prop.sourceName}
                     </div>
                     <div className="absolute top-4 right-4 bg-primary text-white px-3 py-1 rounded-lg text-xs font-bold z-10">
-                      {prop.score}/100
+                      {formatScoreOutOf100(prop.score)}
                     </div>
                   </div>
                 </Link>
@@ -107,17 +108,17 @@ export default function FavoritosPage() {
                     </div>
                     <div>
                       <div className="text-xs text-secondary uppercase font-semibold">Valorização</div>
-                      <div className="text-lg font-bold text-success">{prop.marketValue?.toLocaleString()}€</div>
+                      <div className="text-lg font-bold text-success">{formatEuros(prop.marketValue)}</div>
                     </div>
                   </div>
 
                   <div className="flex justify-between items-center">
                     <div className="flex items-center text-primary font-bold">
                       <TrendingDown size={18} className="mr-1" />
-                      -{prop.discountPct}%
+                      {formatOptional(prop.discountPct === null ? null : -prop.discountPct, "%")}
                     </div>
                     <div className="text-sm font-medium bg-primary/10 text-primary px-3 py-1 rounded-lg">
-                      Rentabilidade: {prop.rentability}%
+                      Rentabilidade: {formatOptional(prop.rentability, "%")}
                     </div>
                   </div>
                 </div>

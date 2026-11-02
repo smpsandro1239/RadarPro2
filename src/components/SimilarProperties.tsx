@@ -6,6 +6,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { MapPin, TrendingDown } from "lucide-react";
 import PropertyImage from "@/components/PropertyImage";
+import { formatOptional, formatScore, formatScoreOutOf100 } from "@/lib/format";
 
 interface Props {
   currentPropertyId: string;
@@ -46,7 +47,7 @@ export default async function SimilarProperties({ currentPropertyId, district, t
               <div className="aspect-video bg-slate-200 relative overflow-hidden">
                 <PropertyImage src={imageUrl} alt={prop.title} fill className="group-hover:scale-105 transition-transform duration-300" />
                 <div className="absolute top-2 right-2 bg-primary text-white px-2 py-0.5 rounded text-xs font-bold z-10">
-                  {prop.score}/100
+                  {formatScoreOutOf100(prop.score)}
                 </div>
               </div>
               <div className="p-3">
@@ -57,7 +58,7 @@ export default async function SimilarProperties({ currentPropertyId, district, t
                 </div>
                 <div className="flex justify-between items-center mt-2">
                   <span className="font-bold text-sm">{prop.price.toLocaleString()}€</span>
-                  <span className="text-xs text-primary font-bold">-{prop.discountPct}%</span>
+                  <span className="text-xs text-primary font-bold">{formatOptional(prop.discountPct === null ? null : -prop.discountPct, "%")}</span>
                 </div>
               </div>
             </Link>

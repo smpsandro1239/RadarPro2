@@ -23,6 +23,7 @@ import PropertyImage from "@/components/PropertyImage";
 import AuctionCountdown from "@/components/AuctionCountdown";
 import ValuationCard from "@/components/ValuationCard";
 import RadarAssistant from "@/components/RadarAssistant";
+import { formatEuros, formatOptional, formatScoreOutOf100 } from "@/lib/format";
 
 interface Property {
   id: string;
@@ -442,7 +443,7 @@ function AdvancedSearchPageInner() {
                         ? "bg-red-50 text-red-700 border-red-100"
                         : "bg-primary text-white"
                     }`}>
-                      {prop.score !== null ? prop.score : "--"}/100
+                      {formatScoreOutOf100(prop.score)}
                     </div>
                     {prop.isAuction && (
                       <div className="absolute bottom-4 left-4 bg-orange-500 text-white px-2 py-1 rounded-lg text-xs font-bold z-10 flex items-center gap-1">
@@ -476,17 +477,17 @@ function AdvancedSearchPageInner() {
                       </div>
                       <div>
                         <div className="text-xs text-secondary uppercase font-semibold">Valorização</div>
-                        <div className="text-lg font-bold text-success">{prop.marketValue?.toLocaleString()}€</div>
+                        <div className="text-lg font-bold text-success">{formatEuros(prop.marketValue)}</div>
                       </div>
                     </div>
 
                     <div className="flex justify-between items-center mb-3">
                       <div className="flex items-center text-primary font-bold">
                         <TrendingDown size={18} className="mr-1" />
-                        -{prop.discountPct}%
+                        {formatOptional(prop.discountPct === null ? null : -prop.discountPct, "%")}
                       </div>
                       <div className="text-sm font-medium bg-primary/10 text-primary px-2 py-1 rounded-lg">
-                        Rentabilidade: {prop.rentability}%
+                        Rentabilidade: {formatOptional(prop.rentability, "%")}
                       </div>
                     </div>
 

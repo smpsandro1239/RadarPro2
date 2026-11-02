@@ -3,6 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { MapPin, TrendingDown, Trophy } from "lucide-react";
 import PropertyImage from "@/components/PropertyImage";
+import { formatOptional, formatScore, formatScoreOutOf100 } from "@/lib/format";
 
 export default async function OportunidadesPage() {
   const properties = await getAllActiveProperties();
@@ -51,7 +52,7 @@ export default async function OportunidadesPage() {
                 <PropertyImage src={imageUrl} alt={prop.title} fill className="group-hover:scale-105 transition-transform duration-300" />
                 <div className="absolute top-4 left-4 text-3xl z-10">{medals[i]}</div>
                 <div className="absolute top-4 right-4 bg-primary text-white px-3 py-1 rounded-lg text-sm font-bold z-10">
-                  {prop.score}/100
+                  {formatScoreOutOf100(prop.score)}
                 </div>
               </div>
               <div className="p-4">
@@ -62,7 +63,7 @@ export default async function OportunidadesPage() {
                 </div>
                 <div className="flex justify-between items-center mt-3">
                   <span className="font-bold text-lg">{prop.price.toLocaleString()}€</span>
-                  <span className="text-primary font-bold">-{prop.discountPct}%</span>
+                  <span className="text-primary font-bold">{formatOptional(prop.discountPct === null ? null : -prop.discountPct, "%")}</span>
                 </div>
               </div>
             </Link>
@@ -86,7 +87,7 @@ export default async function OportunidadesPage() {
                 <div className="font-medium text-sm truncate">{best.title}</div>
                 <div className="flex justify-between mt-2">
                   <span className="font-bold">{best.price.toLocaleString()}€</span>
-                  <span className="text-primary font-bold">{best.score}/100</span>
+                  <span className="text-primary font-bold">{formatScoreOutOf100(best.score)}</span>
                 </div>
               </>
             )}
@@ -116,7 +117,7 @@ export default async function OportunidadesPage() {
               </div>
               <div className="text-right">
                 <div className="font-bold">{prop.price.toLocaleString()}€</div>
-                <div className="text-xs text-primary">-{prop.discountPct}% · {prop.score}/100</div>
+                <div className="text-xs text-primary">{formatOptional(prop.discountPct === null ? null : -prop.discountPct, "%")} · {formatScoreOutOf100(prop.score)}</div>
               </div>
             </Link>
           );
@@ -138,7 +139,7 @@ export default async function OportunidadesPage() {
               <div className="aspect-video bg-slate-200 relative overflow-hidden">
                 <PropertyImage src={imageUrl} alt={prop.title} fill className="group-hover:scale-105 transition-transform duration-300" />
                 <div className="absolute top-2 right-2 bg-red-500 text-white px-2 py-0.5 rounded text-xs font-bold z-10">
-                  -{prop.discountPct}%
+                  {formatOptional(prop.discountPct === null ? null : -prop.discountPct, "%")}
                 </div>
               </div>
               <div className="p-3">
@@ -166,7 +167,7 @@ export default async function OportunidadesPage() {
               <div className="aspect-video bg-slate-200 relative overflow-hidden">
                 <PropertyImage src={imageUrl} alt={prop.title} fill className="group-hover:scale-105 transition-transform duration-300" />
                 <div className="absolute top-2 right-2 bg-success text-white px-2 py-0.5 rounded text-xs font-bold z-10">
-                  {prop.rentability}%
+                  {formatOptional(prop.rentability, "%")}
                 </div>
               </div>
               <div className="p-3">
