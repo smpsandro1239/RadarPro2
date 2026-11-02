@@ -4,6 +4,12 @@ import { db } from "@/db";
 import { properties } from "@/db/schema";
 import { eq } from "drizzle-orm";
 
+/**
+ * A coluna area_sqm so existe depois da migracao aprovada
+ * (scripts/sql/0002_add_property_valuation_inputs.sql).
+ */
+const supportsAreaColumn = "areaSqm" in properties;
+
 export async function POST(request: Request) {
   try {
     const { district, sources } = await request.json();
@@ -46,10 +52,13 @@ export async function POST(request: Request) {
           municipality: prop.location,
           type: "Apartamento",
           price: prop.price,
-          marketValue: prop.price * 1.2,
-          discountPct: 15,
-          score: 70,
-          rentability: 5.0,
+          // marketValue / discountPct / score / rentability sao calculados pelo motor de
+          // avaliacao. Sem motor ligado ficam a null: nada de price*1.2, 15% ou 70 fixos.
+          marketValue: null,
+          discountPct: null,
+          score: null,
+          rentability: null,
+          ...(supportsAreaColumn ? { areaSqm: prop.areaSqm ?? null } : {}),
           images: prop.imageUrl ? JSON.stringify([prop.imageUrl]) : "[]",
           dedupHash,
           isActive: true,

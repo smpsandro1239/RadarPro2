@@ -10,6 +10,7 @@ export interface ScrapedProperty {
   url: string;
   source: string;
   images: string[];
+  areaSqm?: number | null;
   isAuction?: boolean;
   auctionEndDate?: number;
   auctionStartDate?: number;
@@ -54,6 +55,13 @@ export function inferAssetClass(type: string | null, title: string | null): { as
   return { assetClass: 'mixed', confidence: 'low' };
 }
 
+/**
+ * A coluna area_sqm so passa a existir depois da migracao aprovada
+ * (scripts/sql/0002_add_property_valuation_inputs.sql). ate la, o scraper extrai a
+ * area mas a base de dados nao a pode guardar.
+ */
+const supportsAreaColumn = "areaSqm" in properties;
+
 export async function ingestProperty(prop: ScrapedProperty): Promise<{
   action: "inserted" | "updated" | "skipped";
   id: string;
@@ -80,10 +88,12 @@ export async function ingestProperty(prop: ScrapedProperty): Promise<{
     municipality: prop.location,
     type: "Apartamento", // Will be refined by parser
     price: prop.price,
-    marketValue: Math.round(prop.price * 1.2), // Estimate market value
-    discountPct: Math.round(((Math.round(prop.price * 1.2) || prop.price * 1.2) - prop.price) / Math.round(prop.price * 1.2) * 100) || 0,
-    score: undefined,
-    rentability: undefined,
+    // marketValue / discountPct / score / rentability sao calculados pelo motor de
+    // avaliacao. Sem motor ligado ficam a null: nada de price*1.2 ou 15% inventados.
+    marketValue: null,
+    discountPct: null,
+    score: null,
+    rentability: null,
     images: JSON.stringify(prop.images),
     isActive,
     checkStatus: "pending" as "ok" | "not_found" | "error" | "pending",
@@ -91,8 +101,10 @@ export async function ingestProperty(prop: ScrapedProperty): Promise<{
     updatedAt: new Date(),
     auctionHouse: prop.auctionHouse ?? null,
     auctionType: prop.auctionType ?? null,
-    currentBid: prop.currentBid ?? null,
+    // Convencao unica: em leilao, `price` e o lance atual; `current_bid` espelha-o.
+    currentBid: prop.currentBid ?? (prop.isAuction ? prop.price : null),
     reservePrice: prop.reservePrice ?? null,
+    ...(supportsAreaColumn ? { areaSqm: prop.areaSqm ?? null } : {}),
     maxBid: prop.maxBid ?? null,
   };
 
@@ -123,6 +135,7 @@ export async function ingestProperty(prop: ScrapedProperty): Promise<{
       auctionType: normalized.auctionType,
       currentBid: normalized.currentBid,
       reservePrice: normalized.reservePrice,
+      ...(supportsAreaColumn ? { areaSqm: normalized.areaSqm ?? null } : {}),
       maxBid: normalized.maxBid,
     };
 
