@@ -73,7 +73,7 @@ interface EngineResult {
   capped: boolean;
   badges: string[];
   maxScore: number;
-  scoreBreakdown: Record<string, number> | null;
+  scoreBreakdown: Record<string, number | null> | null;
 }
 
 function bucket(score: number | null): string {
@@ -82,6 +82,12 @@ function bucket(score: number | null): string {
   if (score >= 70) return "70–84";
   if (score >= 55) return "55–69";
   return "<55";
+}
+
+function toIso(value: unknown): string | null {
+  if (value === null || value === undefined) return null;
+  const date = value instanceof Date ? value : new Date(value as string | number);
+  return Number.isNaN(date.getTime()) ? null : date.toISOString();
 }
 
 async function main() {
@@ -125,13 +131,19 @@ async function main() {
       infrastructure: row.infrastructure,
       annualIncome: row.annualIncome, // agora existe na schema após migration
       is_auction: row.isAuction === true,
-      createdAt: row.createdAt ? new Date(row.createdAt).toISOString() : null,
+      createdAt: toIso(row.createdAt),
       isActive: row.isActive,
       checkStatus: row.checkStatus,
     };
 
     try {
       const result = evaluateProperty(property);
+      const breakdown = result.breakdown as {
+        scoreCapped?: boolean;
+        scoreBadges?: string[];
+        scoreMax?: number;
+        scoreBreakdown?: Record<string, number | null> | null;
+      };
       audit.push({
         id: row.id,
         title: row.title,
@@ -147,10 +159,10 @@ async function main() {
         max_bid: property.maxBid ?? null,
         valuation: result.valuation ?? null,
         score: result.score,
-        capped: result.breakdown?.scoreCapped ?? false,
-        badges: result.breakdown?.scoreBadges ?? [],
-        maxScore: result.breakdown?.scoreMax ?? 100,
-        scoreBreakdown: result.breakdown?.scoreBreakdown ?? null,
+        capped: breakdown.scoreCapped ?? false,
+        badges: breakdown.scoreBadges ?? [],
+        maxScore: breakdown.scoreMax ?? 100,
+        scoreBreakdown: breakdown.scoreBreakdown ?? null,
       });
     } catch (err) {
       console.error(`Erro a avaliar ${row.id} (${row.title}):`, err);

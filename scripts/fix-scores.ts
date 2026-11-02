@@ -1,7 +1,13 @@
 import { db } from "../src/db/index";
 import { properties } from "../src/db/schema";
 import { eq } from "drizzle-orm";
-import { evaluateProperty } from "../src/lib/auction-calculator";
+import { evaluateProperty } from "../src/lib/valuation/index";
+
+function toIso(value: unknown): string | null {
+  if (value === null || value === undefined) return null;
+  const date = value instanceof Date ? value : new Date(value as string | number);
+  return Number.isNaN(date.getTime()) ? null : date.toISOString();
+}
 
 async function main() {
   console.log("A ler imóveis ativos da BD...");
@@ -30,7 +36,7 @@ async function main() {
         isAuction: row.isAuction === true,
         auctionType: row.auctionType,
         auctionHouse: row.auctionHouse,
-        currentBid: row.currentBid ?? 0,
+        currentBid: row.currentBid ?? (row.isAuction ? row.price : null),
         maxBid: row.maxBid ?? null,
         vpt: row.vpt,
         condominiumDebt: row.condominiumDebt ?? 0,
@@ -41,7 +47,7 @@ async function main() {
         pdm_status: row.pdmStatus,
         infrastructure: row.infrastructure,
         annualIncome: row.annualIncome,
-        createdAt: row.createdAt ? new Date(row.createdAt).toISOString() : null,
+        createdAt: toIso(row.createdAt),
         isActive: row.isActive,
         checkStatus: row.checkStatus,
       };
@@ -49,9 +55,15 @@ async function main() {
       try {
         const result = evaluateProperty(property);
 
+        // Sem avaliacao nao ha score para gravar: nao inventar nem reescrever o valor atual.
+        if (result.score === null) {
+          skipped++;
+          continue;
+        }
+
         await db
           .update(properties)
-          .set({ marketValue: result.marketValue, score: result.maxBid, updatedAt: new Date() })
+          .set({ marketValue: result.valuation, score: result.score, updatedAt: new Date() })
           .where(eq(properties.id, row.id));
         updated++;
       } catch (err: any) {
@@ -67,7 +79,7 @@ async function main() {
   console.log(`\nResultado:`);
   console.log(`  Total: ${rows.length}`);
   console.log(`  Atualizados: ${updated}`);
-  console.log(`  Sem imagem: ${skipped}`);
+  console.log(`  Sem avaliação (score null): ${skipped}`);
   console.log(`  Erros: ${errors}`);
 }
 

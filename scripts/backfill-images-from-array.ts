@@ -12,7 +12,7 @@ async function main() {
 
   for (const row of rows) {
     // Se já tem image_url, pular
-    if (row.image_url && r.image_url.length > 10) continue;
+    if (row.image_url && row.image_url.length > 10) continue;
 
     // Se tem images array, usar a primeira imagem
     if (row.images && typeof row.images === "string") {

@@ -1,7 +1,6 @@
 import { db } from "../src/db/index";
 import { properties } from "../src/db/schema";
 import { eq } from "drizzle-orm";
-import { Curl } from "curl-cffi-node";
 import { load } from "cheerio";
 
 async function main() {
@@ -30,41 +29,24 @@ async function main() {
       }
 
       try {
-        // Usar curl-cffi-node com impersonate do Chrome para burlar proteções anti-bot
-        const curl = new Curl();
-        const response = await new Promise<any>((resolve, reject) => {
-          curl.setOpt(Curl.URL, row.url);
-          curl.setOpt(CurlOpt.HTTPHEADER, [
-            "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-            "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
-            "Accept-Language: pt-PT,pt;q=0.9",
-            "Referer: https://www.google.com/",
-          ]);
-          curl.setOpt(CurlOpt.FOLLOWLOCATION, true);
-          curl.setOpt(CurlOpt.TIMEOUT, 15000);
-          curl.on("end", () => {
-            try {
-              resolve({
-                ok: curl.getInfo(CurlInfo.HTTP_CODE) === 200,
-                data: Buffer.from(curl.getBody()),
-                status: curl.getInfo(CurlInfo.HTTP_CODE),
-              });
-            } catch (e) {
-              reject(e);
-            }
-          });
-          curl.on("error", (err: any) => {
-            reject(err);
-          });
-          curl.perform();
+        // fetch nativo com os mesmos headers que o script usava no wrapper curl
+        const res = await fetch(row.url, {
+          headers: {
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+            Accept: "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
+            "Accept-Language": "pt-PT,pt;q=0.9",
+            Referer: "https://www.google.com/",
+          },
+          redirect: "follow",
+          signal: AbortSignal.timeout(15000),
         });
 
-        if (!res.ok || !res.data) {
+        if (!res.ok) {
           skipped++;
           continue;
         }
 
-        const html = res.data.toString("utf-8");
+        const html = await res.text();
         const $ = load(html);
 
         let image_url: string | null = null;

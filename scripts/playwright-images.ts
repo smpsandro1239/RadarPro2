@@ -24,7 +24,7 @@ async function main() {
     try {
       const page = await browser.newPage();
       const result = await page.goto(row.url, { waitUntil: "domcontentloaded", timeout: 15000 });
-      if (!res.ok) {
+      if (!result || !result.ok()) {
         await page.close();
         skipped++;
         continue;
@@ -34,18 +34,18 @@ async function main() {
 
       let imageUrl: string | null = null;
       const ogImage = await page.locator('meta[property="og:image"]').getAttribute("content");
-      if (ogImage) image_url = ogImage.startsWith("http") ? ogImage : new URL(ogImage, row.url).href;
+      if (ogImage) imageUrl = ogImage.startsWith("http") ? ogImage : new URL(ogImage, row.url).href;
 
-      if (!image_url) {
-        const images = await page.$$eval("img", imgs => imgs.map(i => i.src || i.getAttribute("data-src")).filter(Boolean));
-        const validImg = images.find(s => src.startsWith("http") && !src.includes("placeholder") && !src.includes("svg"));
-        if (validImg) image_url = validImg.startsWith("http") ? validImg : new URL(validImg, row.url).href;
+      if (!imageUrl) {
+        const images = await page.$$eval("img", imgs => imgs.map(i => i.src || i.getAttribute("data-src")).filter(Boolean) as string[]);
+        const validImg = images.find(s => s.startsWith("http") && !s.includes("placeholder") && !s.includes("svg"));
+        if (validImg) imageUrl = validImg.startsWith("http") ? validImg : new URL(validImg, row.url).href;
       }
 
-      if (image_url) {
-        await db.update(properties).set({ image_url, updatedAt: new Date() }).where(eq(properties.id, row.id));
+      if (imageUrl) {
+        await db.update(properties).set({ image_url: imageUrl, updatedAt: new Date() }).where(eq(properties.id, row.id));
         updated++;
-        console.log(`✓ ${row.title}: ${image_url.substring(0, 80)}...`);
+        console.log(`✓ ${row.title}: ${imageUrl.substring(0, 80)}...`);
       } else {
         skipped++;
       }

@@ -61,7 +61,7 @@ async function main() {
       // Tentar primeira imagem com src ou data-src
       const imgElements = await page.$$('img');
       let found = false;
-      for (const img of imgs) {
+      for (const img of imgElements) {
         const src = await img.getAttribute('src') || await img.getAttribute('data-src');
         if (src && src.startsWith('http') && !src.includes('placeholder') && !src.includes('svg')) {
           await db

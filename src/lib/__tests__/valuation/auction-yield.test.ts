@@ -6,8 +6,16 @@
  */
 
 import { describe, it, expect } from "vitest";
-import { calculateScore } from "@/lib/valuation/score";
 import { evaluateProperty } from "@/lib/valuation/index";
+import type { ValuationResult } from "@/lib/valuation/types";
+
+// TODO(Fase 3): testes legados da API v1 — migrar para o motor v2.
+function scoreComponent(result: ValuationResult, key: string): number {
+  const breakdown = result.breakdown.scoreBreakdown as
+    | Record<string, number | null>
+    | undefined;
+  return breakdown?.[key] ?? 0;
+}
 
 const BASE_PROPERTY = {
   district: "Lisboa",
@@ -38,8 +46,8 @@ describe("yield para leilões (TDD)", () => {
       annual_income: 9_000,
     };
 
-    const result = calculateScore(auctionProperty, evaluateProperty(auctionProperty));
-    const yieldScore = result.breakdown.yield;
+    const result = evaluateProperty(auctionProperty);
+    const yieldScore = scoreComponent(result, "yield");
 
     // Se o código usasse current_bid: yield=9% → score 100
     // Se o código usar max_bid: yield=7.5% → score 75 (escala atual)
@@ -59,8 +67,8 @@ describe("yield para leilões (TDD)", () => {
       annual_income: 9_000,
     };
 
-    const result = calculateScore(fixedProperty, evaluateProperty(fixedProperty));
-    const yieldScore = result.breakdown.yield;
+    const result = evaluateProperty(fixedProperty);
+    const yieldScore = scoreComponent(result, "yield");
 
     // yield = 9.000/120.000 = 7.5% → 75 na escala atual, 95 na recalibrada
     expect(yieldScore).toBeGreaterThan(0);
@@ -79,8 +87,8 @@ describe("yield para leilões (TDD)", () => {
       annual_income: 9_000,
     };
 
-    const result = calculateScore(auctionProperty, evaluateProperty(auctionProperty));
-    const yieldScore = result.breakdown.yield;
+    const result = evaluateProperty(auctionProperty);
+    const yieldScore = scoreComponent(result, "yield");
 
     // Se usasse current_bid: 24% → 100 (bug)
     // Se usasse max_bid: 7.5% → 75 (correto)
