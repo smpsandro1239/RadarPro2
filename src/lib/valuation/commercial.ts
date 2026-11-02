@@ -1,89 +1,86 @@
 /**
- * RadarPro Portugal - Avaliação de imóveis comerciais
+ * RadarPro Portugal - Comercial (v2)
  *
- * Base: €/m² comercial da zona (via findMarketData com propertyType "commercial").
- * Yield é indicador central: valor = rendimento anual ÷ taxa de capitalização.
+ * Abordagem 1 (central): renda anual ÷ taxa de capitalização DE MERCADO.
+ *   A rentabilidade do próprio anúncio (yieldPct) NÃO é usada: renda ÷ yield do anúncio
+ *   devolve o preço pedido e nunca há desconto (circularidade).
+ * Abordagem 2: €/m² comercial da zona × área real (sem áreas inventadas).
  */
+import { confidenceFromMarket, lookupMarket, marketAsOf, marketLevel, marketSource } from "./market";
+import type { ConfidenceLevel, EngineResult, PropertyInput } from "./types";
+import { noValuation } from "./utils";
 
-import { findMarketData } from "@/lib/market-data";
-import type { ValuationResult } from "./types";
+export const DEFAULT_MARKET_CAP_RATE = 0.06;
+export const DIVERGENCE_WARN = 0.35;
 
-const DEFAULT_YIELD = 0.06; // 6% yield típico comércio/serviços
+export function evaluateCommercial(p: PropertyInput, now: Date = new Date()): EngineResult {
+  const warnings: string[] = [];
 
-export function evaluateCommercial(property: any): ValuationResult {
-  const {
-    district = "Lisboa",
-    municipality = district,
-    parish,
-    price = 0,
-    sqm = 0,
-    annualRent = null,
-    yieldPct = null,
-  } = property;
-
-  // Abordagem 1: rendimento (yield) - indicador central para comercial
-  let valuationFromIncome: number | null = null;
-  if (annualRent && annualRent > 0) {
-    const yieldRate = (yieldPct && yieldPct > 0 ? yieldPct / 100 : DEFAULT_YIELD);
-    valuationFromIncome = Math.round(annualRent / yieldRate);
+  let capRate = DEFAULT_MARKET_CAP_RATE;
+  let capRateSource: "market" | "default" = "default";
+  if (p.marketCapRate !== null) {
+    const r = p.marketCapRate > 1 ? p.marketCapRate / 100 : p.marketCapRate;
+    if (r > 0 && r <= 0.2) {
+      capRate = r;
+      capRateSource = "market";
+    }
   }
 
-  // Abordagem 2: €/m² comercial da zona
-  const marketData = findMarketData({
-    district,
-    municipality,
-    parish,
-    propertyType: "commercial",
-  });
+  const fromIncome =
+    p.annualRent !== null && p.annualRent > 0 ? Math.round(p.annualRent / capRate) : null;
 
-  let valuationFromSqm: number | null = null;
-  if (marketData) {
-    const estSqm = sqm > 0 ? sqm : 60;
-    valuationFromSqm = Math.round(marketData.pricePerSqm * estSqm);
-  }
+  const market = p.district ? lookupMarket(p, "commercial") : null;
+  const marketConf = market ? confidenceFromMarket(market, now) : null;
+  const fromSqm =
+    market && p.sqm !== null && p.sqm > 0 ? Math.round(market.pricePerSqm * p.sqm) : null;
 
-  // Combinar: se há rendimento, confia-se nele; senão usa €/m²
   let valuation: number | null = null;
-  let confidence: "high" | "medium" | "low" | "very_low" = "low";
-  let source = "";
+  let confidence: ConfidenceLevel = "low";
+  let method = "";
 
-  if (valuationFromIncome) {
-    valuation = valuationFromIncome;
-    confidence = "medium";
-    source = "rendimento_anual";
-  } else if (valuationFromSqm) {
-    valuation = valuationFromSqm;
-    confidence = marketData?.level === "parish" ? "medium" : "low";
-    source = marketData?.source ?? "";
+  if (fromIncome !== null) {
+    valuation = fromIncome;
+    method = "rendimento_anual";
+    confidence = capRateSource === "market" ? "medium" : "low";
+    if (fromSqm !== null) {
+      const div = Math.abs(fromIncome - fromSqm) / Math.max(fromIncome, fromSqm);
+      if (div > DIVERGENCE_WARN) {
+        warnings.push(`Avaliações divergentes: rendimento ${fromIncome} € vs €/m² ${fromSqm} €`);
+        confidence = "low";
+      }
+    }
+  } else if (fromSqm !== null && marketConf) {
+    valuation = fromSqm;
+    method = "preco_m2_comercial";
+    confidence = marketConf.confidence === "high" ? "medium" : "low";
+    warnings.push(...marketConf.warnings);
   }
 
-  if (!valuation) {
-    return {
-      valuation: null,
-      score: 0,
-      engine: "commercial",
-      confidence: "very_low",
-      breakdown: {
-        reason: "Sem rendimento nem dados de mercado comerciais para a zona",
-      },
-    };
+  if (valuation === null) {
+    return noValuation("income", "Sem renda nem dados de mercado comerciais (e área) para a zona", "very_low");
   }
 
   return {
     valuation,
-    score: 0,
-    engine: "commercial",
+    engine: "income",
     confidence,
     breakdown: {
-      basePerSqm: marketData?.pricePerSqm ?? null,
-      areaSqm: sqm || 0,
-      annualRent: annualRent ?? null,
-      yieldPct: yieldPct ?? null,
-      valuationFromIncome,
-      valuationFromSqm,
-      source,
-      level: marketData?.level ?? null,
-      asOf: marketData?.asOf ?? null,
+      method,
+      basePerSqm: market?.pricePerSqm ?? null,
+      areaSqm: p.sqm,
+      annualRent: p.annualRent,
+      capRate,
+      capRateSource,
+      valuationFromIncome: fromIncome,
+      valuationFromSqm: fromSqm,
+      source: market ? marketSource(market) : null,
+      level: market ? marketLevel(market) : null,
+      asOf: market ? marketAsOf(market) : null,
     },
+    warnings,
+    assumptions:
+      fromIncome !== null && capRateSource === "default"
+        ? [`Taxa de capitalização por defeito ${DEFAULT_MARKET_CAP_RATE * 100}% (sem taxa de mercado da zona)`]
+        : [],
   };
 }

@@ -1,149 +1,99 @@
 /**
- * RadarPro Portugal - Avaliação de terreno urbano (lote urbanizável)
+ * RadarPro Portugal - Terreno urbano (lote urbanizável) (v2)
  *
- * Base: €/m² de lote urbanizável (via findMarketData com propertyType "urban_land").
- * Fatores obrigatórios: PDM, infraestrutura, topografia, frente de estrada, área mínima.
- * Se PDM = non_buildable ou unknown → valuation=null, confidence='very_low', score cortado a 40.
+ * Base: €/m² de lote urbanizável (findMarketData "urban_land").
+ * PDM diferente de "buildable"/"restricted" (inclui null) -> valuation = null.
+ * Área do lote = sqm (o minAreaFactor usa a área REAL, não um campo à parte).
  */
+import { confidenceFromMarket, lookupMarket, marketAsOf, marketLevel, marketSource } from "./market";
+import type { EngineResult, PropertyInput } from "./types";
+import { fold, minConfidence, noValuation } from "./utils";
 
-import { findMarketData } from "@/lib/market-data";
-import type { ValuationResult } from "./types";
-
-function pdmFactor(pdmStatus: string | null): number {
-  const p = (pdmStatus || "").toLowerCase();
-  switch (p) {
-    case "buildable": return 1.00;
-    case "restricted": return 0.60;
-    case "non_buildable": return 0.00;
-    case "unknown": return 0.00;
-    default: return 0.00;
-  }
+function pdmFactor(pdm: string): number {
+  if (pdm === "buildable") return 1.0;
+  if (pdm === "restricted") return 0.6;
+  return 0; // non_buildable / unknown: nunca chega aqui (corte prévio)
 }
 
-function infrastructureFactor(infrastructure: string | null): number {
-  const i = (infrastructure || "").toLowerCase();
-  switch (i) {
-    case "full": return 1.00;
+function infrastructureFactor(v: string): number {
+  switch (v) {
+    case "full": return 1.0;
     case "partial": return 0.85;
-    case "none": return 0.60;
-    case "unknown": return 0.70;
-    default: return 0.70;
+    case "none": return 0.6;
+    default: return 0.7; // unknown
   }
 }
 
-function topographyFactor(topography: string | null): number {
-  const t = (topography || "").toLowerCase();
-  const m: Record<string, number> = {
-    flat: 1.00, plano: 1.00,
-    gentle: 0.95, suave: 0.95,
-    steep: 0.80, íngreme: 0.80,
-    unknown: 0.90,
-  };
-  return m[t] ?? 0.90;
-}
+const TOPOGRAPHY: Record<string, number> = {
+  flat: 1.0, plano: 1.0, gentle: 0.95, suave: 0.95, steep: 0.8, ingreme: 0.8,
+};
 
-function roadFrontageFactor(frontageMeters: number | null): number {
-  if (frontageMeters == null) return 0.90;
-  if (frontageMeters >= 20) return 1.05;
-  if (frontageMeters >= 10) return 1.00;
-  if (frontageMeters >= 5) return 0.95;
+function frontageFactor(m: number | null): number {
+  if (m === null) return 0.9;
+  if (m >= 20) return 1.05;
+  if (m >= 10) return 1.0;
+  if (m >= 5) return 0.95;
   return 0.85;
 }
 
-function minAreaFactor(areaSqm: number | null): number {
-  if (areaSqm == null) return 0.90;
-  if (areaSqm >= 1000) return 1.00;
-  if (areaSqm >= 500) return 0.95;
-  if (areaSqm >= 250) return 0.90;
-  return 0.80;
+function areaFactor(area: number): number {
+  if (area >= 1000) return 1.0;
+  if (area >= 500) return 0.95;
+  if (area >= 250) return 0.9;
+  return 0.8;
 }
 
-export function evaluateUrbanLand(property: any): ValuationResult {
-  const {
-    district = "Lisboa",
-    municipality = district,
-    parish,
-    price = 0,
-    sqm = 0,
-    pdmStatus = "unknown",
-    infrastructure = "unknown",
-    topography = null,
-    roadFrontageMeters = null,
-    minArea = null,
-  } = property;
-
-  // Regra de corte: PDM não edificável ou unknown → sem avaliação
-  if (pdmStatus === "non_buildable" || pdmStatus === "unknown") {
-    return {
-      valuation: null,
-      score: 0,
-      engine: "land_urban",
-      confidence: "very_low",
-      breakdown: {
-        reason: "PDM não edificável ou desconhecido - terreno não urbanizável",
-        pdmStatus,
-      },
-    };
+export function evaluateUrbanLand(p: PropertyInput, now: Date = new Date()): EngineResult {
+  const pdm = fold(p.pdmStatus);
+  if (pdm !== "buildable" && pdm !== "restricted") {
+    return noValuation("land_urban", "PDM não edificável ou desconhecido", "very_low", {
+      pdmStatus: p.pdmStatus,
+    });
   }
+  if (!p.district) return noValuation("land_urban", "Distrito em falta");
+  if (p.sqm === null || p.sqm <= 0) return noValuation("land_urban", "Área do lote em falta");
 
-  const marketData = findMarketData({
-    district,
-    municipality,
-    parish,
-    propertyType: "urban_land",
-  });
+  const market = lookupMarket(p, "urban_land");
+  if (!market) return noValuation("land_urban", "Sem dados de mercado para terreno urbano nesta zona");
 
-  if (!marketData) {
-    return {
-      valuation: null,
-      score: 0,
-      engine: "land_urban",
-      confidence: "very_low",
-      breakdown: {
-        reason: "Sem dados de mercado para terreno urbano nesta zona",
-        pdmStatus,
-      },
-    };
-  }
-
-  const basePerSqm = marketData.pricePerSqm;
-  const area = sqm > 0 ? sqm : 500;
+  const assumptions: string[] = [];
+  const infra = fold(p.infrastructure);
+  const topo = fold(p.topography);
+  if (!["full", "partial", "none"].includes(infra)) assumptions.push("Infraestruturas desconhecidas: fator 0.70");
+  if (TOPOGRAPHY[topo] === undefined) assumptions.push("Topografia desconhecida: fator 0.90");
+  if (p.roadFrontageMeters === null) assumptions.push("Frente de estrada desconhecida: fator 0.90");
 
   const factors = {
-    pdm: pdmFactor(pdmStatus),
-    infrastructure: infrastructureFactor(infrastructure),
-    topography: topographyFactor(topography),
-    roadFrontage: roadFrontageFactor(roadFrontageMeters),
-    minArea: minAreaFactor(minArea),
+    pdm: pdmFactor(pdm),
+    infrastructure: infrastructureFactor(infra),
+    topography: TOPOGRAPHY[topo] ?? 0.9,
+    roadFrontage: frontageFactor(p.roadFrontageMeters),
+    area: areaFactor(p.sqm),
   };
+  const totalFactor = Object.values(factors).reduce((a, b) => a * b, 1);
+  const adjustedPerSqm = market.pricePerSqm * totalFactor;
+  const valuation = Math.round(adjustedPerSqm * p.sqm);
 
-  const totalFactor =
-    factors.pdm * factors.infrastructure * factors.topography *
-    factors.roadFrontage * factors.minArea;
-
-  const adjustedPerSqm = basePerSqm * totalFactor;
-  const valuation = Math.round(adjustedPerSqm * area);
-
-  let confidence: "high" | "medium" | "low" | "very_low" = "medium";
-  if (marketData.level === "parish") confidence = "high";
-  else if (marketData.level === "municipality") confidence = "medium";
-  else confidence = "low";
+  const base = confidenceFromMarket(market, now);
+  let confidence = base.confidence;
+  if (pdm === "restricted" || assumptions.length > 0) confidence = minConfidence(confidence, "medium");
 
   return {
     valuation,
-    score: 0,
     engine: "land_urban",
     confidence,
     breakdown: {
-      basePerSqm,
-      areaSqm: area,
+      basePerSqm: market.pricePerSqm,
+      areaSqm: p.sqm,
       totalFactor,
       adjustedPerSqm,
-      source: marketData.source,
-      level: marketData.level,
-      asOf: marketData.asOf,
+      source: marketSource(market),
+      level: marketLevel(market),
+      asOf: marketAsOf(market),
       factors,
-      pdmStatus,
+      pdmStatus: pdm,
     },
+    warnings: base.warnings,
+    assumptions,
   };
 }

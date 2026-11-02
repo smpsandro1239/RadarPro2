@@ -1,216 +1,201 @@
 /**
- * RadarPro Portugal - Motor de scoring com pesos por tipo de ativo
+ * RadarPro Portugal - Motor de scoring (v2)
  *
- * Pesos (soma 1.00 por tipo):
- * | Dimensão       | apartment | urban_land | rural_land | auction |
- * | Desconto vs AVM| 0.30      | 0.25       | 0.20       | 0.30    |
- * | Preço/m² vs mediana| 0.25  | 0.30       | 0.35       | 0.20    |
- * | Yield/rendimento | 0.20    | 0.10       | 0.25       | 0.20    |
- * | Liquidez        | 0.15     | 0.20       | 0.10       | 0.15    |
- * | Confiança/risco | 0.10     | 0.15       | 0.10       | 0.15    |
+ * Mudanças face à v1:
+ * - O desconto é CALCULADO a partir do resultado do motor (preço vs valuation); já não depende
+ *   de campos pré-calculados (discountPct, maxBid, marketAvgPerSqm).
+ * - Os cortes usam o resultado do motor (confidence, currentBidExceedsMax), não colunas da BD.
+ * - Dimensões sem dados são retiradas e os pesos renormalizados (em vez de valerem 0 ou 50);
+ *   com cobertura < 70 % o score é limitado a 70.
+ * - Descontos >= 50 % ou yields >= 12 % são tratados como anomalias (score <= 50, "a verificar").
+ * - Sem avaliação (valuation null) -> score null.
+ * - Curvas contínuas (interpolação) em vez de degraus.
  *
- * Cortes (regras de corte aplicadas depois da soma ponderada):
- * - valuation_confidence = 'very_low'  → score máximo 40
- * - pdm_status = 'non_buildable' ou 'unknown' (urban_land) → score máximo 40
- * - Sem rendimento demonstrável (rural_land) → score máximo 30
- * - current_bid >= max_bid (leilão) → score máximo 30, badge vermelho
+ * Pesos (soma 1.00): ver SCORE_WEIGHTS. House/commercial/garage/mixed usam os pesos de apartment.
  */
+import type { AssetClass, EngineResult, PropertyInput, ScoreContext, ScoreResult } from "./types";
+import { normalizeKey, toNum } from "./utils";
 
-import type { AssetClass, ScoreResult } from "./types";
+type Key = "discount" | "pricePerSqm" | "yield" | "liquidity" | "confidence";
+type WeightSet = Record<Key, number>;
 
-export const SCORE_WEIGHTS: Record<string, Record<string, number>> = {
-  apartment: {
-    discount: 0.30,
-    pricePerSqm: 0.25,
-    yield: 0.20,
-    liquidity: 0.15,
-    confidence: 0.10,
-  },
-  urban_land: {
-    discount: 0.25,
-    pricePerSqm: 0.30,
-    yield: 0.10,
-    liquidity: 0.20,
-    confidence: 0.15,
-  },
-  rural_land: {
-    discount: 0.20,
-    pricePerSqm: 0.35,
-    yield: 0.25,
-    liquidity: 0.10,
-    confidence: 0.10,
-  },
-  auction: {
-    discount: 0.30,
-    pricePerSqm: 0.20,
-    yield: 0.20,
-    liquidity: 0.15,
-    confidence: 0.15,
-  },
+export const SCORE_WEIGHTS: Record<"apartment" | "urban_land" | "rural_land" | "auction", WeightSet> = {
+  apartment: { discount: 0.3, pricePerSqm: 0.25, yield: 0.2, liquidity: 0.15, confidence: 0.1 },
+  urban_land: { discount: 0.25, pricePerSqm: 0.3, yield: 0.1, liquidity: 0.2, confidence: 0.15 },
+  rural_land: { discount: 0.2, pricePerSqm: 0.35, yield: 0.25, liquidity: 0.1, confidence: 0.1 },
+  auction: { discount: 0.3, pricePerSqm: 0.2, yield: 0.2, liquidity: 0.15, confidence: 0.15 },
 };
 
-function clamp01(v: number): number {
-  return Math.min(100, Math.max(0, Math.round(v)));
-}
+export const ANOMALY_DISCOUNT_PCT = 50;
+export const ANOMALY_YIELD_PCT = 12;
+export const ANOMALY_MAX_SCORE = 50;
+export const MIN_COVERAGE = 0.7;
+export const INCOMPLETE_MAX_SCORE = 70;
 
-/** 0-100: desconto do preço de venda/ask face ao valor de referência (AVM) */
-function discountScore(
-  property: any,
-  valuation: any
-): number {
-  const discountPct = property.discountPct ?? 0;
-  if (discountPct >= 40) return 100;
-  if (discountPct >= 30) return 80;
-  if (discountPct >= 20) return 60;
-  if (discountPct >= 10) return 40;
-  if (discountPct > 0) return 20;
-  return 0;
-}
+type Curve = ReadonlyArray<readonly [number, number]>;
 
-/** 0-100: preço/m² do imóvel face à mediana da zona */
-function pricePerSqmScore(property: any, valuation: any): number {
-  const pricePerSqm = property.pricePerSqm ?? 0;
-  const marketAvgPerSqm = valuation.marketAvgPerSqm ?? property.marketAvgPerSqm ?? 0;
-  if (!pricePerSqm || !marketAvgPerSqm) return 50;
-  const ratio = pricePerSqm / marketAvgPerSqm;
-  if (ratio < 0.60) return 100;
-  if (ratio < 0.75) return 80;
-  if (ratio < 0.85) return 60;
-  if (ratio < 0.95) return 40;
-  if (ratio > 1.20) return 0;
-  return 20;
-}
+const DISCOUNT_CURVE: Curve = [[0, 0], [10, 40], [20, 60], [30, 80], [40, 100]];
+/** x = (preço/m²) ÷ mediana da zona; mais baixo = melhor. */
+const PRICE_RATIO_CURVE: Curve = [[0.6, 100], [0.75, 80], [0.85, 60], [0.95, 40], [1.05, 20], [1.2, 0]];
+const YIELD_CURVE: Curve = [[1, 0], [2, 20], [3, 40], [4, 60], [5, 80], [6, 95], [8, 100]];
 
-/** 0-100: yield/rendimento estimado */
-function yieldScore(property: any, valuation: any): number {
-  let yieldPct = property.yieldPct ?? valuation.yieldPct ?? 0;
-  if (!yieldPct || yieldPct <= 0) {
-    // Calcular a partir do annual_income guardado na BD (backfill de rendas)
-    const annualIncome = property.annualIncome ?? property.annual_income ?? 0;
-    const isAuction =
-      property.isAuction === true ||
-      property.listing_type === "auction_judicial" ||
-      property.listing_type === "auction_fiscal" ||
-      property.listing_type === "auction_private";
-    // Para leilões, usar max_bid (custo real com comissão+IMT+selo) como denominador.
-    // Para preço fixo, usar price.
-    const denominator = isAuction && property.maxBid ? property.maxBid : property.price;
-    if (annualIncome > 0 && denominator > 0) {
-      yieldPct = (annualIncome / denominator) * 100;
+export function interpolate(x: number, curve: Curve): number {
+  const first = curve[0];
+  const last = curve[curve.length - 1];
+  if (x <= first[0]) return first[1];
+  if (x >= last[0]) return last[1];
+  for (let i = 1; i < curve.length; i++) {
+    const [x1, y1] = curve[i];
+    if (x <= x1) {
+      const [x0, y0] = curve[i - 1];
+      return y0 + ((y1 - y0) * (x - x0)) / (x1 - x0);
     }
   }
-  if (!yieldPct || yieldPct <= 0) return 0;
-  // Escala calibrada para o mercado português 2026:
-  // Lisboa 3–4%, Porto 4–5%, interior 6–7%. Yields de 8%+ são excecionais.
-  if (yieldPct >= 8) return 100;
-  if (yieldPct >= 6) return 95;
-  if (yieldPct >= 5) return 80;
-  if (yieldPct >= 4) return 60;
-  if (yieldPct >= 3) return 40;
-  if (yieldPct >= 2) return 20;
-  return 0;
+  return last[1];
 }
 
-/** 0-100: liquidez da zona/tipo */
-function liquidityScore(property: any): number {
-  const districtLiquidity: Record<string, number> = {
-    Lisboa: 100, Porto: 80, Braga: 55, Faro: 70, Setubal: 65,
-    Aveiro: 60, Coimbra: 55, Leiria: 55, Santarem: 50,
-    Viseu: 50, "Viana do Castelo": 55, Braganca: 40, Guarda: 40,
-    "Castelo Branco": 40, Portalegre: 40, Evora: 50, Beja: 40,
-    "Vila Real": 50, Acores: 35, Madeira: 50,
+const LIQUIDITY: Record<string, number> = {
+  LISBOA: 100, PORTO: 80, BRAGA: 55, FARO: 70, SETUBAL: 65, AVEIRO: 60, COIMBRA: 55,
+  LEIRIA: 55, SANTAREM: 50, VISEU: 50, VIANA_DO_CASTELO: 55, BRAGANCA: 40, GUARDA: 40,
+  CASTELO_BRANCO: 40, PORTALEGRE: 40, EVORA: 50, BEJA: 40, VILA_REAL: 50, ACORES: 35, MADEIRA: 50,
+};
+const DEFAULT_LIQUIDITY = 55;
+
+const CONFIDENCE_SCORE = { high: 100, medium: 70, low: 40, very_low: 10 } as const;
+
+function weightsFor(assetClass: AssetClass, isAuction: boolean): WeightSet {
+  if (isAuction) return SCORE_WEIGHTS.auction;
+  if (assetClass === "urban_land") return SCORE_WEIGHTS.urban_land;
+  if (assetClass === "rural_land") return SCORE_WEIGHTS.rural_land;
+  return SCORE_WEIGHTS.apartment;
+}
+
+const clamp100 = (v: number) => Math.min(100, Math.max(0, Math.round(v)));
+
+export function calculateScore(p: PropertyInput, result: EngineResult, ctx: ScoreContext): ScoreResult {
+  const { assetClass, listingType } = ctx;
+  const isAuction = listingType !== "fixed_price";
+
+  if (result.valuation === null) {
+    return {
+      score: null,
+      breakdown: { discount: null, pricePerSqm: null, yield: null, liquidity: null, confidence: null },
+      maxScore: 100,
+      badges: ["Sem avaliação"],
+      capped: false,
+      coverage: 0,
+    };
+  }
+
+  const bd = result.breakdown;
+  const num = (k: string): number | null => toNum(bd[k]);
+
+  // --- bases de cálculo ---------------------------------------------------
+  let discountBasisPct: number | null = null; // alimenta a dimensão "desconto"
+  let referenceDiscountPct: number | null = null; // usado só para detetar anomalias
+  let priceForSqm: number | null = null;
+  let yieldDenominator: number | null = null;
+
+  if (isAuction) {
+    const maxBid = num("maxBid");
+    const bid = num("currentBid");
+    const marketValue = num("marketValue");
+    if (maxBid !== null && bid !== null) discountBasisPct = maxBid > 0 ? ((maxBid - bid) / maxBid) * 100 : 0;
+    if (marketValue !== null && marketValue > 0 && bid !== null) referenceDiscountPct = (1 - bid / marketValue) * 100;
+    priceForSqm = bid;
+    yieldDenominator = maxBid !== null && maxBid > 0 ? maxBid : null;
+  } else {
+    if (p.price !== null && p.price > 0 && result.valuation > 0) {
+      discountBasisPct = referenceDiscountPct = (1 - p.price / result.valuation) * 100;
+    }
+    priceForSqm = p.price;
+    yieldDenominator = p.price !== null && p.price > 0 ? p.price : null;
+  }
+
+  const sDiscount = discountBasisPct === null ? null : interpolate(discountBasisPct, DISCOUNT_CURVE);
+
+  const basePerSqm = num("basePerSqm");
+  const sPriceM2 =
+    priceForSqm !== null && priceForSqm > 0 && p.sqm !== null && p.sqm > 0 && basePerSqm !== null && basePerSqm > 0
+      ? interpolate(priceForSqm / p.sqm / basePerSqm, PRICE_RATIO_CURVE)
+      : null;
+
+  let yieldPct = p.yieldPct;
+  if (yieldPct === null) {
+    const income = p.annualIncome ?? p.annualRent;
+    if (income !== null && income > 0 && yieldDenominator !== null) yieldPct = (income / yieldDenominator) * 100;
+  }
+  const sYield = yieldPct !== null && yieldPct > 0 ? interpolate(yieldPct, YIELD_CURVE) : null;
+
+  const sLiquidity = LIQUIDITY[normalizeKey(p.district)] ?? DEFAULT_LIQUIDITY;
+  const sConfidence = CONFIDENCE_SCORE[result.confidence];
+
+  const components: Record<Key, number | null> = {
+    discount: sDiscount,
+    pricePerSqm: sPriceM2,
+    yield: sYield,
+    liquidity: sLiquidity,
+    confidence: sConfidence,
   };
-  return districtLiquidity[property.district] ?? 55;
-}
 
-/** 0-100: confiança do modelo / risco */
-function confidenceScore(property: any, valuation: any): number {
-  const conf = property.valuation_confidence ?? valuation.confidence ?? "low";
-  switch (conf) {
-    case "high": return 100;
-    case "medium": return 70;
-    case "low": return 40;
-    case "very_low": return 10;
-    default: return 40;
+  // --- soma ponderada com renormalização ---------------------------------
+  const weights = weightsFor(assetClass, isAuction);
+  let used = 0;
+  let acc = 0;
+  const missing: string[] = [];
+  (Object.keys(weights) as Key[]).forEach((k) => {
+    const v = components[k];
+    if (v === null) {
+      missing.push(k);
+      return;
+    }
+    used += weights[k];
+    acc += v * weights[k];
+  });
+  const coverage = Math.round(used * 100) / 100;
+  let score = used > 0 ? acc / used : 0;
+
+  // --- cortes -------------------------------------------------------------
+  const caps: { max: number; badge: string }[] = [];
+  if (result.confidence === "very_low") caps.push({ max: 40, badge: "Confiança muito baixa" });
+  if (assetClass === "urban_land") {
+    const pdm = (p.pdmStatus ?? "").toLowerCase();
+    if (pdm !== "buildable" && pdm !== "restricted") caps.push({ max: 40, badge: "PDM não edificável ou desconhecido" });
   }
-}
-
-export function calculateScore(
-  property: any,
-  valuation: any
-): ScoreResult {
-  const assetClass: AssetClass = property.asset_class ?? "apartment";
-  const isAuction =
-    property.isAuction === true ||
-    property.listing_type === "auction_judicial" ||
-    property.listing_type === "auction_fiscal" ||
-    property.listing_type === "auction_private";
-
-  const weightKey = isAuction ? "auction" : assetClass;
-  const weights = SCORE_WEIGHTS[weightKey] ?? SCORE_WEIGHTS.apartment;
-
-  const sDiscount = discountScore(property, valuation);
-  const sPriceM2 = pricePerSqmScore(property, valuation);
-  const sYield = yieldScore(property, valuation);
-  const sLiquidity = liquidityScore(property);
-  const sConfidence = confidenceScore(property, valuation);
-
-  // Soma ponderada (0-100)
-  let score = Math.round(
-    sDiscount * weights.discount +
-    sPriceM2 * weights.pricePerSqm +
-    sYield * weights.yield +
-    sLiquidity * weights.liquidity +
-    sConfidence * weights.confidence
-  );
-
-  // Aplicar cortes
-  let maxScore = 100;
-  const badges: string[] = [];
-  let capped = false;
-
-  if (property.valuation_confidence === "very_low") {
-    maxScore = Math.min(maxScore, 40);
-    badges.push("Confiança muito baixa");
-    capped = true;
+  if (assetClass === "rural_land" && !(p.annualIncome !== null && p.annualIncome > 0)) {
+    caps.push({ max: 30, badge: "Sem rendimento demonstrável" });
+  }
+  if (isAuction && bd["currentBidExceedsMax"] === true) {
+    caps.push({ max: 30, badge: "Lance atual >= lance máximo" });
+  }
+  if (referenceDiscountPct !== null && referenceDiscountPct >= ANOMALY_DISCOUNT_PCT) {
+    caps.push({ max: ANOMALY_MAX_SCORE, badge: `Desconto anómalo (${Math.round(referenceDiscountPct)}%) - verificar dados` });
+  }
+  if (yieldPct !== null && yieldPct >= ANOMALY_YIELD_PCT) {
+    caps.push({ max: ANOMALY_MAX_SCORE, badge: `Rentabilidade anómala (${Math.round(yieldPct)}%) - verificar dados` });
+  }
+  if (coverage < MIN_COVERAGE) {
+    caps.push({ max: INCOMPLETE_MAX_SCORE, badge: "Dados insuficientes para um score completo" });
   }
 
-  if (
-    assetClass === "urban_land" &&
-    (property.pdm_status === "non_buildable" || property.pdm_status === "unknown")
-  ) {
-    maxScore = Math.min(maxScore, 40);
-    badges.push("PDM não edificável ou desconhecido");
-    capped = true;
-  }
+  const maxScore = caps.reduce((m, c) => Math.min(m, c.max), 100);
+  score = Math.min(score, maxScore);
 
-  if (assetClass === "rural_land" && !property.annualIncome) {
-    maxScore = Math.min(maxScore, 30);
-    badges.push("Sem rendimento demonstrável");
-    capped = true;
-  }
-
-  if (isAuction && property.currentBid != null && property.maxBid != null && property.currentBid >= property.maxBid) {
-    maxScore = Math.min(maxScore, 30);
-    badges.push("Lance atual >= lance máximo");
-    capped = true;
-  }
-
-  if (capped) {
-    score = Math.min(score, maxScore);
-  }
+  const badges = caps.map((c) => c.badge);
+  if (missing.length > 0) badges.push(`Dados em falta: ${missing.join(", ")}`);
 
   return {
-    score: clamp01(score),
+    score: clamp100(score),
     breakdown: {
-      discount: sDiscount,
-      pricePerSqm: sPriceM2,
-      yield: sYield,
+      discount: sDiscount === null ? null : Math.round(sDiscount),
+      pricePerSqm: sPriceM2 === null ? null : Math.round(sPriceM2),
+      yield: sYield === null ? null : Math.round(sYield),
       liquidity: sLiquidity,
       confidence: sConfidence,
     },
     maxScore,
     badges,
-    capped,
+    capped: maxScore < 100,
+    coverage,
   };
 }

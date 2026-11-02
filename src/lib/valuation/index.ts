@@ -1,135 +1,73 @@
 /**
- * RadarPro Portugal - Dispatcher do motor de avaliação
+ * RadarPro Portugal - Dispatcher do motor de avaliação (v2)
  *
- * Exporta evaluateProperty(property): ValuationResult
- * - Lê asset_class e listing_type (derivado de isAuction/auction_type)
- * - Despacha para o motor correto
- * - Depois aplica calculateScore e devolve { valuation, score, engine, confidence, breakdown }
+ * evaluateProperty(raw): normaliza -> classifica -> avalia -> pontua.
+ * Aceita linhas da BD (snake_case) ou objetos camelCase.
+ *
+ * Mudanças face à v1:
+ * - Normalização única (acaba o desencontro pdm_status/pdmStatus, null vs undefined).
+ * - asset_class em falta é deduzido de type/title (com pressuposto registado).
+ * - "mixed" já não é avaliado como T2: devolve valuation null (avaliação manual).
+ * - Leilões: o valor de mercado vem do motor da classe, não de price*1.2.
+ * - Garagens têm motor próprio (não usam €/m² de apartamentos).
  */
-
 import { evaluateApartment } from "./apartment";
-import { evaluateUrbanLand } from "./land-urban";
-import { evaluateRuralLand } from "./land-rural";
+import { evaluateAuction } from "./auction";
+import { deriveAssetClass, deriveListingType } from "./classify";
 import { evaluateCommercial } from "./commercial";
-import { calculateMaxBid } from "@/lib/auction-calculator";
+import { evaluateGarage } from "./garage";
+import { evaluateRuralLand } from "./land-rural";
+import { evaluateUrbanLand } from "./land-urban";
+import { normalizeProperty } from "./normalize";
 import { calculateScore } from "./score";
-import type { AssetClass, ListingType, ValuationResult } from "./types";
+import type { AssetClass, EngineResult, PropertyInput, ValuationResult } from "./types";
+import { dedupe, noValuation } from "./utils";
 
-function deriveListingType(property: any): ListingType | null {
-  if (property.isAuction === true) {
-    const t = (property.auction_type || "").toLowerCase();
-    if (t === "judicial") return "auction_judicial";
-    if (t === "fiscal") return "auction_fiscal";
-    if (t === "private") return "auction_private";
-    return "auction_private"; // default para leilão sem tipo especificado
-  }
-  return "fixed_price";
-}
-
-function deriveAssetClass(property: any): AssetClass {
-  const stored = property.asset_class;
-  if (stored && stored !== "mixed") return stored as AssetClass;
-  return "apartment"; // fallback
-}
-
-function runAuctionEngine(property: any): ValuationResult {
-  const marketValue = property.marketValue ?? property.price * 1.2;
-  const result = calculateMaxBid({
-    marketValue: marketValue > 0 ? marketValue : 0,
-    currentBid: property.currentBid ?? 0,
-    auctionHouse: property.auctionHouse ?? undefined,
-    vpt: property.vpt ?? undefined,
-    condominiumDebt: property.condominiumDebt ?? 0,
-    renovationEstimate: property.renovationEstimate ?? 0,
-    targetMargin: 15,
-  });
-
-  return {
-    valuation: result.maxBid > 0 ? result.maxBid : null,
-    score: 0,
-    engine: "auction",
-    confidence: result.maxBid > 0 ? "medium" : "low",
-    breakdown: {
-      maxBid: result.maxBid,
-      currentBid: result.currentBid,
-      headroom: result.headroom,
-      currentBidExceedsMax: result.currentBidExceedsMax,
-      totalCosts: result.totalCosts,
-      commission: result.commission,
-      imt: result.imt,
-      stampDuty: result.stampDuty,
-      auctionHouse: result.auctionHouseConfig.name,
-      vpt: result.vpt,
-    },
-  };
-}
-
-export function evaluateProperty(property: any): ValuationResult {
-  const assetClass: AssetClass = deriveAssetClass(property);
-  const listingType: ListingType | null = deriveListingType(property);
-  const isAuction = listingType ? listingType.startsWith("auction_") : property.isAuction === true;
-
-  // Leilão: usa motor de auction (maxBid)
-  if (isAuction) {
-    const auctionResult = runAuctionEngine(property);
-    const scoreResult = calculateScore(
-      { ...property, listing_type: listingType },
-      auctionResult
-    );
-    return {
-      ...auctionResult,
-      score: scoreResult.score,
-      breakdown: {
-        ...auctionResult.breakdown,
-        scoreBreakdown: scoreResult.breakdown,
-        scoreBadges: scoreResult.badges,
-        scoreCapped: scoreResult.capped,
-        scoreMax: scoreResult.maxScore,
-      },
-    };
-  }
-
-  // Não-leilão: despacha por asset_class
-  let engineResult: ValuationResult;
-
+function evaluateByClass(p: PropertyInput, assetClass: AssetClass, now: Date): EngineResult {
   switch (assetClass) {
-    case "urban_land":
-      engineResult = evaluateUrbanLand(property);
-      break;
-    case "rural_land":
-      engineResult = evaluateRuralLand(property);
-      break;
-    case "commercial":
-      engineResult = evaluateCommercial(property);
-      break;
-    case "garage":
-      engineResult = evaluateApartment({ ...property, type: "Garagem", sqm: property.sqm || 15 });
-      break;
-    case "mixed":
-      engineResult = evaluateApartment({ ...property, type: "T2" });
-      engineResult.confidence = "low";
-      break;
+    case "urban_land": return evaluateUrbanLand(p, now);
+    case "rural_land": return evaluateRuralLand(p);
+    case "commercial": return evaluateCommercial(p, now);
+    case "garage": return evaluateGarage(p, now);
+    case "mixed": return noValuation("none", "Ativo misto: requer avaliação manual", "very_low");
     case "apartment":
     case "house":
-    default:
-      engineResult = evaluateApartment(property);
-      break;
+    default: return evaluateApartment(p, now);
   }
+}
 
-  const scoreResult = calculateScore(
-    { ...property, listing_type: listingType },
-    engineResult
-  );
+export function evaluateProperty(raw: unknown, now: Date = new Date()): ValuationResult {
+  const p = normalizeProperty(raw);
+  const cls = deriveAssetClass(p);
+  const { listingType, assumed } = deriveListingType(p);
+  const isAuction = listingType !== "fixed_price";
+
+  const base = evaluateByClass(p, cls.assetClass, now);
+  const engine = isAuction ? evaluateAuction(p, base) : base;
+  const s = calculateScore(p, engine, { assetClass: cls.assetClass, listingType });
+
+  const assumptions = [...engine.assumptions];
+  if (cls.inferred && cls.reason) assumptions.push(cls.reason);
+  if (assumed) assumptions.push("Tipo de leilão desconhecido: assumido leilão privado");
 
   return {
-    ...engineResult,
-    score: scoreResult.score,
+    ...engine,
+    warnings: dedupe(engine.warnings),
+    assumptions: dedupe(assumptions),
+    score: s.score,
+    assetClass: cls.assetClass,
+    listingType,
     breakdown: {
-      ...engineResult.breakdown,
-      scoreBreakdown: scoreResult.breakdown,
-      scoreBadges: scoreResult.badges,
-      scoreCapped: scoreResult.capped,
-      scoreMax: scoreResult.maxScore,
+      ...engine.breakdown,
+      scoreBreakdown: s.breakdown,
+      scoreBadges: s.badges,
+      scoreCapped: s.capped,
+      scoreMax: s.maxScore,
+      scoreCoverage: s.coverage,
     },
   };
 }
+
+export { calculateScore, SCORE_WEIGHTS } from "./score";
+export { normalizeProperty } from "./normalize";
+export type * from "./types";

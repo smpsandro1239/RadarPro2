@@ -1,86 +1,72 @@
 /**
- * RadarPro Portugal - Avaliação de terreno rústico
+ * RadarPro Portugal - Terreno rústico (v2)
  *
- * Método do rendimento: renda agro-florestal anual ÷ taxa de capitalização (ex: 4%).
- * Se não há rendimento → valuation=null, confidence='low', score cortado a 30.
- * Proibido usar €/m² de construção (terreno rústico não tem valor de construção).
+ * Método do rendimento: renda agro-florestal anual ÷ taxa de capitalização.
+ * - Rendimento INFORMADO -> confiança média.
+ * - Rendimento ESTIMADO por €/ha (sem fonte verificável) -> confiança baixa.
+ * - Sem rendimento -> valuation = null.
+ * Proibido usar €/m² de construção.
  */
+import type { EngineResult, PropertyInput } from "./types";
+import { fold, noValuation } from "./utils";
 
-import type { ValuationResult } from "./types";
+export const DEFAULT_CAP_RATE = 0.04;
 
-const DEFAULT_CAP_RATE = 0.04; // 4% taxa de capitalização
+/** €/ha/ano. Referência a validar (INE/ADP). */
+const INCOME_PER_HA: Record<string, number> = {
+  floresta: 120, agricultura: 300, olival: 450, vinha: 900, pastagem: 180, misto: 250,
+};
 
-function estimateAnnualIncome(
-  areaSqm: number,
-  landUse: string | null,
-  district: string | null
-): number | null {
-  // Rendimento anual estimado €/ha por tipo de uso (referência INE/ADP)
-  const incomePerHa: Record<string, number | null> = {
-    floresta: 120,       // pinhal/eucalipto
-    agricultura: 300,    // culturas temporárias
-    olival: 450,         // olival
-    vinha: 900,          // vinha
-    pastagem: 180,       // pastagem
-    misto: 250,
-    unknown: null,
-  };
-
-  const use = (landUse || "unknown").toLowerCase();
-  const perHa = incomePerHa[use];
-  if (perHa == null) return null;
-
-  const areaHa = areaSqm / 10000;
-  return Math.round(perHa * areaHa);
+function resolveCapRate(raw: number | null, warnings: string[]): number {
+  if (raw === null) return DEFAULT_CAP_RATE;
+  const r = raw > 1 ? raw / 100 : raw; // aceita 4 ou 0.04
+  if (r > 0 && r <= 0.2) return r;
+  warnings.push(`Taxa de capitalização inválida (${raw}): usada ${DEFAULT_CAP_RATE * 100}%`);
+  return DEFAULT_CAP_RATE;
 }
 
-export function evaluateRuralLand(property: any): ValuationResult {
-  const {
-    district = null,
-    municipality = null,
-    price = 0,
-    sqm = 0,
-    landUse = null,
-    annualIncome = null,
-    capRate = DEFAULT_CAP_RATE,
-  } = property;
+export function evaluateRuralLand(p: PropertyInput): EngineResult {
+  const warnings: string[] = [];
+  const assumptions: string[] = [];
 
-  // Regra: proibido usar €/m² de construção para rural
-  // Se não há rendimento anual (informado ou estimado) → sem avaliação
-  let income: number | null = annualIncome ?? null;
-  if (!income && sqm > 0) {
-    income = estimateAnnualIncome(sqm, landUse, district);
+  let income: number | null = p.annualIncome !== null && p.annualIncome > 0 ? p.annualIncome : null;
+  let incomeSource: "informed" | "estimated" = "informed";
+
+  if (income === null && p.sqm !== null && p.sqm > 0) {
+    const perHa = INCOME_PER_HA[fold(p.landUse)];
+    if (perHa !== undefined) {
+      income = Math.round(perHa * (p.sqm / 10000));
+      incomeSource = "estimated";
+      assumptions.push(`Rendimento estimado por €/ha para uso "${p.landUse}" (não demonstrado)`);
+    }
   }
 
-  if (!income || income <= 0) {
-    return {
-      valuation: null,
-      score: 0,
-      engine: "land_rural",
-      confidence: "low",
-      breakdown: {
-        reason: "Sem rendimento agro-florestal demonstrável - método do rendimento não aplicável",
-        landUse,
-        sqm,
-      },
-    };
+  if (income === null || income <= 0) {
+    return noValuation(
+      "land_rural",
+      "Sem rendimento agro-florestal demonstrável - método do rendimento não aplicável",
+      "low",
+      { landUse: p.landUse, sqm: p.sqm },
+    );
   }
 
+  const capRate = resolveCapRate(p.capRate, warnings);
   const valuation = Math.round(income / capRate);
 
   return {
     valuation,
-    score: 0,
     engine: "land_rural",
-    confidence: "medium",
+    confidence: incomeSource === "informed" ? "medium" : "low",
     breakdown: {
       annualIncome: income,
+      incomeSource,
       capRate,
-      areaSqm: sqm,
-      areaHa: Math.round((sqm / 10000) * 100) / 100,
-      landUse,
+      areaSqm: p.sqm,
+      areaHa: p.sqm !== null ? Math.round((p.sqm / 10000) * 100) / 100 : null,
+      landUse: p.landUse,
       method: "rendimento_agro_florestal",
-      note: "Valor = rendimento anual ÷ taxa de capitalização. Proibido €/m² de construção.",
     },
+    warnings,
+    assumptions,
   };
 }

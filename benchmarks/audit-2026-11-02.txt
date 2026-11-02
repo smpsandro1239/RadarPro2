@@ -1,0 +1,91 @@
+=== AUDITORIA DO MOTOR DE AVALIAÇÃO ===
+Data: 2026-11-02T00:06:09.727Z
+Total de imóveis ativos: 200
+
+--- Distribuição de asset_class ---
+  apartment: 117 (58.5%)
+  house: 28 (14.0%)
+  garage: 19 (9.5%)
+  commercial: 17 (8.5%)
+  mixed: 14 (7.0%)
+  rural_land: 3 (1.5%)
+  urban_land: 2 (1.0%)
+
+--- Distribuição de valuation_confidence ---
+  very_low: 197 (98.5%)
+  low: 3 (1.5%)
+
+--- Distribuição de pdm_status (apenas urban_land: ${urbanLand.length}) ---
+  unknown: 2 (100.0%)
+
+--- Distribuição de scores ---
+  ≥85: 0 (0.0%)
+  70–84: 0 (0.0%)
+  55–69: 0 (0.0%)
+  <55: 14 (7.0%)
+  null: 186 (93.0%)
+
+--- Top 10 scores mais altos ---
+  30 | apartment | very_low | Apartamento Lumiar, Lisboa
+  30 | apartment | very_low | Apartamento Parque das Nações (Execução Fiscal)
+  30 | mixed | very_low | Terreno em Estarreja
+  30 | apartment | very_low | T4 em Porto
+  30 | apartment | very_low | T0 em Sesimbra
+  22 | apartment | very_low | T3 em Tomar
+  21 | house | very_low | V4 em Viana do Castelo
+  20 | apartment | very_low | T3 em Elvas
+  15 | apartment | very_low | T2 em Vendas Novas
+  15 | house | very_low | V2 em Nelas
+
+--- Top 10 scores mais baixos ---
+  11 | apartment | very_low | T2 em Ribeira Grande
+  13 | apartment | very_low | T2 em Macedo de Cavaleiros
+  13 | commercial | very_low | Loja em Serpa
+  15 | apartment | very_low | T4 em Funchal
+  15 | house | very_low | V2 em Nelas
+  15 | apartment | very_low | T2 em Vendas Novas
+  20 | apartment | very_low | T3 em Elvas
+  21 | house | very_low | V4 em Viana do Castelo
+  22 | apartment | very_low | T3 em Tomar
+  30 | apartment | very_low | T0 em Sesimbra
+
+--- Top 3 breakdown de score (porque o maximo e baixo) ---
+  1º 30 | apartment | desconto=0 | preco_m2=0 | yield=88 | liquidez=100 | confianca=10 | Apartamento Lumiar, Lisboa
+  1º 30 | apartment | desconto=0 | preco_m2=0 | yield=100 | liquidez=100 | confianca=10 | Apartamento Parque das Nações (Execução Fiscal)
+  1º 30 | mixed | desconto=26 | preco_m2=0 | yield=0 | liquidez=60 | confianca=10 | Terreno em Estarreja
+
+--- Bottom 3 breakdown de score ---
+  11 | apartment | desconto=0 | preco_m2=0 | yield=0 | liquidez=35 | confianca=10 | T2 em Ribeira Grande
+  13 | apartment | desconto=0 | preco_m2=0 | yield=0 | liquidez=40 | confianca=10 | T2 em Macedo de Cavaleiros
+  13 | commercial | desconto=0 | preco_m2=0 | yield=0 | liquidez=40 | confianca=10 | Loja em Serpa
+
+=== Top 10 — Preço Fixo ===
+  (0 duplicados removidos no top preço fixo)
+=== Top 10 — Leilões ===
+  30 | apartment | cbid=320000 | mBid=305340 | margem=-14660 | Apartamento Lumiar, Lisboa
+  30 | apartment | cbid=272882 | mBid=254450 | margem=-18432 | Apartamento Parque das Nações (Execução Fiscal)
+  30 | mixed | cbid=95472 | mBid=102071 | margem=6599 | Terreno em Estarreja
+  30 | apartment | cbid=421344 | mBid=364663 | margem=-56681 | T4 em Porto
+  30 | apartment | cbid=129254 | mBid=106782 | margem=-22472 | T0 em Sesimbra
+  22 | apartment | cbid=65142 | mBid=67655 | margem=2513 | T3 em Tomar
+  21 | house | cbid=338734 | mBid=346844 | margem=8110 | V4 em Viana do Castelo
+  20 | apartment | cbid=81081 | mBid=84208 | margem=3127 | T3 em Elvas
+  15 | apartment | cbid=124168 | mBid=108759 | margem=-15409 | T2 em Vendas Novas
+  15 | house | cbid=182988 | mBid=170554 | margem=-12434 | V2 em Nelas
+
+=== Distribuição de scores por tipo ===
+Preço Fixo (164):
+  ≥85: 0 | 70–84: 0 | 55–69: 0 | <55: 0 | máximo: 0
+Leilões (36):
+  ≥85: 0 | 70–84: 0 | 55–69: 0 | <55: 14 | máximo: 30
+
+=== Diagnóstico ===
+  ⚠️ ALERTA: Preço fixo com 0 imóveis ≥70 — produto só funciona para leilões
+  ⚠️ ALERTA: Leilões com 0 imóveis ≥70
+
+--- Alertas ---
+  ⚠️ 98.5% dos imóveis com confiança very_low (>30%) — rever classificação e PDM
+  OK confiança low: 1.5%
+  ⚠️ 100.0% dos terrenos urbanos sem PDM (>50%) — score cortado em 40
+  ⚠️ 100.0% dos imóveis com score null ou <55 (>40%) — ranking perde valor
+  OK score 100: 0 imóveis

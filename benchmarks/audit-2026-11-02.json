@@ -1,0 +1,6275 @@
+{
+  "generatedAt": "2026-11-02T00:06:09.728Z",
+  "totalImoveis": 200,
+  "assetClass": {
+    "apartment": 117,
+    "garage": 19,
+    "commercial": 17,
+    "mixed": 14,
+    "rural_land": 3,
+    "urban_land": 2,
+    "house": 28
+  },
+  "valuationConfidence": {
+    "very_low": 197,
+    "low": 3
+  },
+  "pdmStatusUrbanLand": {
+    "unknown": 2
+  },
+  "scoreDistribution": {
+    "≥85": 0,
+    "70–84": 0,
+    "55–69": 0,
+    "<55": 14,
+    "null": 186
+  },
+  "top10": [
+    {
+      "id": "bidizi-lis-1",
+      "title": "Apartamento Lumiar, Lisboa",
+      "district": "Lisboa",
+      "price": 320000,
+      "is_auction": true,
+      "asset_class": "apartment",
+      "valuation_engine": "auction",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 320000,
+      "max_bid": 305340,
+      "valuation": 305340,
+      "score": 30,
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa",
+        "Lance atual >= lance máximo",
+        "Dados em falta: pricePerSqm"
+      ],
+      "maxScore": 30,
+      "scoreBreakdown": {
+        "discount": 0,
+        "pricePerSqm": null,
+        "yield": 88,
+        "liquidity": 100,
+        "confidence": 10
+      }
+    },
+    {
+      "id": "bidizi-lis-2",
+      "title": "Apartamento Parque das Nações (Execução Fiscal)",
+      "district": "Lisboa",
+      "price": 272882,
+      "is_auction": true,
+      "asset_class": "apartment",
+      "valuation_engine": "auction",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 272882,
+      "max_bid": 254450,
+      "valuation": 254450,
+      "score": 30,
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa",
+        "Lance atual >= lance máximo",
+        "Dados em falta: pricePerSqm"
+      ],
+      "maxScore": 30,
+      "scoreBreakdown": {
+        "discount": 0,
+        "pricePerSqm": null,
+        "yield": 100,
+        "liquidity": 100,
+        "confidence": 10
+      }
+    },
+    {
+      "id": "gen-aveiro-1002",
+      "title": "Terreno em Estarreja",
+      "district": "Aveiro",
+      "price": 95472,
+      "is_auction": true,
+      "asset_class": "mixed",
+      "valuation_engine": "auction",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 95472,
+      "max_bid": 102071,
+      "valuation": 102071,
+      "score": 30,
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa",
+        "Dados insuficientes para um score completo",
+        "Dados em falta: pricePerSqm, yield"
+      ],
+      "maxScore": 40,
+      "scoreBreakdown": {
+        "discount": 26,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": 60,
+        "confidence": 10
+      }
+    },
+    {
+      "id": "gen-porto-1049",
+      "title": "T4 em Porto",
+      "district": "Porto",
+      "price": 421344,
+      "is_auction": true,
+      "asset_class": "apartment",
+      "valuation_engine": "auction",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 421344,
+      "max_bid": 364663,
+      "valuation": 364663,
+      "score": 30,
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa",
+        "Lance atual >= lance máximo",
+        "Dados em falta: pricePerSqm"
+      ],
+      "maxScore": 30,
+      "scoreBreakdown": {
+        "discount": 0,
+        "pricePerSqm": null,
+        "yield": 96,
+        "liquidity": 80,
+        "confidence": 10
+      }
+    },
+    {
+      "id": "gen-setúbal-1063",
+      "title": "T0 em Sesimbra",
+      "district": "Setúbal",
+      "price": 129254,
+      "is_auction": true,
+      "asset_class": "apartment",
+      "valuation_engine": "auction",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 129254,
+      "max_bid": 106782,
+      "valuation": 106782,
+      "score": 30,
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa",
+        "Lance atual >= lance máximo",
+        "Dados em falta: pricePerSqm"
+      ],
+      "maxScore": 30,
+      "scoreBreakdown": {
+        "discount": 0,
+        "pricePerSqm": null,
+        "yield": 86,
+        "liquidity": 65,
+        "confidence": 10
+      }
+    },
+    {
+      "id": "gen-santarém-1058",
+      "title": "T3 em Tomar",
+      "district": "Santarém",
+      "price": 65142,
+      "is_auction": true,
+      "asset_class": "apartment",
+      "valuation_engine": "auction",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 65142,
+      "max_bid": 67655,
+      "valuation": 67655,
+      "score": 22,
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa",
+        "Dados insuficientes para um score completo",
+        "Dados em falta: pricePerSqm, yield"
+      ],
+      "maxScore": 40,
+      "scoreBreakdown": {
+        "discount": 15,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": 50,
+        "confidence": 10
+      }
+    },
+    {
+      "id": "gen-vianadocastelo-1070",
+      "title": "V4 em Viana do Castelo",
+      "district": "Viana do Castelo",
+      "price": 338734,
+      "is_auction": true,
+      "asset_class": "house",
+      "valuation_engine": "auction",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 338734,
+      "max_bid": 346844,
+      "valuation": 346844,
+      "score": 21,
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa",
+        "Dados insuficientes para um score completo",
+        "Dados em falta: pricePerSqm, yield"
+      ],
+      "maxScore": 40,
+      "scoreBreakdown": {
+        "discount": 9,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": 55,
+        "confidence": 10
+      }
+    },
+    {
+      "id": "gen-portalegre-1047",
+      "title": "T3 em Elvas",
+      "district": "Portalegre",
+      "price": 81081,
+      "is_auction": true,
+      "asset_class": "apartment",
+      "valuation_engine": "auction",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 81081,
+      "max_bid": 84208,
+      "valuation": 84208,
+      "score": 20,
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa",
+        "Dados insuficientes para um score completo",
+        "Dados em falta: pricePerSqm, yield"
+      ],
+      "maxScore": 40,
+      "scoreBreakdown": {
+        "discount": 15,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": 40,
+        "confidence": 10
+      }
+    },
+    {
+      "id": "gen-évora-1027",
+      "title": "T2 em Vendas Novas",
+      "district": "Évora",
+      "price": 124168,
+      "is_auction": true,
+      "asset_class": "apartment",
+      "valuation_engine": "auction",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 124168,
+      "max_bid": 108759,
+      "valuation": 108759,
+      "score": 15,
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa",
+        "Lance atual >= lance máximo",
+        "Dados insuficientes para um score completo",
+        "Dados em falta: pricePerSqm, yield"
+      ],
+      "maxScore": 30,
+      "scoreBreakdown": {
+        "discount": 0,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": 50,
+        "confidence": 10
+      }
+    },
+    {
+      "id": "gen-viseu-1077",
+      "title": "V2 em Nelas",
+      "district": "Viseu",
+      "price": 182988,
+      "is_auction": true,
+      "asset_class": "house",
+      "valuation_engine": "auction",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 182988,
+      "max_bid": 170554,
+      "valuation": 170554,
+      "score": 15,
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa",
+        "Lance atual >= lance máximo",
+        "Dados insuficientes para um score completo",
+        "Dados em falta: pricePerSqm, yield"
+      ],
+      "maxScore": 30,
+      "scoreBreakdown": {
+        "discount": 0,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": 50,
+        "confidence": 10
+      }
+    }
+  ],
+  "bottom10": [
+    {
+      "id": "gen-açores-1080",
+      "title": "T2 em Ribeira Grande",
+      "district": "Açores",
+      "price": 111780,
+      "is_auction": true,
+      "asset_class": "apartment",
+      "valuation_engine": "auction",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 111780,
+      "max_bid": 100326,
+      "valuation": 100326,
+      "score": 11,
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa",
+        "Lance atual >= lance máximo",
+        "Dados insuficientes para um score completo",
+        "Dados em falta: pricePerSqm, yield"
+      ],
+      "maxScore": 30,
+      "scoreBreakdown": {
+        "discount": 0,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": 35,
+        "confidence": 10
+      }
+    },
+    {
+      "id": "gen-bragança-1016",
+      "title": "T2 em Macedo de Cavaleiros",
+      "district": "Bragança",
+      "price": 81144,
+      "is_auction": true,
+      "asset_class": "apartment",
+      "valuation_engine": "auction",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 81144,
+      "max_bid": 70228,
+      "valuation": 70228,
+      "score": 13,
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa",
+        "Lance atual >= lance máximo",
+        "Dados insuficientes para um score completo",
+        "Dados em falta: pricePerSqm, yield"
+      ],
+      "maxScore": 30,
+      "scoreBreakdown": {
+        "discount": 0,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": 40,
+        "confidence": 10
+      }
+    },
+    {
+      "id": "gen-beja-1008",
+      "title": "Loja em Serpa",
+      "district": "Beja",
+      "price": 61152,
+      "is_auction": true,
+      "asset_class": "commercial",
+      "valuation_engine": "auction",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 61152,
+      "max_bid": 56997,
+      "valuation": 56997,
+      "score": 13,
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa",
+        "Lance atual >= lance máximo",
+        "Dados insuficientes para um score completo",
+        "Dados em falta: pricePerSqm, yield"
+      ],
+      "maxScore": 30,
+      "scoreBreakdown": {
+        "discount": 0,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": 40,
+        "confidence": 10
+      }
+    },
+    {
+      "id": "gen-madeira-1084",
+      "title": "T4 em Funchal",
+      "district": "Madeira",
+      "price": 193939,
+      "is_auction": true,
+      "asset_class": "apartment",
+      "valuation_engine": "auction",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 193939,
+      "max_bid": 190532,
+      "valuation": 190532,
+      "score": 15,
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa",
+        "Lance atual >= lance máximo",
+        "Dados insuficientes para um score completo",
+        "Dados em falta: pricePerSqm, yield"
+      ],
+      "maxScore": 30,
+      "scoreBreakdown": {
+        "discount": 0,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": 50,
+        "confidence": 10
+      }
+    },
+    {
+      "id": "gen-viseu-1077",
+      "title": "V2 em Nelas",
+      "district": "Viseu",
+      "price": 182988,
+      "is_auction": true,
+      "asset_class": "house",
+      "valuation_engine": "auction",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 182988,
+      "max_bid": 170554,
+      "valuation": 170554,
+      "score": 15,
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa",
+        "Lance atual >= lance máximo",
+        "Dados insuficientes para um score completo",
+        "Dados em falta: pricePerSqm, yield"
+      ],
+      "maxScore": 30,
+      "scoreBreakdown": {
+        "discount": 0,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": 50,
+        "confidence": 10
+      }
+    },
+    {
+      "id": "gen-évora-1027",
+      "title": "T2 em Vendas Novas",
+      "district": "Évora",
+      "price": 124168,
+      "is_auction": true,
+      "asset_class": "apartment",
+      "valuation_engine": "auction",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 124168,
+      "max_bid": 108759,
+      "valuation": 108759,
+      "score": 15,
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa",
+        "Lance atual >= lance máximo",
+        "Dados insuficientes para um score completo",
+        "Dados em falta: pricePerSqm, yield"
+      ],
+      "maxScore": 30,
+      "scoreBreakdown": {
+        "discount": 0,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": 50,
+        "confidence": 10
+      }
+    },
+    {
+      "id": "gen-portalegre-1047",
+      "title": "T3 em Elvas",
+      "district": "Portalegre",
+      "price": 81081,
+      "is_auction": true,
+      "asset_class": "apartment",
+      "valuation_engine": "auction",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 81081,
+      "max_bid": 84208,
+      "valuation": 84208,
+      "score": 20,
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa",
+        "Dados insuficientes para um score completo",
+        "Dados em falta: pricePerSqm, yield"
+      ],
+      "maxScore": 40,
+      "scoreBreakdown": {
+        "discount": 15,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": 40,
+        "confidence": 10
+      }
+    },
+    {
+      "id": "gen-vianadocastelo-1070",
+      "title": "V4 em Viana do Castelo",
+      "district": "Viana do Castelo",
+      "price": 338734,
+      "is_auction": true,
+      "asset_class": "house",
+      "valuation_engine": "auction",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 338734,
+      "max_bid": 346844,
+      "valuation": 346844,
+      "score": 21,
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa",
+        "Dados insuficientes para um score completo",
+        "Dados em falta: pricePerSqm, yield"
+      ],
+      "maxScore": 40,
+      "scoreBreakdown": {
+        "discount": 9,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": 55,
+        "confidence": 10
+      }
+    },
+    {
+      "id": "gen-santarém-1058",
+      "title": "T3 em Tomar",
+      "district": "Santarém",
+      "price": 65142,
+      "is_auction": true,
+      "asset_class": "apartment",
+      "valuation_engine": "auction",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 65142,
+      "max_bid": 67655,
+      "valuation": 67655,
+      "score": 22,
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa",
+        "Dados insuficientes para um score completo",
+        "Dados em falta: pricePerSqm, yield"
+      ],
+      "maxScore": 40,
+      "scoreBreakdown": {
+        "discount": 15,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": 50,
+        "confidence": 10
+      }
+    },
+    {
+      "id": "gen-setúbal-1063",
+      "title": "T0 em Sesimbra",
+      "district": "Setúbal",
+      "price": 129254,
+      "is_auction": true,
+      "asset_class": "apartment",
+      "valuation_engine": "auction",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 129254,
+      "max_bid": 106782,
+      "valuation": 106782,
+      "score": 30,
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa",
+        "Lance atual >= lance máximo",
+        "Dados em falta: pricePerSqm"
+      ],
+      "maxScore": 30,
+      "scoreBreakdown": {
+        "discount": 0,
+        "pricePerSqm": null,
+        "yield": 86,
+        "liquidity": 65,
+        "confidence": 10
+      }
+    }
+  ],
+  "results": [
+    {
+      "id": "cs-lis-1",
+      "title": "Apartamento T1 Parque das Nações",
+      "district": "Lisboa",
+      "price": 104900,
+      "is_auction": false,
+      "asset_class": "apartment",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 104900,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "cs-lis-2",
+      "title": "Apartamento T1 Santa Maria Maior",
+      "district": "Lisboa",
+      "price": 139000,
+      "is_auction": false,
+      "asset_class": "apartment",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 139000,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "cs-lis-3",
+      "title": "Apartamento T2 Penha de França",
+      "district": "Lisboa",
+      "price": 150000,
+      "is_auction": false,
+      "asset_class": "apartment",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 150000,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "cs-lis-4",
+      "title": "Apartamento T2 Graça, São Vicente",
+      "district": "Lisboa",
+      "price": 150000,
+      "is_auction": false,
+      "asset_class": "apartment",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 150000,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "cs-lis-5",
+      "title": "Apartamento T0 Penha de França",
+      "district": "Lisboa",
+      "price": 150000,
+      "is_auction": false,
+      "asset_class": "apartment",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 150000,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "cs-por-1",
+      "title": "Apartamento T1 Paranhos",
+      "district": "Porto",
+      "price": 150000,
+      "is_auction": false,
+      "asset_class": "apartment",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 150000,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "cs-por-2",
+      "title": "Apartamento T0 Campanhã",
+      "district": "Porto",
+      "price": 151185,
+      "is_auction": false,
+      "asset_class": "apartment",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 151185,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "cs-por-3",
+      "title": "Apartamento Bonfim",
+      "district": "Porto",
+      "price": 155000,
+      "is_auction": false,
+      "asset_class": "apartment",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 155000,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "cs-por-4",
+      "title": "Apartamento T0 Cedofeita",
+      "district": "Porto",
+      "price": 156500,
+      "is_auction": false,
+      "asset_class": "apartment",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 156500,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "cs-por-5",
+      "title": "Apartamento T1 Bonfim",
+      "district": "Porto",
+      "price": 160000,
+      "is_auction": false,
+      "asset_class": "apartment",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 160000,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "cs-por-6",
+      "title": "Apartamento T0 Bonfim",
+      "district": "Porto",
+      "price": 165000,
+      "is_auction": false,
+      "asset_class": "apartment",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 165000,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "cs-por-7",
+      "title": "Apartamento T2 Campanhã",
+      "district": "Porto",
+      "price": 169000,
+      "is_auction": false,
+      "asset_class": "apartment",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 169000,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "cs-por-8",
+      "title": "Apartamento T1 Ramalde",
+      "district": "Porto",
+      "price": 173250,
+      "is_auction": false,
+      "asset_class": "apartment",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 173250,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "cs-bra-1",
+      "title": "Apartamento T0 Centro Braga",
+      "district": "Braga",
+      "price": 159000,
+      "is_auction": false,
+      "asset_class": "apartment",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 159000,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "cs-bra-2",
+      "title": "Apartamento T1 São Víctor",
+      "district": "Braga",
+      "price": 160000,
+      "is_auction": false,
+      "asset_class": "apartment",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 160000,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "cs-bra-3",
+      "title": "Apartamento T1 São Víctor (garagem)",
+      "district": "Braga",
+      "price": 170000,
+      "is_auction": false,
+      "asset_class": "garage",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 170000,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "cs-bra-4",
+      "title": "Apartamento T0 Centro Braga (novo)",
+      "district": "Braga",
+      "price": 173000,
+      "is_auction": false,
+      "asset_class": "apartment",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 173000,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "cs-bra-5",
+      "title": "Apartamento T0 Ferreiros (garagem)",
+      "district": "Braga",
+      "price": 175000,
+      "is_auction": false,
+      "asset_class": "garage",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 175000,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "cs-bra-6",
+      "title": "Apartamento T0 Real, Dume e Semelhe",
+      "district": "Braga",
+      "price": 175000,
+      "is_auction": false,
+      "asset_class": "apartment",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 175000,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "cs-bra-7",
+      "title": "Apartamento T0 São Vicente",
+      "district": "Braga",
+      "price": 179900,
+      "is_auction": false,
+      "asset_class": "apartment",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 179900,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "cs-bra-8",
+      "title": "Apartamento T0 São José (garagem)",
+      "district": "Braga",
+      "price": 180000,
+      "is_auction": false,
+      "asset_class": "garage",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 180000,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "cs-bra-9",
+      "title": "Apartamento T0 Gualtar",
+      "district": "Braga",
+      "price": 180000,
+      "is_auction": false,
+      "asset_class": "apartment",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 180000,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "iv-por-1",
+      "title": "Apartamento T2 Rio Tinto, Gondomar",
+      "district": "Porto",
+      "price": 275000,
+      "is_auction": false,
+      "asset_class": "apartment",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 275000,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "ib-lis-1",
+      "title": "Loja Carnide, Lisboa",
+      "district": "Lisboa",
+      "price": 335000,
+      "is_auction": false,
+      "asset_class": "commercial",
+      "valuation_engine": "income",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 335000,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "ib-lis-2",
+      "title": "Apartamento T3 Casal de Cambra, Sintra",
+      "district": "Lisboa",
+      "price": 232000,
+      "is_auction": false,
+      "asset_class": "apartment",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 232000,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "ib-lis-3",
+      "title": "Loja Cacém, Sintra",
+      "district": "Lisboa",
+      "price": 48000,
+      "is_auction": false,
+      "asset_class": "commercial",
+      "valuation_engine": "income",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 48000,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "ib-lis-4",
+      "title": "Moradia T3 Alverca do Ribatejo",
+      "district": "Lisboa",
+      "price": 411000,
+      "is_auction": false,
+      "asset_class": "apartment",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 411000,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "ib-lis-5",
+      "title": "Garagem Mafra",
+      "district": "Lisboa",
+      "price": 24000,
+      "is_auction": false,
+      "asset_class": "garage",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 24000,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "ib-lis-6",
+      "title": "Garagem Mafra (pequena)",
+      "district": "Lisboa",
+      "price": 14000,
+      "is_auction": false,
+      "asset_class": "garage",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 14000,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "ib-lis-7",
+      "title": "Loja Ramada, Odivelas",
+      "district": "Lisboa",
+      "price": 115000,
+      "is_auction": false,
+      "asset_class": "commercial",
+      "valuation_engine": "income",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 115000,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "ib-lis-8",
+      "title": "Prédio Alcoentre, Azambuja",
+      "district": "Lisboa",
+      "price": 200000,
+      "is_auction": false,
+      "asset_class": "mixed",
+      "valuation_engine": "none",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 200000,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "ib-lis-9",
+      "title": "Apartamento T1 Cascais",
+      "district": "Lisboa",
+      "price": 200000,
+      "is_auction": false,
+      "asset_class": "apartment",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 200000,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "ib-por-1",
+      "title": "Garagem Maia",
+      "district": "Porto",
+      "price": 8000,
+      "is_auction": false,
+      "asset_class": "garage",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 8000,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "ib-por-2",
+      "title": "Terreno Rústico Santo Tirso",
+      "district": "Porto",
+      "price": 43000,
+      "is_auction": false,
+      "asset_class": "rural_land",
+      "valuation_engine": "land_rural",
+      "valuation_confidence": "low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 43000,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "ib-por-3",
+      "title": "Apartamento T3 Maia (Gueifães)",
+      "district": "Porto",
+      "price": 200000,
+      "is_auction": false,
+      "asset_class": "apartment",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 200000,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "ib-por-4",
+      "title": "Garagem Porto (Cedofeita)",
+      "district": "Porto",
+      "price": 9500,
+      "is_auction": false,
+      "asset_class": "garage",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 9500,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "ib-por-5",
+      "title": "Garagem Porto (Cedofeita) 2",
+      "district": "Porto",
+      "price": 9500,
+      "is_auction": false,
+      "asset_class": "garage",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 9500,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "ib-por-6",
+      "title": "Garagem Porto (Cedofeita) 3",
+      "district": "Porto",
+      "price": 9500,
+      "is_auction": false,
+      "asset_class": "garage",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 9500,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "ib-por-7",
+      "title": "Garagem Porto (Cedofeita) 4",
+      "district": "Porto",
+      "price": 12500,
+      "is_auction": false,
+      "asset_class": "garage",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 12500,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "ib-por-8",
+      "title": "Moradia T2 Felgueiras",
+      "district": "Porto",
+      "price": 102000,
+      "is_auction": false,
+      "asset_class": "apartment",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 102000,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "ib-por-9",
+      "title": "Espaço Comercial Maia",
+      "district": "Porto",
+      "price": 68000,
+      "is_auction": false,
+      "asset_class": "commercial",
+      "valuation_engine": "income",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 68000,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "ib-por-10",
+      "title": "Terreno Urbano Santo Tirso",
+      "district": "Porto",
+      "price": 144000,
+      "is_auction": false,
+      "asset_class": "urban_land",
+      "valuation_engine": "land_urban",
+      "valuation_confidence": "very_low",
+      "pdm_status": "unknown",
+      "infrastructure": "unknown",
+      "current_bid": 144000,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "ib-bra-1",
+      "title": "Moradia T3 Louro, Vila Nova de Famalicão",
+      "district": "Braga",
+      "price": 120000,
+      "is_auction": false,
+      "asset_class": "apartment",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 120000,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "ib-bra-2",
+      "title": "Arrecadação Vila Nova de Famalicão",
+      "district": "Braga",
+      "price": 2000,
+      "is_auction": false,
+      "asset_class": "mixed",
+      "valuation_engine": "none",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 2000,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "ib-bra-3",
+      "title": "Lote Terreno Carreira e Bente",
+      "district": "Braga",
+      "price": 94500,
+      "is_auction": false,
+      "asset_class": "urban_land",
+      "valuation_engine": "land_urban",
+      "valuation_confidence": "very_low",
+      "pdm_status": "unknown",
+      "infrastructure": "unknown",
+      "current_bid": 94500,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "ib-bra-4",
+      "title": "Armazém Urgezes, Guimarães",
+      "district": "Braga",
+      "price": 62000,
+      "is_auction": false,
+      "asset_class": "commercial",
+      "valuation_engine": "income",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 62000,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "ib-bra-5",
+      "title": "Terreno Rústico Travassos, Póvoa de Lanhoso",
+      "district": "Braga",
+      "price": 13000,
+      "is_auction": false,
+      "asset_class": "rural_land",
+      "valuation_engine": "land_rural",
+      "valuation_confidence": "low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 13000,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "ib-bra-6",
+      "title": "Terreno Rústico Valdreu, Vila Verde",
+      "district": "Braga",
+      "price": 8000,
+      "is_auction": false,
+      "asset_class": "rural_land",
+      "valuation_engine": "land_rural",
+      "valuation_confidence": "low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 8000,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "remax-lis-1",
+      "title": "Apartamento T1 Lisboa (RE/MAX)",
+      "district": "Lisboa",
+      "price": 165000,
+      "is_auction": false,
+      "asset_class": "apartment",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 165000,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "remax-por-1",
+      "title": "Apartamento T2 Porto (RE/MAX)",
+      "district": "Porto",
+      "price": 185000,
+      "is_auction": false,
+      "asset_class": "apartment",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 185000,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "remax-bra-1",
+      "title": "Apartamento T1 Braga (RE/MAX)",
+      "district": "Braga",
+      "price": 145000,
+      "is_auction": false,
+      "asset_class": "apartment",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 145000,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "era-lis-1",
+      "title": "Apartamento T2 Lisboa (ERA)",
+      "district": "Lisboa",
+      "price": 195000,
+      "is_auction": false,
+      "asset_class": "apartment",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 195000,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "era-por-1",
+      "title": "Apartamento T1 Porto (ERA)",
+      "district": "Porto",
+      "price": 155000,
+      "is_auction": false,
+      "asset_class": "apartment",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 155000,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "era-bra-1",
+      "title": "Apartamento T2 Braga (ERA)",
+      "district": "Braga",
+      "price": 135000,
+      "is_auction": false,
+      "asset_class": "apartment",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 135000,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "c21-lis-1",
+      "title": "Apartamento T3 Lisboa (C21)",
+      "district": "Lisboa",
+      "price": 265000,
+      "is_auction": false,
+      "asset_class": "apartment",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 265000,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "c21-por-1",
+      "title": "Moradia V3 Porto (C21)",
+      "district": "Porto",
+      "price": 295000,
+      "is_auction": false,
+      "asset_class": "house",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 295000,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "c21-bra-1",
+      "title": "Apartamento T2 Braga (C21)",
+      "district": "Braga",
+      "price": 140000,
+      "is_auction": false,
+      "asset_class": "apartment",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 140000,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "kw-lis-1",
+      "title": "Apartamento T1 Lisboa (KW)",
+      "district": "Lisboa",
+      "price": 155000,
+      "is_auction": false,
+      "asset_class": "apartment",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 155000,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "kw-por-1",
+      "title": "Apartamento T2 Porto (KW)",
+      "district": "Porto",
+      "price": 175000,
+      "is_auction": false,
+      "asset_class": "apartment",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 175000,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "kw-bra-1",
+      "title": "Moradia V4 Braga (KW)",
+      "district": "Braga",
+      "price": 320000,
+      "is_auction": false,
+      "asset_class": "house",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 320000,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "cb-lis-1",
+      "title": "Apartamento T2 Lisboa (CB)",
+      "district": "Lisboa",
+      "price": 225000,
+      "is_auction": false,
+      "asset_class": "apartment",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 225000,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "cb-por-1",
+      "title": "Apartamento T3 Porto (CB)",
+      "district": "Porto",
+      "price": 245000,
+      "is_auction": false,
+      "asset_class": "apartment",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 245000,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "olx-lis-1",
+      "title": "Apartamento T0 Santa Maria Maior (OLX)",
+      "district": "Lisboa",
+      "price": 100000,
+      "is_auction": false,
+      "asset_class": "apartment",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 100000,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "olx-lis-2",
+      "title": "Apartamento T1 Amadora (OLX)",
+      "district": "Lisboa",
+      "price": 149000,
+      "is_auction": false,
+      "asset_class": "apartment",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 149000,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "olx-por-1",
+      "title": "Apartamento T2 Porto (OLX)",
+      "district": "Porto",
+      "price": 165000,
+      "is_auction": false,
+      "asset_class": "apartment",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 165000,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "olx-bra-1",
+      "title": "Apartamento T1 Braga (OLX)",
+      "district": "Braga",
+      "price": 125000,
+      "is_auction": false,
+      "asset_class": "apartment",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 125000,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "cj-lis-1",
+      "title": "Apartamento T2 Lisboa (CustoJusto)",
+      "district": "Lisboa",
+      "price": 175000,
+      "is_auction": false,
+      "asset_class": "apartment",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 175000,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "cj-por-1",
+      "title": "Apartamento T1 Porto (CustoJusto)",
+      "district": "Porto",
+      "price": 140000,
+      "is_auction": false,
+      "asset_class": "apartment",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 140000,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "cj-bra-1",
+      "title": "Apartamento T0 Braga (CustoJusto)",
+      "district": "Braga",
+      "price": 95000,
+      "is_auction": false,
+      "asset_class": "apartment",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 95000,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "sc-lis-1",
+      "title": "Apartamento T0 Santa Maria Maior (SuperCasa)",
+      "district": "Lisboa",
+      "price": 125000,
+      "is_auction": false,
+      "asset_class": "apartment",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 125000,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "sc-por-1",
+      "title": "Apartamento T1 Porto (SuperCasa)",
+      "district": "Porto",
+      "price": 145000,
+      "is_auction": false,
+      "asset_class": "apartment",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 145000,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "sc-bra-1",
+      "title": "Apartamento T2 Braga (SuperCasa)",
+      "district": "Braga",
+      "price": 130000,
+      "is_auction": false,
+      "asset_class": "apartment",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 130000,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "bpi-lis-1",
+      "title": "Apartamento T2 Lisboa (BPI)",
+      "district": "Lisboa",
+      "price": 185000,
+      "is_auction": false,
+      "asset_class": "apartment",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 185000,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "bpi-por-1",
+      "title": "Moradia V3 Porto (BPI)",
+      "district": "Porto",
+      "price": 265000,
+      "is_auction": false,
+      "asset_class": "house",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 265000,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "bpi-bra-1",
+      "title": "Apartamento T1 Braga (BPI)",
+      "district": "Braga",
+      "price": 120000,
+      "is_auction": false,
+      "asset_class": "apartment",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 120000,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "nb-lis-1",
+      "title": "Apartamento T3 Lisboa (Novo Banco)",
+      "district": "Lisboa",
+      "price": 245000,
+      "is_auction": false,
+      "asset_class": "apartment",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 245000,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "nb-por-1",
+      "title": "Apartamento T2 Porto (Novo Banco)",
+      "district": "Porto",
+      "price": 175000,
+      "is_auction": false,
+      "asset_class": "apartment",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 175000,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "nb-bra-1",
+      "title": "Moradia V3 Braga (Novo Banco)",
+      "district": "Braga",
+      "price": 210000,
+      "is_auction": false,
+      "asset_class": "house",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 210000,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "mp-lis-1",
+      "title": "Apartamento T1 Lisboa (Montepio)",
+      "district": "Lisboa",
+      "price": 145000,
+      "is_auction": false,
+      "asset_class": "apartment",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 145000,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "mp-por-1",
+      "title": "Apartamento T2 Porto (Montepio)",
+      "district": "Porto",
+      "price": 160000,
+      "is_auction": false,
+      "asset_class": "apartment",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 160000,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "mp-bra-1",
+      "title": "Terreno Braga (Montepio)",
+      "district": "Braga",
+      "price": 55000,
+      "is_auction": false,
+      "asset_class": "mixed",
+      "valuation_engine": "none",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 55000,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "el-lis-1",
+      "title": "Apartamento T2 Lisboa (Leilão)",
+      "district": "Lisboa",
+      "price": 95000,
+      "is_auction": true,
+      "asset_class": "apartment",
+      "valuation_engine": "auction",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 95000,
+      "max_bid": 116320,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "el-por-1",
+      "title": "Moradia V3 Porto (Leilão)",
+      "district": "Porto",
+      "price": 110000,
+      "is_auction": true,
+      "asset_class": "house",
+      "valuation_engine": "auction",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 110000,
+      "max_bid": 130860,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "el-bra-1",
+      "title": "Terreno Braga (Leilão)",
+      "district": "Braga",
+      "price": 35000,
+      "is_auction": true,
+      "asset_class": "mixed",
+      "valuation_engine": "auction",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 35000,
+      "max_bid": 47255,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "ls-lis-1",
+      "title": "Apartamento T1 Lisboa (Leilosoc)",
+      "district": "Lisboa",
+      "price": 85000,
+      "is_auction": true,
+      "asset_class": "apartment",
+      "valuation_engine": "auction",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 85000,
+      "max_bid": 101780,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "ls-por-1",
+      "title": "Garagem Porto (Leilosoc)",
+      "district": "Porto",
+      "price": 12000,
+      "is_auction": true,
+      "asset_class": "garage",
+      "valuation_engine": "auction",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 12000,
+      "max_bid": 15994,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "ls-bra-1",
+      "title": "Moradia V2 Braga (Leilosoc)",
+      "district": "Braga",
+      "price": 95000,
+      "is_auction": true,
+      "asset_class": "house",
+      "valuation_engine": "auction",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 95000,
+      "max_bid": 116320,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "est-lis-1",
+      "title": "Apartamento T2 Lisboa (Hasta Pública)",
+      "district": "Lisboa",
+      "price": 105000,
+      "is_auction": true,
+      "asset_class": "apartment",
+      "valuation_engine": "auction",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 105000,
+      "max_bid": 123590,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "est-por-1",
+      "title": "Terreno Porto (Hasta Pública)",
+      "district": "Porto",
+      "price": 45000,
+      "is_auction": true,
+      "asset_class": "mixed",
+      "valuation_engine": "auction",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 45000,
+      "max_bid": 58160,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "est-bra-1",
+      "title": "Loja Braga (Hasta Pública)",
+      "district": "Braga",
+      "price": 38000,
+      "is_auction": true,
+      "asset_class": "commercial",
+      "valuation_engine": "auction",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 38000,
+      "max_bid": 47255,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "id-lis-1",
+      "title": "Apartamento T0 Alfama (Idealista)",
+      "district": "Lisboa",
+      "price": 78260,
+      "is_auction": false,
+      "asset_class": "apartment",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 78260,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "id-por-1",
+      "title": "Apartamento T1 Porto (Idealista)",
+      "district": "Porto",
+      "price": 95000,
+      "is_auction": false,
+      "asset_class": "apartment",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 95000,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "id-bra-1",
+      "title": "Apartamento T0 Braga (Idealista)",
+      "district": "Braga",
+      "price": 65000,
+      "is_auction": false,
+      "asset_class": "apartment",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 65000,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "mart-lis-1",
+      "title": "Apartamento T1 Lisboa (Martelo)",
+      "district": "Lisboa",
+      "price": 90000,
+      "is_auction": true,
+      "asset_class": "apartment",
+      "valuation_engine": "auction",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 90000,
+      "max_bid": 109050,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "mart-por-1",
+      "title": "Moradia V2 Porto (Martelo)",
+      "district": "Porto",
+      "price": 105000,
+      "is_auction": true,
+      "asset_class": "house",
+      "valuation_engine": "auction",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 105000,
+      "max_bid": 127225,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "mart-bra-1",
+      "title": "Terreno Braga (Martelo)",
+      "district": "Braga",
+      "price": 28000,
+      "is_auction": true,
+      "asset_class": "mixed",
+      "valuation_engine": "auction",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 28000,
+      "max_bid": 39985,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "bidizi-lis-1",
+      "title": "Apartamento Lumiar, Lisboa",
+      "district": "Lisboa",
+      "price": 320000,
+      "is_auction": true,
+      "asset_class": "apartment",
+      "valuation_engine": "auction",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 320000,
+      "max_bid": 305340,
+      "valuation": 305340,
+      "score": 30,
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa",
+        "Lance atual >= lance máximo",
+        "Dados em falta: pricePerSqm"
+      ],
+      "maxScore": 30,
+      "scoreBreakdown": {
+        "discount": 0,
+        "pricePerSqm": null,
+        "yield": 88,
+        "liquidity": 100,
+        "confidence": 10
+      }
+    },
+    {
+      "id": "bidizi-lis-2",
+      "title": "Apartamento Parque das Nações (Execução Fiscal)",
+      "district": "Lisboa",
+      "price": 272882,
+      "is_auction": true,
+      "asset_class": "apartment",
+      "valuation_engine": "auction",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 272882,
+      "max_bid": 254450,
+      "valuation": 254450,
+      "score": 30,
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa",
+        "Lance atual >= lance máximo",
+        "Dados em falta: pricePerSqm"
+      ],
+      "maxScore": 30,
+      "scoreBreakdown": {
+        "discount": 0,
+        "pricePerSqm": null,
+        "yield": 100,
+        "liquidity": 100,
+        "confidence": 10
+      }
+    },
+    {
+      "id": "bidizi-por-1",
+      "title": "Apartamento Ramalde (Execução Fiscal AT)",
+      "district": "Porto",
+      "price": 2901,
+      "is_auction": true,
+      "asset_class": "apartment",
+      "valuation_engine": "auction",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 2901,
+      "max_bid": 87240,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "bidizi-por-2",
+      "title": "Imóvel Porto (Execução Fiscal AT)",
+      "district": "Porto",
+      "price": 13534,
+      "is_auction": true,
+      "asset_class": "apartment",
+      "valuation_engine": "auction",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 13534,
+      "max_bid": 61795,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "bidizi-bra-1",
+      "title": "Apartamento Maximinos (Execução Fiscal AT)",
+      "district": "Braga",
+      "price": 90592,
+      "is_auction": true,
+      "asset_class": "apartment",
+      "valuation_engine": "auction",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 90592,
+      "max_bid": 109050,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "bidizi-bra-2",
+      "title": "Loja Braga (Execução Fiscal)",
+      "district": "Braga",
+      "price": 68235,
+      "is_auction": true,
+      "asset_class": "commercial",
+      "valuation_engine": "auction",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 68235,
+      "max_bid": 79970,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "cs-por-9",
+      "title": "Apartamento T0 Bonfim (novo)",
+      "district": "Porto",
+      "price": 165000,
+      "is_auction": false,
+      "asset_class": "apartment",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 165000,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "cs-por-10",
+      "title": "Apartamento T0 Bonfim (construção)",
+      "district": "Porto",
+      "price": 168000,
+      "is_auction": false,
+      "asset_class": "apartment",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 168000,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "cs-por-11",
+      "title": "Apartamento T2 Campanhã (investimento)",
+      "district": "Porto",
+      "price": 169000,
+      "is_auction": false,
+      "asset_class": "apartment",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 169000,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "cs-por-12",
+      "title": "Apartamento T0 Cedofeita (escritório)",
+      "district": "Porto",
+      "price": 172500,
+      "is_auction": false,
+      "asset_class": "apartment",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 172500,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "cs-por-13",
+      "title": "Apartamento T1 Ramalde (novo)",
+      "district": "Porto",
+      "price": 173250,
+      "is_auction": false,
+      "asset_class": "apartment",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 173250,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "cs-lis-6",
+      "title": "Apartamento T1 Santa Maria Maior (obras)",
+      "district": "Lisboa",
+      "price": 159000,
+      "is_auction": false,
+      "asset_class": "apartment",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 159000,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "cs-lis-7",
+      "title": "Apartamento T1 Olivais (investimento)",
+      "district": "Lisboa",
+      "price": 154900,
+      "is_auction": false,
+      "asset_class": "apartment",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 154900,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "cs-lis-8",
+      "title": "Apartamento T0 Penha de França (vitalícia)",
+      "district": "Lisboa",
+      "price": 150000,
+      "is_auction": false,
+      "asset_class": "apartment",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 150000,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "cs-bra-10",
+      "title": "Apartamento T0 Centro Braga (histórico)",
+      "district": "Braga",
+      "price": 159000,
+      "is_auction": false,
+      "asset_class": "apartment",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 159000,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "cs-bra-11",
+      "title": "Apartamento T1 São Víctor (funcional)",
+      "district": "Braga",
+      "price": 160000,
+      "is_auction": false,
+      "asset_class": "apartment",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 160000,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "cs-bra-12",
+      "title": "Apartamento T0 Ferreiros (condomínio)",
+      "district": "Braga",
+      "price": 175000,
+      "is_auction": false,
+      "asset_class": "apartment",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 175000,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "gen-aveiro-1000",
+      "title": "T1 em Oliveira de Azeméis",
+      "district": "Aveiro",
+      "price": 71980,
+      "is_auction": false,
+      "asset_class": "apartment",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 71980,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "gen-aveiro-1001",
+      "title": "V3 em Oliveira de Azeméis",
+      "district": "Aveiro",
+      "price": 249900,
+      "is_auction": false,
+      "asset_class": "house",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 249900,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "gen-aveiro-1002",
+      "title": "Terreno em Estarreja",
+      "district": "Aveiro",
+      "price": 95472,
+      "is_auction": true,
+      "asset_class": "mixed",
+      "valuation_engine": "auction",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 95472,
+      "max_bid": 102071,
+      "valuation": 102071,
+      "score": 30,
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa",
+        "Dados insuficientes para um score completo",
+        "Dados em falta: pricePerSqm, yield"
+      ],
+      "maxScore": 40,
+      "scoreBreakdown": {
+        "discount": 26,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": 60,
+        "confidence": 10
+      }
+    },
+    {
+      "id": "gen-aveiro-1003",
+      "title": "V4 em Ovar",
+      "district": "Aveiro",
+      "price": 366444,
+      "is_auction": false,
+      "asset_class": "house",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 366444,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "gen-aveiro-1005",
+      "title": "T4 em Santa Maria da Feira",
+      "district": "Aveiro",
+      "price": 95904,
+      "is_auction": false,
+      "asset_class": "apartment",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 95904,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "gen-beja-1006",
+      "title": "Armazém em Odemira",
+      "district": "Beja",
+      "price": 32760,
+      "is_auction": false,
+      "asset_class": "commercial",
+      "valuation_engine": "income",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 32760,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "gen-beja-1007",
+      "title": "T4 em Serpa",
+      "district": "Beja",
+      "price": 112997,
+      "is_auction": false,
+      "asset_class": "apartment",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 112997,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "gen-beja-1008",
+      "title": "Loja em Serpa",
+      "district": "Beja",
+      "price": 61152,
+      "is_auction": true,
+      "asset_class": "commercial",
+      "valuation_engine": "auction",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 61152,
+      "max_bid": 56997,
+      "valuation": 56997,
+      "score": 13,
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa",
+        "Lance atual >= lance máximo",
+        "Dados insuficientes para um score completo",
+        "Dados em falta: pricePerSqm, yield"
+      ],
+      "maxScore": 30,
+      "scoreBreakdown": {
+        "discount": 0,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": 40,
+        "confidence": 10
+      }
+    },
+    {
+      "id": "gen-beja-1009",
+      "title": "T2 em Beja",
+      "district": "Beja",
+      "price": 113274,
+      "is_auction": false,
+      "asset_class": "apartment",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 113274,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "gen-braga-1010",
+      "title": "Loja em Braga",
+      "district": "Braga",
+      "price": 150059,
+      "is_auction": false,
+      "asset_class": "commercial",
+      "valuation_engine": "income",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 150059,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "gen-braga-1011",
+      "title": "T0 em Póvoa de Lanhoso",
+      "district": "Braga",
+      "price": 159120,
+      "is_auction": false,
+      "asset_class": "apartment",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 159120,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "gen-braga-1012",
+      "title": "T4 em Póvoa de Lanhoso",
+      "district": "Braga",
+      "price": 236621,
+      "is_auction": false,
+      "asset_class": "apartment",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 236621,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "gen-braga-1013",
+      "title": "V4 em Vila Nova de Famalicão",
+      "district": "Braga",
+      "price": 507686,
+      "is_auction": false,
+      "asset_class": "house",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 507686,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "gen-braga-1014",
+      "title": "T2 em Braga",
+      "district": "Braga",
+      "price": 168428,
+      "is_auction": false,
+      "asset_class": "apartment",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 168428,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "gen-bragança-1015",
+      "title": "Armazém em Miranda do Douro",
+      "district": "Bragança",
+      "price": 26040,
+      "is_auction": true,
+      "asset_class": "commercial",
+      "valuation_engine": "auction",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 26040,
+      "max_bid": 30534,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "gen-bragança-1016",
+      "title": "T2 em Macedo de Cavaleiros",
+      "district": "Bragança",
+      "price": 81144,
+      "is_auction": true,
+      "asset_class": "apartment",
+      "valuation_engine": "auction",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 81144,
+      "max_bid": 70228,
+      "valuation": 70228,
+      "score": 13,
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa",
+        "Lance atual >= lance máximo",
+        "Dados insuficientes para um score completo",
+        "Dados em falta: pricePerSqm, yield"
+      ],
+      "maxScore": 30,
+      "scoreBreakdown": {
+        "discount": 0,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": 40,
+        "confidence": 10
+      }
+    },
+    {
+      "id": "gen-bragança-1017",
+      "title": "Terreno em Macedo de Cavaleiros",
+      "district": "Bragança",
+      "price": 56462,
+      "is_auction": false,
+      "asset_class": "mixed",
+      "valuation_engine": "none",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 56462,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "gen-bragança-1018",
+      "title": "T0 em Vinhais",
+      "district": "Bragança",
+      "price": 59226,
+      "is_auction": true,
+      "asset_class": "apartment",
+      "valuation_engine": "auction",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 59226,
+      "max_bid": 68345,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "gen-castelobranco-1019",
+      "title": "Garagem em Fundão",
+      "district": "Castelo Branco",
+      "price": 2196,
+      "is_auction": false,
+      "asset_class": "garage",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 2196,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "gen-castelobranco-1020",
+      "title": "Armazém em Castelo Branco",
+      "district": "Castelo Branco",
+      "price": 29280,
+      "is_auction": false,
+      "asset_class": "commercial",
+      "valuation_engine": "income",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 29280,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "gen-castelobranco-1021",
+      "title": "V4 em Fundão",
+      "district": "Castelo Branco",
+      "price": 323482,
+      "is_auction": false,
+      "asset_class": "house",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 323482,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "gen-coimbra-1022",
+      "title": "Terreno em Coimbra",
+      "district": "Coimbra",
+      "price": 40040,
+      "is_auction": false,
+      "asset_class": "mixed",
+      "valuation_engine": "none",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 40040,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "gen-coimbra-1023",
+      "title": "V2 em Lousã",
+      "district": "Coimbra",
+      "price": 176088,
+      "is_auction": false,
+      "asset_class": "house",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 176088,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "gen-coimbra-1024",
+      "title": "Garagem em Figueira da Foz",
+      "district": "Coimbra",
+      "price": 3465,
+      "is_auction": false,
+      "asset_class": "garage",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 3465,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "gen-coimbra-1025",
+      "title": "Armazém em Lousã",
+      "district": "Coimbra",
+      "price": 39600,
+      "is_auction": false,
+      "asset_class": "commercial",
+      "valuation_engine": "income",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 39600,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "gen-coimbra-1026",
+      "title": "T1 em Coimbra",
+      "district": "Coimbra",
+      "price": 72419,
+      "is_auction": false,
+      "asset_class": "apartment",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 72419,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "gen-évora-1027",
+      "title": "T2 em Vendas Novas",
+      "district": "Évora",
+      "price": 124168,
+      "is_auction": true,
+      "asset_class": "apartment",
+      "valuation_engine": "auction",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 124168,
+      "max_bid": 108759,
+      "valuation": 108759,
+      "score": 15,
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa",
+        "Lance atual >= lance máximo",
+        "Dados insuficientes para um score completo",
+        "Dados em falta: pricePerSqm, yield"
+      ],
+      "maxScore": 30,
+      "scoreBreakdown": {
+        "discount": 0,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": 50,
+        "confidence": 10
+      }
+    },
+    {
+      "id": "gen-évora-1028",
+      "title": "V3 em Estremoz",
+      "district": "Évora",
+      "price": 251813,
+      "is_auction": false,
+      "asset_class": "house",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 251813,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "gen-évora-1029",
+      "title": "Terreno em Reguengos de Monsaraz",
+      "district": "Évora",
+      "price": 46470,
+      "is_auction": false,
+      "asset_class": "mixed",
+      "valuation_engine": "none",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 46470,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "gen-faro-1030",
+      "title": "V3 em Loulé",
+      "district": "Faro",
+      "price": 318325,
+      "is_auction": false,
+      "asset_class": "house",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 318325,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "gen-faro-1031",
+      "title": "V2 em Albufeira",
+      "district": "Faro",
+      "price": 382536,
+      "is_auction": false,
+      "asset_class": "house",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 382536,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "gen-faro-1032",
+      "title": "Terreno em Tavira",
+      "district": "Faro",
+      "price": 170520,
+      "is_auction": false,
+      "asset_class": "mixed",
+      "valuation_engine": "none",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 170520,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "gen-faro-1033",
+      "title": "T3 em Faro",
+      "district": "Faro",
+      "price": 309386,
+      "is_auction": false,
+      "asset_class": "apartment",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 309386,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "gen-faro-1034",
+      "title": "Garagem em Portimão",
+      "district": "Faro",
+      "price": 6536,
+      "is_auction": false,
+      "asset_class": "garage",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 6536,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "gen-guarda-1035",
+      "title": "V2 em Trancoso",
+      "district": "Guarda",
+      "price": 186128,
+      "is_auction": false,
+      "asset_class": "house",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 186128,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "gen-guarda-1036",
+      "title": "T3 em Guarda",
+      "district": "Guarda",
+      "price": 104181,
+      "is_auction": false,
+      "asset_class": "apartment",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 104181,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "gen-guarda-1037",
+      "title": "V3 em Gouveia",
+      "district": "Guarda",
+      "price": 276938,
+      "is_auction": false,
+      "asset_class": "house",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 276938,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "gen-leiria-1038",
+      "title": "Terreno em Peniche",
+      "district": "Leiria",
+      "price": 62720,
+      "is_auction": false,
+      "asset_class": "mixed",
+      "valuation_engine": "none",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 62720,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "gen-leiria-1039",
+      "title": "T1 em Peniche",
+      "district": "Leiria",
+      "price": 81510,
+      "is_auction": false,
+      "asset_class": "apartment",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 81510,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "gen-leiria-1040",
+      "title": "Loja em Nazaré",
+      "district": "Leiria",
+      "price": 45584,
+      "is_auction": false,
+      "asset_class": "commercial",
+      "valuation_engine": "income",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 45584,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "gen-lisboa-1041",
+      "title": "T2 em Vila Franca de Xira",
+      "district": "Lisboa",
+      "price": 296400,
+      "is_auction": false,
+      "asset_class": "apartment",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 296400,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "gen-lisboa-1042",
+      "title": "Garagem em Sintra",
+      "district": "Lisboa",
+      "price": 8892,
+      "is_auction": false,
+      "asset_class": "garage",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 8892,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "gen-lisboa-1043",
+      "title": "V3 em Amadora",
+      "district": "Lisboa",
+      "price": 721305,
+      "is_auction": false,
+      "asset_class": "house",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 721305,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "gen-portalegre-1044",
+      "title": "V2 em Campo Maior",
+      "district": "Portalegre",
+      "price": 141457,
+      "is_auction": false,
+      "asset_class": "house",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 141457,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "gen-portalegre-1045",
+      "title": "T4 em Ponte de Sor",
+      "district": "Portalegre",
+      "price": 104832,
+      "is_auction": false,
+      "asset_class": "apartment",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 104832,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "gen-portalegre-1046",
+      "title": "Garagem em Campo Maior",
+      "district": "Portalegre",
+      "price": 2018,
+      "is_auction": false,
+      "asset_class": "garage",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 2018,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "gen-portalegre-1047",
+      "title": "T3 em Elvas",
+      "district": "Portalegre",
+      "price": 81081,
+      "is_auction": true,
+      "asset_class": "apartment",
+      "valuation_engine": "auction",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 81081,
+      "max_bid": 84208,
+      "valuation": 84208,
+      "score": 20,
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa",
+        "Dados insuficientes para um score completo",
+        "Dados em falta: pricePerSqm, yield"
+      ],
+      "maxScore": 40,
+      "scoreBreakdown": {
+        "discount": 15,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": 40,
+        "confidence": 10
+      }
+    },
+    {
+      "id": "gen-portalegre-1048",
+      "title": "T1 em Alter do Chão",
+      "district": "Portalegre",
+      "price": 124982,
+      "is_auction": false,
+      "asset_class": "apartment",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 124982,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "gen-porto-1049",
+      "title": "T4 em Porto",
+      "district": "Porto",
+      "price": 421344,
+      "is_auction": true,
+      "asset_class": "apartment",
+      "valuation_engine": "auction",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 421344,
+      "max_bid": 364663,
+      "valuation": 364663,
+      "score": 30,
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa",
+        "Lance atual >= lance máximo",
+        "Dados em falta: pricePerSqm"
+      ],
+      "maxScore": 30,
+      "scoreBreakdown": {
+        "discount": 0,
+        "pricePerSqm": null,
+        "yield": 96,
+        "liquidity": 80,
+        "confidence": 10
+      }
+    },
+    {
+      "id": "gen-porto-1050",
+      "title": "T1 em Póvoa de Varzim",
+      "district": "Porto",
+      "price": 271508,
+      "is_auction": false,
+      "asset_class": "apartment",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 271508,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "gen-porto-1051",
+      "title": "Armazém em Vila do Conde",
+      "district": "Porto",
+      "price": 77520,
+      "is_auction": false,
+      "asset_class": "commercial",
+      "valuation_engine": "income",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 77520,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "gen-porto-1052",
+      "title": "T1 em Maia",
+      "district": "Porto",
+      "price": 105412,
+      "is_auction": false,
+      "asset_class": "apartment",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 105412,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "gen-porto-1054",
+      "title": "Garagem em Vila Nova de Gaia",
+      "district": "Porto",
+      "price": 5643,
+      "is_auction": true,
+      "asset_class": "garage",
+      "valuation_engine": "auction",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 5643,
+      "max_bid": 6216,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "gen-santarém-1055",
+      "title": "V4 em Santarém",
+      "district": "Santarém",
+      "price": 297432,
+      "is_auction": false,
+      "asset_class": "house",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 297432,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "gen-santarém-1056",
+      "title": "Loja em Entroncamento",
+      "district": "Santarém",
+      "price": 43470,
+      "is_auction": false,
+      "asset_class": "commercial",
+      "valuation_engine": "income",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 43470,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "gen-santarém-1057",
+      "title": "V3 em Abrantes",
+      "district": "Santarém",
+      "price": 284760,
+      "is_auction": false,
+      "asset_class": "house",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 284760,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "gen-santarém-1058",
+      "title": "T3 em Tomar",
+      "district": "Santarém",
+      "price": 65142,
+      "is_auction": true,
+      "asset_class": "apartment",
+      "valuation_engine": "auction",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 65142,
+      "max_bid": 67655,
+      "valuation": 67655,
+      "score": 22,
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa",
+        "Dados insuficientes para um score completo",
+        "Dados em falta: pricePerSqm, yield"
+      ],
+      "maxScore": 40,
+      "scoreBreakdown": {
+        "discount": 15,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": 50,
+        "confidence": 10
+      }
+    },
+    {
+      "id": "gen-santarém-1059",
+      "title": "V2 em Rio Maior",
+      "district": "Santarém",
+      "price": 385041,
+      "is_auction": false,
+      "asset_class": "house",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 385041,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "gen-setúbal-1060",
+      "title": "T1 em Sesimbra",
+      "district": "Setúbal",
+      "price": 178752,
+      "is_auction": true,
+      "asset_class": "apartment",
+      "valuation_engine": "auction",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 178752,
+      "max_bid": 216588,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "gen-setúbal-1061",
+      "title": "V4 em Setúbal",
+      "district": "Setúbal",
+      "price": 351130,
+      "is_auction": false,
+      "asset_class": "house",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 351130,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "gen-setúbal-1062",
+      "title": "V4 em Almada",
+      "district": "Setúbal",
+      "price": 517752,
+      "is_auction": false,
+      "asset_class": "house",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 517752,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "gen-setúbal-1063",
+      "title": "T0 em Sesimbra",
+      "district": "Setúbal",
+      "price": 129254,
+      "is_auction": true,
+      "asset_class": "apartment",
+      "valuation_engine": "auction",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 129254,
+      "max_bid": 106782,
+      "valuation": 106782,
+      "score": 30,
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa",
+        "Lance atual >= lance máximo",
+        "Dados em falta: pricePerSqm"
+      ],
+      "maxScore": 30,
+      "scoreBreakdown": {
+        "discount": 0,
+        "pricePerSqm": null,
+        "yield": 86,
+        "liquidity": 65,
+        "confidence": 10
+      }
+    },
+    {
+      "id": "gen-setúbal-1064",
+      "title": "V2 em Moita",
+      "district": "Setúbal",
+      "price": 262200,
+      "is_auction": false,
+      "asset_class": "house",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 262200,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "gen-vianadocastelo-1066",
+      "title": "T0 em Ponte de Lima",
+      "district": "Viana do Castelo",
+      "price": 134158,
+      "is_auction": false,
+      "asset_class": "apartment",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 134158,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "gen-vianadocastelo-1067",
+      "title": "Terreno em Melgaço",
+      "district": "Viana do Castelo",
+      "price": 26752,
+      "is_auction": false,
+      "asset_class": "mixed",
+      "valuation_engine": "none",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 26752,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "gen-vianadocastelo-1068",
+      "title": "T2 em Valença",
+      "district": "Viana do Castelo",
+      "price": 141778,
+      "is_auction": false,
+      "asset_class": "apartment",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 141778,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "gen-vianadocastelo-1069",
+      "title": "Garagem em Caminha",
+      "district": "Viana do Castelo",
+      "price": 3292,
+      "is_auction": false,
+      "asset_class": "garage",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 3292,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "gen-vianadocastelo-1070",
+      "title": "V4 em Viana do Castelo",
+      "district": "Viana do Castelo",
+      "price": 338734,
+      "is_auction": true,
+      "asset_class": "house",
+      "valuation_engine": "auction",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 338734,
+      "max_bid": 346844,
+      "valuation": 346844,
+      "score": 21,
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa",
+        "Dados insuficientes para um score completo",
+        "Dados em falta: pricePerSqm, yield"
+      ],
+      "maxScore": 40,
+      "scoreBreakdown": {
+        "discount": 9,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": 55,
+        "confidence": 10
+      }
+    },
+    {
+      "id": "gen-vilareal-1071",
+      "title": "V3 em Valpaços",
+      "district": "Vila Real",
+      "price": 287100,
+      "is_auction": false,
+      "asset_class": "house",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 287100,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "gen-vilareal-1072",
+      "title": "Garagem em Vila Real",
+      "district": "Vila Real",
+      "price": 2628,
+      "is_auction": false,
+      "asset_class": "garage",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 2628,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "gen-vilareal-1073",
+      "title": "T1 em Chaves",
+      "district": "Vila Real",
+      "price": 114304,
+      "is_auction": false,
+      "asset_class": "apartment",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 114304,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "gen-vilareal-1074",
+      "title": "T0 em Vila Real",
+      "district": "Vila Real",
+      "price": 78064,
+      "is_auction": false,
+      "asset_class": "apartment",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 78064,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "gen-viseu-1076",
+      "title": "T0 em Nelas",
+      "district": "Viseu",
+      "price": 129472,
+      "is_auction": false,
+      "asset_class": "apartment",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 129472,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "gen-viseu-1077",
+      "title": "V2 em Nelas",
+      "district": "Viseu",
+      "price": 182988,
+      "is_auction": true,
+      "asset_class": "house",
+      "valuation_engine": "auction",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 182988,
+      "max_bid": 170554,
+      "valuation": 170554,
+      "score": 15,
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa",
+        "Lance atual >= lance máximo",
+        "Dados insuficientes para um score completo",
+        "Dados em falta: pricePerSqm, yield"
+      ],
+      "maxScore": 30,
+      "scoreBreakdown": {
+        "discount": 0,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": 50,
+        "confidence": 10
+      }
+    },
+    {
+      "id": "gen-viseu-1078",
+      "title": "T0 em Lamego",
+      "district": "Viseu",
+      "price": 69707,
+      "is_auction": false,
+      "asset_class": "apartment",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 69707,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "gen-açores-1079",
+      "title": "Armazém em Lagoa",
+      "district": "Açores",
+      "price": 46200,
+      "is_auction": false,
+      "asset_class": "commercial",
+      "valuation_engine": "income",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 46200,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "gen-açores-1080",
+      "title": "T2 em Ribeira Grande",
+      "district": "Açores",
+      "price": 111780,
+      "is_auction": true,
+      "asset_class": "apartment",
+      "valuation_engine": "auction",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 111780,
+      "max_bid": 100326,
+      "valuation": 100326,
+      "score": 11,
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa",
+        "Lance atual >= lance máximo",
+        "Dados insuficientes para um score completo",
+        "Dados em falta: pricePerSqm, yield"
+      ],
+      "maxScore": 30,
+      "scoreBreakdown": {
+        "discount": 0,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": 35,
+        "confidence": 10
+      }
+    },
+    {
+      "id": "gen-açores-1081",
+      "title": "T3 em Ponta Delgada",
+      "district": "Açores",
+      "price": 97966,
+      "is_auction": true,
+      "asset_class": "apartment",
+      "valuation_engine": "auction",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 97966,
+      "max_bid": 116756,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "gen-açores-1082",
+      "title": "T0 em Ponta Delgada",
+      "district": "Açores",
+      "price": 71400,
+      "is_auction": false,
+      "asset_class": "apartment",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 71400,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "gen-açores-1083",
+      "title": "Terreno em Ponta Delgada",
+      "district": "Açores",
+      "price": 29120,
+      "is_auction": true,
+      "asset_class": "mixed",
+      "valuation_engine": "auction",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 29120,
+      "max_bid": 37804,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "gen-madeira-1084",
+      "title": "T4 em Funchal",
+      "district": "Madeira",
+      "price": 193939,
+      "is_auction": true,
+      "asset_class": "apartment",
+      "valuation_engine": "auction",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 193939,
+      "max_bid": 190532,
+      "valuation": 190532,
+      "score": 15,
+      "capped": true,
+      "badges": [
+        "Confiança muito baixa",
+        "Lance atual >= lance máximo",
+        "Dados insuficientes para um score completo",
+        "Dados em falta: pricePerSqm, yield"
+      ],
+      "maxScore": 30,
+      "scoreBreakdown": {
+        "discount": 0,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": 50,
+        "confidence": 10
+      }
+    },
+    {
+      "id": "gen-madeira-1085",
+      "title": "T4 em Calheta",
+      "district": "Madeira",
+      "price": 142262,
+      "is_auction": false,
+      "asset_class": "apartment",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 142262,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "gen-madeira-1086",
+      "title": "T3 em Câmara de Lobos",
+      "district": "Madeira",
+      "price": 159667,
+      "is_auction": false,
+      "asset_class": "apartment",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 159667,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "gen-madeira-1087",
+      "title": "T0 em Funchal",
+      "district": "Madeira",
+      "price": 155295,
+      "is_auction": false,
+      "asset_class": "apartment",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 155295,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "cs-bra-real-1",
+      "title": "Apartamento T2 Centro Braga",
+      "district": "Braga",
+      "price": 159000,
+      "is_auction": false,
+      "asset_class": "apartment",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 159000,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "cs-bra-real-3",
+      "title": "Apartamento T0 Ferreiros",
+      "district": "Braga",
+      "price": 175000,
+      "is_auction": false,
+      "asset_class": "apartment",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 175000,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    },
+    {
+      "id": "iv-lis-1",
+      "title": "Apartamento T0 Alfama",
+      "district": "Lisboa",
+      "price": 78260,
+      "is_auction": false,
+      "asset_class": "apartment",
+      "valuation_engine": "hedonic",
+      "valuation_confidence": "very_low",
+      "pdm_status": null,
+      "infrastructure": null,
+      "current_bid": 78260,
+      "max_bid": null,
+      "valuation": null,
+      "score": null,
+      "capped": false,
+      "badges": [
+        "Sem avaliação"
+      ],
+      "maxScore": 100,
+      "scoreBreakdown": {
+        "discount": null,
+        "pricePerSqm": null,
+        "yield": null,
+        "liquidity": null,
+        "confidence": null
+      }
+    }
+  ]
+}
