@@ -1,4 +1,4 @@
-import * as cheerio from "cheerio";
+import { parseCasaSapoListings, parseImovirtualListingsFromHtml } from "@/lib/portal-parsers";
 
 export interface ScrapedProperty {
   title: string;
@@ -7,101 +7,54 @@ export interface ScrapedProperty {
   url: string;
   source: string;
   imageUrl?: string;
+  areaSqm?: number | null;
+}
+
+const USER_AGENT =
+  "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36";
+
+async function fetchHtml(url: string): Promise<string | null> {
+  try {
+    const res = await fetch(url, { headers: { "User-Agent": USER_AGENT } });
+    if (!res.ok) {
+      console.error(`${url} returned ${res.status}`);
+      return null;
+    }
+    return await res.text();
+  } catch (error) {
+    console.error("Error fetching", url, error);
+    return null;
+  }
 }
 
 export async function scrapeCasaSapo(district: string): Promise<ScrapedProperty[]> {
-  const results: ScrapedProperty[] = [];
+  const url = `https://casa.sapo.pt/comprar-apartamentos/${district.toLowerCase()}/`;
+  const html = await fetchHtml(url);
+  if (!html) return [];
 
-  try {
-    const url = `https://casa.sapo.pt/venda-apartamentos/${district.toLowerCase()}/`;
-    const res = await fetch(url, {
-      headers: {
-        "User-Agent":
-          "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-      },
-    });
-
-    if (!res.ok) {
-      console.error(`Casa Sapo returned ${res.status} for ${district}`);
-      return results;
-    }
-
-    const html = await res.text();
-    const $ = cheerio.load(html);
-
-    // Casa Sapo listing cards
-    $(".property, .listing-item, [class*='property-card']").each((_, el) => {
-      const $el = $(el);
-      const title = $el.find("h2, h3, .title, [class*='title']").first().text().trim();
-      const priceText = $el.find(".price, [class*='price']").first().text().trim();
-      const location = $el.find(".location, [class*='location'], [class*='address']").first().text().trim();
-      const link = $el.find("a").first().attr("href");
-      const img = $el.find("img").first().attr("src");
-
-      const price = parseInt(priceText.replace(/[^\d]/g, ""), 10);
-
-      if (title && price > 0) {
-        results.push({
-          title,
-          price,
-          location: location || district,
-          url: link ? (link.startsWith("http") ? link : `https://casa.sapo.pt${link}`) : url,
-          source: "Casa Sapo",
-          imageUrl: img,
-        });
-      }
-    });
-  } catch (error) {
-    console.error("Error scraping Casa Sapo:", error);
-  }
-
-  return results;
+  return parseCasaSapoListings(html).map((l) => ({
+    title: l.title,
+    price: l.price,
+    location: l.location || district,
+    url: l.url,
+    source: "Casa Sapo",
+    imageUrl: l.images[0],
+    areaSqm: l.areaSqm,
+  }));
 }
 
 export async function scrapeImovirtual(district: string): Promise<ScrapedProperty[]> {
-  const results: ScrapedProperty[] = [];
+  const url = `https://www.imovirtual.com/pt/resultados/comprar/apartamento/${district.toLowerCase()}/`;
+  const html = await fetchHtml(url);
+  if (!html) return [];
 
-  try {
-    const url = `https://www.imovirtual.com/comprar/apartamento/${district.toLowerCase()}/`;
-    const res = await fetch(url, {
-      headers: {
-        "User-Agent":
-          "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-      },
-    });
-
-    if (!res.ok) {
-      console.error(`Imovirtual returned ${res.status} for ${district}`);
-      return results;
-    }
-
-    const html = await res.text();
-    const $ = cheerio.load(html);
-
-    $("[data-cy='listing-item'], .listing-item, article").each((_, el) => {
-      const $el = $(el);
-      const title = $el.find("h3, h2, [class*='title']").first().text().trim();
-      const priceText = $el.find("[class*='price']").first().text().trim();
-      const location = $el.find("[class*='location'], [class*='address']").first().text().trim();
-      const link = $el.find("a").first().attr("href");
-      const img = $el.find("img").first().attr("src");
-
-      const price = parseInt(priceText.replace(/[^\d]/g, ""), 10);
-
-      if (title && price > 0) {
-        results.push({
-          title,
-          price,
-          location: location || district,
-          url: link ? (link.startsWith("http") ? link : `https://www.imovirtual.com${link}`) : url,
-          source: "Imovirtual",
-          imageUrl: img,
-        });
-      }
-    });
-  } catch (error) {
-    console.error("Error scraping Imovirtual:", error);
-  }
-
-  return results;
+  return parseImovirtualListingsFromHtml(html).map((l) => ({
+    title: l.title,
+    price: l.price,
+    location: l.location || district,
+    url: l.url,
+    source: "Imovirtual",
+    imageUrl: l.images[0],
+    areaSqm: l.areaSqm,
+  }));
 }

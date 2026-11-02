@@ -1,6 +1,8 @@
 import { createClient } from "@libsql/client";
 import { load as cheerioLoad } from "cheerio";
 import * as Sentry from "@sentry/nextjs";
+import { parseAreaSqm } from "@/lib/area-parser";
+import { parseCasaSapoListings, parseImovirtualListingsFromHtml } from "@/lib/portal-parsers";
 
 const c = createClient({
   url: "libsql://radarpro2-smpsandro1239.aws-eu-west-1.turso.io",
@@ -47,8 +49,16 @@ export interface ScrapedProperty {
   url: string;
   source: string;
   images: string[];
+  areaSqm?: number | null;
   isAuction?: boolean;
   auctionEndDate?: number;
+}
+
+/** Id estavel a partir do url (o titulo nao distingue anuncios com o mesmo preco). */
+function stableId(prefix: string, district: string, url: string, price: number): string {
+  let hash = 0;
+  for (let i = 0; i < url.length; i++) hash = (hash * 31 + url.charCodeAt(i)) >>> 0;
+  return prefix + "-" + district.toLowerCase() + "-" + price + "-" + hash.toString(36);
 }
 
 export async function scrapeCasaSapo(district: string): Promise<ScrapedProperty[]> {
@@ -62,31 +72,18 @@ export async function scrapeCasaSapo(district: string): Promise<ScrapedProperty[
     const url = "https://casa.sapo.pt/comprar-apartamentos/" + district.toLowerCase() + "/";
     const res = await fetchWithRetry(url);
     const html = await res.text();
-    const $ = cheerioLoad(html);
-    $(".property-card, article.property, .listing-item, .result-item").each((_, el) => {
-      const $el = $(el);
-      const title = $el.find("h2, h3, .title, [class*='title']").first().text().trim();
-      const priceText = $el.find(".price, [class*='price']").first().text().trim();
-      const location = $el.find(".location, [class*='location'], .address").first().text().trim();
-      const link = $el.find("a").first().attr("href");
-      const images: string[] = [];
-      $el.find("img").each((_, img) => {
-        const src = $(img).attr("src") || $(img).attr("data-src");
-        if (src && src.startsWith("http")) images.push(src);
+    for (const l of parseCasaSapoListings(html)) {
+      results.push({
+        id: stableId("cs", district, l.url, l.price),
+        title: l.title,
+        price: l.price,
+        location: l.location,
+        url: l.url,
+        source: "Casa Sapo",
+        images: l.images,
+        areaSqm: l.areaSqm,
       });
-      const price = parsePrice(priceText);
-      if (title && price > 0) {
-        results.push({
-          id: "cs-" + district + "-" + price + "-" + title.replace(/\s+/g, "-").toLowerCase().slice(0, 30),
-          title,
-          price,
-          location,
-          url: link ? (link.startsWith("http") ? link : "https://casa.sapo.pt" + link) : url,
-          source: "Casa Sapo",
-          images,
-        });
-      }
-    });
+    }
   } catch (error) {
     Sentry.captureException(error, {
       tags: { source: 'Casa Sapo', district: district },
@@ -96,7 +93,6 @@ export async function scrapeCasaSapo(district: string): Promise<ScrapedProperty[
   }
   return results;
 }
-
 export async function scrapeImovirtual(district: string): Promise<ScrapedProperty[]> {
   const results: ScrapedProperty[] = [];
   Sentry.addBreadcrumb({
@@ -108,31 +104,18 @@ export async function scrapeImovirtual(district: string): Promise<ScrapedPropert
     const url = "https://www.imovirtual.com/pt/resultados/comprar/apartamento/" + district.toLowerCase() + "/";
     const res = await fetchWithRetry(url);
     const html = await res.text();
-    const $ = cheerioLoad(html);
-    $("[data-cy='listing-item'], .listing-item, article").each((_, el) => {
-      const $el = $(el);
-      const title = $el.find("h3, h2, [class*='title']").first().text().trim();
-      const priceText = $el.find("[class*='price']").first().text().trim();
-      const location = $el.find("[class*='location'], [class*='address']").first().text().trim();
-      const link = $el.find("a").first().attr("href");
-      const images: string[] = [];
-      $el.find("img").each((_, img) => {
-        const src = $(img).attr("src") || $(img).attr("data-src");
-        if (src && src.startsWith("http")) images.push(src);
+    for (const l of parseImovirtualListingsFromHtml(html)) {
+      results.push({
+        id: stableId("im", district, l.url, l.price),
+        title: l.title,
+        price: l.price,
+        location: l.location,
+        url: l.url,
+        source: "Imovirtual",
+        images: l.images,
+        areaSqm: l.areaSqm,
       });
-      const price = parsePrice(priceText);
-      if (title && price > 0) {
-        results.push({
-          id: "im-por-" + district + "-" + price + "-" + title.replace(/\s+/g, "-").toLowerCase().slice(0, 30),
-          title,
-          price,
-          location,
-          url: link ? (link.startsWith("http") ? link : "https://www.imovirtual.com" + link) : url,
-          source: "Imovirtual",
-          images,
-        });
-      }
-    });
+    }
   } catch (error) {
     Sentry.captureException(error, {
       tags: { source: 'Imovirtual', district: district },
@@ -142,7 +125,6 @@ export async function scrapeImovirtual(district: string): Promise<ScrapedPropert
   }
   return results;
 }
-
 export async function scrapeIdealista(district: string): Promise<ScrapedProperty[]> {
   const results: ScrapedProperty[] = [];
   Sentry.addBreadcrumb({
@@ -176,6 +158,7 @@ export async function scrapeIdealista(district: string): Promise<ScrapedProperty
           url: link ? (link.startsWith("http") ? link : "https://www.idealista.pt" + link) : url,
           source: "Idealista",
           images,
+          areaSqm: parseAreaSqm($el.text()),
         });
       }
     });
@@ -222,6 +205,7 @@ export async function scrapeOLX(district: string): Promise<ScrapedProperty[]> {
           url: link ? (link.startsWith("http") ? link : "https://www.olx.pt" + link) : url,
           source: "OLX",
           images,
+          areaSqm: parseAreaSqm($el.text()),
         });
       }
     });
@@ -268,6 +252,7 @@ export async function scrapeCustoJusto(district: string): Promise<ScrapedPropert
           url: link ? (link.startsWith("http") ? link : "https://www.custojusto.pt" + link) : url,
           source: "CustoJusto",
           images,
+          areaSqm: parseAreaSqm($el.text()),
         });
       }
     });
@@ -314,6 +299,7 @@ export async function scrapeELeiloes(district: string): Promise<ScrapedProperty[
           url: link ? (link.startsWith("http") ? link : "https://www.e-leiloes.pt" + link) : url,
           source: "e-Leiloes",
           images,
+          areaSqm: parseAreaSqm($el.text()),
           isAuction: true,
         });
       }
@@ -382,6 +368,7 @@ export async function scrapeImobancos(district: string): Promise<ScrapedProperty
           url: link ? (link.startsWith("http") ? link : "https://imobancos.pt" + link) : url,
           source: "Imobancos",
           images,
+          areaSqm: parseAreaSqm($el.text()),
         });
       }
     });
@@ -428,6 +415,7 @@ export async function scrapeMillenniumBCP(district: string): Promise<ScrapedProp
           url: link ? (link.startsWith("http") ? link : "https://ind.millenniumbcp.pt" + link) : url,
           source: "Millennium BCP",
           images,
+          areaSqm: parseAreaSqm($el.text()),
         });
       }
     });
@@ -474,6 +462,7 @@ export async function scrapeSantander(district: string): Promise<ScrapedProperty
           url: link ? (link.startsWith("http") ? link : "https://www.santander.pt" + link) : url,
           source: "Santander",
           images,
+          areaSqm: parseAreaSqm($el.text()),
         });
       }
     });
@@ -520,6 +509,7 @@ export async function scrapeMontepio(district: string): Promise<ScrapedProperty[
           url: link ? (link.startsWith("http") ? link : "https://www.montepio.pt" + link) : url,
           source: "Montepio",
           images,
+          areaSqm: parseAreaSqm($el.text()),
         });
       }
     });
@@ -566,6 +556,7 @@ export async function scrapeCaixaImobiliario(district: string): Promise<ScrapedP
           url: link ? (link.startsWith("http") ? link : "https://www.caixaimobiliario.pt" + link) : url,
           source: "Caixa Imobiliário",
           images,
+          areaSqm: parseAreaSqm($el.text()),
         });
       }
     });
@@ -612,6 +603,7 @@ export async function scrapeCreditoAgricola(district: string): Promise<ScrapedPr
           url: link ? (link.startsWith("http") ? link : "https://www.cai.pt" + link) : url,
           source: "Crédito Agrícola",
           images,
+          areaSqm: parseAreaSqm($el.text()),
         });
       }
     });
@@ -658,6 +650,7 @@ export async function scrapeNovoBanco(district: string): Promise<ScrapedProperty
           url: link ? (link.startsWith("http") ? link : "https://www.novobanco.pt" + link) : url,
           source: "Novo Banco",
           images,
+          areaSqm: parseAreaSqm($el.text()),
         });
       }
     });
@@ -704,6 +697,7 @@ export async function scrapeBPI(district: string): Promise<ScrapedProperty[]> {
           url: link ? (link.startsWith("http") ? link : "https://www.bpiexpressoimobiliario.pt" + link) : url,
           source: "BPI Expresso",
           images,
+          areaSqm: parseAreaSqm($el.text()),
         });
       }
     });
