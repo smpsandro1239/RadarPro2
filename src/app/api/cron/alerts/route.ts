@@ -1,11 +1,10 @@
 import { NextResponse } from "next/server";
 import { inngest } from "@/lib/inngest";
+import { authorizeWrite } from "@/lib/api-auth";
 
 export async function GET(request: Request) {
-  const authHeader = request.headers.get("authorization");
-  if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  }
+  const denied = await authorizeWrite(request);
+  if (denied) return denied;
 
   try {
     await inngest.send({ name: "alerts.send" });

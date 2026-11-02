@@ -1,12 +1,10 @@
-import { getSession } from "@/lib/auth";
+import { ADMIN_EMAIL, getSession } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import { db } from "@/db";
 import { properties, users, searchAlerts, savedProperties } from "@/db/schema";
 import { eq, count, sql, desc } from "drizzle-orm";
 
 import { unstable_noStore } from "next/cache";
-
-const ADMIN_EMAIL = "smpsandro1239@gmail.com";
 
 export default async function AdminPage() {
   unstable_noStore();

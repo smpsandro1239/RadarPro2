@@ -2,12 +2,11 @@ import { NextResponse } from "next/server";
 import { db } from "@/db";
 import { properties } from "@/db/schema";
 import { eq, isNull, lt, or } from "drizzle-orm";
+import { authorizeWrite } from "@/lib/api-auth";
 
 export async function GET(request: Request) {
-  const authHeader = request.headers.get("authorization");
-  if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  }
+  const denied = await authorizeWrite(request);
+  if (denied) return denied;
 
   try {
     // Get properties that haven't been checked in the last 24 hours or never checked

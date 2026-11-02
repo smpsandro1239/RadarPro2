@@ -3,6 +3,7 @@ import { scrapeCasaSapo, scrapeImovirtual } from "@/lib/scraper";
 import { db } from "@/db";
 import { properties } from "@/db/schema";
 import { eq } from "drizzle-orm";
+import { authorizeWrite } from "@/lib/api-auth";
 
 /**
  * A coluna area_sqm so existe depois da migracao aprovada
@@ -11,18 +12,23 @@ import { eq } from "drizzle-orm";
 const supportsAreaColumn = "areaSqm" in properties;
 
 export async function POST(request: Request) {
+  const denied = await authorizeWrite(request);
+  if (denied) return denied;
+
   try {
-    const { district, sources } = await request.json();
-    const selectedSources = sources || ["casasapo", "imovirtual"];
+    // O formulario do /admin envia form-urlencoded; chamadas API enviam JSON.
+    const body = await readBody(request);
+    const district = body.district || "Lisboa";
+    const sources = body.sources || ["casasapo", "imovirtual"];
 
     let allScraped: Awaited<ReturnType<typeof scrapeCasaSapo>> = [];
 
-    if (selectedSources.includes("casasapo")) {
+    if (sources.includes("casasapo")) {
       const results = await scrapeCasaSapo(district);
       allScraped = allScraped.concat(results);
     }
 
-    if (selectedSources.includes("imovirtual")) {
+    if (sources.includes("imovirtual")) {
       const results = await scrapeImovirtual(district);
       allScraped = allScraped.concat(results);
     }
@@ -80,4 +86,18 @@ export async function POST(request: Request) {
     console.error(error);
     return NextResponse.json({ error: "Erro no scraping" }, { status: 500 });
   }
+}
+
+async function readBody(request: Request): Promise<Record<string, any>> {
+  const contentType = request.headers.get("content-type") ?? "";
+  if (contentType.includes("application/json")) {
+    return await request.json().catch(() => ({}));
+  }
+  const form = await request.formData().catch(() => null);
+  if (!form) return {};
+  const sources = form.get("sources");
+  return {
+    district: form.get("district"),
+    sources: typeof sources === "string" && sources ? sources.split(",") : undefined,
+  };
 }

@@ -1,6 +1,9 @@
 import { SignJWT, jwtVerify } from "jose";
 import { cookies } from "next/headers";
 
+/** Unico e-mail com acesso ao painel /admin e as rotas de escrita. */
+export const ADMIN_EMAIL = "smpsandro1239@gmail.com";
+
 const secret = new TextEncoder().encode(
   process.env.JWT_SECRET || "radarpro-dev-secret-change-in-prod"
 );
