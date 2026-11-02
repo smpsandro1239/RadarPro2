@@ -20,12 +20,33 @@ cp .env.example .env.local
 npm run dev
 ```
 
+## Verificação antes de push
+
+```bash
+npm run verify
+```
+
+Equivale a, por esta ordem:
+
+```bash
+npm run typecheck          # tsc --noEmit (src/, sem scripts/)
+npm run typecheck:scripts  # tsc --noEmit -p tsconfig.scripts.json (scripts/)
+npm run test               # vitest run
+npm run build              # next build (type-check incluído)
+```
+
+O `scripts/` está fora do type-check do build (foi a causa de builds vermelhos por
+erros em scripts de apoio). O `typecheck:scripts` cobre essa parte e corre no CI
+(`.github/workflows/ci.yml`), que executa `npm ci`, os dois type-checks e os testes
+em cada PR.
+
 ## Variáveis de ambiente
 
 | Variável | Descrição |
 |---|---|
 | `TURSO_DATABASE_URL` | URL da base de dados Turso |
 | `TURSO_AUTH_TOKEN` | Token de autenticação Turso |
+| `CRON_SECRET` | Segredo dos endpoints `/api/cron/*` e `/api/scrape` (a Vercel envia `Authorization: Bearer <CRON_SECRET>` nos crons; sem esta variável as rotas recusam o acesso) |
 | `STRIPE_SECRET_KEY` | Chave secreta Stripe |
 | `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` | Chave pública Stripe |
 | `STRIPE_WEBHOOK_SECRET` | Segredo do webhook Stripe |
