@@ -9,8 +9,8 @@ Estados: `todo | doing | done | blocked(humano) | blocked(técnico)`.
 | WP2 | Triagem de termos de utilizacao (Casa Sapo, Imovirtual e os outros portais) -> `docs/PORTAIS.md` | auto | done |
 | WP3 | `timingSafeEqual` em `authorizeWrite`; `it.fails` legados com TODO + limite no CI; ids duplicados/`gen-*` identificados | auto | done |
 | WP4 | Migracao `0003 data_origin` (so na BD local) + prova da origem por prefixo de id + `SHOW_SEED_DATA` + banner "Dados de demonstracao" | auto | done |
-| WP5 | Dry-run de scraping real so na BD local (portais que o WP2 permita; limite pequeno; ritmo educado) + medicoes | auto | todo |
-| WP6 | Fase 2: geografia do `ingest.ts`, `findMarketData` nivel `district`, testes de integracao com `market-data.ts` real, proposta de estrutura/fontes/unidade | auto | todo |
+| WP5 | Dry-run de scraping real so na BD local (portais que o WP2 permita; limite pequeno; ritmo educado) + medicoes | auto | done |
+| WP6 | Fase 2: geografia do `ingest.ts`, `findMarketData` nivel `district`, testes de integracao com `market-data.ts` real, proposta de estrutura/fontes/unidade | auto | done |
 | WP7 | Fase 3: v2 como unico motor; legacy como wrapper `@deprecated`; migrar os 5 testes legados; `ValuationCard` consome servidor | auto | todo |
 | WP8 | Fase 4: "Sem avaliacao", escala do `SourceReliabilityBadge`, rankings sem `NULL`, leiloes em separador proprio, `rentability` sintetico fora dos rankings | auto | todo |
 | WP9 | SEO: `generateMetadata` por rota, slugs de distrito sem perder acentos, meta description coerente com a cobertura real | auto | todo |
@@ -32,6 +32,8 @@ Estados: `todo | doing | done | blocked(humano) | blocked(técnico)`.
 | 7 | Aplicar migracoes 0002/0003 na live ou autorizar `src/db/schema.ts` em conjunto | `scripts/sql/0003_add_data_origin.sql` | pendente |
 | 8 | Decidir `SHOW_SEED_DATA` em producao (hoje: dados de demonstracao fora das listagens) | `src/lib/data-origin.ts` | pendente |
 | 9 | Confirmar valores de mercado/unidades reais (decisoes com default seguro) | `src/lib/market-data.ts` | pendente |
+| 10 | Migrar `auction_end_date` para milissegundos na live (scripts legados gravam segundos) e fixar a unidade canonica | `scripts/migrate_auction.mjs`, `src/db/schema.ts` | pendente |
+| 11 | Ampliar a tabela de dados de mercado (hoje ~25 municipios de 308) e confirmar fontes e data de referencia | `src/lib/market-data.ts` | pendente |
 
 ## Notas de operacao
 
