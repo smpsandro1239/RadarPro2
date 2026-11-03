@@ -1,6 +1,11 @@
 "use client";
 
 import { useState } from "react";
+import PageShell from "@/components/ds/PageShell";
+import Button from "@/components/ds/Button";
+
+const FIELD =
+  "w-full min-h-11 rounded-rp border border-rp-line bg-rp-surface px-4 py-2 text-[15px] text-rp-ink focus:border-rp-cobalt focus:outline-none";
 
 export default function ValoracaoPage() {
   const [district, setDistrict] = useState("");
@@ -24,71 +29,95 @@ export default function ValoracaoPage() {
   }
 
   return (
-    <main className="min-h-screen max-w-2xl mx-auto px-6 py-12">
-      <a href="/" className="text-primary hover:underline mb-6 inline-block">
-        ← Voltar
-      </a>
-      <h1 className="text-4xl font-extrabold mb-4">Valorização de Imóveis</h1>
-      <p className="text-secondary mb-8">
-        Estime o valor de mercado de um imóvel em Portugal.
-      </p>
-
-      <div className="space-y-4 mb-8">
-        <div>
-          <label className="block text-sm font-medium mb-1">Distrito</label>
-          <select
-            value={district}
-            onChange={(e) => setDistrict(e.target.value)}
-            className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:outline-none"
-          >
-            <option value="">Selecione</option>
-            <option value="Lisboa">Lisboa</option>
-            <option value="Porto">Porto</option>
-            <option value="Braga">Braga</option>
-          </select>
-        </div>
-        <div>
-          <label className="block text-sm font-medium mb-1">Tipo</label>
-          <select
-            value={type}
-            onChange={(e) => setType(e.target.value)}
-            className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:outline-none"
-          >
-            <option value="">Selecione</option>
-            <option value="Apartamento">Apartamento</option>
-            <option value="Moradia">Moradia</option>
-            <option value="Terreno">Terreno</option>
-          </select>
-        </div>
-        <div>
-          <label className="block text-sm font-medium mb-1">Área (m²)</label>
-          <input
-            type="number"
-            value={sqm}
-            onChange={(e) => setSqm(e.target.value)}
-            className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:outline-none"
-            placeholder="Ex: 100"
-          />
-        </div>
-        <button
-          onClick={calculate}
-          className="w-full bg-primary text-white py-3 rounded-lg font-bold hover:opacity-90 transition"
+    <PageShell
+      eyebrow="Valorização"
+      title="Valorização de imóveis"
+      description="Estime o valor de mercado de um imóvel em Portugal."
+      backHref="/"
+      backLabel="Voltar ao início"
+    >
+      <div className="grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
+        <form
+          className="space-y-4 border border-rp-line bg-rp-surface p-6"
+          onSubmit={(e) => {
+            e.preventDefault();
+            calculate();
+          }}
         >
-          Calcular valorização
-        </button>
-      </div>
+          <div>
+            <label htmlFor="valoracao-distrito" className="rp-eyebrow mb-1 block text-rp-muted">
+              Distrito
+            </label>
+            <select
+              id="valoracao-distrito"
+              value={district}
+              onChange={(e) => setDistrict(e.target.value)}
+              className={FIELD}
+            >
+              <option value="">Selecione</option>
+              <option value="Lisboa">Lisboa</option>
+              <option value="Porto">Porto</option>
+              <option value="Braga">Braga</option>
+            </select>
+          </div>
 
-      {result && (
-        <div className="bg-green-50 border border-green-200 rounded-2xl p-6 text-center">
-          <div className="text-sm text-secondary mb-1">Valor estimado de mercado</div>
-          <div className="text-3xl font-extrabold text-success">
-            {result.toLocaleString()}€
+          <div>
+            <label htmlFor="valoracao-tipo" className="rp-eyebrow mb-1 block text-rp-muted">
+              Tipo
+            </label>
+            <select
+              id="valoracao-tipo"
+              value={type}
+              onChange={(e) => setType(e.target.value)}
+              className={FIELD}
+            >
+              <option value="">Selecione</option>
+              <option value="Apartamento">Apartamento</option>
+              <option value="Moradia">Moradia</option>
+              <option value="Terreno">Terreno</option>
+            </select>
           </div>
-          <div className="text-xs text-secondary mt-2">
-            * Estimativa baseada em preços médios por m². Não substitui avaliação profissional.
+
+          <div>
+            <label htmlFor="valoracao-area" className="rp-eyebrow mb-1 block text-rp-muted">
+              Área (m²)
+            </label>
+            <input
+              id="valoracao-area"
+              type="number"
+              value={sqm}
+              onChange={(e) => setSqm(e.target.value)}
+              className={FIELD}
+              placeholder="Ex: 100"
+            />
           </div>
+
+          <Button type="submit" variant="primary" size="lg" className="w-full">
+            Calcular valorização
+          </Button>
+        </form>
+
+        <div>
+          {result ? (
+            <div className="border border-rp-line bg-rp-surface p-6 shadow-rp-1">
+              <p className="rp-eyebrow text-rp-muted">Valor estimado de mercado</p>
+              <p className="rp-num mt-3 text-[40px] leading-none text-rp-ink">{result.toLocaleString()}€</p>
+              <p className="mt-4 max-w-[52ch] text-[13px] leading-relaxed text-rp-muted">
+                * Estimativa baseada em preços médios por m². Não substitui avaliação profissional.
+              </p>
+            </div>
+          ) : (
+            <div className="border border-dashed border-rp-line bg-rp-surface px-6 py-14 text-center">
+              <p className="rp-display text-[22px] leading-tight text-rp-ink">
+                O valor estimado aparece aqui
+              </p>
+              <p className="mx-auto mt-2 max-w-[46ch] text-[15px] leading-relaxed text-rp-muted">
+                Preenche o distrito, o tipo e a área para estimar o valor de mercado.
+              </p>
+            </div>
+          )}
         </div>
-      )}
-    </main>
+      </div>
+    </PageShell>
   );
 }

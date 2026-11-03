@@ -1,8 +1,10 @@
-import { db } from "@/db";
-import { properties } from "@/db/schema";
-import { eq, sql, count, avg, min, max } from "drizzle-orm";
 import { getAllActiveProperties } from "@/lib/queries";
-import { formatOptional, formatScore, formatScoreOutOf100 } from "@/lib/format";
+import { formatOptional, formatScoreOutOf100 } from "@/lib/format";
+import Link from "next/link";
+import PageShell from "@/components/ds/PageShell";
+import StatCard from "@/components/ds/StatCard";
+import SectionHeader from "@/components/ds/SectionHeader";
+import DataTable from "@/components/ds/DataTable";
 
 export default async function EstatisticasPage() {
   const properties = await getAllActiveProperties();
@@ -55,140 +57,117 @@ export default async function EstatisticasPage() {
 
   // Overall stats
   const totalPrice = properties.reduce((a, b) => a + b.price, 0);
-  const totalMarket = properties.reduce((a, b) => a + (b.marketValue || 0), 0);
   const avgDiscount = Math.round(properties.reduce((a, b) => a + (b.discountPct || 0), 0) / properties.length);
 
   return (
-    <main className="min-h-screen max-w-7xl mx-auto px-6 py-12">
-      <a href="/" className="text-primary hover:underline mb-6 inline-block">
-        ← Voltar
-      </a>
-      <h1 className="text-4xl font-extrabold mb-2">Estatísticas do Mercado</h1>
-      <p className="text-secondary mb-8">
-        Análise de {properties.length} imóveis em Portugal (Lisboa, Porto, Braga)
-      </p>
-
+    <PageShell
+      eyebrow="Estatísticas"
+      title="Estatísticas do mercado"
+      description={`Análise de ${properties.length} imóveis em Portugal (Lisboa, Porto, Braga)`}
+      backHref="/"
+      backLabel="Voltar ao início"
+    >
       {/* Overall stats */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-        <div className="bg-white border rounded-xl p-6 text-center">
-          <div className="text-3xl font-bold text-primary">{properties.length}</div>
-          <div className="text-sm text-secondary">Imóveis ativos</div>
-        </div>
-        <div className="bg-white border rounded-xl p-6 text-center">
-          <div className="text-3xl font-bold text-primary">{Math.round(totalPrice / properties.length).toLocaleString()}€</div>
-          <div className="text-sm text-secondary">Preço médio</div>
-        </div>
-        <div className="bg-white border rounded-xl p-6 text-center">
-          <div className="text-3xl font-bold text-success">{avgDiscount}%</div>
-          <div className="text-sm text-secondary">Desconto médio</div>
-        </div>
-        <div className="bg-white border rounded-xl p-6 text-center">
-          <div className="text-3xl font-bold text-primary">{[...new Set(properties.map((p) => p.sourceName))].length}</div>
-          <div className="text-sm text-secondary">Fontes de dados</div>
-        </div>
+      <div className="mb-12 grid grid-cols-2 gap-4 md:grid-cols-4">
+        <StatCard label="Imóveis ativos" value={properties.length} />
+        <StatCard label="Preço médio" value={`${Math.round(totalPrice / properties.length).toLocaleString()}€`} />
+        <StatCard label="Desconto médio" value={`${avgDiscount}%`} hint="face ao valor estimado" />
+        <StatCard label="Fontes de dados" value={[...new Set(properties.map((p) => p.sourceName))].length} />
       </div>
 
       {/* By district */}
-      <h2 className="text-2xl font-bold mb-4">Por distrito</h2>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-        {byDistrict.map((d) => (
-          <div key={d.district} className="bg-white border rounded-xl p-6">
-            <h3 className="text-xl font-bold mb-4">{d.district}</h3>
-            <div className="space-y-3">
-              <div className="flex justify-between">
-                <span className="text-secondary text-sm">Imóveis</span>
-                <span className="font-bold">{d.count}</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-secondary text-sm">Preço médio</span>
-                <span className="font-bold">{d.avgPrice.toLocaleString()}€</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-secondary text-sm">Preço mínimo</span>
-                <span className="font-bold">{d.minPrice.toLocaleString()}€</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-secondary text-sm">Preço máximo</span>
-                <span className="font-bold">{d.maxPrice.toLocaleString()}€</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-secondary text-sm">Score médio</span>
-                <span className="font-bold text-primary">{d.avgScore}/100</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-secondary text-sm">Desconto médio</span>
-                <span className="font-bold text-success">{d.avgDiscount}%</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-secondary text-sm">Fontes</span>
-                <span className="font-bold">{d.sources}</span>
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
+      <section className="mb-12">
+        <SectionHeader eyebrow="Por distrito" title="Lisboa, Porto e Braga" />
+        <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-3">
+          {byDistrict.map((d) => (
+            <article key={d.district} className="border border-rp-line bg-rp-surface p-6 shadow-rp-1">
+              <h3 className="rp-display text-[22px] leading-tight text-rp-ink">{d.district}</h3>
+              <dl className="mt-4 space-y-3">
+                {[
+                  { label: "Imóveis", value: String(d.count) },
+                  { label: "Preço médio", value: `${d.avgPrice.toLocaleString()}€` },
+                  { label: "Preço mínimo", value: `${d.minPrice.toLocaleString()}€` },
+                  { label: "Preço máximo", value: `${d.maxPrice.toLocaleString()}€` },
+                  { label: "Score médio", value: `${d.avgScore}/100`, tone: "text-rp-cobalt" },
+                  { label: "Desconto médio", value: `${d.avgDiscount}%`, tone: "text-rp-anomaly" },
+                  { label: "Fontes", value: String(d.sources) },
+                ].map((row) => (
+                  <div key={row.label} className="flex items-baseline justify-between gap-4 border-b border-rp-line pb-2">
+                    <dt className="text-[13px] text-rp-muted">{row.label}</dt>
+                    <dd className={`rp-num text-[14px] font-medium text-rp-ink ${row.tone ?? ""}`}>{row.value}</dd>
+                  </div>
+                ))}
+              </dl>
+            </article>
+          ))}
+        </div>
+      </section>
 
       {/* By source */}
-      <h2 className="text-2xl font-bold mb-4">Por fonte</h2>
-      <div className="bg-white border rounded-xl overflow-hidden mb-8">
-        <table className="w-full text-sm">
-          <thead className="bg-slate-50">
-            <tr>
-              <th className="text-left p-3">Fonte</th>
-              <th className="text-right p-3">Imóveis</th>
-              <th className="text-right p-3">Preço médio</th>
-              <th className="text-right p-3">Score médio</th>
-              <th className="text-right p-3">Desconto médio</th>
-            </tr>
-          </thead>
-          <tbody>
-            {sourceStats.map((s) => (
-              <tr key={s.source} className="border-t">
-                <td className="p-3 font-medium">{s.source}</td>
-                <td className="p-3 text-right">{s.count}</td>
-                <td className="p-3 text-right">{s.avgPrice.toLocaleString()}€</td>
-                <td className="p-3 text-right">{s.avgScore}/100</td>
-                <td className="p-3 text-right text-success">{s.avgDiscount}%</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+      <section className="mb-12">
+        <SectionHeader eyebrow="Por fonte" title="Cobertura dos portais" />
+        <div className="mt-6 border border-rp-line bg-rp-surface p-4">
+          <DataTable
+            caption="Imóveis, preço, score e desconto por fonte"
+            columns={[
+              { key: "source", header: "Fonte", render: (row) => row.source },
+              { key: "count", header: "Imóveis", numeric: true, render: (row) => row.count },
+              { key: "avgPrice", header: "Preço médio", numeric: true, render: (row) => `${row.avgPrice.toLocaleString()}€` },
+              { key: "avgScore", header: "Score médio", numeric: true, render: (row) => `${row.avgScore}/100` },
+              {
+                key: "avgDiscount",
+                header: "Desconto médio",
+                numeric: true,
+                render: (row) => `${row.avgDiscount}%`,
+              },
+            ]}
+            rows={sourceStats}
+          />
+        </div>
+      </section>
 
       {/* By type */}
-      <h2 className="text-2xl font-bold mb-4">Por tipo de imóvel</h2>
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-        {typeStats.map((t) => (
-          <div key={t.type} className="bg-white border rounded-xl p-4 text-center">
-            <div className="text-2xl font-bold text-primary">{t.count}</div>
-            <div className="text-sm font-medium">{t.type}</div>
-            <div className="text-xs text-secondary">{t.avgPrice.toLocaleString()}€ médio</div>
-            <div className="text-xs text-success">-{t.avgDiscount}% desconto</div>
-          </div>
-        ))}
-      </div>
+      <section className="mb-12">
+        <SectionHeader eyebrow="Por tipo de imóvel" title="O que está no mercado" />
+        <div className="mt-6 grid grid-cols-2 gap-4 md:grid-cols-4">
+          {typeStats.map((t) => (
+            <article key={t.type} className="border border-rp-line bg-rp-surface p-4">
+              <p className="rp-num text-[28px] leading-none text-rp-ink">{t.count}</p>
+              <p className="rp-eyebrow mt-2 text-rp-muted">{t.type}</p>
+              <p className="rp-num mt-2 text-[13px] text-rp-ink-2">{t.avgPrice.toLocaleString()}€ médio</p>
+              <p className="rp-num text-[13px] text-rp-anomaly">-{t.avgDiscount}% desconto</p>
+            </article>
+          ))}
+        </div>
+      </section>
 
       {/* Top opportunities */}
-      <h2 className="text-2xl font-bold mb-4">Top 5 Oportunidades</h2>
-      <div className="space-y-4">
-        {topOpportunities.map((p, i) => (
-          <a
-            key={p.id}
-            href={`/imovel/${p.id}`}
-            className="flex items-center gap-4 bg-white border rounded-xl p-4 hover:shadow-lg transition"
-          >
-            <div className="text-2xl font-bold text-primary w-8">{i + 1}</div>
-            <div className="flex-1">
-              <div className="font-bold">{p.title}</div>
-              <div className="text-sm text-secondary">{p.municipality}, {p.district} · {p.sourceName}</div>
-            </div>
-            <div className="text-right">
-              <div className="font-bold">{p.price.toLocaleString()}€</div>
-              <div className="text-sm text-primary">{formatOptional(p.discountPct === null ? null : -p.discountPct, "%")} · {formatScoreOutOf100(p.score)}</div>
-            </div>
-          </a>
-        ))}
-      </div>
-    </main>
+      <section>
+        <SectionHeader eyebrow="Top 5" title="Oportunidades com melhor score" />
+        <div className="mt-6 space-y-4">
+          {topOpportunities.map((p, i) => (
+            <Link
+              key={p.id}
+              href={`/imovel/${p.id}`}
+              className="flex items-center gap-4 border border-rp-line bg-rp-surface p-4 transition-[transform,box-shadow] duration-[var(--rp-dur-2)] ease-[var(--rp-ease-1)] hover:-translate-y-0.5 hover:shadow-rp-1"
+            >
+              <span className="rp-num w-8 text-[20px] text-rp-cobalt">{String(i + 1).padStart(2, "0")}</span>
+              <span className="min-w-0 flex-1">
+                <span className="block truncate text-[15px] font-medium text-rp-ink">{p.title}</span>
+                <span className="block text-[13px] text-rp-muted">
+                  {p.municipality}, {p.district} · {p.sourceName}
+                </span>
+              </span>
+              <span className="text-right">
+                <span className="rp-num block text-[15px] font-medium text-rp-ink">{p.price.toLocaleString()}€</span>
+                <span className="rp-num block text-[12px] text-rp-muted">
+                  {formatOptional(p.discountPct === null ? null : -p.discountPct, "%")} · {formatScoreOutOf100(p.score)}
+                </span>
+              </span>
+            </Link>
+          ))}
+        </div>
+      </section>
+    </PageShell>
   );
 }
