@@ -1,6 +1,11 @@
 "use client";
 
 import { useState } from "react";
+import PageShell from "@/components/ds/PageShell";
+import Button from "@/components/ds/Button";
+
+const FIELD =
+  "w-full min-h-11 rounded-rp border border-rp-line bg-rp-surface px-4 py-2 text-[15px] text-rp-ink focus:border-rp-cobalt focus:outline-none";
 
 export default function CreditoPage() {
   const [price, setPrice] = useState("");
@@ -63,112 +68,152 @@ export default function CreditoPage() {
   }
 
   return (
-    <main className="min-h-screen max-w-2xl mx-auto px-6 py-12">
-      <a href="/" className="text-primary hover:underline mb-6 inline-block">
-        ← Voltar
-      </a>
-      <h1 className="text-4xl font-extrabold mb-4">Calculadora de Crédito Habitação</h1>
-      <p className="text-secondary mb-8">
-        Estime a prestação mensal, IMT e custos associados à compra de casa em Portugal.
-      </p>
-
-      <div className="space-y-4 mb-8">
-        <div>
-          <label className="block text-sm font-medium mb-1">Preço do imóvel (€)</label>
-          <input
-            type="number"
-            value={price}
-            onChange={(e) => setPrice(e.target.value)}
-            className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:outline-none"
-            placeholder="Ex: 200000"
-          />
-        </div>
-        <div>
-          <label className="block text-sm font-medium mb-1">Entrada (€)</label>
-          <input
-            type="number"
-            value={downPayment}
-            onChange={(e) => setDownPayment(e.target.value)}
-            className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:outline-none"
-            placeholder="Ex: 40000"
-          />
-        </div>
-        <div className="grid grid-cols-2 gap-4">
+    <PageShell
+      eyebrow="Crédito"
+      title="Calculadora de crédito habitação"
+      description="Estime a prestação mensal, IMT e custos associados à compra de casa em Portugal."
+      backHref="/"
+      backLabel="Voltar ao início"
+    >
+      <form
+        className="mb-8 grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]"
+        onSubmit={(e) => {
+          e.preventDefault();
+          calculate();
+        }}
+      >
+        <div className="space-y-4 border border-rp-line bg-rp-surface p-6">
           <div>
-            <label className="block text-sm font-medium mb-1">Taxa de juro anual (%)</label>
+            <label htmlFor="credito-preco" className="rp-eyebrow mb-1 block text-rp-muted">
+              Preço do imóvel (€)
+            </label>
             <input
+              id="credito-preco"
               type="number"
-              step="0.1"
-              value={rate}
-              onChange={(e) => setRate(e.target.value)}
-              className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:outline-none"
+              value={price}
+              onChange={(e) => setPrice(e.target.value)}
+              className={FIELD}
+              placeholder="Ex: 200000"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium mb-1">Prazo (anos)</label>
+            <label htmlFor="credito-entrada" className="rp-eyebrow mb-1 block text-rp-muted">
+              Entrada (€)
+            </label>
             <input
+              id="credito-entrada"
               type="number"
-              value={years}
-              onChange={(e) => setYears(e.target.value)}
-              className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:outline-none"
+              value={downPayment}
+              onChange={(e) => setDownPayment(e.target.value)}
+              className={FIELD}
+              placeholder="Ex: 40000"
             />
           </div>
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label htmlFor="credito-taxa" className="rp-eyebrow mb-1 block text-rp-muted">
+                Taxa de juro anual (%)
+              </label>
+              <input
+                id="credito-taxa"
+                type="number"
+                step="0.1"
+                value={rate}
+                onChange={(e) => setRate(e.target.value)}
+                className={FIELD}
+              />
+            </div>
+            <div>
+              <label htmlFor="credito-prazo" className="rp-eyebrow mb-1 block text-rp-muted">
+                Prazo (anos)
+              </label>
+              <input
+                id="credito-prazo"
+                type="number"
+                value={years}
+                onChange={(e) => setYears(e.target.value)}
+                className={FIELD}
+              />
+            </div>
+          </div>
+          <Button type="submit" variant="primary" size="lg" className="w-full">
+            Calcular
+          </Button>
         </div>
-        <button
-          onClick={calculate}
-          className="w-full bg-primary text-white py-3 rounded-lg font-bold hover:opacity-90 transition"
-        >
-          Calcular
-        </button>
-      </div>
 
-      {result && (
-        <div className="space-y-4">
-          <div className="bg-primary/5 border border-primary/20 rounded-2xl p-6 text-center">
-            <div className="text-sm text-secondary mb-1">Prestação mensal estimada</div>
-            <div className="text-4xl font-extrabold text-primary">
-              {result.monthlyPayment.toLocaleString("pt-PT", { maximumFractionDigits: 2 })}€
-            </div>
-          </div>
+        <div>
+          {result ? (
+            <div className="space-y-4">
+              <div className="border border-rp-line bg-rp-surface p-6 shadow-rp-2">
+                <p className="rp-eyebrow text-rp-muted">Prestação mensal estimada</p>
+                <p className="rp-num mt-3 text-[40px] leading-none text-rp-ink">
+                  {result.monthlyPayment.toLocaleString("pt-PT", { maximumFractionDigits: 2 })}€
+                </p>
+              </div>
 
-          <div className="bg-white border rounded-2xl p-6 space-y-3">
-            <h2 className="font-bold mb-2">Resumo do crédito</h2>
-            <div className="flex justify-between text-sm">
-              <span className="text-secondary">Montante do crédito</span>
-              <span className="font-medium">{result.loanAmount.toLocaleString()}€</span>
-            </div>
-            <div className="flex justify-between text-sm">
-              <span className="text-secondary">Total pago (capital + juros)</span>
-              <span className="font-medium">{result.totalPaid.toLocaleString("pt-PT", { maximumFractionDigits: 0 })}€</span>
-            </div>
-            <div className="flex justify-between text-sm">
-              <span className="text-secondary">Total de juros</span>
-              <span className="font-medium text-red-500">{result.totalInterest.toLocaleString("pt-PT", { maximumFractionDigits: 0 })}€</span>
-            </div>
-          </div>
+              <div className="border border-rp-line bg-rp-surface p-6">
+                <h2 className="rp-display text-[20px] leading-tight text-rp-ink">Resumo do crédito</h2>
+                <dl className="mt-4 space-y-3">
+                  <div className="flex items-baseline justify-between gap-4 border-b border-rp-line pb-2">
+                    <dt className="text-[13px] text-rp-muted">Montante do crédito</dt>
+                    <dd className="rp-num text-[14px] text-rp-ink">{result.loanAmount.toLocaleString()}€</dd>
+                  </div>
+                  <div className="flex items-baseline justify-between gap-4 border-b border-rp-line pb-2">
+                    <dt className="text-[13px] text-rp-muted">Total pago (capital + juros)</dt>
+                    <dd className="rp-num text-[14px] text-rp-ink">
+                      {result.totalPaid.toLocaleString("pt-PT", { maximumFractionDigits: 0 })}€
+                    </dd>
+                  </div>
+                  <div className="flex items-baseline justify-between gap-4">
+                    <dt className="text-[13px] text-rp-muted">Total de juros</dt>
+                    <dd className="rp-num text-[14px] text-rp-anomaly">
+                      {result.totalInterest.toLocaleString("pt-PT", { maximumFractionDigits: 0 })}€
+                    </dd>
+                  </div>
+                </dl>
+              </div>
 
-          <div className="bg-white border rounded-2xl p-6 space-y-3">
-            <h2 className="font-bold mb-2">Custos de aquisição</h2>
-            <div className="flex justify-between text-sm">
-              <span className="text-secondary">IMT</span>
-              <span className="font-medium">{result.imt.toLocaleString("pt-PT", { maximumFractionDigits: 2 })}€</span>
-            </div>
-            <div className="flex justify-between text-sm">
-              <span className="text-secondary">Imposto de Selo (0,8%)</span>
-              <span className="font-medium">{result.stampDuty.toLocaleString("pt-PT", { maximumFractionDigits: 2 })}€</span>
-            </div>
-            <div className="flex justify-between text-sm font-bold border-t pt-2">
-              <span>Total de impostos</span>
-              <span>{result.totalCost.toLocaleString("pt-PT", { maximumFractionDigits: 2 })}€</span>
-            </div>
-          </div>
+              <div className="border border-rp-line bg-rp-surface p-6">
+                <h2 className="rp-display text-[20px] leading-tight text-rp-ink">Custos de aquisição</h2>
+                <dl className="mt-4 space-y-3">
+                  <div className="flex items-baseline justify-between gap-4 border-b border-rp-line pb-2">
+                    <dt className="text-[13px] text-rp-muted">IMT</dt>
+                    <dd className="rp-num text-[14px] text-rp-ink">
+                      {result.imt.toLocaleString("pt-PT", { maximumFractionDigits: 2 })}€
+                    </dd>
+                  </div>
+                  <div className="flex items-baseline justify-between gap-4 border-b border-rp-line pb-2">
+                    <dt className="text-[13px] text-rp-muted">Imposto de Selo (0,8%)</dt>
+                    <dd className="rp-num text-[14px] text-rp-ink">
+                      {result.stampDuty.toLocaleString("pt-PT", { maximumFractionDigits: 2 })}€
+                    </dd>
+                  </div>
+                  <div className="flex items-baseline justify-between gap-4">
+                    <dt className="rp-eyebrow text-rp-ink">Total de impostos</dt>
+                    <dd className="rp-num text-[14px] font-medium text-rp-ink">
+                      {result.totalCost.toLocaleString("pt-PT", { maximumFractionDigits: 2 })}€
+                    </dd>
+                  </div>
+                </dl>
+              </div>
 
-          <p className="text-xs text-secondary">
-            * Valores estimados. O IMT pode variar consoante o tipo de imóvel, localização e regime fiscal.
-            Consulte um profissional para valores exatos.
-          </p>
+              <p className="max-w-[60ch] text-[13px] leading-relaxed text-rp-muted">
+                * Valores estimados. O IMT pode variar consoante o tipo de imóvel, localização e regime fiscal.
+                Consulte um profissional para valores exatos.
+              </p>
+            </div>
+          ) : (
+            <div className="border border-dashed border-rp-line bg-rp-surface px-6 py-14 text-center">
+              <p className="rp-display text-[22px] leading-tight text-rp-ink">
+                A prestação aparece aqui
+              </p>
+              <p className="mx-auto mt-2 max-w-[46ch] text-[15px] leading-relaxed text-rp-muted">
+                Preenche o preço, a entrada, a taxa e o prazo para estimar a prestação, os juros e os impostos.
+              </p>
+            </div>
+          )}
         </div>
-      )}
-    </main>
+      </form>
+    </PageShell>
   );
 }

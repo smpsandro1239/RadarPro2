@@ -1,128 +1,196 @@
 import { getSession } from "@/lib/auth";
 import { redirect } from "next/navigation";
+import { BarChart3, Bell, Check, LineChart, Target } from "lucide-react";
+import PageShell from "@/components/ds/PageShell";
+import SectionHeader from "@/components/ds/SectionHeader";
+import Button from "@/components/ds/Button";
+
+const PLANS = [
+  {
+    name: "Básico",
+    price: "49€",
+    period: "/mês",
+    features: [
+      "Até 10 anúncios ativos",
+      "Destaque na listagem",
+      "Relatório mensal",
+      "Suporte por email",
+    ],
+    cta: "Começar",
+    recommended: false,
+  },
+  {
+    name: "Profissional",
+    price: "99€",
+    period: "/mês",
+    features: [
+      "Até 50 anúncios ativos",
+      "Destaque prioritário",
+      "Relatório semanal",
+      "Alertas de leads",
+      "Suporte prioritário",
+      "API de integração",
+    ],
+    cta: "Começar",
+    recommended: true,
+  },
+  {
+    name: "Enterprise",
+    price: "Sob consulta",
+    period: "",
+    features: [
+      "Anúncios ilimitados",
+      "Feed automático (XML/API)",
+      "Relatórios personalizados",
+      "Gestor de conta dedicado",
+      "SLA garantido",
+    ],
+    cta: "Contactar",
+    recommended: false,
+  },
+];
+
+const BENEFITS = [
+  {
+    icon: Target,
+    title: "Público qualificado",
+    description:
+      "Utilizadores que procuram ativamente oportunidades imobiliárias com desconto.",
+  },
+  {
+    icon: LineChart,
+    title: "Score de oportunidade",
+    description:
+      "Cada anúncio recebe um score automático que ajuda os compradores a decidir.",
+  },
+  {
+    icon: Bell,
+    title: "Alertas automáticos",
+    description:
+      "Os seus anúncios são enviados por email aos utilizadores com pesquisas correspondentes.",
+  },
+  {
+    icon: BarChart3,
+    title: "Relatórios detalhados",
+    description: "Visualizações, cliques e leads por anúncio.",
+  },
+];
+
+const FIELD =
+  "w-full min-h-11 rounded-rp border border-rp-line bg-rp-surface px-4 py-2 text-[15px] text-rp-ink focus:border-rp-cobalt focus:outline-none";
 
 export default async function AgenciasPage() {
   const session = await getSession();
   if (!session) redirect("/auth");
 
   return (
-    <main className="min-h-screen max-w-5xl mx-auto px-6 py-12">
-      <a href="/" className="text-primary hover:underline mb-6 inline-block">
-        ← Voltar
-      </a>
-      <h1 className="text-4xl font-extrabold mb-4">Portal para Agências Imobiliárias</h1>
-      <p className="text-xl text-secondary mb-8">
-        Publique os seus imóveis no RadarPro Portugal e alcance mais compradores.
-      </p>
-
+    <PageShell
+      eyebrow="Agências"
+      title="Portal para agências imobiliárias"
+      description="Publique os seus imóveis no RadarPro Portugal e alcance mais compradores."
+      backHref="/"
+      backLabel="Voltar ao início"
+    >
       {/* Pricing for agencies */}
-      <div className="grid md:grid-cols-3 gap-6 mb-12">
-        <div className="border rounded-2xl p-6">
-          <h2 className="text-xl font-bold mb-2">Básico</h2>
-          <div className="text-3xl font-extrabold mb-4">49€<span className="text-sm text-secondary">/mês</span></div>
-          <ul className="space-y-2 text-sm mb-6">
-            <li>✓ Até 10 anúncios ativos</li>
-            <li>✓ Destaque na listagem</li>
-            <li>✓ Relatório mensal</li>
-            <li>✓ Suporte por email</li>
-          </ul>
-          <button className="w-full bg-slate-100 text-foreground py-3 rounded-lg font-bold hover:bg-slate-200 transition">
-            Começar
-          </button>
-        </div>
-
-        <div className="border-2 border-primary rounded-2xl p-6 scale-105">
-          <div className="text-xs font-bold text-primary mb-2">RECOMENDADO</div>
-          <h2 className="text-xl font-bold mb-2">Profissional</h2>
-          <div className="text-3xl font-extrabold mb-4">99€<span className="text-sm text-secondary">/mês</span></div>
-          <ul className="space-y-2 text-sm mb-6">
-            <li>✓ Até 50 anúncios ativos</li>
-            <li>✓ Destaque prioritário</li>
-            <li>✓ Relatório semanal</li>
-            <li>✓ Alertas de leads</li>
-            <li>✓ Suporte prioritário</li>
-            <li>✓ API de integração</li>
-          </ul>
-          <button className="w-full bg-primary text-white py-3 rounded-lg font-bold hover:opacity-90 transition">
-            Começar
-          </button>
-        </div>
-
-        <div className="border rounded-2xl p-6">
-          <h2 className="text-xl font-bold mb-2">Enterprise</h2>
-          <div className="text-3xl font-extrabold mb-4">Sob consulta</div>
-          <ul className="space-y-2 text-sm mb-6">
-            <li>✓ Anúncios ilimitados</li>
-            <li>✓ Feed automático (XML/API)</li>
-            <li>✓ Relatórios personalizados</li>
-            <li>✓ Gestor de conta dedicado</li>
-            <li>✓ SLA garantido</li>
-          </ul>
-          <button className="w-full bg-slate-100 text-foreground py-3 rounded-lg font-bold hover:bg-slate-200 transition">
-            Contactar
-          </button>
-        </div>
+      <div className="mb-12 grid gap-6 md:grid-cols-3">
+        {PLANS.map((plan) => (
+          <article
+            key={plan.name}
+            className={`flex flex-col border bg-rp-surface p-6 ${
+              plan.recommended
+                ? "border-rp-cobalt shadow-rp-2"
+                : "border-rp-line shadow-rp-1"
+            }`}
+          >
+            {plan.recommended ? (
+              <p className="rp-eyebrow mb-2 text-rp-cobalt">Recomendado</p>
+            ) : null}
+            <h2 className="rp-display text-[22px] leading-tight text-rp-ink">{plan.name}</h2>
+            <p className="rp-num mt-2 text-[32px] leading-none text-rp-ink">
+              {plan.price}
+              {plan.period ? (
+                <span className="ml-1 text-[14px] text-rp-muted">{plan.period}</span>
+              ) : null}
+            </p>
+            <ul className="my-6 space-y-2">
+              {plan.features.map((feature) => (
+                <li key={feature} className="flex items-start gap-2 text-[15px] leading-snug text-rp-ink-2">
+                  <Check size={16} className="mt-0.5 shrink-0 text-rp-cobalt" aria-hidden="true" />
+                  {feature}
+                </li>
+              ))}
+            </ul>
+            <Button
+              type="button"
+              variant={plan.recommended ? "primary" : "secondary"}
+              size="md"
+              className="mt-auto w-full"
+            >
+              {plan.cta}
+            </Button>
+          </article>
+        ))}
       </div>
 
       {/* Benefits */}
-      <h2 className="text-2xl font-bold mb-4">Porquê publicar no RadarPro?</h2>
-      <div className="grid md:grid-cols-2 gap-6 mb-12">
-        <div className="flex gap-4">
-          <div className="text-3xl">🎯</div>
-          <div>
-            <h3 className="font-bold mb-1">Público qualificado</h3>
-            <p className="text-secondary text-sm">Utilizadores que procuram ativamente oportunidades imobiliárias com desconto.</p>
-          </div>
+      <section className="mb-12">
+        <SectionHeader
+          eyebrow="Porquê publicar no RadarPro?"
+          title="O que ganha quem publica aqui"
+        />
+        <div className="mt-6 grid gap-6 md:grid-cols-2">
+          {BENEFITS.map((benefit) => {
+            const Icon = benefit.icon;
+            return (
+              <article key={benefit.title} className="flex gap-4 border-l-2 border-rp-cobalt pl-4">
+                <Icon size={22} className="mt-1 shrink-0 text-rp-cobalt" aria-hidden="true" />
+                <div>
+                  <h3 className="text-[16px] font-semibold text-rp-ink">{benefit.title}</h3>
+                  <p className="mt-1 max-w-[52ch] text-[15px] leading-relaxed text-rp-ink-2">
+                    {benefit.description}
+                  </p>
+                </div>
+              </article>
+            );
+          })}
         </div>
-        <div className="flex gap-4">
-          <div className="text-3xl">📊</div>
-          <div>
-            <h3 className="font-bold mb-1">Score de oportunidade</h3>
-            <p className="text-secondary text-sm">Cada anúncio recebe um score automático que ajuda os compradores a decidir.</p>
-          </div>
-        </div>
-        <div className="flex gap-4">
-          <div className="text-3xl">🔔</div>
-          <div>
-            <h3 className="font-bold mb-1">Alertas automáticos</h3>
-            <p className="text-secondary text-sm">Os seus anúncios são enviados por email aos utilizadores com pesquisas correspondentes.</p>
-          </div>
-        </div>
-        <div className="flex gap-4">
-          <div className="text-3xl">📈</div>
-          <div>
-            <h3 className="font-bold mb-1">Relatórios detalhados</h3>
-            <p className="text-secondary text-sm">Visualizações, cliques e leads por anúncio.</p>
-          </div>
-        </div>
-      </div>
+      </section>
 
       {/* Contact form */}
-      <div className="bg-slate-50 border rounded-2xl p-8">
-        <h2 className="text-2xl font-bold mb-4">Contacte-nos</h2>
-        <p className="text-secondary mb-6">Preencha o formulário e entraremos em contacto.</p>
-        <form className="space-y-4 max-w-lg">
+      <section className="border border-rp-line bg-rp-surface p-8">
+        <SectionHeader eyebrow="Contacto" title="Contacte-nos" description="Preencha o formulário e entraremos em contacto." />
+        <form className="mt-6 grid max-w-lg gap-4">
           <div>
-            <label className="block text-sm font-medium mb-1">Nome da agência</label>
-            <input type="text" className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:outline-none" />
+            <label htmlFor="agencia-nome" className="rp-eyebrow mb-1 block text-rp-muted">
+              Nome da agência
+            </label>
+            <input id="agencia-nome" type="text" className={FIELD} />
           </div>
           <div>
-            <label className="block text-sm font-medium mb-1">Email</label>
-            <input type="email" className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:outline-none" />
+            <label htmlFor="agencia-email" className="rp-eyebrow mb-1 block text-rp-muted">
+              Email
+            </label>
+            <input id="agencia-email" type="email" className={FIELD} />
           </div>
           <div>
-            <label className="block text-sm font-medium mb-1">Telefone</label>
-            <input type="tel" className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:outline-none" />
+            <label htmlFor="agencia-telefone" className="rp-eyebrow mb-1 block text-rp-muted">
+              Telefone
+            </label>
+            <input id="agencia-telefone" type="tel" className={FIELD} />
           </div>
           <div>
-            <label className="block text-sm font-medium mb-1">Mensagem</label>
-            <textarea rows={4} className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:outline-none" />
+            <label htmlFor="agencia-mensagem" className="rp-eyebrow mb-1 block text-rp-muted">
+              Mensagem
+            </label>
+            <textarea id="agencia-mensagem" rows={4} className={FIELD} />
           </div>
-          <button type="submit" className="bg-primary text-white px-6 py-3 rounded-lg font-bold hover:opacity-90 transition">
-            Enviar
-          </button>
+          <div>
+            <Button type="submit" variant="primary" size="lg">
+              Enviar
+            </Button>
+          </div>
         </form>
-      </div>
-    </main>
+      </section>
+    </PageShell>
   );
 }
