@@ -41,16 +41,18 @@ export default function AuctionCountdown({ endDate, compact = false }: AuctionCo
 
   if (compact) {
     return (
-      <span className="inline-flex items-center gap-1 text-xs font-bold text-orange-600 bg-orange-50 px-2 py-1 rounded">
-        <Clock size={12} /> {timeLeft}
+      <span className="rp-eyebrow inline-flex items-center gap-1 rounded-rp border border-rp-orange bg-[rgba(242,107,58,.14)] px-2 py-[4px] text-[12px] text-rp-anomaly">
+        <Clock size={12} aria-hidden="true" />
+        <span className="rp-num">{timeLeft}</span>
       </span>
     );
   }
 
   return (
-    <div className="flex items-center gap-2 text-sm">
-      <Gavel size={16} className="text-orange-600" />
-      <span className="font-bold text-orange-600">Termina em: {timeLeft}</span>
+    <div className="flex items-center gap-2 text-[14px]">
+      <Gavel size={16} className="text-rp-orange" aria-hidden="true" />
+      <span className="font-medium text-rp-ink-2">Termina em:</span>
+      <span className="rp-num font-medium text-rp-anomaly">{timeLeft}</span>
     </div>
   );
 }

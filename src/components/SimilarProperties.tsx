@@ -1,18 +1,29 @@
-import { db } from "@/db";
-import { properties } from "@/db/schema";
-import { eq, and, ne, desc } from "drizzle-orm";
 import { getAllActiveProperties } from "@/lib/queries";
-import Link from "next/link";
-import Image from "next/image";
-import { MapPin, TrendingDown } from "lucide-react";
-import PropertyImage from "@/components/PropertyImage";
-import { formatOptional, formatScore, formatScoreOutOf100 } from "@/lib/format";
+import DsPropertyCard from "@/components/ds/PropertyCard";
+import SectionHeader from "@/components/ds/SectionHeader";
+import { formatOptional, formatScoreOutOf100 } from "@/lib/format";
 
 interface Props {
   currentPropertyId: string;
   district: string;
   type: string;
   price: number;
+}
+
+function firstImage(images: string | null): string | null {
+  if (!images) return null;
+  try {
+    const parsed: unknown = JSON.parse(images);
+    if (Array.isArray(parsed) && typeof parsed[0] === "string") return parsed[0];
+  } catch {
+    return null;
+  }
+  return null;
+}
+
+function proxiedImage(images: string | null): string | null {
+  const url = firstImage(images);
+  return url ? `/api/img?u=${encodeURIComponent(url)}` : null;
 }
 
 export default async function SimilarProperties({ currentPropertyId, district, type, price }: Props) {
@@ -32,39 +43,45 @@ export default async function SimilarProperties({ currentPropertyId, district, t
   if (similar.length === 0) return null;
 
   return (
-    <div className="border-t pt-6 mt-6">
-      <h2 className="font-bold text-lg mb-4">Imóveis semelhantes</h2>
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+    <section className="mt-16 border-t border-rp-line pt-10">
+      <SectionHeader
+        eyebrow="Comparáveis"
+        title="Imóveis semelhantes"
+        description="Outros anúncios do mesmo distrito, dentro de 40% deste preço."
+      />
+
+      <div className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-3">
         {similar.map((prop) => {
-          const images = prop.images ? JSON.parse(prop.images) : [];
-          const imageUrl = images[0] || null;
+          const imageUrl = proxiedImage(prop.images);
+          const discount = formatOptional(prop.discountPct === null ? null : -prop.discountPct, "%");
+
+          const badges = [
+            { kind: "confidence-medium" as const, label: formatScoreOutOf100(prop.score) },
+            ...(prop.discountPct !== null
+              ? [{ kind: "opportunity" as const, label: discount }]
+              : []),
+            ...(prop.marketValue === null
+              ? [{ kind: "no-valuation" as const }]
+              : []),
+          ];
+
           return (
-            <Link
+            <DsPropertyCard
               key={prop.id}
+              title={prop.title}
+              location={prop.municipality}
+              askingPrice={prop.price}
+              estimatedValue={prop.marketValue}
+              badges={badges}
               href={`/imovel/${prop.id}`}
-              className="border rounded-xl overflow-hidden hover:shadow-lg transition group block"
-            >
-              <div className="aspect-video bg-slate-200 relative overflow-hidden">
-                <PropertyImage src={imageUrl} alt={prop.title} fill className="group-hover:scale-105 transition-transform duration-300" />
-                <div className="absolute top-2 right-2 bg-primary text-white px-2 py-0.5 rounded text-xs font-bold z-10">
-                  {formatScoreOutOf100(prop.score)}
-                </div>
-              </div>
-              <div className="p-3">
-                <h3 className="font-bold text-sm truncate">{prop.title}</h3>
-                <div className="flex items-center text-xs text-secondary mt-1">
-                  <MapPin size={12} className="mr-1" />
-                  {prop.municipality}
-                </div>
-                <div className="flex justify-between items-center mt-2">
-                  <span className="font-bold text-sm">{prop.price.toLocaleString()}€</span>
-                  <span className="text-xs text-primary font-bold">{formatOptional(prop.discountPct === null ? null : -prop.discountPct, "%")}</span>
-                </div>
-              </div>
-            </Link>
+              source={prop.sourceName}
+              imageUrl={imageUrl}
+              imageAlt={prop.title}
+              status={prop.checkStatus === "ok" ? "estimated" : "to-verify"}
+            />
           );
         })}
       </div>
-    </div>
+    </section>
   );
 }

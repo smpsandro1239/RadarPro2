@@ -89,17 +89,18 @@ const getLabel = (val: string) => {
   return labels[val] || val;
 };
 
-const getColor = (type: string, val: string) => {
-  if (type === "noise") {
-    return val === "baixo" ? "text-success" : val === "medio" ? "text-yellow-600" : "text-red-500";
+/**
+ * Tomes do design system. A cor nunca é o único sinal: o rotulo textual
+ * ("Baixo", "Médio", "Alto") acompanha sempre a barra.
+ */
+const getTone = (val: string) => {
+  if (val === "baixo" || val === "boa") {
+    return { text: "text-rp-cobalt", bar: "bg-rp-cobalt" };
   }
-  if (type === "airQuality") {
-    return val === "boa" ? "text-success" : val === "moderada" ? "text-yellow-600" : "text-red-500";
+  if (val === "medio" || val === "moderada") {
+    return { text: "text-rp-ink-2", bar: "bg-rp-amber" };
   }
-  if (type === "floodRisk" || type === "emfRisk") {
-    return val === "baixo" ? "text-success" : val === "medio" ? "text-yellow-600" : "text-red-500";
-  }
-  return "text-secondary";
+  return { text: "text-rp-anomaly", bar: "bg-rp-orange" };
 };
 
 export default function NeighborhoodRadar({ district, municipality }: NeighborhoodRadarProps) {
@@ -115,82 +116,48 @@ export default function NeighborhoodRadar({ district, municipality }: Neighborho
     }, 500);
   }, [district, municipality]);
 
+  const meters = [
+    { id: "noise", label: "Ruído urbano", value: data.noise, width: data.noise === "baixo" ? "30%" : data.noise === "medio" ? "60%" : "90%" },
+    { id: "airQuality", label: "Qualidade do ar", value: data.airQuality, width: data.airQuality === "boa" ? "80%" : data.airQuality === "moderada" ? "60%" : "40%" },
+    { id: "floodRisk", label: "Risco de inundações", value: data.floodRisk, width: data.floodRisk === "baixo" ? "20%" : data.floodRisk === "medio" ? "50%" : "80%" },
+    { id: "emfRisk", label: "Radiação eletromagnética", value: data.emfRisk, width: data.emfRisk === "baixo" ? "20%" : data.emfRisk === "medio" ? "40%" : "60%" },
+  ];
+
   return (
-    <div className="border rounded-2xl p-6">
-      <h3 className="font-bold text-lg mb-4 flex items-center gap-2">
-        <Home size={20} className="text-primary" />
+    <section
+      className="border border-rp-line bg-rp-surface p-5 shadow-rp-1"
+      aria-busy={loading}
+      aria-label={`Radar da vizinhança: ${municipality}, ${district}`}
+    >
+      <h2 className="rp-display flex items-center gap-2 text-[24px] leading-tight text-rp-ink">
+        <Home size={20} className="text-rp-cobalt" aria-hidden="true" />
         Radar da Vizinhança
-      </h3>
-      <p className="text-xs text-secondary mb-4">
+      </h2>
+      <p className="mt-2 text-[13px] text-rp-muted">
         Informações sobre o ambiente da zona de {municipality}, {district}.
       </p>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
-        <div className="bg-white border rounded-xl p-4">
-          <div className="flex items-center justify-between mb-2">
-            <span className="text-xs font-medium text-secondary">Ruído urbano</span>
-            <span className={`text-xs font-bold ${getColor("noise", data.noise)}`}>
-              {getLabel(data.noise)}
-            </span>
-          </div>
-          <div className="w-full bg-slate-200 h-2 rounded-full overflow-hidden">
-            <div
-              className={`h-full ${getColor("noise", data.noise)}`}
-              style={{ width: data.noise === "baixo" ? "30%" : data.noise === "medio" ? "60%" : "90%" }}
-            />
-          </div>
-        </div>
-        <div className="bg-white border rounded-xl p-4">
-          <div className="flex items-center justify-between mb-2">
-            <span className="text-xs font-medium text-secondary">Qualidade do ar</span>
-            <span className={`text-xs font-bold ${getColor("airQuality", data.airQuality)}`}>
-              {getLabel(data.airQuality)}
-            </span>
-          </div>
-          <div className="w-full bg-slate-200 h-2 rounded-full overflow-hidden">
-            <div
-              className={`h-full ${getColor("airQuality", data.airQuality)}`}
-              style={{ width: data.airQuality === "boa" ? "80%" : data.airQuality === "moderada" ? "60%" : "40%" }}
-            />
-          </div>
-        </div>
+      <div className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2">
+        {meters.map((meter) => {
+          const tone = getTone(meter.value);
+          return (
+            <div key={meter.id} className="border border-rp-line bg-rp-ceramic p-4">
+              <div className="flex items-center justify-between gap-3">
+                <span className="text-[13px] font-medium text-rp-ink-2">{meter.label}</span>
+                <span className={`rp-eyebrow ${tone.text}`}>{getLabel(meter.value)}</span>
+              </div>
+              <div className="mt-3 h-2 w-full overflow-hidden rounded-rp border border-rp-line bg-rp-surface">
+                <div className={`h-full ${tone.bar}`} style={{ width: meter.width }} />
+              </div>
+            </div>
+          );
+        })}
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <div className="bg-white border rounded-xl p-4">
-          <div className="flex items-center justify-between mb-2">
-            <span className="text-xs font-medium text-secondary">Risco de inundações</span>
-            <span className={`text-xs font-bold ${getColor("floodRisk", data.floodRisk)}`}>
-              {getLabel(data.floodRisk)}
-            </span>
-          </div>
-          <div className="w-full bg-slate-200 h-2 rounded-full overflow-hidden">
-            <div
-              className={`h-full ${getColor("floodRisk", data.floodRisk)}`}
-              style={{ width: data.floodRisk === "baixo" ? "20%" : data.floodRisk === "medio" ? "50%" : "80%" }}
-            />
-          </div>
-        </div>
-        <div className="bg-white border rounded-xl p-4">
-          <div className="flex items-center justify-between mb-2">
-            <span className="text-xs font-medium text-secondary">Radiação eletromagnética</span>
-            <span className={`text-xs font-bold ${getColor("emfRisk", data.emfRisk)}`}>
-              {getLabel(data.emfRisk)}
-            </span>
-          </div>
-          <div className="w-full bg-slate-200 h-2 rounded-full overflow-hidden">
-            <div
-              className={`h-full ${getColor("emfRisk", data.emfRisk)}`}
-              style={{ width: data.emfRisk === "baixo" ? "20%" : data.emfRisk === "medio" ? "40%" : "60%" }}
-            />
-          </div>
-        </div>
+      <div className="mt-4 flex items-start gap-2 border-l-2 border-rp-cobalt bg-rp-ceramic p-3 text-[13px] leading-relaxed text-rp-ink-2">
+        <Wind size={14} className="mt-0.5 shrink-0 text-rp-cobalt" aria-hidden="true" />
+        <span>{data.description}</span>
       </div>
-
-      <div className="mt-4 p-3 bg-slate-50 rounded-lg text-sm text-secondary">
-        <Wind size={14} className="mr-2" />
-        {data.description}
-      </div>
-    </div>
+    </section>
   );
 }

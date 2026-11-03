@@ -51,10 +51,10 @@ export default function ValuationCard({
     isActive,
   });
 
-  const riskColors: Record<string, string> = {
-    baixo: "text-success bg-green-50 border-green-200",
-    medio: "text-yellow-600 bg-yellow-50 border-yellow-200",
-    alto: "text-red-500 bg-red-50 border-red-200",
+  const riskTones: Record<string, string> = {
+    baixo: "border-rp-cobalt text-rp-cobalt",
+    medio: "border-rp-amber text-rp-ink-2",
+    alto: "border-rp-orange text-rp-anomaly",
   };
 
   const riskLabels: Record<string, string> = {
@@ -88,65 +88,74 @@ export default function ValuationCard({
   };
 
   return (
-    <div className="border rounded-2xl p-6 space-y-4">
-      <div className="flex items-center justify-between">
-        <h2 className="font-bold text-lg">Análise de Oportunidade</h2>
-        <div className={`px-3 py-1 rounded-full text-xs font-bold border ${riskColors[val.risk]}`}>
+    <section className="border border-rp-line bg-rp-surface p-5 shadow-rp-1">
+      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-rp-line pb-4">
+        <h2 className="rp-display text-[24px] leading-tight text-rp-ink">Análise de Oportunidade</h2>
+        <span
+          className={`rp-eyebrow inline-flex items-center rounded-rp border px-2 py-[5px] text-[12px] ${riskTones[val.risk]}`}
+        >
           {riskLabels[val.risk]}
+        </span>
+      </div>
+
+      <div className="mt-5 flex items-center gap-4">
+        <p className="rp-num text-[48px] leading-none text-rp-cobalt">{val.score}</p>
+        <p className="rp-num text-[14px] text-rp-muted">/100</p>
+        <div className="h-3 flex-1 overflow-hidden rounded-rp border border-rp-line bg-rp-ceramic">
+          <div
+            className="h-full bg-rp-cobalt transition-[width] duration-[var(--rp-dur-3)] ease-[var(--rp-ease-1)]"
+            style={{ width: `${val.score}%` }}
+          />
         </div>
       </div>
 
-      <div className="flex items-center gap-4">
-        <div className="text-5xl font-extrabold text-primary">{val.score}</div>
-        <div className="text-sm text-secondary">/100</div>
-        <div className="flex-1">
-          <div className="h-3 bg-slate-100 rounded-full overflow-hidden">
-            <div className="h-full bg-primary rounded-full transition-all duration-500" style={{ width: `${val.score}%` }} />
-          </div>
-        </div>
-      </div>
-
-      <div className="grid grid-cols-3 gap-2 text-xs">
+      <div className="mt-5 grid grid-cols-2 gap-2 text-[12px] sm:grid-cols-3 lg:grid-cols-5">
         {Object.entries(val.factors).map(([key, value]) => (
-          <div key={key} className="bg-slate-50 p-2 rounded-lg text-center">
-            <div className="text-secondary">{factorLabels[key]}</div>
-            <div className="font-bold">{value}/{maxValues[key]}</div>
+          <div key={key} className="border border-rp-line bg-rp-ceramic p-2 text-center">
+            <p className="text-rp-muted">{factorLabels[key]}</p>
+            <p className="rp-num mt-1 font-medium text-rp-ink">
+              {value}/{maxValues[key]}
+            </p>
           </div>
         ))}
       </div>
 
-      <div className="grid grid-cols-2 gap-4">
-        <div className="bg-slate-50 p-3 rounded-xl">
-          <div className="text-xs text-secondary uppercase font-semibold mb-1">
-            Valor de mercado (AVM)
-          </div>
-          <div className="text-xl font-bold">{formatCurrency(val.avm)}</div>
-          <div className="text-xs text-secondary">Confiança: {val.avmConfidence}</div>
+      <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
+        <div className="border border-rp-line bg-rp-ceramic p-3">
+          <p className="rp-eyebrow text-rp-muted">Valor de mercado (AVM)</p>
+          <p className="rp-num mt-1 text-[22px] leading-tight text-rp-ink">{formatCurrency(val.avm)}</p>
+          <p className="mt-1 text-[12px] text-rp-muted">Confiança: {val.avmConfidence}</p>
         </div>
-        <div className="bg-slate-50 p-3 rounded-xl">
-          <div className="text-xs text-secondary uppercase font-semibold mb-1">Faixa de valor</div>
-          <div className="text-sm font-bold">{formatCurrency(val.avmLow)} - {formatCurrency(val.avmHigh)}</div>
-          <div className="text-xs text-secondary">{val.pricePerSqm}€/m² vs {val.marketAvgPerSqm}€/m² média</div>
+        <div className="border border-rp-line bg-rp-ceramic p-3">
+          <p className="rp-eyebrow text-rp-muted">Faixa de valor</p>
+          <p className="rp-num mt-1 text-[15px] font-medium text-rp-ink">
+            {formatCurrency(val.avmLow)} - {formatCurrency(val.avmHigh)}
+          </p>
+          <p className="mt-1 text-[12px] text-rp-muted">
+            {val.pricePerSqm}€/m² vs {val.marketAvgPerSqm}€/m² média
+          </p>
         </div>
       </div>
 
-      <div className="grid grid-cols-5 gap-2 text-xs">
+      <div className="mt-4 grid grid-cols-2 gap-2 text-[12px] sm:grid-cols-3 lg:grid-cols-5">
         {Object.entries(val.valuationFactors).map(([key, value]) => (
-          <div key={key} className="bg-slate-50 p-2 rounded-lg text-center">
-            <div className="text-secondary">{valuationFactorLabels[key]}</div>
-            <div className="font-bold">{value}x</div>
+          <div key={key} className="border border-rp-line bg-rp-ceramic p-2 text-center">
+            <p className="text-rp-muted">{valuationFactorLabels[key]}</p>
+            <p className="rp-num mt-1 font-medium text-rp-ink">{value}x</p>
           </div>
         ))}
       </div>
 
-      <details className="text-xs text-secondary">
-        <summary className="cursor-pointer hover:text-primary">Metodologia AVM</summary>
-        <p className="mt-2">{val.methodology}</p>
+      <details className="group mt-4 border border-rp-line bg-rp-ceramic p-3 text-[12px] text-rp-ink-2">
+        <summary className="cursor-pointer font-medium text-rp-cobalt transition-colors duration-[var(--rp-dur-2)] ease-[var(--rp-ease-1)] hover:text-rp-ink">
+          Metodologia AVM
+        </summary>
+        <p className="mt-2 leading-relaxed">{val.methodology}</p>
       </details>
 
-      <div className="bg-primary/5 border border-primary/20 rounded-xl p-4">
-        <p className="text-sm">{formatScoreText(val.score)}</p>
+      <div className="mt-4 border-l-2 border-rp-cobalt bg-rp-ceramic p-4">
+        <p className="text-[14px] text-rp-ink">{formatScoreText(val.score)}</p>
       </div>
-    </div>
+    </section>
   );
 }

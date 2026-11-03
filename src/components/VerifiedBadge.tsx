@@ -8,35 +8,50 @@ interface VerifiedBadgeProps {
   label?: string;
 }
 
+const TONES = {
+  verified: "border-rp-cobalt bg-rp-surface text-rp-cobalt",
+  link: "border-rp-amber bg-rp-surface text-rp-ink-2",
+  expired: "border-rp-orange bg-rp-surface text-rp-anomaly",
+  none: "border-rp-line bg-rp-surface text-rp-muted",
+} as const;
+
 export default function VerifiedBadge({ isVerified, hasImage, label }: VerifiedBadgeProps) {
   const isFullyVerified = isVerified && hasImage;
 
+  const shell =
+    "rp-eyebrow inline-flex items-center gap-1.5 rounded-rp border px-2 py-[5px] text-[12px]";
+
+  if (isFullyVerified) {
+    return (
+      <span className={`${shell} ${TONES.verified}`}>
+        <ShieldCheck size={12} aria-hidden="true" />
+        {label ?? "Verificado RadarPro"}
+      </span>
+    );
+  }
+
+  if (isVerified && !hasImage) {
+    return (
+      <span className={`${shell} ${TONES.link}`}>
+        <ShieldCheck size={12} aria-hidden="true" />
+        {label ?? "Link verificado"}
+      </span>
+    );
+  }
+
+  if (!isVerified && hasImage) {
+    return (
+      <span className={`${shell} ${TONES.expired}`}>
+        <ShieldOff size={12} aria-hidden="true" />
+        {label ?? "Link expirado"}
+      </span>
+    );
+  }
+
   return (
-    <div className="flex items-center gap-2">
-      {isFullyVerified && (
-        <span className="px-2 py-1 rounded text-xs font-bold border border-green-200 bg-green-50 text-green-700 flex items-center gap-1">
-          <ShieldCheck size={12} />
-          Verificado RadarPro
-        </span>
-      )}
-      {isVerified && !hasImage && (
-        <span className="px-2 py-1 rounded text-xs font-bold border border-yellow-200 bg-yellow-50 text-yellow-700 flex items-center gap-1">
-          <ShieldCheck size={12} />
-          Link verificado
-        </span>
-      )}
-      {!isVerified && hasImage && (
-        <span className="px-2 py-1 rounded text-xs font-bold border border-orange-200 bg-orange-50 text-orange-700 flex items-center gap-1">
-          <ShieldOff size={12} />
-          Link expirado
-        </span>
-      )}
-      {!isVerified && !hasImage && (
-        <span className="px-2 py-1 rounded text-xs font-bold border border-red-200 bg-red-50 text-red-700 flex items-center gap-1">
-          <ShieldOff size={12} />
-          Sem verificação
-        </span>
-      )}
-    </div>
+    <span className={`${shell} ${TONES.none}`}>
+      <ShieldOff size={12} aria-hidden="true" />
+      {label ?? "Sem verificação"}
+    </span>
   );
 }

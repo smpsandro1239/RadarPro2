@@ -32,6 +32,12 @@ const cityCenters: Record<string, [number, number]> = {
   Coimbra: [40.2033, -8.4103],
 };
 
+const MODES = [
+  { id: "car", label: "Carro", Icon: Car },
+  { id: "transit", label: "Transporte público", Icon: Train },
+  { id: "walk", label: "A pé", Icon: Footprints },
+] as const;
+
 export default function CommuteEstimator({ propertyLat, propertyLng }: CommuteEstimatorProps) {
   const [destination, setDestination] = useState("Lisboa");
   const [mode, setMode] = useState<"car" | "transit" | "walk">("car");
@@ -46,19 +52,22 @@ export default function CommuteEstimator({ propertyLat, propertyLng }: CommuteEs
   const timeMinutes = Math.round((distance / speedKmh) * 60);
 
   return (
-    <div className="border rounded-2xl p-6 space-y-4">
-      <h2 className="font-bold text-lg flex items-center gap-2">
-        <Clock size={20} className="text-primary" />
+    <section className="border border-rp-line bg-rp-surface p-5 shadow-rp-1">
+      <h2 className="rp-display flex items-center gap-2 text-[24px] leading-tight text-rp-ink">
+        <Clock size={20} className="text-rp-cobalt" aria-hidden="true" />
         Estimativa de deslocação
       </h2>
 
-      <div className="grid grid-cols-2 gap-4">
+      <div className="mt-5 grid grid-cols-2 gap-4">
         <div>
-          <label className="block text-xs font-medium text-secondary mb-1">Destino</label>
+          <label htmlFor="commute-destination" className="rp-eyebrow mb-1 block text-rp-muted">
+            Destino
+          </label>
           <select
+            id="commute-destination"
             value={destination}
             onChange={(e) => setDestination(e.target.value)}
-            className="w-full px-3 py-2 border rounded-lg text-sm"
+            className="min-h-11 w-full rounded-rp border border-rp-line bg-rp-bg px-3 py-2 text-[14px] text-rp-ink transition-colors duration-[var(--rp-dur-2)] ease-[var(--rp-ease-1)] hover:border-rp-ink-2"
           >
             {Object.keys(cityCenters).map((city) => (
               <option key={city} value={city}>{city}</option>
@@ -66,42 +75,44 @@ export default function CommuteEstimator({ propertyLat, propertyLng }: CommuteEs
           </select>
         </div>
         <div>
-          <label className="block text-xs font-medium text-secondary mb-1">Modo</label>
+          <span className="rp-eyebrow mb-1 block text-rp-muted">Modo</span>
           <div className="flex gap-2">
-            <button
-              onClick={() => setMode("car")}
-              className={`flex-1 px-2 py-2 rounded-lg text-xs font-medium transition ${mode === "car" ? "bg-primary text-white" : "bg-slate-100"}`}
-            >
-              <Car size={14} className="mx-auto" />
-            </button>
-            <button
-              onClick={() => setMode("transit")}
-              className={`flex-1 px-2 py-2 rounded-lg text-xs font-medium transition ${mode === "transit" ? "bg-primary text-white" : "bg-slate-100"}`}
-            >
-              <Train size={14} className="mx-auto" />
-            </button>
-            <button
-              onClick={() => setMode("walk")}
-              className={`flex-1 px-2 py-2 rounded-lg text-xs font-medium transition ${mode === "walk" ? "bg-primary text-white" : "bg-slate-100"}`}
-            >
-              <Footprints size={14} className="mx-auto" />
-            </button>
+            {MODES.map(({ id, label, Icon }) => {
+              const active = mode === id;
+              return (
+                <button
+                  key={id}
+                  type="button"
+                  onClick={() => setMode(id)}
+                  aria-label={label}
+                  aria-pressed={active}
+                  title={label}
+                  className={`inline-flex min-h-11 flex-1 items-center justify-center rounded-rp border transition-[transform,box-shadow,color,background-color,border-color] duration-[var(--rp-dur-2)] ease-[var(--rp-ease-1)] ${
+                    active
+                      ? "border-rp-ink bg-rp-ink text-rp-surface shadow-rp-2"
+                      : "border-rp-line bg-rp-bg text-rp-ink-2 hover:-translate-y-px hover:border-rp-ink-2 hover:text-rp-ink"
+                  }`}
+                >
+                  <Icon size={16} aria-hidden="true" />
+                </button>
+              );
+            })}
           </div>
         </div>
       </div>
 
-      <div className="bg-slate-50 rounded-xl p-4 text-center">
-        <div className="text-2xl font-bold text-primary">
+      <div className="mt-5 border border-rp-line bg-rp-ceramic p-4 text-center">
+        <p className="rp-num text-[32px] leading-none text-rp-cobalt">
           {timeMinutes < 60 ? `${timeMinutes} min` : `${Math.floor(timeMinutes / 60)}h ${timeMinutes % 60}m`}
-        </div>
-        <div className="text-xs text-secondary mt-1">
+        </p>
+        <p className="mt-2 text-[13px] text-rp-muted">
           Distância: {distance.toFixed(1)} km (estimativa)
-        </div>
+        </p>
       </div>
 
-      <p className="text-xs text-secondary">
+      <p className="mt-4 text-[12px] leading-relaxed text-rp-muted">
         * Estimativa baseada em distância em linha reta. Tempos reais podem variar.
       </p>
-    </div>
+    </section>
   );
 }

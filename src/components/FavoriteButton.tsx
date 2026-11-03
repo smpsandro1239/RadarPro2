@@ -37,18 +37,23 @@ export default function FavoriteButton({ propertyId }: { propertyId: string }) {
     setLoading(false);
   }
 
+  const label = isFavorite ? "Remover dos favoritos" : "Adicionar aos favoritos";
+
   return (
     <button
+      type="button"
       onClick={toggle}
       disabled={loading}
-      className={`p-3 rounded-lg border transition ${
+      aria-label={label}
+      aria-pressed={isFavorite}
+      title={label}
+      className={`inline-flex min-h-11 min-w-11 items-center justify-center rounded-rp border px-3 transition-[transform,box-shadow,color,background-color,border-color] duration-[var(--rp-dur-2)] ease-[var(--rp-ease-1)] disabled:opacity-55 ${
         isFavorite
-          ? "bg-red-50 border-red-200 text-red-500"
-          : "bg-white border-slate-200 text-secondary hover:text-red-500 hover:border-red-200"
-      } disabled:opacity-50`}
-      title={isFavorite ? "Remover dos favoritos" : "Adicionar aos favoritos"}
+          ? "border-rp-orange bg-[rgba(242,107,58,.14)] text-rp-anomaly shadow-rp-1"
+          : "border-rp-line bg-rp-surface text-rp-ink-2 hover:-translate-y-px hover:text-rp-cobalt hover:shadow-[5px_5px_0_rgba(18,24,33,.18)]"
+      }`}
     >
-      <Heart size={20} fill={isFavorite ? "currentColor" : "none"} />
+      <Heart size={20} fill={isFavorite ? "currentColor" : "none"} aria-hidden="true" />
     </button>
   );
 }

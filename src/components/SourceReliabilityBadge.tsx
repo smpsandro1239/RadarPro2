@@ -16,17 +16,23 @@ export default function SourceReliabilityBadge({ sourceName, score }: SourceReli
     return "Baixa confiabilidade";
   };
 
-  const getColor = (s: number | null) => {
-    if (s === null) return "text-slate-500 bg-slate-50 border-slate-200";
-    if (s >= 13) return "text-success bg-green-50 border-green-200";
-    if (s >= 9) return "text-yellow-600 bg-yellow-50 border-yellow-200";
-    return "text-red-500 bg-red-50 border-red-200";
+  const getTone = (s: number | null) => {
+    if (s === null) return "border-rp-line bg-rp-surface text-rp-muted";
+    if (s >= 13) return "border-rp-cobalt bg-rp-surface text-rp-cobalt";
+    if (s >= 9) return "border-rp-amber bg-rp-surface text-rp-ink-2";
+    return "border-rp-orange bg-rp-surface text-rp-anomaly";
   };
 
+  const label = getLabel(score);
+
   return (
-    <div className={`px-2 py-1 rounded text-xs font-bold border ${getColor(score)} flex items-center gap-1.5`}>
-      {score !== null && (score >= 13 ? <ShieldCheck size={12} /> : <ShieldAlert size={12} />)}
-      <span>{score === null ? "—" : `${score}/15`}</span>
-    </div>
+    <span
+      className={`rp-eyebrow inline-flex items-center gap-1.5 rounded-rp border px-2 py-[5px] text-[12px] ${getTone(score)}`}
+      title={`${sourceName}: ${label}`}
+      aria-label={`${sourceName}: ${label}`}
+    >
+      {score !== null && (score >= 13 ? <ShieldCheck size={12} aria-hidden="true" /> : <ShieldAlert size={12} aria-hidden="true" />)}
+      <span className="rp-num">{score === null ? label : `${score}/15`}</span>
+    </span>
   );
 }
