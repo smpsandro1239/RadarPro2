@@ -1,7 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Bell } from "lucide-react";
+import { Bell, BellRing } from "lucide-react";
+import Button from "@/components/ds/Button";
 
 export default function PushNotificationButton() {
   const [supported, setSupported] = useState(false);
@@ -36,17 +37,13 @@ export default function PushNotificationButton() {
   if (!supported) return null;
 
   return (
-    <button
-      onClick={subscribe}
-      disabled={subscribed}
-      className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition ${
-        subscribed
-          ? "bg-success/10 text-success"
-          : "bg-primary/10 text-primary hover:bg-primary/20"
-      }`}
-    >
-      <Bell size={16} />
+    <Button onClick={subscribe} disabled={subscribed} variant="secondary" size="md">
+      {subscribed ? (
+        <BellRing size={16} aria-hidden="true" />
+      ) : (
+        <Bell size={16} aria-hidden="true" />
+      )}
       {subscribed ? "Notificações ativadas" : "Ativar notificações push"}
-    </button>
+    </Button>
   );
 }

@@ -1,3 +1,6 @@
+import Button from "@/components/ds/Button";
+import PageShell from "@/components/ds/PageShell";
+
 const faqs = [
   {
     q: "O que é o RadarPro Portugal?",
@@ -27,19 +30,34 @@ const faqs = [
 
 export default function FAQPage() {
   return (
-    <main className="min-h-screen max-w-3xl mx-auto px-6 py-12">
-      <a href="/" className="text-primary hover:underline mb-6 inline-block">
-        ← Voltar
-      </a>
-      <h1 className="text-4xl font-extrabold mb-8">Perguntas frequentes</h1>
-      <div className="space-y-6">
+    <PageShell
+      eyebrow="Perguntas frequentes"
+      title="As dúvidas que mais nos chegam"
+      backHref="/"
+      backLabel="Voltar ao início"
+    >
+      <div className="max-w-[820px] border-t border-rp-line">
         {faqs.map((faq) => (
-          <div key={faq.q} className="border-b pb-6">
-            <h2 className="text-lg font-bold mb-2">{faq.q}</h2>
-            <p className="text-secondary">{faq.a}</p>
-          </div>
+          <details key={faq.q} className="group border-b border-rp-line">
+            <summary className="flex cursor-pointer list-none items-start justify-between gap-6 py-5 text-[17px] font-semibold leading-snug text-rp-ink transition-colors duration-[var(--rp-dur-2)] ease-[var(--rp-ease-1)] hover:text-rp-cobalt [&::-webkit-details-marker]:hidden">
+              <span>{faq.q}</span>
+              <span aria-hidden="true" className="rp-num mt-[3px] shrink-0 text-rp-cobalt group-open:hidden">
+                +
+              </span>
+              <span aria-hidden="true" className="rp-num mt-[3px] hidden shrink-0 text-rp-cobalt group-open:inline">
+                −
+              </span>
+            </summary>
+            <p className="max-w-[70ch] pb-6 text-[16px] leading-[1.55] text-rp-ink-2">{faq.a}</p>
+          </details>
         ))}
       </div>
-    </main>
+
+      <div className="mt-10">
+        <Button href="/como-funciona" variant="link" size="lg">
+          Ver como calculamos o valor →
+        </Button>
+      </div>
+    </PageShell>
   );
 }

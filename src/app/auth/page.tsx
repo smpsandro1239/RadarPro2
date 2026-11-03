@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import Button from "@/components/ds/Button";
+import PageShell from "@/components/ds/PageShell";
 
 export default function AuthPage() {
   const [isLogin, setIsLogin] = useState(true);
@@ -36,63 +38,83 @@ export default function AuthPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-slate-50 px-4">
-      <div className="w-full max-w-md bg-white p-8 rounded-2xl shadow-lg">
-        <h1 className="text-2xl font-bold mb-2 text-center">
-          RadarPro <span className="text-primary">Portugal</span>
-        </h1>
-        <p className="text-secondary text-center mb-6">
-          {isLogin ? "Entre na sua conta" : "Crie a sua conta gratuita"}
-        </p>
+    <PageShell
+      eyebrow="Conta"
+      title="Entrar ou criar conta"
+      backHref="/"
+      backLabel="Voltar ao início"
+    >
+      <div className="mx-auto max-w-[440px]">
+        <div className="rounded-rp border border-rp-line bg-rp-surface p-6 shadow-rp-2 sm:p-8">
+          <p className="rp-display text-[24px] leading-none text-rp-ink">
+            RadarPro <span className="text-rp-cobalt">Portugal</span>
+          </p>
+          <p className="mt-3 text-[16px] leading-snug text-rp-ink-2">
+            {isLogin ? "Entre na sua conta" : "Crie a sua conta gratuita"}
+          </p>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium mb-1">Email</label>
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:outline-none"
-              required
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium mb-1">Password</label>
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:outline-none"
-              required
-              minLength={6}
-            />
-          </div>
-
-          {error && (
-            <div className="text-red-500 text-sm bg-red-50 p-3 rounded-lg">
-              {error}
+          <form id="formulario-conta" onSubmit={handleSubmit} className="mt-7 flex flex-col gap-5">
+            <div>
+              <label htmlFor="email" className="block text-[14px] font-medium text-rp-ink">
+                Email
+              </label>
+              <input
+                id="email"
+                name="email"
+                type="email"
+                autoComplete="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="mt-2 min-h-11 w-full rounded-rp border border-rp-line bg-rp-ceramic px-3 text-[15px] text-rp-ink transition-colors duration-[var(--rp-dur-2)] ease-[var(--rp-ease-1)] focus:border-rp-cobalt"
+                required
+              />
             </div>
-          )}
+            <div>
+              <label htmlFor="password" className="block text-[14px] font-medium text-rp-ink">
+                Password
+              </label>
+              <input
+                id="password"
+                name="password"
+                type="password"
+                autoComplete={isLogin ? "current-password" : "new-password"}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="mt-2 min-h-11 w-full rounded-rp border border-rp-line bg-rp-ceramic px-3 text-[15px] text-rp-ink transition-colors duration-[var(--rp-dur-2)] ease-[var(--rp-ease-1)] focus:border-rp-cobalt"
+                required
+                minLength={6}
+              />
+            </div>
 
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full bg-primary text-white py-3 rounded-lg font-bold hover:opacity-90 transition disabled:opacity-50"
-          >
-            {loading ? "A processar..." : isLogin ? "Entrar" : "Criar conta"}
-          </button>
-        </form>
+            {error ? (
+              <div
+                id="erro-conta"
+                role="alert"
+                className="rounded-rp border border-rp-anomaly bg-rp-surface px-3 py-2"
+              >
+                <p className="rp-eyebrow text-rp-anomaly">Erro</p>
+                <p className="mt-1 text-[14px] leading-snug text-rp-ink">{error}</p>
+              </div>
+            ) : null}
 
-        <p className="text-center mt-4 text-sm text-secondary">
-          {isLogin ? "Não tem conta?" : "Já tem conta?"}{" "}
-          <button
-            onClick={() => setIsLogin(!isLogin)}
-            className="text-primary font-medium hover:underline"
-          >
-            {isLogin ? "Registar-se" : "Entrar"}
-          </button>
-        </p>
+            <Button type="submit" disabled={loading} variant="primary" size="lg" className="w-full">
+              {loading ? "A processar..." : isLogin ? "Entrar" : "Criar conta"}
+            </Button>
+          </form>
+
+          <p className="mt-6 text-[14px] text-rp-muted">
+            {isLogin ? "Não tem conta?" : "Já tem conta?"}{" "}
+            <button
+              type="button"
+              onClick={() => setIsLogin(!isLogin)}
+              aria-controls="formulario-conta"
+              className="inline-flex min-h-11 items-center font-medium text-rp-cobalt underline decoration-[1px] underline-offset-4 transition-colors duration-[var(--rp-dur-2)] ease-[var(--rp-ease-1)] hover:text-rp-ink hover:decoration-2"
+            >
+              {isLogin ? "Registar-se" : "Entrar"}
+            </button>
+          </p>
+        </div>
       </div>
-    </div>
+    </PageShell>
   );
 }

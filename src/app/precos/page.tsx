@@ -1,8 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { getSession } from "@/lib/auth";
 import { useRouter } from "next/navigation";
+import Button from "@/components/ds/Button";
+import PageShell from "@/components/ds/PageShell";
 
 const plans = [
   {
@@ -61,58 +62,57 @@ export default function PrecosPage() {
   }
 
   return (
-    <main className="min-h-screen">
-      <section className="py-20 px-6 text-center max-w-4xl mx-auto">
-        <h1 className="text-4xl font-extrabold mb-4">
-          Planos simples, sem surpresas
-        </h1>
-        <p className="text-xl text-secondary mb-12">
-          Cancele quando quiser. Sem permanência.
-        </p>
+    <PageShell
+      eyebrow="Preços"
+      title="Planos simples, sem surpresas"
+      description="Cancele quando quiser. Sem permanência."
+      backHref="/"
+      backLabel="Voltar ao início"
+    >
+      <div className="grid max-w-[880px] gap-6 md:grid-cols-2">
+        {plans.map((plan) => (
+          <article
+            key={plan.name}
+            className={`flex flex-col rounded-rp border bg-rp-surface p-7 ${
+              plan.highlight ? "border-rp-cobalt shadow-rp-2" : "border-rp-line shadow-rp-1"
+            }`}
+          >
+            {plan.highlight ? <p className="rp-eyebrow mb-2 text-rp-cobalt">Recomendado</p> : null}
+            <h2 className="rp-display text-[26px] leading-tight text-rp-ink">{plan.name}</h2>
+            <p className="mt-1 text-[14px] text-rp-muted">{plan.description}</p>
 
-        <div className="grid md:grid-cols-2 gap-8 max-w-3xl mx-auto">
-          {plans.map((plan) => (
-            <div
-              key={plan.name}
-              className={`border rounded-2xl p-8 ${
-                plan.highlight
-                  ? "border-primary shadow-xl scale-105"
-                  : "border-slate-200"
-              }`}
-            >
-              {plan.highlight && (
-                <div className="text-xs font-bold text-primary mb-2">
-                  RECOMENDADO
-                </div>
-              )}
-              <h2 className="text-2xl font-bold mb-1">{plan.name}</h2>
-              <p className="text-secondary text-sm mb-4">{plan.description}</p>
-              <div className="mb-6">
-                <span className="text-4xl font-extrabold">{plan.price}</span>
-                <span className="text-secondary">{plan.period}</span>
-              </div>
-              <ul className="space-y-3 mb-8 text-left">
-                {plan.features.map((f) => (
-                  <li key={f} className="flex items-center gap-2 text-sm">
-                    <span className="text-success">✓</span> {f}
-                  </li>
-                ))}
-              </ul>
-              <button
+            <p className="mt-6 flex items-baseline gap-1.5">
+              <span className="rp-num text-[44px] leading-none text-rp-ink">{plan.price}</span>
+              <span className="rp-num text-[13px] text-rp-muted">{plan.period}</span>
+            </p>
+
+            <ul className="mt-7 flex flex-col gap-2.5">
+              {plan.features.map((feature) => (
+                <li key={feature} className="flex gap-3 text-[15px] leading-snug text-rp-ink-2">
+                  <span aria-hidden="true" className="mt-[10px] h-[2px] w-2 shrink-0 bg-rp-cobalt" />
+                  {feature}
+                </li>
+              ))}
+            </ul>
+
+            <div className="mt-auto pt-8">
+              <Button
                 onClick={() => handleCheckout(plan.priceId)}
                 disabled={loading}
-                className={`w-full py-3 rounded-lg font-bold transition ${
-                  plan.highlight
-                    ? "bg-primary text-white hover:opacity-90"
-                    : "bg-slate-100 text-foreground hover:bg-slate-200"
-                } disabled:opacity-50`}
+                variant={plan.highlight ? "primary" : "secondary"}
+                size="lg"
+                className="w-full"
               >
                 {loading ? "A processar..." : plan.cta}
-              </button>
+              </Button>
             </div>
-          ))}
-        </div>
-      </section>
-    </main>
+          </article>
+        ))}
+      </div>
+
+      <p className="mt-8 max-w-[70ch] text-[14px] leading-snug text-rp-muted">
+        Mensalidade fixa, sem comissão sobre a compra.
+      </p>
+    </PageShell>
   );
 }
