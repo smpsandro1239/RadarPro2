@@ -1,3 +1,6 @@
+import PageShell from "@/components/ds/PageShell";
+import Link from "next/link";
+
 const posts = [
   {
     slug: "como-comprar-imovel-leilao",
@@ -21,23 +24,29 @@ const posts = [
 
 export default function BlogPage() {
   return (
-    <main className="min-h-screen max-w-4xl mx-auto px-6 py-12">
-      <a href="/" className="text-primary hover:underline mb-6 inline-block">
-        ← Voltar
-      </a>
-      <h1 className="text-4xl font-extrabold mb-8">Blog — Guias de Investimento</h1>
-
-      <div className="space-y-8">
+    <PageShell
+      eyebrow="Blog"
+      title="Guias de investimento"
+      description="Artigos práticos sobre compra, leilão e avaliação de imóveis em Portugal."
+      backHref="/"
+      backLabel="Voltar ao início"
+    >
+      <div className="border-t border-rp-line">
         {posts.map((post) => (
-          <article key={post.slug} className="border-b pb-8">
-            <h2 className="text-2xl font-bold mb-2 hover:text-primary transition">
-              <a href={`/blog/${post.slug}`}>{post.title}</a>
+          <article key={post.slug} className="border-b border-rp-line py-8">
+            <p className="rp-eyebrow text-rp-muted">{post.date}</p>
+            <h2 className="rp-display mt-2 text-[26px] leading-tight text-rp-ink">
+              <Link
+                href={`/blog/${post.slug}`}
+                className="underline decoration-[1px] underline-offset-4 transition-colors duration-[var(--rp-dur-1)] hover:text-rp-cobalt hover:decoration-2"
+              >
+                {post.title}
+              </Link>
             </h2>
-            <p className="text-secondary mb-3">{post.excerpt}</p>
-            <div className="text-sm text-secondary">{post.date}</div>
+            <p className="mt-2 max-w-[68ch] text-[16px] leading-relaxed text-rp-ink-2">{post.excerpt}</p>
           </article>
         ))}
       </div>
-    </main>
+    </PageShell>
   );
 }
