@@ -38,7 +38,8 @@ describe("terreno rural", () => {
     // Teste legado da API v1: o motor v2 usa cobertura e limites declarados,
   // pelo que as expectativas da v1 nao se cumprem. Migracao para a v2 = Fase 3.
   // it.fails avisa se o teste comecar a passar (ou seja, quando for migrado).
-it.fails("sem rendimento → score ≤ 30, confidence 'low'", () => {
+  // TODO(Fase 3): migrar para o motor v2 — a expectativa e da API v1.
+  it.fails("sem rendimento → score ≤ 30, confidence 'low'", () => {
     const r = evaluateProperty({
       ...base,
       landUse: "unknown",
@@ -55,7 +56,8 @@ it.fails("sem rendimento → score ≤ 30, confidence 'low'", () => {
     // Teste legado da API v1: o motor v2 usa cobertura e limites declarados,
   // pelo que as expectativas da v1 nao se cumprem. Migracao para a v2 = Fase 3.
   // it.fails avisa se o teste comecar a passar (ou seja, quando for migrado).
-it.fails("proibido usar €/m² de construção para terreno rural", () => {
+  // TODO(Fase 3): migrar para o motor v2 — a expectativa e da API v1.
+  it.fails("proibido usar €/m² de construção para terreno rural", () => {
     const r = evaluateProperty({ ...base, landUse: "floresta", annualIncome: 120 });
 
     const keys = Object.keys(r.breakdown).join(" ").toLowerCase();

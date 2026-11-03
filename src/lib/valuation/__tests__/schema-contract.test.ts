@@ -101,6 +101,7 @@ describe("contrato de dados: normalize.ts <-> schema de properties", () => {
   // nao foi aplicada na BD, por isso o contrato ainda nao se cumpre. Este teste
   // tem de ser REMOVIDO (e as entradas de NOT_YET_IN_DB apagadas) no momento em
   // que a migração entrar na BD - o `it.fails` avisa se isso for esquecido.
+  // TODO(WP4): aplicar a migracao 0002 na BD local e remover este it.fails.
   it.fails("não há lacunas por resolver: o motor lê apenas colunas existentes", () => {
     expect(
       Object.keys(NOT_YET_IN_DB),

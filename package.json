@@ -15,6 +15,7 @@
     "typecheck:scripts": "tsc --noEmit -p tsconfig.scripts.json",
     "verify": "npm run typecheck && npm run typecheck:scripts && npm run test && npm run build",
     "release:check": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/check-token-rotated.ts",
+    "check:ids": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/check-property-ids.ts",
     "db:generate": "drizzle-kit generate",
     "db:push": "drizzle-kit push"
   },

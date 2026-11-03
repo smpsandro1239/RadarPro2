@@ -9,7 +9,7 @@
  * Sem CRON_SECRET configurado o acesso por segredo é recusado: escrever na BD
  * fica dependente da sessão de admin, nunca aberta.
  */
-import { timingSafeEqual } from "node:crypto";
+import { createHash, timingSafeEqual } from "node:crypto";
 import { NextResponse } from "next/server";
 import { ADMIN_EMAIL, getSession } from "@/lib/auth";
 
@@ -36,9 +36,14 @@ export async function authorizeWrite(request: Request): Promise<NextResponse | n
   return null;
 }
 
+/**
+ * Compara em tempo constante. Compara sempre dois digests SHA-256 (32 bytes),
+ * para nao revelar pelo tempo de execucao o tamanho do segredo.
+ */
 function safeEqual(a: string, b: string): boolean {
-  const left = Buffer.from(a);
-  const right = Buffer.from(b);
-  if (left.length !== right.length) return false;
-  return timingSafeEqual(left, right);
+  return timingSafeEqual(digest(a), digest(b));
+}
+
+function digest(value: string): Buffer {
+  return createHash("sha256").update(value, "utf8").digest();
 }
