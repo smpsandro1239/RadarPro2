@@ -1,0 +1,334 @@
+/* ==========================================================================
+   Maquete "cidade" — CSS 3D (Fase A).
+   Regras: nunca aplicar filter, opacity < 1, overflow != visible nem clip-path
+   a elementos com `preserve-3d` (isso achata a cena). O recorte fica no
+   contentor exterior (`.stage`).
+   ========================================================================== */
+
+.stage {
+  position: relative;
+  width: 100%;
+  min-height: 440px;
+  overflow: hidden;
+  perspective: 1600px;
+  perspective-origin: 50% 22%;
+  background: var(--rp-ceramic);
+  border: 1px solid var(--rp-line);
+  border-radius: var(--rp-radius);
+}
+
+.scene3d {
+  position: absolute;
+  inset: 0;
+}
+
+.plate {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 440px;
+  height: 440px;
+  margin-left: -220px;
+  margin-top: -220px;
+  transform-style: preserve-3d;
+  transform: rotateX(58deg) rotateZ(calc(45deg + var(--tilt, 0deg)));
+  will-change: transform;
+  background-color: var(--rp-ceramic);
+  background-image:
+    repeating-linear-gradient(0deg, rgba(18, 24, 33, 0.07) 0 1px, transparent 1px 22px),
+    repeating-linear-gradient(90deg, rgba(18, 24, 33, 0.07) 0 1px, transparent 1px 22px);
+}
+
+.plateEdge {
+  position: absolute;
+  left: 0;
+  top: 440px;
+  width: 440px;
+  height: 18px;
+  transform-origin: top;
+  transform: rotateX(90deg);
+  background-color: #d9e0e5;
+  background-image: repeating-linear-gradient(0deg, rgba(30, 50, 75, 0.14) 0 1px, transparent 1px 4px);
+}
+
+/* Chao */
+.ground {
+  position: absolute;
+  transform: translateZ(0.5px);
+}
+
+.roadV {
+  background-color: #2a313b;
+  background-image: repeating-linear-gradient(180deg, rgba(250, 251, 252, 0.5) 0 8px, transparent 8px 16px);
+  background-size: 2px 100%;
+  background-position: center;
+  background-repeat: repeat-y;
+}
+
+.roadH {
+  background-color: #2a313b;
+  background-image: repeating-linear-gradient(90deg, rgba(250, 251, 252, 0.5) 0 8px, transparent 8px 16px);
+  background-size: 100% 2px;
+  background-position: center;
+  background-repeat: repeat-x;
+}
+
+.park {
+  background-color: #a9cdb4;
+}
+
+.water {
+  background-color: #8db3e0;
+}
+
+/* Partes 3D */
+.part {
+  position: absolute;
+  transform-style: preserve-3d;
+  transform-origin: 50% 50%;
+}
+
+.face {
+  position: absolute;
+}
+
+.face::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(8, 16, 28, var(--shade, 0));
+}
+
+.faceTop {
+  --shade: 0;
+}
+
+.faceFront {
+  --shade: 0;
+}
+
+.faceRight {
+  --shade: 0.22;
+}
+
+.faceLeft {
+  --shade: 0.3;
+}
+
+.faceBack {
+  --shade: 0.36;
+}
+
+/* Materiais */
+.matCeramic {
+  background-color: #e7ebee;
+  background-image: repeating-linear-gradient(0deg, rgba(30, 50, 75, 0.3) 0 2px, transparent 2px 9px);
+}
+
+.matCeramicTop {
+  background-color: #f7f9fa;
+  background-image: repeating-linear-gradient(0deg, rgba(30, 50, 75, 0.22) 0 2px, transparent 2px 9px);
+}
+
+.matGlass {
+  background-color: #35506b;
+  background-image:
+    repeating-linear-gradient(0deg, rgba(175, 220, 255, 0.6) 0 3px, transparent 3px 8px),
+    repeating-linear-gradient(90deg, transparent 0 9px, rgba(10, 22, 38, 0.55) 9px 10px);
+}
+
+.matGlassTop {
+  background-color: #7c9bb6;
+  background-image:
+    repeating-linear-gradient(0deg, rgba(175, 220, 255, 0.5) 0 3px, transparent 3px 8px),
+    repeating-linear-gradient(90deg, transparent 0 9px, rgba(10, 22, 38, 0.4) 9px 10px);
+}
+
+.matOpportunity {
+  background-color: #3a3f4a;
+  background-image:
+    repeating-linear-gradient(0deg, rgba(255, 180, 100, 0.95) 0 3px, transparent 3px 8px),
+    repeating-linear-gradient(90deg, transparent 0 9px, rgba(40, 20, 10, 0.6) 9px 10px);
+}
+
+.matOpportunityTop {
+  background-color: #f26b3a;
+  background-image: repeating-linear-gradient(0deg, rgba(255, 226, 194, 0.9) 0 3px, transparent 3px 8px);
+}
+
+.matAnomaly {
+  background-image: repeating-linear-gradient(45deg, #e7b04a 0 5px, #2b3138 5px 10px);
+}
+
+.matAnomalyTop {
+  background-image: repeating-linear-gradient(45deg, #e7b04a 0 5px, #2b3138 5px 10px);
+}
+
+.matMetal {
+  background-color: #8d98a5;
+}
+
+.matMetalTop {
+  background-color: #c4cdd6;
+}
+
+.matGold {
+  background-color: #e0a030;
+}
+
+.matGoldTop {
+  background-color: #f0bc60;
+}
+
+/* Volume fantasma: diferenca ate ao valor estimado */
+.ghost {
+  background: rgba(31, 79, 163, 0.16);
+  outline: 1px solid rgba(31, 79, 163, 0.85);
+}
+
+.ghost::after {
+  content: none;
+}
+
+/* Varredura do radar */
+.sweep {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 440px;
+  height: 440px;
+  transform-style: preserve-3d;
+  transform: translateZ(1px);
+  animation: rp-sweep 9s linear infinite;
+  pointer-events: none;
+  background: conic-gradient(
+    from -55deg,
+    rgba(224, 160, 48, 0) 0,
+    rgba(224, 160, 48, 0.34) 55deg,
+    rgba(224, 160, 48, 0) 55deg
+  );
+}
+
+@keyframes rp-sweep {
+  from {
+    transform: translateZ(1px) rotate(0deg);
+  }
+  to {
+    transform: translateZ(1px) rotate(360deg);
+  }
+}
+
+.arm {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 2px;
+  height: 220px;
+  transform-origin: 50% 0;
+  transform: translateZ(1.2px) rotate(-55deg);
+  background: var(--rp-amber);
+}
+
+/* Leitura e lista de exemplos */
+.readout {
+  margin-top: 12px;
+  padding: 12px 14px;
+  background: var(--rp-surface);
+  border: 1px solid var(--rp-line);
+  border-radius: var(--rp-radius);
+  box-shadow: 4px 4px 0 rgba(18, 24, 33, 0.14);
+  min-height: 104px;
+}
+
+.readoutGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.readoutValue {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.examples {
+  list-style: none;
+  margin: 12px 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.exampleButton {
+  width: 100%;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 8px 10px;
+  text-align: left;
+  background: var(--rp-surface);
+  border: 1px solid var(--rp-line);
+  border-radius: var(--rp-radius);
+  color: var(--rp-ink);
+  cursor: pointer;
+  transition: border-color var(--rp-dur-1) var(--rp-ease-1);
+}
+
+.exampleButton:hover {
+  border-color: var(--rp-cobalt);
+}
+
+.exampleButton[aria-pressed="true"] {
+  border-color: var(--rp-cobalt);
+  box-shadow: 4px 4px 0 var(--rp-cobalt);
+}
+
+.caption {
+  margin: 10px 0 0;
+  font-size: 13px;
+  color: var(--rp-muted);
+}
+
+/* Versao movel: isometrica simplificada em SVG, sem inclinacao */
+.svgScene {
+  display: none;
+}
+
+.svgPlate {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+@media (max-width: 1100px) {
+  .plate {
+    transform: scale(0.82) rotateX(58deg) rotateZ(calc(45deg + var(--tilt, 0deg)));
+  }
+
+  .stage {
+    min-height: 380px;
+  }
+}
+
+@media (max-width: 639px) {
+  .scene3d {
+    display: none;
+  }
+
+  .svgScene {
+    display: block;
+  }
+
+  .stage {
+    min-height: 0;
+    perspective: none;
+  }
+
+  .examples {
+    grid-template-columns: 1fr;
+  }
+}

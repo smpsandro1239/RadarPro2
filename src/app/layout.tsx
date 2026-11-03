@@ -5,6 +5,7 @@ import CookieBanner from "@/components/CookieBanner";
 import SeedDataBanner from "@/components/SeedDataBanner";
 import ServiceWorkerRegistration from "@/components/ServiceWorkerRegistration";
 import Navbar from "@/components/Navbar";
+import { fraunces, instrumentSans, plexMono } from "@/app/fonts";
 import * as Sentry from "@sentry/nextjs";
 
 export const metadata: Metadata = {
@@ -18,10 +19,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="pt">
+    <html
+      lang="pt-PT"
+      className={`${fraunces.variable} ${instrumentSans.variable} ${plexMono.variable}`}
+    >
       <head>
         <link rel="manifest" href="/manifest.json" />
-        <meta name="theme-color" content="#2563eb" />
+        <meta name="theme-color" content="#E3E8EC" />
       </head>
       <body className="antialiased">
         <Navbar />

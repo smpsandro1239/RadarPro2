@@ -22,6 +22,7 @@
     "backfill:origin": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/backfill-data-origin.ts",
     "db:stats": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/db-stats.ts",
     "scrape:dry-run": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/scrape-dry-run.ts",
+    "capture:design": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/capture-design.ts",
     "db:generate": "drizzle-kit generate",
     "db:push": "drizzle-kit push"
   },

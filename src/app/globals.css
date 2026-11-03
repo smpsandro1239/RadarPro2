@@ -1,6 +1,44 @@
 @import "tailwindcss";
 
+/* ==========================================================================
+   RadarPro — design system (WP-D)
+   Fonte unica de verdade: os tokens `--rp-*`.
+   As paginas interiores continuam a usar os aliases legados (`--primary`,
+   `--background`, ...) ate a migracao por fases; a landing e os componentes
+   novos usam apenas `--rp-*`.
+   ========================================================================== */
+
 :root {
+  /* Cor */
+  --rp-bg: #e3e8ec;
+  --rp-surface: #fafbfc;
+  --rp-ceramic: #f4f6f7;
+  --rp-ink: #121821;
+  --rp-ink-2: #2a3340;
+  --rp-muted: #4a5563;
+  --rp-line: rgba(18, 24, 33, 0.2);
+  --rp-cobalt: #1f4fa3;
+  --rp-orange: #f26b3a;
+  --rp-accent: #d9480f;
+  --rp-anomaly: #a8472b;
+  --rp-amber: #e0a030;
+  --rp-glass: #35506b;
+
+  /* Forma */
+  --rp-radius: 2px;
+  --rp-shadow-1: 4px 4px 0 rgba(18, 24, 33, 0.14);
+  --rp-shadow-2: 4px 4px 0 var(--rp-cobalt);
+  --rp-shadow-3: 0 24px 48px -24px rgba(18, 24, 33, 0.45);
+
+  /* Movimento */
+  --rp-dur-1: 120ms;
+  --rp-dur-2: 180ms;
+  --rp-dur-3: 320ms;
+  --rp-dur-4: 600ms;
+  --rp-ease-1: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --rp-ease-2: cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Aliases legados: mantem o aspecto actual das paginas interiores. */
   --background: #ffffff;
   --foreground: #0f172a;
   --primary: #2563eb;
@@ -14,10 +52,84 @@
   --color-secondary: var(--secondary);
   --color-accent: var(--accent);
   --color-success: var(--success);
+
+  --color-rp-bg: var(--rp-bg);
+  --color-rp-surface: var(--rp-surface);
+  --color-rp-ceramic: var(--rp-ceramic);
+  --color-rp-ink: var(--rp-ink);
+  --color-rp-ink-2: var(--rp-ink-2);
+  --color-rp-muted: var(--rp-muted);
+  --color-rp-line: var(--rp-line);
+  --color-rp-cobalt: var(--rp-cobalt);
+  --color-rp-orange: var(--rp-orange);
+  --color-rp-accent: var(--rp-accent);
+  --color-rp-anomaly: var(--rp-anomaly);
+  --color-rp-amber: var(--rp-amber);
+  --color-rp-glass: var(--rp-glass);
+
+  --radius-rp: 2px;
+  --shadow-rp-1: var(--rp-shadow-1);
+  --shadow-rp-2: var(--rp-shadow-2);
+  --shadow-rp-3: var(--rp-shadow-3);
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: system-ui, -apple-system, sans-serif;
+@layer base {
+  body {
+    color: var(--foreground);
+    background: var(--background);
+    font-family: var(--font-instrument-sans), system-ui, -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Foco visivel e unico em todo o produto: contorno cobalto de 2 px. */
+  :focus-visible {
+    outline: 2px solid var(--rp-cobalt);
+    outline-offset: 2px;
+  }
+
+  /* Alvos de toque: 44 px minimos nos controlos interactivos do design system. */
+  button,
+  a[href],
+  input,
+  select,
+  textarea {
+    touch-action: manipulation;
+  }
+}
+
+@layer components {
+  .rp-display {
+    font-family: var(--font-fraunces), Georgia, "Times New Roman", serif;
+    letter-spacing: -0.02em;
+  }
+
+  .rp-mono {
+    font-family: var(--font-plex-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
+
+  /* Rotulo mono para eyebrows, numeros e etiquetas. */
+  .rp-eyebrow {
+    font-family: var(--font-plex-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 12px;
+    line-height: 1.4;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .rp-num {
+    font-family: var(--font-plex-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+/* Todo o movimento respeita a preferencia do sistema. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
 }

@@ -5,7 +5,7 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: "*",
       allow: "/",
-      disallow: ["/app/", "/api/"],
+      disallow: ["/app/", "/api/", "/styleguide"],
     },
     sitemap: "https://radarpro-portugal.vercel.app/sitemap.xml",
   };
