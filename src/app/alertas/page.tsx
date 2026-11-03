@@ -1,8 +1,11 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Bell, Trash2, Plus } from "lucide-react";
+import { Trash2, Plus } from "lucide-react";
 import PushNotificationButton from "@/components/PushNotificationButton";
+import PageShell from "@/components/ds/PageShell";
+import EmptyState from "@/components/ds/EmptyState";
+import Button from "@/components/ds/Button";
 
 interface Alert {
   id: string;
@@ -13,6 +16,9 @@ interface Alert {
   email: string;
   active: boolean;
 }
+
+const FIELD =
+  "w-full min-h-11 rounded-rp border border-rp-line bg-rp-surface px-3 py-2 text-[14px] text-rp-ink focus:border-rp-cobalt focus:outline-none";
 
 export default function AlertasPage() {
   const [alerts, setAlerts] = useState<Alert[]>([]);
@@ -61,32 +67,33 @@ export default function AlertasPage() {
   }
 
   return (
-    <main className="min-h-screen max-w-4xl mx-auto px-6 py-12">
-      <a href="/" className="text-primary hover:underline mb-6 inline-block">
-        ← Voltar
-      </a>
-      <div className="flex justify-between items-center mb-8">
-        <h1 className="text-4xl font-extrabold">Alertas de Oportunidades</h1>
-        <div className="flex gap-3">
+    <PageShell
+      eyebrow="Alertas"
+      title="Alertas de oportunidades"
+      description="Crie alertas por zona, tipo ou preco e receba avisos quando aparece uma oportunidade."
+      backHref="/"
+      backLabel="Voltar ao início"
+      actions={
+        <>
           <PushNotificationButton />
-          <button
-            onClick={() => setShowForm(!showForm)}
-            className="bg-primary text-white px-4 py-2 rounded-lg font-bold flex items-center gap-2 hover:opacity-90 transition"
-          >
-            <Plus size={18} /> Novo alerta
-          </button>
-        </div>
-      </div>
-
+          <Button type="button" onClick={() => setShowForm(!showForm)} variant="primary" size="md">
+            <Plus size={18} aria-hidden="true" /> Novo alerta
+          </Button>
+        </>
+      }
+    >
       {showForm && (
-        <form onSubmit={handleSubmit} className="bg-slate-50 border rounded-xl p-6 mb-8 space-y-4">
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <form onSubmit={handleSubmit} className="mb-8 border border-rp-line bg-rp-surface p-6">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div>
-              <label className="block text-sm font-medium mb-1">Distrito</label>
+              <label htmlFor="alerta-distrito" className="rp-eyebrow mb-1 block text-rp-muted">
+                Distrito
+              </label>
               <select
+                id="alerta-distrito"
                 value={form.district}
                 onChange={(e) => setForm({ ...form, district: e.target.value })}
-                className="w-full px-3 py-2 border rounded-lg"
+                className={FIELD}
               >
                 <option value="">Todos</option>
                 <option value="Lisboa">Lisboa</option>
@@ -95,11 +102,14 @@ export default function AlertasPage() {
               </select>
             </div>
             <div>
-              <label className="block text-sm font-medium mb-1">Tipo de imóvel</label>
+              <label htmlFor="alerta-tipo" className="rp-eyebrow mb-1 block text-rp-muted">
+                Tipo de imóvel
+              </label>
               <select
+                id="alerta-tipo"
                 value={form.propertyType}
                 onChange={(e) => setForm({ ...form, propertyType: e.target.value })}
-                className="w-full px-3 py-2 border rounded-lg"
+                className={FIELD}
               >
                 <option value="">Todos</option>
                 <option value="T0">T0</option>
@@ -112,21 +122,27 @@ export default function AlertasPage() {
               </select>
             </div>
             <div>
-              <label className="block text-sm font-medium mb-1">Preço máximo (€)</label>
+              <label htmlFor="alerta-preco" className="rp-eyebrow mb-1 block text-rp-muted">
+                Preço máximo (€)
+              </label>
               <input
+                id="alerta-preco"
                 type="number"
                 value={form.maxPrice}
                 onChange={(e) => setForm({ ...form, maxPrice: e.target.value })}
-                className="w-full px-3 py-2 border rounded-lg"
+                className={FIELD}
                 placeholder="Ex: 200000"
               />
             </div>
             <div>
-              <label className="block text-sm font-medium mb-1">Score mínimo</label>
+              <label htmlFor="alerta-score" className="rp-eyebrow mb-1 block text-rp-muted">
+                Score mínimo
+              </label>
               <select
+                id="alerta-score"
                 value={form.minScore}
                 onChange={(e) => setForm({ ...form, minScore: e.target.value })}
-                className="w-full px-3 py-2 border rounded-lg"
+                className={FIELD}
               >
                 <option value="">Qualquer</option>
                 <option value="70">70+</option>
@@ -135,56 +151,69 @@ export default function AlertasPage() {
               </select>
             </div>
             <div className="sm:col-span-2">
-              <label className="block text-sm font-medium mb-1">Email para alertas</label>
+              <label htmlFor="alerta-email" className="rp-eyebrow mb-1 block text-rp-muted">
+                Email para alertas
+              </label>
               <input
+                id="alerta-email"
                 type="email"
                 value={form.email}
                 onChange={(e) => setForm({ ...form, email: e.target.value })}
-                className="w-full px-3 py-2 border rounded-lg"
+                className={FIELD}
                 placeholder="seu@email.com"
               />
             </div>
           </div>
-          <button
-            type="submit"
-            className="bg-primary text-white px-6 py-2 rounded-lg font-bold hover:opacity-90 transition"
-          >
-            Criar alerta
-          </button>
+          <div className="mt-6">
+            <Button type="submit" variant="primary" size="md">
+              Criar alerta
+            </Button>
+          </div>
         </form>
       )}
 
       {loading ? (
-        <p className="text-secondary">A carregar...</p>
+        <p className="text-rp-muted">A carregar…</p>
       ) : alerts.length === 0 ? (
-        <div className="text-center py-12 text-secondary">
-          <Bell size={48} className="mx-auto mb-4 opacity-30" />
-          <p>Nenhum alerta configurado.</p>
-          <p className="text-sm">Crie um alerta para receber notificações de novas oportunidades.</p>
-        </div>
+        <EmptyState
+          title="Nenhum alerta configurado"
+          description="Crie um alerta para receber notificações de novas oportunidades."
+          action={
+            <Button type="button" variant="secondary" size="md" onClick={() => setShowForm(true)}>
+              Criar o primeiro alerta
+            </Button>
+          }
+        />
       ) : (
         <div className="space-y-4">
           {alerts.map((alert) => (
-            <div key={alert.id} className="border rounded-xl p-4 flex justify-between items-center">
-              <div>
-                <div className="font-bold">{alert.district || "Todos os distritos"}</div>
-                <div className="text-sm text-secondary">
+            <article
+              key={alert.id}
+              className="flex items-center justify-between gap-4 border border-rp-line bg-rp-surface p-4"
+            >
+              <div className="min-w-0">
+                <h2 className="rp-display text-[18px] leading-snug text-rp-ink">
+                  {alert.district || "Todos os distritos"}
+                </h2>
+                <p className="rp-num mt-1 text-[13px] text-rp-muted">
                   {alert.propertyType && `${alert.propertyType} · `}
                   {alert.maxPrice && `Até ${alert.maxPrice.toLocaleString()}€ · `}
                   {alert.minScore && `Score ${alert.minScore}+ · `}
                   {alert.email}
-                </div>
+                </p>
               </div>
               <button
+                type="button"
                 onClick={() => handleDelete(alert.id)}
-                className="text-red-500 hover:bg-red-50 p-2 rounded-lg transition"
+                aria-label="Eliminar alerta"
+                className="inline-flex min-h-11 min-w-11 shrink-0 items-center justify-center rounded-rp border border-rp-line bg-rp-surface text-rp-anomaly transition-colors duration-[var(--rp-dur-1)] hover:bg-rp-ceramic"
               >
-                <Trash2 size={18} />
+                <Trash2 size={18} aria-hidden="true" />
               </button>
-            </div>
+            </article>
           ))}
         </div>
       )}
-    </main>
+    </PageShell>
   );
 }

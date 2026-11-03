@@ -1,10 +1,11 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { MapPin, TrendingDown, Star, X, Plus } from "lucide-react";
+import { X, Plus } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
-import { formatOptional, formatScore, formatScoreOutOf100 } from "@/lib/format";
+import PageShell from "@/components/ds/PageShell";
+import { formatOptional, formatScoreOutOf100 } from "@/lib/format";
 
 interface Property {
   id: string;
@@ -56,45 +57,50 @@ export default function ComparadorPage() {
     return value ? value.toLocaleString() + "€" : "—";
   }
 
-  return (
-    <main className="min-h-screen max-w-7xl mx-auto px-6 py-12">
-      <a href="/" className="text-primary hover:underline mb-6 inline-block">
-        ← Voltar
-      </a>
-      <h1 className="text-4xl font-extrabold mb-2">Comparador de Imóveis</h1>
-      <p className="text-secondary mb-8">
-        Compare até 4 imóveis lado a lado. Selecione imóveis para comparar.
-      </p>
+  const ROW_LABEL = "border border-rp-line bg-rp-ceramic px-3 py-3 text-left align-top text-[13px] font-medium text-rp-ink";
+  const ROW_CELL = "border border-rp-line px-3 py-3 text-center align-top text-[14px] text-rp-ink";
 
+  return (
+    <PageShell
+      eyebrow="Comparador"
+      title="Comparador de imóveis"
+      description="Compare até 4 imóveis lado a lado. Selecione imóveis para comparar."
+      backHref="/"
+      backLabel="Voltar ao início"
+    >
       {/* Selected properties */}
       {selected.length > 0 && (
-        <div className="overflow-x-auto mb-8">
+        <div className="mb-8 overflow-x-auto border border-rp-line bg-rp-surface">
           <table className="w-full border-collapse">
             <thead>
-              <tr className="bg-slate-50">
-                <th className="p-3 text-left text-sm font-semibold text-secondary border">Característica</th>
+              <tr>
+                <th scope="col" className={`${ROW_LABEL} rp-eyebrow text-rp-muted`}>
+                  Característica
+                </th>
                 {selected.map((p) => {
                   const images = p.images ? JSON.parse(p.images) : [];
                   return (
-                    <th key={p.id} className="p-3 text-center border min-w-[200px]">
-                      <div className="relative">
-                        <button
-                          onClick={() => removeProperty(p.id)}
-                          className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1 hover:bg-red-600"
-                        >
-                          <X size={12} />
-                        </button>
-                        {images[0] && (
-                          <Image
-                            src={images[0]}
-                            alt={p.title}
-                            width={200}
-                            height={120}
-                            className="rounded-lg object-cover mx-auto mb-2"
-                          />
-                        )}
-                        <div className="font-bold text-sm">{p.title}</div>
-                        <div className="text-xs text-secondary">{p.municipality}, {p.district}</div>
+                    <th key={p.id} scope="col" className="relative border border-rp-line px-3 py-3 text-center align-top min-w-[200px]">
+                      <button
+                        type="button"
+                        onClick={() => removeProperty(p.id)}
+                        aria-label={`Remover ${p.title} da comparação`}
+                        className="absolute -top-2 -right-2 inline-flex h-8 w-8 items-center justify-center rounded-full border border-rp-line bg-rp-surface text-rp-anomaly transition-colors duration-[var(--rp-dur-1)] hover:bg-rp-ceramic"
+                      >
+                        <X size={14} aria-hidden="true" />
+                      </button>
+                      {images[0] && (
+                        <Image
+                          src={images[0]}
+                          alt={p.title}
+                          width={200}
+                          height={120}
+                          className="mx-auto mb-2 rounded-rp object-cover"
+                        />
+                      )}
+                      <div className="rp-display text-[16px] leading-snug text-rp-ink">{p.title}</div>
+                      <div className="mt-1 text-[12px] text-rp-muted">
+                        {p.municipality}, {p.district}
                       </div>
                     </th>
                   );
@@ -103,64 +109,64 @@ export default function ComparadorPage() {
             </thead>
             <tbody>
               <tr>
-                <td className="p-3 font-medium text-sm border bg-slate-50">Preço</td>
+                <th scope="row" className={ROW_LABEL}>Preço</th>
                 {selected.map((p) => (
-                  <td key={p.id} className="p-3 text-center border font-bold">
+                  <td key={p.id} className={`${ROW_CELL} rp-num font-medium`}>
                     {formatPrice(p.price)}
                   </td>
                 ))}
               </tr>
               <tr>
-                <td className="p-3 font-medium text-sm border bg-slate-50">Valorização</td>
+                <th scope="row" className={ROW_LABEL}>Valorização</th>
                 {selected.map((p) => (
-                  <td key={p.id} className="p-3 text-center border text-success">
+                  <td key={p.id} className={`${ROW_CELL} rp-num text-rp-cobalt`}>
                     {formatPrice(p.marketValue)}
                   </td>
                 ))}
               </tr>
               <tr>
-                <td className="p-3 font-medium text-sm border bg-slate-50">Desconto</td>
+                <th scope="row" className={ROW_LABEL}>Desconto</th>
                 {selected.map((p) => (
-                  <td key={p.id} className="p-3 text-center border text-primary font-bold">
+                  <td key={p.id} className={`${ROW_CELL} rp-num text-rp-anomaly`}>
                     {formatOptional(p.discountPct === null ? null : -p.discountPct, "%")}
                   </td>
                 ))}
               </tr>
               <tr>
-                <td className="p-3 font-medium text-sm border bg-slate-50">Score</td>
+                <th scope="row" className={ROW_LABEL}>Score</th>
                 {selected.map((p) => (
-                  <td key={p.id} className="p-3 text-center border">
-                    <span className="bg-primary text-white px-2 py-1 rounded text-xs font-bold">
+                  <td key={p.id} className={ROW_CELL}>
+                    <span className="rp-num inline-flex items-center border border-rp-line bg-rp-ceramic px-2 py-1 text-[12px] text-rp-ink">
                       {formatScoreOutOf100(p.score)}
                     </span>
                   </td>
                 ))}
               </tr>
               <tr>
-                <td className="p-3 font-medium text-sm border bg-slate-50">Rentabilidade</td>
+                <th scope="row" className={ROW_LABEL}>Rentabilidade</th>
                 {selected.map((p) => (
-                  <td key={p.id} className="p-3 text-center border">
+                  <td key={p.id} className={`${ROW_CELL} rp-num`}>
                     {formatOptional(p.rentability, "%")}
                   </td>
                 ))}
               </tr>
               <tr>
-                <td className="p-3 font-medium text-sm border bg-slate-50">Tipo</td>
+                <th scope="row" className={ROW_LABEL}>Tipo</th>
                 {selected.map((p) => (
-                  <td key={p.id} className="p-3 text-center border">{p.type}</td>
+                  <td key={p.id} className={ROW_CELL}>{p.type}</td>
                 ))}
               </tr>
               <tr>
-                <td className="p-3 font-medium text-sm border bg-slate-50">Fonte</td>
+                <th scope="row" className={ROW_LABEL}>Fonte</th>
                 {selected.map((p) => (
-                  <td key={p.id} className="p-3 text-center border text-xs">{p.sourceName}</td>
+                  <td key={p.id} className={`${ROW_CELL} text-[12px] text-rp-muted`}>{p.sourceName}</td>
                 ))}
               </tr>
               <tr>
-                <td className="p-3 font-medium text-sm border bg-slate-50">Link</td>
+                <th scope="row" className={ROW_LABEL}>Link</th>
                 {selected.map((p) => (
-                  <td key={p.id} className="p-3 text-center border">
-                    <Link href={`/imovel/${p.id}`} className="text-primary hover:underline text-sm">
+                  <td key={p.id} className={ROW_CELL}>
+                    <Link href={`/imovel/${p.id}`} className="text-rp-cobalt underline decoration-[1px] underline-offset-4 hover:text-rp-ink hover:decoration-2">
                       Ver detalhes
                     </Link>
                   </td>
@@ -173,36 +179,43 @@ export default function ComparadorPage() {
 
       {/* Add property */}
       {selectedIds.length < 4 && (
-        <div className="border rounded-xl p-6">
-          <h3 className="font-bold mb-4">Adicionar imóvel para comparar</h3>
+        <div className="border border-rp-line bg-rp-surface p-6">
+          <h2 className="rp-display mb-4 text-[20px] leading-tight text-rp-ink">
+            Adicionar imóvel para comparar
+          </h2>
+          <label htmlFor="comparador-search" className="rp-eyebrow mb-1 block text-rp-muted">
+            Pesquisar imóvel
+          </label>
           <input
+            id="comparador-search"
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Pesquisar imóvel..."
-            className="w-full px-4 py-2 border rounded-lg mb-4 focus:ring-2 focus:ring-primary focus:outline-none"
+            className="mb-4 w-full min-h-11 rounded-rp border border-rp-line bg-rp-surface px-4 py-2 text-[14px] text-rp-ink placeholder:text-rp-muted focus:border-rp-cobalt focus:outline-none"
           />
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 max-h-60 overflow-y-auto">
+          <div className="grid max-h-60 grid-cols-1 gap-3 overflow-y-auto sm:grid-cols-2 lg:grid-cols-3">
             {available.slice(0, 12).map((p) => (
               <button
                 key={p.id}
+                type="button"
                 onClick={() => addProperty(p.id)}
-                className="flex items-center gap-3 p-3 border rounded-lg hover:bg-slate-50 transition text-left"
+                className="flex min-h-11 items-center gap-3 rounded-rp border border-rp-line bg-rp-surface p-3 text-left transition-colors duration-[var(--rp-dur-1)] hover:bg-rp-ceramic"
               >
-                <Plus size={16} className="text-primary flex-shrink-0" />
-                <div className="min-w-0">
-                  <div className="font-medium text-sm truncate">{p.title}</div>
-                  <div className="text-xs text-secondary">
+                <Plus size={16} className="shrink-0 text-rp-cobalt" aria-hidden="true" />
+                <span className="min-w-0">
+                  <span className="block truncate text-[14px] font-medium text-rp-ink">{p.title}</span>
+                  <span className="rp-num block text-[12px] text-rp-muted">
                     {p.price.toLocaleString()}€ · {p.municipality}
-                  </div>
-                </div>
+                  </span>
+                </span>
               </button>
             ))}
           </div>
         </div>
       )}
 
-      {loading && <p className="text-secondary">A carregar imóveis...</p>}
-    </main>
+      {loading && <p className="text-rp-muted">A carregar imóveis…</p>}
+    </PageShell>
   );
 }

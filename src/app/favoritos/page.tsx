@@ -1,11 +1,13 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Heart, Trash2, MapPin, TrendingDown } from "lucide-react";
+import { Trash2, MapPin, TrendingDown } from "lucide-react";
 import Link from "next/link";
-import Image from "next/image";
 import PropertyImage from "@/components/PropertyImage";
-import { formatEuros, formatOptional, formatScore, formatScoreOutOf100 } from "@/lib/format";
+import PageShell from "@/components/ds/PageShell";
+import EmptyState from "@/components/ds/EmptyState";
+import Button from "@/components/ds/Button";
+import { formatEuros, formatOptional, formatScoreOutOf100 } from "@/lib/format";
 
 interface Property {
   id: string;
@@ -46,87 +48,100 @@ export default function FavoritosPage() {
   }
 
   return (
-    <main className="min-h-screen max-w-7xl mx-auto px-6 py-12">
-      <a href="/" className="text-primary hover:underline mb-6 inline-block">
-        ← Voltar
-      </a>
-      <h1 className="text-4xl font-extrabold mb-2">Meus Favoritos</h1>
-      <p className="text-secondary mb-8">
-        {properties.length} imóveis guardados
-      </p>
-
+    <PageShell
+      eyebrow="Favoritos"
+      title="Meus favoritos"
+      description={`${properties.length} imóveis guardados`}
+      backHref="/"
+      backLabel="Voltar ao início"
+    >
       {loading ? (
-        <p className="text-secondary">A carregar...</p>
+        <p className="text-rp-muted">A carregar…</p>
       ) : properties.length === 0 ? (
-        <div className="text-center py-12 text-secondary">
-          <Heart size={48} className="mx-auto mb-4 opacity-30" />
-          <p>Nenhum imóvel guardado.</p>
-          <p className="text-sm">Clique no coração nos imóveis para os guardar aqui.</p>
-          <a href="/" className="inline-block mt-4 text-primary hover:underline">
-            Explorar oportunidades →
-          </a>
-        </div>
+        <EmptyState
+          title="Nenhum imóvel guardado"
+          description="Clique no coração nos imóveis para os guardar aqui."
+          action={
+            <Button href="/oportunidades" variant="primary" size="md">
+              Explorar oportunidades →
+            </Button>
+          }
+        />
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
           {properties.map((prop) => {
             const images = prop.images ? JSON.parse(prop.images) : [];
             const imageUrl = images[0] || null;
             return (
-              <div key={prop.id} className="border rounded-2xl overflow-hidden hover:shadow-xl transition group">
-                <Link href={`/imovel/${prop.id}`} className="block">
-                  <div className="aspect-video bg-slate-200 relative overflow-hidden">
-                    <PropertyImage src={imageUrl} alt={prop.title} fill className="group-hover:scale-105 transition-transform duration-300" />
-                    <div className="absolute top-4 left-4 bg-white px-3 py-1 rounded-lg text-xs font-bold shadow-sm z-10">
-                      {prop.sourceName}
-                    </div>
-                    <div className="absolute top-4 right-4 bg-primary text-white px-3 py-1 rounded-lg text-xs font-bold z-10">
-                      {formatScoreOutOf100(prop.score)}
-                    </div>
-                  </div>
+              <article
+                key={prop.id}
+                className="group flex h-full flex-col overflow-hidden rounded-rp border border-rp-line bg-rp-surface shadow-rp-1 transition-[transform,box-shadow] duration-[var(--rp-dur-2)] ease-[var(--rp-ease-1)] hover:-translate-y-0.5 hover:shadow-[5px_5px_0_rgba(18,24,33,.18)]"
+              >
+                <Link href={`/imovel/${prop.id}`} className="relative block aspect-[16/9] overflow-hidden border-b border-rp-line bg-rp-ceramic">
+                  <PropertyImage
+                    src={imageUrl}
+                    alt={prop.title}
+                    fill
+                    className="object-cover transition-transform duration-[var(--rp-dur-2)] ease-[var(--rp-ease-1)] group-hover:scale-105"
+                  />
+                  <span className="rp-eyebrow absolute left-0 top-0 z-10 border-b border-r border-rp-line bg-rp-surface px-3 py-2 text-rp-ink-2">
+                    {prop.sourceName}
+                  </span>
+                  <span className="rp-num absolute right-0 top-0 z-10 border-b border-l border-rp-line bg-rp-surface px-3 py-2 text-[13px] text-rp-ink">
+                    {formatScoreOutOf100(prop.score)}
+                  </span>
                 </Link>
 
-                <div className="p-6">
-                  <div className="flex justify-between items-start mb-2">
-                    <h3 className="font-bold text-lg truncate flex-1">{prop.title}</h3>
+                <div className="flex flex-1 flex-col gap-3 p-5">
+                  <div className="flex items-start justify-between gap-3">
+                    <h3 className="rp-display text-[20px] leading-snug text-rp-ink">
+                      <Link href={`/imovel/${prop.id}`} className="inline-flex min-h-11 items-center underline-offset-4 hover:underline">
+                        {prop.title}
+                      </Link>
+                    </h3>
                     <button
+                      type="button"
                       onClick={() => removeFavorite(prop.id)}
-                      className="text-red-500 hover:bg-red-50 p-1 rounded transition"
+                      aria-label={`Remover ${prop.title} dos favoritos`}
+                      className="inline-flex min-h-11 min-w-11 shrink-0 items-center justify-center rounded-rp border border-rp-line bg-rp-surface text-rp-anomaly transition-colors duration-[var(--rp-dur-1)] hover:bg-rp-ceramic"
                     >
-                      <Trash2 size={16} />
+                      <Trash2 size={16} aria-hidden="true" />
                     </button>
                   </div>
 
-                  <div className="flex items-center text-sm text-secondary mb-4">
-                    <MapPin size={14} className="mr-1" />
+                  <p className="flex items-center gap-1.5 text-[13px] text-rp-muted">
+                    <MapPin size={14} aria-hidden="true" />
                     {prop.municipality}, {prop.district}
-                  </div>
+                  </p>
 
-                  <div className="grid grid-cols-2 gap-4 border-y py-4 mb-4">
+                  <dl className="grid grid-cols-2 gap-4 border-y border-rp-line py-3">
                     <div>
-                      <div className="text-xs text-secondary uppercase font-semibold">Preço</div>
-                      <div className="text-lg font-bold">{prop.price.toLocaleString()}€</div>
+                      <dt className="rp-eyebrow text-rp-muted">preço pedido</dt>
+                      <dd className="rp-num mt-1 text-[20px] leading-none text-rp-ink">{formatEuros(prop.price)}</dd>
                     </div>
                     <div>
-                      <div className="text-xs text-secondary uppercase font-semibold">Valorização</div>
-                      <div className="text-lg font-bold text-success">{formatEuros(prop.marketValue)}</div>
+                      <dt className="rp-eyebrow text-rp-muted">valorização</dt>
+                      <dd className="rp-num mt-1 text-[20px] leading-none text-rp-cobalt">
+                        {formatEuros(prop.marketValue)}
+                      </dd>
                     </div>
-                  </div>
+                  </dl>
 
-                  <div className="flex justify-between items-center">
-                    <div className="flex items-center text-primary font-bold">
-                      <TrendingDown size={18} className="mr-1" />
+                  <div className="mt-auto flex items-center justify-between gap-3">
+                    <span className="inline-flex items-center gap-1 text-[13px] text-rp-anomaly">
+                      <TrendingDown size={14} aria-hidden="true" />
                       {formatOptional(prop.discountPct === null ? null : -prop.discountPct, "%")}
-                    </div>
-                    <div className="text-sm font-medium bg-primary/10 text-primary px-3 py-1 rounded-lg">
+                    </span>
+                    <span className="rp-num border border-rp-line bg-rp-ceramic px-2 py-1 text-[12px] text-rp-ink-2">
                       Rentabilidade: {formatOptional(prop.rentability, "%")}
-                    </div>
+                    </span>
                   </div>
                 </div>
-              </div>
+              </article>
             );
           })}
         </div>
       )}
-    </main>
+    </PageShell>
   );
 }
