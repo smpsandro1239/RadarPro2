@@ -11,6 +11,9 @@ import { existsSync, mkdtempSync, readFileSync, realpathSync, rmSync, writeFileS
 import { tmpdir } from "node:os";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { isRemoteDatabaseUrl } from "../src/lib/database-url.ts";
+
+export { isRemoteDatabaseUrl };
 
 /** Fingerprints sha256[:12] de tokens Turso que ja vazaram. */
 export const KNOWN_LEAKED_FINGERPRINTS: readonly string[] = ["1bb0c1abb032"];
@@ -78,10 +81,6 @@ export function leakedFingerprints(extra?: string): string[] {
 
 export function isLeakedFingerprint(fp: string, leaked: readonly string[] = leakedFingerprints()): boolean {
   return leaked.includes(fp);
-}
-
-export function isRemoteDatabaseUrl(url: string): boolean {
-  return /^(libsql|https?|wss?):\/\//i.test(url);
 }
 
 /** Header de um JWT: false positives de URLs (CDN) nao passam neste teste. */

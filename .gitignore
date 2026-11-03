@@ -39,5 +39,11 @@ next-env.d.ts
 # drizzle
 drizzle/
 
+# base de dados local
+local.db
+local.db-journal
+local.db-wal
+local.db-shm
+
 # scripts (optional, keep seeds)
 # scripts/

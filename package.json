@@ -16,6 +16,11 @@
     "verify": "npm run typecheck && npm run typecheck:scripts && npm run test && npm run build",
     "release:check": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/check-token-rotated.ts",
     "check:ids": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/check-property-ids.ts",
+    "db:local": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/db-local.ts",
+    "db:local:reset": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/db-local.ts --reset",
+    "db:local:seed": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/db-local.ts --seed",
+    "backfill:origin": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/backfill-data-origin.ts",
+    "db:stats": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/db-stats.ts",
     "db:generate": "drizzle-kit generate",
     "db:push": "drizzle-kit push"
   },

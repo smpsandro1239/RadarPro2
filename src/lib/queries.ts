@@ -2,6 +2,8 @@ import { drizzle } from "drizzle-orm/libsql";
 import { createClient } from "@libsql/client";
 import { properties } from "@/db/schema";
 import { desc, eq, and, sql } from "drizzle-orm";
+import { showSeedData } from "@/lib/data-origin";
+import { demoDataCondition } from "@/lib/data-origin-sql";
 
 const client = createClient({
   url: process.env.TURSO_DATABASE_URL!,
@@ -10,11 +12,21 @@ const client = createClient({
 
 const db = drizzle(client);
 
+/**
+ * Condicoes das consultas publicas. Por omissao os dados de demonstracao
+ * ficam de fora (SHOW_SEED_DATA=true mostra-os, com o banner de aviso).
+ */
+function publicConditions() {
+  const conditions = [eq(properties.isActive, true)];
+  if (!showSeedData()) conditions.push(demoDataCondition());
+  return conditions;
+}
+
 export async function getLatestProperties() {
   return await db
     .select()
     .from(properties)
-    .where(eq(properties.isActive, true))
+    .where(and(...publicConditions()))
     .orderBy(desc(properties.score))
     .limit(50);
 }
@@ -23,11 +35,11 @@ export async function getPropertiesByDistrict(district: string) {
   return await db
     .select()
     .from(properties)
-    .where(and(eq(properties.district, district), eq(properties.isActive, true)));
+    .where(and(...publicConditions(), eq(properties.district, district)));
 }
 
 export async function getAllActiveProperties(listingType?: string, isAuction?: string) {
-  const conditions = [eq(properties.isActive, true)];
+  const conditions = publicConditions();
 
   if (isAuction === "true") {
     conditions.push(eq(properties.isAuction, true));
@@ -55,7 +67,7 @@ export async function getTotalActiveProperties() {
   const result = await db
     .select({ count: sql`count(*)`.mapWith(Number) })
     .from(properties)
-    .where(eq(properties.isActive, true));
+    .where(and(...publicConditions()));
 
   return Number(result[0]?.count || 0);
 }
@@ -64,7 +76,7 @@ export async function getDistinctSourceCount() {
   const result = await db
     .select({ sourceName: properties.sourceName })
     .from(properties)
-    .where(eq(properties.isActive, true))
+    .where(and(...publicConditions()))
     .groupBy(properties.sourceName);
 
   return result.length;
