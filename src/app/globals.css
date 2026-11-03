@@ -3,9 +3,6 @@
 /* ==========================================================================
    RadarPro — design system (WP-D)
    Fonte unica de verdade: os tokens `--rp-*`.
-   As paginas interiores continuam a usar os aliases legados (`--primary`,
-   `--background`, ...) ate a migracao por fases; a landing e os componentes
-   novos usam apenas `--rp-*`.
    ========================================================================== */
 
 :root {
@@ -37,22 +34,9 @@
   --rp-dur-4: 600ms;
   --rp-ease-1: cubic-bezier(0.2, 0.8, 0.2, 1);
   --rp-ease-2: cubic-bezier(0.4, 0, 0.2, 1);
-
-  /* Aliases legados: mantem o aspecto actual das paginas interiores. */
-  --background: #ffffff;
-  --foreground: #0f172a;
-  --primary: #2563eb;
-  --secondary: #64748b;
-  --accent: #f59e0b;
-  --success: #22c55e;
 }
 
 @theme {
-  --color-primary: var(--primary);
-  --color-secondary: var(--secondary);
-  --color-accent: var(--accent);
-  --color-success: var(--success);
-
   --color-rp-bg: var(--rp-bg);
   --color-rp-surface: var(--rp-surface);
   --color-rp-ceramic: var(--rp-ceramic);
@@ -75,8 +59,8 @@
 
 @layer base {
   body {
-    color: var(--foreground);
-    background: var(--background);
+    color: var(--rp-ink);
+    background: var(--rp-bg);
     font-family: var(--font-instrument-sans), system-ui, -apple-system, sans-serif;
     -webkit-font-smoothing: antialiased;
   }
