@@ -92,8 +92,42 @@ export const ALL_MARKET_DATA = [
 ];
 
 /**
+ * Medianas por DISTRITO: o ultimo nivel de fallback (freguesia > concelho > distrito).
+ *
+ * VAZIA de proposito. Nao existe fonte oficial carregada para o nivel de distrito,
+ * e um agregado calculado a partir dos municipios seria uma estatistica que
+ * nenhuma fonte publica (as unidades registadas acima) publica.
+ *
+ * Consequencia: sem estas linhas, um imovel sem mediana de freguesia nem de
+ * concelho fica sem avaliacao ("Sem avaliacao"), que e o resultado honesto.
+ *
+ * Para preencher: uma linha por distrito e tipo, com a mediana de mercado em
+ * EUR/m2, a fonte e a data de referencia, como nas tabelas acima.
+ */
+export interface DistrictMarketEntry {
+  district: string;
+  pricePerSqm: number;
+  source: "INE" | "Confidencial Imobiliário";
+  asOf: string;
+  propertyType: "apartment" | "house" | "urban_land" | "rural_land" | "commercial";
+}
+
+export const MARKET_DATA_DISTRICT: DistrictMarketEntry[] = [];
+
+/** Procura a mediana de um distrito numa tabela de distrito (parametro para poder ser testada). */
+export function findDistrictMarketData(
+  district: string,
+  propertyType: string,
+  table: DistrictMarketEntry[] = MARKET_DATA_DISTRICT,
+): DistrictMarketEntry | null {
+  if (!district) return null;
+  return table.find((entry) => entry.district === district && entry.propertyType === propertyType) ?? null;
+}
+
+/**
  * Busca mediana de preço por m² para um imóvel.
- * Ordem de preferência: paróquia > concelho > distrito.
+ * Ordem de preferência: paróquia > concelho > distrito (a tabela de distrito
+ * está vazia: sem fonte oficial carregada, o distrito não é usado).
  * Retorna null se não houver dados.
  */
 export function findMarketData(params: {
@@ -121,7 +155,18 @@ export function findMarketData(params: {
     return { pricePerSqm: munMatch.pricePerSqm, source: munMatch.source, asOf: munMatch.asOf, level: "municipality" };
   }
 
-  // 3. Sem mediana de freguesia nem de concelho — não usar distrito como fallback.
-  // O distrito é demasiado agregado (ex.: Lisboa distrito inclui VFX com preços 3× menores).
+  // 3. Sem mediana de freguesia nem de concelho — tenta o distrito.
+  // Só existe se houver uma linha na tabela de distrito (hoje não há: ver
+  // MARKET_DATA_DISTRICT). Um distrito é demasiado agregado para servir de
+  // referência automática, por isso a confiança do motor é "low" neste nível.
+  const districtMatch = findDistrictMarketData(district, propertyType);
+  if (districtMatch) {
+    return {
+      pricePerSqm: districtMatch.pricePerSqm,
+      source: districtMatch.source,
+      asOf: districtMatch.asOf,
+      level: "district",
+    };
+  }
   return null;
 }

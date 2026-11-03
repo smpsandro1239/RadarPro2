@@ -1,6 +1,17 @@
 import { db } from "@/db";
 import { properties } from "@/db/schema";
 import { eq, and } from "drizzle-orm";
+import { normalizeDistrict, resolveGeography } from "@/lib/geography";
+
+/** Rotulo em portugues para o tipo inferido (o schema guarda texto livre). */
+const ASSET_CLASS_LABEL: Record<string, string> = {
+  apartment: "Apartamento",
+  house: "Moradia",
+  urban_land: "Terreno",
+  rural_land: "Terreno rústico",
+  commercial: "Comercial",
+  garage: "Garagem",
+};
 
 export interface ScrapedProperty {
   id: string;
@@ -19,6 +30,12 @@ export interface ScrapedProperty {
   currentBid?: number;
   reservePrice?: number;
   maxBid?: number;
+  /** Geografia estruturada (canais oficiais). Tem prioridade sobre `location`. */
+  district?: string | null;
+  municipality?: string | null;
+  parish?: string | null;
+  /** Tipo do imovel ("Moradia T4"). Sem tipo, e deduzido do titulo. */
+  type?: string | null;
 }
 
 
@@ -62,6 +79,9 @@ export function inferAssetClass(type: string | null, title: string | null): { as
  */
 const supportsAreaColumn = "areaSqm" in properties;
 
+/** `parish` so existe na base depois da migracao 0002 (ver scripts/sql/0002). */
+const supportsParishColumn = "parish" in properties;
+
 export async function ingestProperty(prop: ScrapedProperty): Promise<{
   action: "inserted" | "updated" | "skipped";
   id: string;
@@ -78,15 +98,32 @@ export async function ingestProperty(prop: ScrapedProperty): Promise<{
     }
   }
 
+  const geography = resolveGeography({
+    district: prop.district,
+    municipality: prop.municipality,
+    parish: prop.parish,
+    location: prop.location,
+  });
+
+  // Sem distrito nao ha imovel para o RadarPro (a base exige o campo e o site
+  // agrupa por distrito): nao se inventa "Lisboa" como antes.
+  if (geography.district === null) {
+    console.warn(`[ingest] ${prop.id} ignorado: sem distrito reconhecivel ("${prop.location}")`);
+    return { action: "skipped", id: prop.id };
+  }
+
+  const inferred = inferAssetClass(prop.type ?? null, prop.title);
+
   const normalized = {
     id: prop.id,
     source: prop.source.toLowerCase().replace(/\s+/g, "-"),
     sourceName: prop.source,
     url: prop.url,
     title: prop.title,
-    district: prop.location.split(",").pop()?.trim() || "Lisboa",
-    municipality: prop.location,
-    type: "Apartamento", // Will be refined by parser
+    district: normalizeDistrict(geography.district) ?? geography.district,
+    municipality: geography.municipality ?? geography.district,
+    ...(supportsParishColumn ? { parish: geography.parish } : {}),
+    type: prop.type ?? ASSET_CLASS_LABEL[inferred.assetClass] ?? "",
     price: prop.price,
     // marketValue / discountPct / score / rentability sao calculados pelo motor de
     // avaliacao. Sem motor ligado ficam a null: nada de price*1.2 ou 15% inventados.
@@ -121,6 +158,7 @@ export async function ingestProperty(prop: ScrapedProperty): Promise<{
       title: normalized.title,
       district: normalized.district,
       municipality: normalized.municipality,
+      ...(supportsParishColumn ? { parish: normalized.parish } : {}),
       type: normalized.type,
       price: normalized.price,
       marketValue: normalized.marketValue,
@@ -145,7 +183,7 @@ export async function ingestProperty(prop: ScrapedProperty): Promise<{
   }
 
   // Inferir asset_class a partir de type e title
-  const { assetClass, confidence } = inferAssetClass(normalized.type, normalized.title);
+  const { assetClass, confidence } = inferred;
   (normalized as any).assetClass = assetClass;
   (normalized as any).valuationConfidence = confidence;
 
