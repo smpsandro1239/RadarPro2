@@ -1,6 +1,6 @@
 "use client";
 
-import { Camera, Building2 } from "lucide-react";
+import { Building2 } from "lucide-react";
 import Image from "next/image";
 
 interface PropertyImageProps {
@@ -16,10 +16,12 @@ interface PropertyImageProps {
 export default function PropertyImage({ src, alt, className = "", fill, width, height, sourceName }: PropertyImageProps) {
   if (!src) {
     return (
-      <div className={`bg-gradient-to-br from-slate-50 to-slate-200 flex flex-col items-center justify-center text-slate-400 ${className}`}>
-        <Building2 size={48} className="mb-3 opacity-20" />
-        <span className="text-sm font-medium text-slate-500">Sem imagem disponível</span>
-        <span className="text-xs text-slate-400 mt-1">{sourceName || "Imóvel"}</span>
+      <div
+        className={`flex flex-col items-center justify-center bg-rp-ceramic text-rp-muted ${className}`}
+      >
+        <Building2 size={40} className="mb-3 opacity-40" aria-hidden="true" />
+        <span className="rp-eyebrow text-rp-muted">Sem imagem disponível</span>
+        <span className="rp-eyebrow mt-1 text-rp-muted opacity-70">{sourceName || "Imóvel"}</span>
       </div>
     );
   }
