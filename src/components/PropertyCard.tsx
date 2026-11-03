@@ -1,8 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { MapPin, Gavel, CheckCircle, TrendingDown, AlertTriangle, ChevronDown } from "lucide-react";
+import { AlertTriangle, Gavel, MapPin, TrendingDown } from "lucide-react";
 import PropertyImage from "@/components/PropertyImage";
+import Badge, { type BadgeKind } from "@/components/ds/Badge";
+import PriceEstimateBar from "@/components/ds/PriceEstimateBar";
+import { formatEuros } from "@/lib/format";
 
 interface PropertyCardProps {
   id: string;
@@ -27,20 +30,17 @@ interface PropertyCardProps {
   assetClass?: string | null;
 }
 
-function getScoreColor(score: number | null, confidence?: string | null): string {
-  if (score === null) return "text-slate-400";
-  if (confidence === "very_low") return "text-red-500 font-extrabold";
-  if (score >= 85) return "text-success font-extrabold";
-  if (score >= 70) return "text-warning font-bold";
-  return "text-muted font-semibold";
-}
+const CHIP = "rp-eyebrow absolute z-10 inline-flex items-center gap-1.5 px-2.5 py-1.5";
 
-function getScoreBadgeVariant(score: number | null, confidence?: string | null): string {
-  if (score === null) return "bg-slate-100 text-slate-500";
-  if (confidence === "very_low") return "bg-red-50 text-red-700 border border-red-100";
-  if (score >= 85) return "bg-success/10 text-success border border-success/20";
-  if (score >= 70) return "bg-warning/10 text-warning border border-warning/20";
-  return "bg-slate-50 text-slate-600 border border-slate-200";
+function parseImages(images: string | null): string[] {
+  if (!images || typeof images !== "string") return [];
+  try {
+    const parsed: unknown = JSON.parse(images);
+    if (!Array.isArray(parsed)) return [];
+    return parsed.filter((value): value is string => typeof value === "string");
+  } catch {
+    return [];
+  }
 }
 
 function getScoreLabel(score: number | null): string {
@@ -50,13 +50,41 @@ function getScoreLabel(score: number | null): string {
   return "Moderada";
 }
 
+function getScoreTone(score: number | null, confidence?: string | null): string {
+  if (score === null) return "text-rp-muted";
+  if (confidence === "very_low") return "text-rp-anomaly";
+  if (score >= 85) return "text-rp-cobalt";
+  if (score >= 70) return "text-rp-accent";
+  return "text-rp-ink-2";
+}
+
+function buildBadges(
+  isVerified: boolean,
+  marketValue: number | null,
+  valuationConfidence?: string | null,
+): { kind: BadgeKind; label?: string }[] {
+  const badges: { kind: BadgeKind; label?: string }[] = [];
+
+  badges.push(isVerified ? { kind: "confidence-high", label: "Verificado" } : { kind: "to-verify" });
+
+  if (marketValue === null) badges.push({ kind: "no-valuation" });
+
+  if (valuationConfidence === "high") badges.push({ kind: "confidence-high" });
+  else if (valuationConfidence === "medium") badges.push({ kind: "confidence-medium" });
+  else if (valuationConfidence === "low") badges.push({ kind: "confidence-low" });
+  else if (valuationConfidence === "very_low") {
+    badges.push({ kind: "confidence-low", label: "Confiança muito baixa" });
+  }
+
+  return badges;
+}
+
 export default function PropertyCard({
   id,
   title,
   district,
   municipality,
   sourceName,
-  source,
   price,
   marketValue,
   discountPct,
@@ -70,144 +98,173 @@ export default function PropertyCard({
   maxBid,
   sqm,
   valuationConfidence,
-  assetClass,
 }: PropertyCardProps) {
-  const imageList = images ? (typeof images === "string" ? JSON.parse(images) : images) : [];
-  const imageUrl = imageList[0] || null;
+  const imageUrl = parseImages(images)[0] ?? null;
   const isVerified = checkStatus === "ok";
-  const formattedPrice = price.toLocaleString("pt-PT");
 
-  // Calcular dias restantes do leilão
   let auctionDaysLeft: number | null = null;
   if (auctionEndDate) {
     const end = typeof auctionEndDate === "number" ? auctionEndDate * 1000 : new Date(auctionEndDate).getTime();
-    const now = Date.now();
-    auctionDaysLeft = Math.max(0, Math.ceil((end - now) / (1000 * 60 * 60 * 24)));
+    auctionDaysLeft = Math.max(0, Math.ceil((end - Date.now()) / (1000 * 60 * 60 * 24)));
   }
 
-  // Badge de margem do leilão
   const auctionMargin = currentBid !== null && maxBid !== null && maxBid > 0 ? maxBid - currentBid : null;
   const auctionAboveMax = currentBid !== null && maxBid !== null && currentBid >= maxBid;
 
+  const badges = buildBadges(isVerified, marketValue, valuationConfidence);
+  const askingPrice = isAuction && currentBid !== null ? currentBid : price;
+
+  const isAuctionListing = isAuction && auctionDaysLeft !== null && auctionDaysLeft >= 0;
+  const saleTypeText = isAuctionListing
+    ? `Leilão • fecha em ${auctionDaysLeft} dias`
+    : "Preço fixo";
+  const saleTypeTone = isAuctionListing ? "bg-rp-orange text-rp-ink" : "bg-rp-ink text-rp-surface";
+
   return (
-    <Link
-      href={`/imovel/${id}`}
-      className="border rounded-2xl overflow-hidden hover:shadow-xl transition group block"
-      prefetch={false}
-    >
-      <div className="aspect-video bg-slate-200 relative overflow-hidden">
-        <PropertyImage src={imageUrl} alt={title} fill className="group-hover:scale-105 transition-transform duration-300" />
+    <article className="group flex h-full flex-col overflow-hidden rounded-rp border border-rp-line bg-rp-surface shadow-rp-1 transition-[transform,box-shadow] duration-[var(--rp-dur-2)] ease-[var(--rp-ease-1)] hover:-translate-y-0.5 hover:shadow-[5px_5px_0_rgba(18,24,33,.18)]">
+      {imageUrl ? (
+        <div className="relative aspect-[16/9] overflow-hidden border-b border-rp-line bg-rp-ceramic">
+          <Link
+            href={`/imovel/${id}`}
+            tabIndex={-1}
+            aria-hidden="true"
+            prefetch={false}
+            className="absolute inset-0 block"
+          >
+            <PropertyImage
+              src={imageUrl}
+              alt=""
+              fill
+              className="object-cover transition-transform duration-[var(--rp-dur-2)] ease-[var(--rp-ease-1)] group-hover:scale-105"
+            />
+          </Link>
 
-        {/* Tipo: Leilão ou Preço fixo */}
-        {isAuction && auctionDaysLeft !== null && auctionDaysLeft >= 0 ? (
-          <div className="absolute top-4 left-4 bg-orange-500 text-white px-2.5 py-1 rounded-lg text-xs font-bold z-10 flex items-center gap-1.5">
-            <Gavel size={12} />
-            Leilão • fecha em {auctionDaysLeft} dias
-          </div>
-        ) : (
-          <div className="absolute top-4 left-4 bg-slate-800/90 text-white px-2.5 py-1 rounded-lg text-xs font-bold z-10">
-            Preço fixo
-          </div>
-        )}
+          <span className={`${CHIP} left-0 top-0 ${saleTypeTone}`}>
+            {isAuctionListing ? <Gavel size={12} aria-hidden="true" /> : null}
+            {saleTypeText}
+          </span>
 
-        {/* Verificado */}
-        {isVerified && (
-          <div className="absolute bottom-4 right-4 bg-success text-white px-2.5 py-1 rounded-lg text-xs font-bold z-10 flex items-center gap-1.5">
-            <CheckCircle size={14} />
-            Verificado
-          </div>
-        )}
-
-        {/* Confiança muito baixa */}
-        {valuationConfidence === "very_low" && (
-          <div className="absolute bottom-4 left-4 bg-red-500 text-white px-2.5 py-1 rounded-lg text-xs font-bold z-10 flex items-center gap-1.5">
-            <AlertTriangle size={12} />
-            Confiança baixa
-          </div>
-        )}
-
-        {/* Score */}
-        <div className={`absolute top-4 right-4 px-3 py-1.5 rounded-lg text-xs font-bold z-10 ${getScoreBadgeVariant(score, valuationConfidence)} border`}>
-          {score !== null ? score : "--"}<span className="text-[10px] opacity-80 ml-0.5">/100</span>
+          <span className="rp-num absolute right-0 top-0 z-10 border-b border-l border-rp-line bg-rp-surface px-3 py-2 text-[13px] text-rp-ink">
+            {score !== null ? score : "--"}
+            <span className="ml-0.5 text-[11px] text-rp-muted">/100</span>
+          </span>
         </div>
-      </div>
-
-      <div className="p-4">
-        <div className="flex items-center justify-between mb-1">
-          <h3 className="font-bold text-base truncate">{title}</h3>
+      ) : (
+        <div className="flex items-center justify-between gap-3 border-b border-rp-line bg-rp-ink px-4 py-2.5">
+          <span
+            className={`rp-eyebrow inline-flex min-w-0 items-center gap-1.5 ${
+              isAuctionListing ? "text-rp-orange" : "text-rp-surface"
+            }`}
+          >
+            {isAuctionListing ? <Gavel size={12} aria-hidden="true" /> : null}
+            <span className="truncate">{saleTypeText}</span>
+          </span>
+          <span className="rp-num shrink-0 text-[13px] text-rp-surface">
+            {score !== null ? score : "--"}
+            <span className="ml-0.5 text-[11px] text-rp-surface/70">/100</span>
+          </span>
         </div>
-        <div className="flex items-center text-xs text-secondary mb-2.5">
-          <MapPin size={14} className="mr-1.5" />
-          <span className="truncate">{municipality}, {district}</span>
-        </div>
+      )}
 
-        {/* Preço em destaque */}
-        <div className="mb-2.5">
-          {isAuction && currentBid !== null ? (
-            <div className="flex items-baseline gap-1">
-              <span className="text-2xl font-extrabold text-primary">{currentBid.toLocaleString("pt-PT")}€</span>
-              <span className="text-xs text-secondary ml-1">lance atual</span>
-              {maxBid !== null && maxBid > 0 && (
-                <span className="text-xs text-success ml-2">Máx. p/ 15% margem: {maxBid.toLocaleString("pt-PT")}€</span>
-              )}
-            </div>
-          ) : (
-            <span className="text-2xl font-extrabold text-primary">{formattedPrice}€</span>
-          )}
-          {discountPct !== null && discountPct > 0 && (
-            <span className="text-xs text-success ml-2">
-              <TrendingDown size={12} className="mr-1" /> -{discountPct}% mercado
+      <div className="flex flex-1 flex-col gap-3 p-4">
+        {badges.length > 0 ? (
+          <div className="flex flex-wrap gap-2">
+            {badges.map((badge, index) => (
+              <Badge key={`${badge.kind}-${index}`} kind={badge.kind} label={badge.label} />
+            ))}
+          </div>
+        ) : null}
+
+        <div>
+          <h3 className="flex items-center rp-display text-[20px] leading-snug text-rp-ink">
+            <Link
+              href={`/imovel/${id}`}
+              prefetch={false}
+              className="inline-flex min-h-11 items-center underline-offset-4 hover:underline"
+            >
+              {title}
+            </Link>
+          </h3>
+          <p className="mt-1 flex items-center gap-1.5 text-[13px] text-rp-muted">
+            <MapPin size={14} aria-hidden="true" />
+            <span className="truncate">
+              {municipality}, {district}
             </span>
+          </p>
+        </div>
+
+        <div>
+          <p className="rp-eyebrow text-rp-muted">
+            {isAuction && currentBid !== null ? "lance atual" : "preço pedido"}
+          </p>
+          <p className="rp-num text-[24px] font-medium leading-tight text-rp-ink">
+            {isAuction && currentBid !== null ? formatEuros(currentBid) : formatEuros(price)}
+          </p>
+
+          {isAuction && currentBid !== null && maxBid !== null && maxBid > 0 && (
+            <p className="mt-1 text-[13px] text-rp-ink-2">
+              Máx. p/ 15% margem: {formatEuros(maxBid)}
+            </p>
+          )}
+
+          {discountPct !== null && discountPct > 0 && (
+            <p className="mt-1 inline-flex items-center gap-1 text-[13px] text-rp-anomaly">
+              <TrendingDown size={12} aria-hidden="true" /> -{discountPct}% mercado
+            </p>
           )}
         </div>
 
-        {/* Badges de leilão (margem ou acima do máximo) */}
         {isAuction && auctionAboveMax && (
-          <div className="mb-2 inline-flex items-center gap-1.5 px-2 py-1 rounded bg-red-50 text-red-700 text-xs font-bold border border-red-100">
-            <AlertTriangle size={12} /> Acima do lance máximo
-          </div>
+          <p className="inline-flex w-fit items-center gap-1.5 border border-rp-anomaly bg-rp-ceramic px-2 py-1 text-[12px] text-rp-anomaly">
+            <AlertTriangle size={12} aria-hidden="true" />
+            Acima do lance máximo
+          </p>
         )}
+
         {isAuction && auctionMargin !== null && auctionMargin > 0 && !auctionAboveMax && (
-          <div className="mb-2 inline-flex items-center gap-1.5 px-2 py-1 rounded bg-green-50 text-green-700 text-xs font-bold border border-green-100">
-            Margem: {auctionMargin.toLocaleString("pt-PT")}€
-          </div>
+          <p className="inline-flex w-fit items-center gap-1.5 border border-rp-cobalt bg-rp-ceramic px-2 py-1 text-[12px] text-rp-cobalt">
+            Margem: {formatEuros(auctionMargin)}
+          </p>
         )}
 
-        {/* Linha de 3 factos */}
-        <div className="flex items-center justify-between text-xs text-secondary mb-3">
-          <span className="flex items-center gap-1">
-            {sqm ? `${sqm}m²` : "— m²"}
-          </span>
-          <span className="flex items-center gap-1">
-            {type}
-          </span>
-          <span className="flex items-center gap-1">
-            {sourceName}
-          </span>
-        </div>
+        <dl className="grid grid-cols-3 gap-2 border-y border-rp-line py-2.5">
+          <div className="min-w-0">
+            <dt className="rp-eyebrow text-rp-muted">área</dt>
+            <dd className="rp-num mt-1 truncate text-[13px] text-rp-ink">{sqm ? `${sqm}m²` : "— m²"}</dd>
+          </div>
+          <div className="min-w-0">
+            <dt className="rp-eyebrow text-rp-muted">tipo</dt>
+            <dd className="mt-1 truncate text-[13px] text-rp-ink">{type}</dd>
+          </div>
+          <div className="min-w-0">
+            <dt className="rp-eyebrow text-rp-muted">fonte</dt>
+            <dd className="mt-1 truncate text-[13px] text-rp-ink">{sourceName}</dd>
+          </div>
+        </dl>
 
-        {/* Score único com cor semântica */}
-        <div className="flex items-center gap-2 mb-3">
-          <span className={`text-xs font-bold ${getScoreColor(score, valuationConfidence)}`}>
+        <PriceEstimateBar
+          askingPrice={askingPrice}
+          estimatedValue={marketValue}
+          status={isVerified ? "estimated" : "to-verify"}
+        />
+
+        <div className="flex items-center gap-2">
+          <span className={`rp-eyebrow ${getScoreTone(score, valuationConfidence)}`}>
             {getScoreLabel(score)}
           </span>
-          <span className="text-[10px] text-slate-400">{score !== null ? score + "/100" : "—"}</span>
-          {valuationConfidence === "very_low" && (
-            <span className="text-[10px] text-red-500 font-medium ml-1">
-              Confiança muito baixa
-            </span>
-          )}
+          <span className="rp-num text-[12px] text-rp-muted">
+            {score !== null ? `${score}/100` : "—"}
+          </span>
         </div>
 
-        <div className="mt-3">
-          <a
-            href={`/imovel/${id}`}
-            className="w-full py-2.5 border border-primary text-primary text-sm font-medium rounded-lg text-center hover:bg-primary/50 transition flex items-center justify-center gap-1.5"
-          >
-            Ver detalhes <span aria-hidden="true">→</span>
-          </a>
-        </div>
+        <Link
+          href={`/imovel/${id}`}
+          prefetch={false}
+          className="mt-auto inline-flex min-h-11 items-center justify-center gap-1.5 border border-rp-ink bg-rp-ink px-4 text-[15px] text-rp-surface transition-[transform,box-shadow] duration-[var(--rp-dur-2)] ease-[var(--rp-ease-1)] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[6px_6px_0_var(--rp-cobalt)] active:translate-x-0 active:translate-y-0"
+        >
+          Ver detalhes <span aria-hidden="true">→</span>
+        </Link>
       </div>
-    </Link>
+    </article>
   );
 }

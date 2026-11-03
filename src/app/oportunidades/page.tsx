@@ -1,9 +1,154 @@
-import { getAllActiveProperties } from "@/lib/queries";
+import type { ReactNode } from "react";
 import Link from "next/link";
-import Image from "next/image";
-import { MapPin, TrendingDown, Trophy } from "lucide-react";
+import { getAllActiveProperties } from "@/lib/queries";
 import PropertyImage from "@/components/PropertyImage";
-import { formatOptional, formatScore, formatScoreOutOf100 } from "@/lib/format";
+import DsPropertyCard from "@/components/ds/PropertyCard";
+import EmptyState from "@/components/ds/EmptyState";
+import PageShell from "@/components/ds/PageShell";
+import PriceEstimateBar from "@/components/ds/PriceEstimateBar";
+import SectionHeader from "@/components/ds/SectionHeader";
+import StatCard from "@/components/ds/StatCard";
+import { formatEuros, formatOptional, formatScoreOutOf100 } from "@/lib/format";
+
+type Property = Awaited<ReturnType<typeof getAllActiveProperties>>[number];
+
+/**
+ * O cartao do design system so expoe o titulo como link de texto. Aqui o
+ * alvo de toque tem de ficar nos 44 px, por isso esticamos o link e o
+ * cartao a partir do contentor, sem tocar no componente partilhado.
+ */
+const DS_CARD = "[&>article]:h-full [&_h3]:flex [&_h3]:items-center [&_h3>a]:inline-flex [&_h3>a]:min-h-11 [&_h3>a]:items-center";
+
+function firstImage(images: string | null): string | null {
+  if (!images) return null;
+  try {
+    const parsed: unknown = JSON.parse(images);
+    if (Array.isArray(parsed) && typeof parsed[0] === "string") return parsed[0];
+  } catch {
+    return null;
+  }
+  return null;
+}
+
+function proxiedImage(images: string | null): string | null {
+  const url = firstImage(images);
+  return url ? `/api/img?u=${encodeURIComponent(url)}` : null;
+}
+
+function discountLabel(discountPct: number | null): string {
+  return formatOptional(discountPct === null ? null : -discountPct, "%");
+}
+
+function Section({
+  index,
+  eyebrow,
+  title,
+  description,
+  children,
+}: {
+  index: string;
+  eyebrow: string;
+  title: string;
+  description?: string;
+  children: ReactNode;
+}) {
+  return (
+    <section className="mt-16 border-t border-rp-line pt-10">
+      <div className="flex items-baseline gap-3">
+        <span className="rp-num text-[12px] text-rp-muted">{index}</span>
+        <SectionHeader eyebrow={eyebrow} title={title} description={description} className="flex-1" />
+      </div>
+      <div className="mt-8">{children}</div>
+    </section>
+  );
+}
+
+function PodiumCard({ property, rank }: { property: Property; rank: number }) {
+  const imageUrl = firstImage(property.images);
+  const featured = rank === 1;
+
+  return (
+    <article
+      className={`group flex h-full flex-col overflow-hidden rounded-rp border bg-rp-surface transition-[transform,box-shadow] duration-[var(--rp-dur-2)] ease-[var(--rp-ease-1)] hover:-translate-y-0.5 ${
+        featured
+          ? "border-rp-cobalt shadow-rp-2 hover:shadow-[6px_6px_0_var(--rp-cobalt)]"
+          : "border-rp-line shadow-rp-1 hover:shadow-[5px_5px_0_rgba(18,24,33,.18)]"
+      }`}
+    >
+      {imageUrl ? (
+        <div className="relative aspect-[16/9] overflow-hidden border-b border-rp-line bg-rp-ceramic">
+          <Link
+            href={`/imovel/${property.id}`}
+            tabIndex={-1}
+            aria-hidden="true"
+            className="absolute inset-0 block"
+          >
+            <PropertyImage
+              src={imageUrl}
+              alt=""
+              fill
+              className="object-cover transition-transform duration-[var(--rp-dur-2)] ease-[var(--rp-ease-1)] group-hover:scale-105"
+            />
+          </Link>
+
+          <span
+            className={`rp-eyebrow absolute left-0 top-0 z-10 px-3 py-2 ${
+              featured ? "bg-rp-orange text-rp-ink" : "bg-rp-ink text-rp-surface"
+            }`}
+          >
+            Nº {String(rank).padStart(2, "0")}
+          </span>
+
+          <span className="rp-num absolute right-0 top-0 z-10 border-b border-l border-rp-line bg-rp-surface px-3 py-2 text-[13px] text-rp-ink">
+            {formatScoreOutOf100(property.score)}
+          </span>
+        </div>
+      ) : (
+        <div className="flex items-center justify-between gap-3 border-b border-rp-line bg-rp-ink px-4 py-2.5">
+          <span
+            className={`rp-eyebrow ${featured ? "text-rp-orange" : "text-rp-surface"}`}
+          >
+            Nº {String(rank).padStart(2, "0")}
+          </span>
+          <span className="rp-num text-[13px] text-rp-surface">
+            {formatScoreOutOf100(property.score)}
+          </span>
+        </div>
+      )}
+
+      <div className="flex flex-1 flex-col gap-3 p-4">
+        <div>
+          <h3 className="flex items-center rp-display text-[20px] leading-snug text-rp-ink">
+            <Link
+              href={`/imovel/${property.id}`}
+              className="inline-flex min-h-11 items-center underline-offset-4 hover:underline"
+            >
+              {property.title}
+            </Link>
+          </h3>
+          <p className="mt-1 text-[13px] text-rp-muted">
+            {property.municipality}, {property.district}
+          </p>
+        </div>
+
+        <div>
+          <p className="rp-eyebrow text-rp-muted">preço pedido</p>
+          <p className="rp-num text-[24px] font-medium leading-tight text-rp-ink">
+            {formatEuros(property.price)}
+          </p>
+        </div>
+
+        <PriceEstimateBar
+          askingPrice={property.price}
+          estimatedValue={property.marketValue}
+          status={property.checkStatus === "ok" ? "estimated" : "to-verify"}
+        />
+
+        <p className="mt-auto pt-1 text-[12px] text-rp-muted">Fonte: {property.sourceName}</p>
+      </div>
+    </article>
+  );
+}
 
 export default async function OportunidadesPage() {
   const properties = await getAllActiveProperties();
@@ -27,158 +172,178 @@ export default async function OportunidadesPage() {
   const bestRentability = [...properties].filter((p) => (p.rentability || 0) > 0).sort((a, b) => (b.rentability || 0) - (a.rentability || 0)).slice(0, 5);
 
   return (
-    <main className="min-h-screen max-w-7xl mx-auto px-6 py-12">
-      <a href="/" className="text-primary hover:underline mb-6 inline-block">
-        ← Voltar
-      </a>
-      <h1 className="text-4xl font-extrabold mb-2">Melhores Oportunidades</h1>
-      <p className="text-secondary mb-8">
-        Ranking das melhores oportunidades imobiliárias em Portugal, ordenadas por score.
-      </p>
-
-      {/* Top 3 podium */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-        {top10.slice(0, 3).map((prop, i) => {
-          const images = prop.images ? JSON.parse(prop.images) : [];
-          const imageUrl = images[0] || null;
-          const medals = ["🥇", "🥈", "🥉"];
-          return (
-            <Link
-              key={prop.id}
-              href={`/imovel/${prop.id}`}
-              className="border-2 border-primary rounded-2xl overflow-hidden hover:shadow-xl transition group block"
-            >
-              <div className="aspect-video bg-slate-200 relative overflow-hidden">
-                <PropertyImage src={imageUrl} alt={prop.title} fill className="group-hover:scale-105 transition-transform duration-300" />
-                <div className="absolute top-4 left-4 text-3xl z-10">{medals[i]}</div>
-                <div className="absolute top-4 right-4 bg-primary text-white px-3 py-1 rounded-lg text-sm font-bold z-10">
-                  {formatScoreOutOf100(prop.score)}
-                </div>
-              </div>
-              <div className="p-4">
-                <h3 className="font-bold text-lg truncate">{prop.title}</h3>
-                <div className="flex items-center text-sm text-secondary mt-1">
-                  <MapPin size={14} className="mr-1" />
-                  {prop.municipality}, {prop.district}
-                </div>
-                <div className="flex justify-between items-center mt-3">
-                  <span className="font-bold text-lg">{prop.price.toLocaleString()}€</span>
-                  <span className="text-primary font-bold">{formatOptional(prop.discountPct === null ? null : -prop.discountPct, "%")}</span>
-                </div>
-              </div>
-            </Link>
-          );
-        })}
-      </div>
-
-      {/* Best by district */}
-      <h2 className="text-2xl font-bold mb-4">Melhor por distrito</h2>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-        {byDistrict.map(({ district, best, count }) => (
-          <Link
-            key={district}
-            href={best ? `/imovel/${best.id}` : "#"}
-            className="bg-white border rounded-xl p-4 hover:shadow-lg transition block"
+    <PageShell
+      eyebrow="Oportunidades"
+      title="Melhores Oportunidades"
+      description="Ranking das melhores oportunidades imobiliárias em Portugal, ordenadas por score."
+    >
+      {properties.length === 0 ? (
+        <EmptyState
+          title="Nenhum imóvel encontrado"
+          description="Ainda não há imóveis ativos para ordenar."
+        />
+      ) : (
+        <>
+          <Section
+            index="01"
+            eyebrow="Pódio"
+            title="Top 3 por score"
+            description="Os três imóveis com a pontuação mais alta entre os anúncios ativos."
           >
-            <div className="font-bold text-lg mb-1">{district}</div>
-            <div className="text-sm text-secondary mb-2">{count} imóveis</div>
-            {best && (
-              <>
-                <div className="font-medium text-sm truncate">{best.title}</div>
-                <div className="flex justify-between mt-2">
-                  <span className="font-bold">{best.price.toLocaleString()}€</span>
-                  <span className="text-primary font-bold">{formatScoreOutOf100(best.score)}</span>
-                </div>
-              </>
-            )}
-          </Link>
-        ))}
-      </div>
+            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 lg:grid-rows-[auto_auto]">
+              {top10.slice(0, 3).map((prop, i) => {
+                const rank = i + 1;
+                const placement =
+                  rank === 1
+                    ? "lg:col-start-2 lg:row-start-1"
+                    : rank === 2
+                      ? "lg:col-start-1 lg:row-start-2"
+                      : "lg:col-start-3 lg:row-start-2";
 
-      {/* Top 10 ranking */}
-      <h2 className="text-2xl font-bold mb-4">Top 10 por score</h2>
-      <div className="space-y-3 mb-8">
-        {top10.map((prop, i) => {
-          const images = prop.images ? JSON.parse(prop.images) : [];
-          const imageUrl = images[0] || null;
-          return (
-            <Link
-              key={prop.id}
-              href={`/imovel/${prop.id}`}
-              className="flex items-center gap-4 bg-white border rounded-xl p-3 hover:shadow-lg transition"
-            >
-              <div className="w-8 text-center font-bold text-lg text-primary">{i + 1}</div>
-              <div className="w-16 h-12 bg-slate-200 rounded overflow-hidden relative flex-shrink-0">
-                <PropertyImage src={imageUrl} alt={prop.title} fill className="object-cover" />
-              </div>
-              <div className="flex-1 min-w-0">
-                <div className="font-bold text-sm truncate">{prop.title}</div>
-                <div className="text-xs text-secondary">{prop.municipality}, {prop.district} · {prop.sourceName}</div>
-              </div>
-              <div className="text-right">
-                <div className="font-bold">{prop.price.toLocaleString()}€</div>
-                <div className="text-xs text-primary">{formatOptional(prop.discountPct === null ? null : -prop.discountPct, "%")} · {formatScoreOutOf100(prop.score)}</div>
-              </div>
-            </Link>
-          );
-        })}
-      </div>
+                return (
+                  <div key={prop.id} className={placement}>
+                    <PodiumCard property={prop} rank={rank} />
+                  </div>
+                );
+              })}
+            </div>
+          </Section>
 
-      {/* Best by discount */}
-      <h2 className="text-2xl font-bold mb-4">Maiores descontos</h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 mb-8">
-        {bestDiscount.map((prop) => {
-          const images = prop.images ? JSON.parse(prop.images) : [];
-          const imageUrl = images[0] || null;
-          return (
-            <Link
-              key={prop.id}
-              href={`/imovel/${prop.id}`}
-              className="border rounded-xl overflow-hidden hover:shadow-lg transition group block"
-            >
-              <div className="aspect-video bg-slate-200 relative overflow-hidden">
-                <PropertyImage src={imageUrl} alt={prop.title} fill className="group-hover:scale-105 transition-transform duration-300" />
-                <div className="absolute top-2 right-2 bg-red-500 text-white px-2 py-0.5 rounded text-xs font-bold z-10">
-                  {formatOptional(prop.discountPct === null ? null : -prop.discountPct, "%")}
+          <Section
+            index="02"
+            eyebrow="Território"
+            title="Melhor por distrito"
+            description="O imóvel com melhor score em Lisboa, Porto e Braga."
+          >
+            <div className="grid gap-6 md:grid-cols-3">
+              {byDistrict.map(({ district, best, count }) => (
+                <div key={district} className="flex flex-col gap-4">
+                  <StatCard label={district} value={count} hint="imóveis neste distrito" />
+                  <Link
+                    href={best ? `/imovel/${best.id}` : "#"}
+                    className="group flex flex-1 flex-col border border-rp-line bg-rp-surface p-4 shadow-rp-1 transition-[transform,box-shadow] duration-[var(--rp-dur-2)] ease-[var(--rp-ease-1)] hover:-translate-y-0.5 hover:shadow-[5px_5px_0_rgba(18,24,33,.18)]"
+                  >
+                    <span className="rp-eyebrow text-rp-cobalt">melhor score</span>
+                    <span className="rp-display mt-1 text-[19px] leading-snug text-rp-ink">
+                      {best ? best.title : "Sem imóveis registados"}
+                    </span>
+                    <span className="mt-auto flex items-end justify-between gap-3 pt-4">
+                      <span className="rp-num text-[18px] text-rp-ink">
+                        {best ? formatEuros(best.price) : "—"}
+                      </span>
+                      <span className="rp-num text-[13px] text-rp-muted">
+                        {best ? formatScoreOutOf100(best.score) : ""}
+                      </span>
+                    </span>
+                  </Link>
                 </div>
-              </div>
-              <div className="p-3">
-                <div className="font-bold text-sm truncate">{prop.title}</div>
-                <div className="text-xs text-secondary">{prop.municipality}</div>
-                <div className="font-bold mt-1">{prop.price.toLocaleString()}€</div>
-              </div>
-            </Link>
-          );
-        })}
-      </div>
+              ))}
+            </div>
+          </Section>
 
-      {/* Best by rentability */}
-      <h2 className="text-2xl font-bold mb-4">Melhor rentabilidade</h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
-        {bestRentability.map((prop) => {
-          const images = prop.images ? JSON.parse(prop.images) : [];
-          const imageUrl = images[0] || null;
-          return (
-            <Link
-              key={prop.id}
-              href={`/imovel/${prop.id}`}
-              className="border rounded-xl overflow-hidden hover:shadow-lg transition group block"
-            >
-              <div className="aspect-video bg-slate-200 relative overflow-hidden">
-                <PropertyImage src={imageUrl} alt={prop.title} fill className="group-hover:scale-105 transition-transform duration-300" />
-                <div className="absolute top-2 right-2 bg-success text-white px-2 py-0.5 rounded text-xs font-bold z-10">
-                  {formatOptional(prop.rentability, "%")}
+          <Section
+            index="03"
+            eyebrow="Classificação"
+            title="Top 10 por score"
+            description="Os dez imóveis mais bem pontuados, por ordem decrescente."
+          >
+            <ol className="border-t border-rp-line">
+              {top10.map((prop, i) => {
+                const imageUrl = firstImage(prop.images);
+
+                return (
+                  <li key={prop.id} className="border-b border-rp-line">
+                    <Link
+                      href={`/imovel/${prop.id}`}
+                      className="group flex min-h-11 items-center gap-4 py-4 transition-colors duration-[var(--rp-dur-2)] ease-[var(--rp-ease-1)] hover:bg-rp-ceramic"
+                    >
+                      <span className="rp-num w-9 shrink-0 text-[18px] text-rp-cobalt">
+                        {String(i + 1).padStart(2, "0")}
+                      </span>
+
+                      {imageUrl ? (
+                        <span className="relative hidden h-12 w-16 shrink-0 overflow-hidden border border-rp-line bg-rp-ceramic sm:block">
+                          <PropertyImage src={imageUrl} alt="" fill className="object-cover" />
+                        </span>
+                      ) : null}
+
+                      <span className="min-w-0 flex-1">
+                        <span className="block truncate text-[15px] font-semibold text-rp-ink group-hover:text-rp-cobalt">
+                          {prop.title}
+                        </span>
+                        <span className="block truncate text-[13px] text-rp-muted">
+                          {prop.municipality}, {prop.district} · {prop.sourceName}
+                        </span>
+                      </span>
+
+                      <span className="shrink-0 text-right">
+                        <span className="rp-num block text-[16px] text-rp-ink">
+                          {formatEuros(prop.price)}
+                        </span>
+                        <span className="rp-num block text-[12px] text-rp-muted">
+                          {discountLabel(prop.discountPct)} · {formatScoreOutOf100(prop.score)}
+                        </span>
+                      </span>
+                    </Link>
+                  </li>
+                );
+              })}
+            </ol>
+          </Section>
+
+          <Section
+            index="04"
+            eyebrow="Desconto"
+            title="Maiores descontos"
+            description="Os cinco imóveis com a maior diferença face ao valor estimado."
+          >
+            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              {bestDiscount.map((prop) => (
+                <div key={prop.id} className={DS_CARD}>
+                  <DsPropertyCard
+                    title={prop.title}
+                    location={`${prop.municipality}, ${prop.district}`}
+                    askingPrice={prop.price}
+                    estimatedValue={prop.marketValue}
+                    badges={[{ kind: "opportunity", label: discountLabel(prop.discountPct) }]}
+                    href={`/imovel/${prop.id}`}
+                    source={prop.sourceName}
+                    imageUrl={proxiedImage(prop.images)}
+                    imageAlt={prop.title}
+                    status={prop.checkStatus === "ok" ? "estimated" : "to-verify"}
+                  />
                 </div>
-              </div>
-              <div className="p-3">
-                <div className="font-bold text-sm truncate">{prop.title}</div>
-                <div className="text-xs text-secondary">{prop.municipality}</div>
-                <div className="font-bold mt-1">{prop.price.toLocaleString()}€</div>
-              </div>
-            </Link>
-          );
-        })}
-      </div>
-    </main>
+              ))}
+            </div>
+          </Section>
+
+          <Section
+            index="05"
+            eyebrow="Rendimento"
+            title="Melhor rentabilidade"
+            description="Os cinco imóveis com o maior rendimento anual estimado."
+          >
+            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              {bestRentability.map((prop) => (
+                <div key={prop.id} className={DS_CARD}>
+                  <DsPropertyCard
+                    title={prop.title}
+                    location={`${prop.municipality}, ${prop.district}`}
+                    askingPrice={prop.price}
+                    estimatedValue={prop.marketValue}
+                    badges={[{ kind: "confidence-high", label: formatOptional(prop.rentability, "%") }]}
+                    href={`/imovel/${prop.id}`}
+                    source={prop.sourceName}
+                    imageUrl={proxiedImage(prop.images)}
+                    imageAlt={prop.title}
+                    status={prop.checkStatus === "ok" ? "estimated" : "to-verify"}
+                  />
+                </div>
+              ))}
+            </div>
+          </Section>
+        </>
+      )}
+    </PageShell>
   );
 }
