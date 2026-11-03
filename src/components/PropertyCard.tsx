@@ -22,10 +22,11 @@ interface PropertyCardProps {
   images: string | null;
   isAuction: boolean | null;
   auctionEndDate: number | Date | null;
-  checkStatus: string | null;
+  checkStatus?: string | null;
   currentBid: number | null;
   maxBid: number | null;
   sqm?: number | null;
+  rentability?: number | null;
   valuationConfidence?: string | null;
   assetClass?: string | null;
 }
@@ -62,10 +63,12 @@ function buildBadges(
   isVerified: boolean,
   marketValue: number | null,
   valuationConfidence?: string | null,
+  checkStatus?: string | null,
 ): { kind: BadgeKind; label?: string }[] {
   const badges: { kind: BadgeKind; label?: string }[] = [];
 
-  badges.push(isVerified ? { kind: "confidence-high", label: "Verificado" } : { kind: "to-verify" });
+  if (isVerified) badges.push({ kind: "confidence-high", label: "Verificado" });
+  else if (checkStatus !== undefined && checkStatus !== null) badges.push({ kind: "to-verify" });
 
   if (marketValue === null) badges.push({ kind: "no-valuation" });
 
@@ -97,6 +100,7 @@ export default function PropertyCard({
   currentBid,
   maxBid,
   sqm,
+  rentability,
   valuationConfidence,
 }: PropertyCardProps) {
   const imageUrl = parseImages(images)[0] ?? null;
@@ -111,7 +115,7 @@ export default function PropertyCard({
   const auctionMargin = currentBid !== null && maxBid !== null && maxBid > 0 ? maxBid - currentBid : null;
   const auctionAboveMax = currentBid !== null && maxBid !== null && currentBid >= maxBid;
 
-  const badges = buildBadges(isVerified, marketValue, valuationConfidence);
+  const badges = buildBadges(isVerified, marketValue, valuationConfidence, checkStatus);
   const askingPrice = isAuction && currentBid !== null ? currentBid : price;
 
   const isAuctionListing = isAuction && auctionDaysLeft !== null && auctionDaysLeft >= 0;
@@ -241,6 +245,10 @@ export default function PropertyCard({
             <dd className="mt-1 truncate text-[13px] text-rp-ink">{sourceName}</dd>
           </div>
         </dl>
+
+        {rentability !== null && rentability !== undefined && (
+          <p className="rp-num text-[13px] text-rp-ink-2">Rentabilidade: {rentability}%</p>
+        )}
 
         <PriceEstimateBar
           askingPrice={askingPrice}
