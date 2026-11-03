@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
-import { formatOptional, formatScore, formatScoreOutOf100 } from "@/lib/format";
+import { formatOptional, formatScoreOutOf100 } from "@/lib/format";
+import Button from "@/components/ds/Button";
 
 const MapContainer = dynamic(
   () => import("react-leaflet").then((m) => m.MapContainer),
@@ -64,8 +65,8 @@ export default function MapView({ properties }: { properties: Property[] }) {
 
   if (!mounted) {
     return (
-      <div className="h-[600px] bg-slate-100 rounded-2xl flex items-center justify-center">
-        <p className="text-secondary">A carregar mapa...</p>
+      <div className="flex h-[600px] items-center justify-center rounded-rp border border-rp-line bg-rp-ceramic">
+        <p className="rp-eyebrow text-rp-muted">A carregar mapa…</p>
       </div>
     );
   }
@@ -117,39 +118,33 @@ export default function MapView({ properties }: { properties: Property[] }) {
 
   return (
     <div className="space-y-4">
-      <div className="flex flex-wrap gap-3">
-        <button
+      <div className="flex flex-wrap items-center gap-3">
+        <Button
+          type="button"
           onClick={() => setIsDrawing(true)}
-          className={`px-4 py-2 rounded-lg text-sm font-medium transition ${
-            isDrawing ? "bg-primary text-white" : "bg-slate-100 hover:bg-slate-200"
-          }`}
+          variant={isDrawing ? "primary" : "secondary"}
+          size="md"
         >
           {isDrawing ? "Desenhar (clique no mapa)" : "Desenhar área"}
-        </button>
+        </Button>
         {isDrawing && (
-          <button
-            onClick={finishDrawing}
-            className="px-4 py-2 bg-success text-white rounded-lg text-sm font-medium hover:opacity-90"
-          >
+          <Button type="button" onClick={finishDrawing} variant="primary" size="md">
             Concluir
-          </button>
+          </Button>
         )}
         {polygonPoints.length > 0 && (
-          <button
-            onClick={clearPolygon}
-            className="px-4 py-2 bg-red-100 text-red-600 rounded-lg text-sm font-medium hover:bg-red-200"
-          >
+          <Button type="button" onClick={clearPolygon} variant="secondary" size="md">
             Limpar área
-          </button>
+          </Button>
         )}
         {filteredIds && (
-          <span className="px-4 py-2 bg-primary/10 text-primary rounded-lg text-sm font-medium">
+          <span className="rp-eyebrow inline-flex min-h-11 items-center border border-rp-cobalt bg-rp-ceramic px-3 text-rp-cobalt">
             {displayProperties.length} imóveis na área selecionada
           </span>
         )}
       </div>
 
-      <div className="h-[600px] rounded-2xl overflow-hidden border relative">
+      <div className="relative h-[600px] overflow-hidden rounded-rp border border-rp-line">
         <MapContainer
           center={center}
           zoom={7}
@@ -164,7 +159,7 @@ export default function MapView({ properties }: { properties: Property[] }) {
           {polygonPoints.length > 0 && (
             <Polygon
               positions={polygonPoints}
-              pathOptions={{ color: "#2563eb", fillColor: "#2563eb", fillOpacity: 0.1 }}
+              pathOptions={{ color: "#1F4FA3", fillColor: "#1F4FA3", fillOpacity: 0.1 }}
             />
           )}
           {displayProperties.map((prop) => (
@@ -173,22 +168,22 @@ export default function MapView({ properties }: { properties: Property[] }) {
               position={[prop.lat!, prop.lng!]}
             >
               <Popup>
-                <div className="min-w-[220px]">
-                  <h3 className="font-bold text-sm mb-1">{prop.title}</h3>
-                  <p className="text-xs text-gray-500 mb-2">
+                <div className="min-w-[220px] text-[var(--rp-ink)]">
+                  <h3 className="rp-display text-[15px] leading-snug text-[var(--rp-ink)]">{prop.title}</h3>
+                  <p className="mt-1 text-[12px] text-[var(--rp-muted)]">
                     {prop.municipality}, {prop.district}
                   </p>
-                  <p className="font-bold text-blue-600 text-lg">
+                  <p className="rp-num mt-2 text-[18px] leading-none text-[var(--rp-cobalt)]">
                     {prop.price.toLocaleString()}€
                   </p>
                   {prop.score && (
-                    <p className="text-xs mt-1">
+                    <p className="rp-num mt-1 text-[12px] text-[var(--rp-ink-2)]">
                       Score: {formatScoreOutOf100(prop.score)} | {formatOptional(prop.discountPct === null ? null : -prop.discountPct, "%")}
                     </p>
                   )}
                   <a
                     href={`/imovel/${prop.id}`}
-                    className="text-xs text-blue-600 hover:underline mt-2 inline-block"
+                    className="mt-2 inline-block text-[12px] text-[var(--rp-cobalt)] underline underline-offset-4 hover:text-[var(--rp-ink)]"
                   >
                     Ver detalhes →
                   </a>
@@ -199,7 +194,7 @@ export default function MapView({ properties }: { properties: Property[] }) {
         </MapContainer>
       </div>
 
-      <p className="text-xs text-secondary">
+      <p className="max-w-[70ch] text-[13px] leading-relaxed text-rp-muted">
         Dica: clique em "Desenhar área" e depois clique no mapa para definir os vértices do polígono.
         Clique em "Concluir" para filtrar os imóveis dentro da área.
       </p>

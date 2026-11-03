@@ -1,37 +1,34 @@
 import { getAllActiveProperties } from "@/lib/queries";
 import MapView from "@/components/MapView";
+import PageShell from "@/components/ds/PageShell";
+import StatCard from "@/components/ds/StatCard";
 
 export default async function MapaPage() {
   const properties = await getAllActiveProperties();
 
   const withCoords = properties.filter((p) => p.lat && p.lng);
+  const districts = ["Lisboa", "Porto", "Braga"];
 
   return (
-    <main className="min-h-screen max-w-7xl mx-auto px-6 py-12">
-      <a href="/" className="text-primary hover:underline mb-6 inline-block">
-        ← Voltar
-      </a>
-      <h1 className="text-4xl font-extrabold mb-2">Mapa de Oportunidades</h1>
-      <p className="text-secondary mb-8">
-        {withCoords.length} de {properties.length} imóveis com localização no mapa.
-      </p>
-
+    <PageShell
+      eyebrow="Mapa"
+      title="Mapa de oportunidades"
+      description={`${withCoords.length} de ${properties.length} imóveis com localização no mapa.`}
+      backHref="/"
+      backLabel="Voltar ao início"
+    >
       <MapView properties={properties} />
 
-      <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div className="bg-slate-50 p-4 rounded-xl text-center">
-          <div className="text-2xl font-bold text-primary">{properties.filter((p) => p.district === "Lisboa").length}</div>
-          <div className="text-sm text-secondary">Lisboa</div>
-        </div>
-        <div className="bg-slate-50 p-4 rounded-xl text-center">
-          <div className="text-2xl font-bold text-primary">{properties.filter((p) => p.district === "Porto").length}</div>
-          <div className="text-sm text-secondary">Porto</div>
-        </div>
-        <div className="bg-slate-50 p-4 rounded-xl text-center">
-          <div className="text-2xl font-bold text-primary">{properties.filter((p) => p.district === "Braga").length}</div>
-          <div className="text-sm text-secondary">Braga</div>
-        </div>
+      <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-3">
+        {districts.map((district) => (
+          <StatCard
+            key={district}
+            label={district}
+            value={properties.filter((p) => p.district === district).length}
+            hint="imóveis registados"
+          />
+        ))}
       </div>
-    </main>
+    </PageShell>
   );
 }

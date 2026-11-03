@@ -147,6 +147,9 @@ const OTHER_DISTRICTS_WITHOUT_MUNICIPALITIES = [
   "Portalegre", "Viana do Castelo", "Vila Real", "Açores", "Madeira",
 ];
 
+const FIELD =
+  "w-full min-h-11 rounded-rp border border-rp-line bg-rp-surface px-3 py-2 text-[14px] text-rp-ink focus:border-rp-cobalt focus:outline-none";
+
 export default function PropertyGrid({
   properties,
   totalCount,
@@ -318,43 +321,56 @@ export default function PropertyGrid({
 
   return (
     <div>
-      <div className="flex gap-3 mb-6">
-        <div className="flex-1 relative">
-          <Search size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-secondary" />
+      <div className="mb-6 flex gap-3">
+        <div className="relative flex-1">
+          <Search size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-rp-muted" aria-hidden="true" />
+          <label htmlFor="property-grid-search" className="sr-only">
+            Pesquisar imóveis
+          </label>
           <input
+            id="property-grid-search"
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Distrito, concelho, código postal, tipo ou fonte..."
             onBlur={() => updateUrl()}
-            className="w-full pl-10 pr-4 py-3 border rounded-lg focus:ring-2 focus:ring-primary focus:outline-none"
+            className="w-full min-h-11 rounded-rp border border-rp-line bg-rp-surface py-3 pl-10 pr-4 text-[14px] text-rp-ink placeholder:text-rp-muted focus:border-rp-cobalt focus:outline-none"
           />
         </div>
         <button
+          type="button"
           onClick={() => setShowFilters(!showFilters)}
-          className={`px-4 py-3 border rounded-lg flex items-center gap-2 transition ${
-            showFilters ? "bg-primary text-white border-primary" : "hover:bg-slate-50"
+          aria-expanded={showFilters}
+          aria-controls="property-grid-filters"
+          className={`inline-flex min-h-11 items-center gap-2 rounded-rp border px-4 py-3 text-[14px] transition-colors duration-[var(--rp-dur-1)] ${
+            showFilters
+              ? "border-rp-ink bg-rp-ink text-rp-surface"
+              : "border-rp-line bg-rp-surface text-rp-ink hover:bg-rp-ceramic"
           }`}
         >
-          <SlidersHorizontal size={18} />
+          <SlidersHorizontal size={18} aria-hidden="true" />
           <span className="hidden sm:inline">Filtros</span>
         </button>
       </div>
 
       {showFilters && (
-        <div className="bg-slate-50 border rounded-xl p-6 mb-6">
-          <div className="flex justify-between items-center mb-4">
-            <h3 className="font-bold">Pesquisa avançada</h3>
+        <div id="property-grid-filters" className="mb-6 border border-rp-line bg-rp-surface p-6">
+          <div className="mb-4 flex items-center justify-between gap-4">
+            <h3 className="rp-display text-[20px] leading-tight text-rp-ink">Pesquisa avançada</h3>
             {hasActiveFilters && (
-              <button onClick={clearFilters} className="text-sm text-primary hover:underline flex items-center gap-1">
-                <X size={14} /> Limpar filtros
+              <button
+                type="button"
+                onClick={clearFilters}
+                className="rp-eyebrow inline-flex min-h-11 items-center gap-1 text-rp-cobalt underline decoration-[1px] underline-offset-4 hover:text-rp-ink hover:decoration-2"
+              >
+                <X size={14} aria-hidden="true" /> Limpar filtros
               </button>
             )}
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             <div>
-              <label className="block text-xs font-medium text-secondary mb-1">Distrito</label>
+              <label className="rp-eyebrow mb-1 block text-rp-muted">Distrito</label>
               <select
                 value={district}
                 onChange={(e) => {
@@ -362,7 +378,7 @@ export default function PropertyGrid({
                   setMunicipality("todos");
                   updateUrl();
                 }}
-                className="w-full px-3 py-2 border rounded-lg text-sm"
+                className={FIELD}
               >
                 <option value="todos">Todos os distritos</option>
                 {ALL_DISTRICTS.map((d) => (
@@ -373,14 +389,14 @@ export default function PropertyGrid({
 
             {availableMunicipalities.length > 0 && (
               <div>
-                <label className="block text-xs font-medium text-secondary mb-1">Concelho</label>
+                <label className="rp-eyebrow mb-1 block text-rp-muted">Concelho</label>
                 <select
                   value={municipality}
                   onChange={(e) => {
                     setMunicipality(e.target.value);
                     updateUrl();
                   }}
-                  className="w-full px-3 py-2 border rounded-lg text-sm"
+                  className={FIELD}
                 >
                   <option value="todos">Todos os concelhos</option>
                   {availableMunicipalities.map((m) => (
@@ -391,11 +407,11 @@ export default function PropertyGrid({
             )}
 
             <div>
-              <label className="block text-xs font-medium text-secondary mb-1">Tipo</label>
+              <label className="rp-eyebrow mb-1 block text-rp-muted">Tipo</label>
               <select
                 value={type}
                 onChange={(e) => { setType(e.target.value); updateUrl(); }}
-                className="w-full px-3 py-2 border rounded-lg text-sm"
+                className={FIELD}
               >
                 {types.map((t) => (
                   <option key={t} value={t}>{t === "todos" ? "Todos os tipos" : t}</option>
@@ -404,11 +420,11 @@ export default function PropertyGrid({
             </div>
 
             <div>
-              <label className="block text-xs font-medium text-secondary mb-1">Fonte</label>
+              <label className="rp-eyebrow mb-1 block text-rp-muted">Fonte</label>
               <select
                 value={source}
                 onChange={(e) => { setSource(e.target.value); updateUrl(); }}
-                className="w-full px-3 py-2 border rounded-lg text-sm"
+                className={FIELD}
               >
                 {sources.map((s) => (
                   <option key={s} value={s}>{s === "todos" ? "Todas as fontes" : s}</option>
@@ -417,11 +433,11 @@ export default function PropertyGrid({
             </div>
 
             <div>
-              <label className="block text-xs font-medium text-secondary mb-1">Tipo de venda</label>
+              <label className="rp-eyebrow mb-1 block text-rp-muted">Tipo de venda</label>
               <select
                 value={auctionFilter}
                 onChange={(e) => { setAuctionFilter(e.target.value); updateUrl(); }}
-                className="w-full px-3 py-2 border rounded-lg text-sm"
+                className={FIELD}
               >
                 <option value="todos">Todos</option>
                 <option value="leilao">Apenas leilões</option>
@@ -430,11 +446,11 @@ export default function PropertyGrid({
             </div>
 
             <div>
-              <label className="block text-xs font-medium text-secondary mb-1">Score mínimo</label>
+              <label className="rp-eyebrow mb-1 block text-rp-muted">Score mínimo</label>
               <select
                 value={minScore}
                 onChange={(e) => { setMinScore(parseInt(e.target.value)); updateUrl(); }}
-                className="w-full px-3 py-2 border rounded-lg text-sm"
+                className={FIELD}
               >
                 <option value={0}>Qualquer</option>
                 <option value={70}>70+</option>
@@ -444,11 +460,11 @@ export default function PropertyGrid({
             </div>
 
             <div>
-              <label className="block text-xs font-medium text-secondary mb-1">Desconto mínimo</label>
+              <label className="rp-eyebrow mb-1 block text-rp-muted">Desconto mínimo</label>
               <select
                 value={minDiscount}
                 onChange={(e) => { setMinDiscount(parseInt(e.target.value)); updateUrl(); }}
-                className="w-full px-3 py-2 border rounded-lg text-sm"
+                className={FIELD}
               >
                 <option value={0}>Qualquer</option>
                 <option value={15}>15%+</option>
@@ -458,22 +474,22 @@ export default function PropertyGrid({
             </div>
 
             <div>
-              <label className="block text-xs font-medium text-secondary mb-1">Preço máximo (€)</label>
+              <label className="rp-eyebrow mb-1 block text-rp-muted">Preço máximo (€)</label>
               <input
                 type="number"
                 value={maxPrice}
                 onChange={(e) => { setMaxPrice(e.target.value); updateUrl(); }}
                 placeholder="Ex: 200000"
-                className="w-full px-3 py-2 border rounded-lg text-sm"
+                className={FIELD}
               />
             </div>
 
             <div>
-              <label className="block text-xs font-medium text-secondary mb-1">Ordenar por</label>
+              <label className="rp-eyebrow mb-1 block text-rp-muted">Ordenar por</label>
               <select
                 value={sortBy}
                 onChange={(e) => { setSortBy(e.target.value); updateUrl(); }}
-                className="w-full px-3 py-2 border rounded-lg text-sm"
+                className={FIELD}
               >
                 <option value="score">Melhor score</option>
                 <option value="discount">Maior desconto</option>
@@ -486,18 +502,22 @@ export default function PropertyGrid({
         </div>
       )}
 
-      <div className="flex items-center justify-between mb-6">
-        <span className="text-sm text-secondary">
+      <div className="mb-6 flex items-center justify-between gap-4">
+        <span className="rp-eyebrow text-rp-muted">
           A mostrar {paginated.length} de {filtered.length} imóveis
         </span>
         {hasActiveFilters && (
-          <button onClick={clearFilters} className="text-sm text-primary hover:underline">
+          <button
+            type="button"
+            onClick={clearFilters}
+            className="rp-eyebrow inline-flex min-h-11 items-center text-rp-cobalt underline decoration-[1px] underline-offset-4 hover:text-rp-ink hover:decoration-2"
+          >
             Limpar filtros
           </button>
         )}
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
         {paginated.map((prop) => (
           <PropertyCard
             key={prop.id}
@@ -527,25 +547,32 @@ export default function PropertyGrid({
 
       {hasMore && (
         <button
+          type="button"
           onClick={loadMore}
-          className="w-full py-4 border border-primary text-primary text-sm font-medium rounded-lg text-center hover:bg-primary/50 transition flex items-center justify-center gap-2 mx-auto my-8 max-w-md"
+          className="mx-auto my-8 inline-flex min-h-11 max-w-md w-full items-center justify-center gap-2 rounded-rp border border-rp-ink bg-rp-ink px-4 py-4 text-[14px] text-rp-surface transition-[transform,box-shadow] duration-[var(--rp-dur-2)] ease-[var(--rp-ease-1)] hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[6px_6px_0_var(--rp-cobalt)] active:translate-x-0 active:translate-y-0"
         >
-          Carregar mais <ChevronRight size={16} />
-          <span className="text-xs text-secondary">(+{perPage} imóveis)</span>
+          Carregar mais <ChevronRight size={16} aria-hidden="true" />
+          <span className="rp-num text-[12px] text-rp-surface/70">(+{perPage} imóveis)</span>
         </button>
       )}
 
       {!hasMore && filtered.length > 0 && (
-        <p className="text-center text-sm text-secondary mt-8">
+        <p className="rp-eyebrow mt-8 text-center text-rp-muted">
           A mostrar todos os {filtered.length} imóveis encontrados
         </p>
       )}
 
       {filtered.length === 0 && (
-        <div className="text-center py-16 text-secondary">
-          <p className="text-lg">Nenhum imóvel encontrado com os filtros selecionados.</p>
+        <div className="border border-dashed border-rp-line bg-rp-surface px-6 py-14 text-center">
+          <p className="rp-display text-[22px] leading-tight text-rp-ink">
+            Nenhum imóvel encontrado com os filtros selecionados.
+          </p>
           {hasActiveFilters && (
-            <button onClick={clearFilters} className="mt-4 text-primary hover:underline">
+            <button
+              type="button"
+              onClick={clearFilters}
+              className="rp-eyebrow mt-4 inline-flex min-h-11 items-center text-rp-cobalt underline decoration-[1px] underline-offset-4 hover:text-rp-ink hover:decoration-2"
+            >
               Limpar todos os filtros
             </button>
           )}

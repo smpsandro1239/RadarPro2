@@ -1,7 +1,8 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { Search, Send, X } from "lucide-react";
+import { useState } from "react";
+import { Search, Send } from "lucide-react";
+import Button from "@/components/ds/Button";
 
 const KEYWORD_MAP: Record<string, { district?: string; type?: string; maxPrice?: number; minDiscount?: number; description: string; isAuction?: boolean }> = {
   lisboa: { district: "Lisboa", description: "Imóveis em Lisboa" },
@@ -127,48 +128,59 @@ export default function RadarAssistant({ onApplyFilters }: RadarAssistantProps) 
   };
 
   return (
-    <div className="border rounded-2xl p-6 bg-slate-50/50">
-      <div className="flex items-center gap-2 mb-4">
-        <Search size={20} className="text-primary" />
-        <h3 className="font-bold text-lg">Radar Assistant</h3>
+    <div className="border border-rp-line bg-rp-surface p-6">
+      <div className="flex items-center gap-2">
+        <Search size={20} className="text-rp-cobalt" aria-hidden="true" />
+        <h3 className="rp-display text-[20px] leading-tight text-rp-ink">Radar Assistant</h3>
       </div>
-      <p className="text-xs text-secondary mb-4">
+      <p className="mt-2 text-[13px] leading-relaxed text-rp-muted">
         Descreva o que procura em linguagem natural e eu aplico os filtros automaticamente.
       </p>
 
-      <div className="h-64 overflow-y-auto border rounded-lg p-4 mb-4 bg-white">
+      <div
+        className="mb-4 mt-4 h-64 overflow-y-auto border border-rp-line bg-rp-ceramic p-4"
+        role="log"
+        aria-live="polite"
+        aria-label="Conversa com o Radar Assistant"
+      >
         {messages.map((m, i) => (
           <div key={i} className={m.role === "user" ? "flex gap-3 mb-3 flex-row-reverse" : "flex gap-3 mb-3"}>
-            <div className={m.role === "user" ? "max-w-[80%] p-3 rounded-lg bg-primary text-white" : "max-w-[80%] p-3 rounded-lg bg-white border border-slate-200 text-slate-700"}>
+            <div
+              className={
+                m.role === "user"
+                  ? "max-w-[80%] whitespace-pre-line border border-rp-ink bg-rp-ink p-3 text-[14px] leading-relaxed text-rp-surface"
+                  : "max-w-[80%] whitespace-pre-line border border-rp-line bg-rp-surface p-3 text-[14px] leading-relaxed text-rp-ink-2"
+              }
+            >
               {m.text}
             </div>
           </div>
         ))}
         {loading && (
-          <div className="flex gap-2 p-3">
-            <div className="w-2 h-2 bg-primary rounded-full animate-pulse" />
-            <div className="w-2 h-2 bg-primary rounded-full animate-pulse" style={{ animationDelay: "200ms" }} />
-            <div className="w-2 h-2 bg-primary rounded-full animate-pulse" style={{ animationDelay: "400ms" }} />
+          <div className="flex gap-2 p-3" aria-label="A processar">
+            <div className="w-2 h-2 bg-rp-cobalt rounded-full animate-pulse" />
+            <div className="w-2 h-2 bg-rp-cobalt rounded-full animate-pulse" style={{ animationDelay: "200ms" }} />
+            <div className="w-2 h-2 bg-rp-cobalt rounded-full animate-pulse" style={{ animationDelay: "400ms" }} />
           </div>
         )}
       </div>
 
       <form onSubmit={handleSend} className="flex gap-2">
+        <label htmlFor="radar-assistant-query" className="sr-only">
+          Descreva o imóvel que procura
+        </label>
         <input
+          id="radar-assistant-query"
           type="text"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder="Descreva o que procura..."
-          className="flex-1 px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:outline-none"
+          className="flex-1 min-h-11 rounded-rp border border-rp-line bg-rp-surface px-4 py-2 text-[15px] text-rp-ink placeholder:text-rp-muted focus:border-rp-cobalt focus:outline-none"
           disabled={loading}
         />
-        <button
-          type="submit"
-          disabled={loading || !query.trim()}
-          className="px-4 py-2 bg-primary text-white rounded-lg font-bold hover:opacity-90 transition disabled:opacity-50"
-        >
-          <Send size={18} />
-        </button>
+        <Button type="submit" ariaLabel="Enviar" disabled={loading || !query.trim()}>
+          <Send size={18} aria-hidden="true" />
+        </Button>
       </form>
     </div>
   );

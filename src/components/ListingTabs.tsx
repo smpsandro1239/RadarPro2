@@ -8,6 +8,11 @@ interface ListingTabProps {
   className?: string;
 }
 
+const TABS = [
+  { id: "fixed", label: "Preço fixo", icon: Tag },
+  { id: "auction", label: "Leilões", icon: Gavel },
+] as const;
+
 export default function ListingTabs({ className }: ListingTabProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -42,29 +47,28 @@ export default function ListingTabs({ className }: ListingTabProps) {
 
   return (
     <div className={`flex flex-col gap-2 ${className || ""}`}>
-      <div className="flex gap-1 border-b border-slate-200">
-        <button
-          onClick={() => switchTab("fixed")}
-          className={`px-4 py-3 text-sm font-medium border-b-2 transition-colors ${
-            activeTab === "fixed"
-              ? "border-primary text-primary bg-primary/5"
-              : "border-transparent text-secondary hover:text-slate-700"
-          }`}
-        >
-          <Tag size={14} className="mr-2" />
-          Preço fixo
-        </button>
-        <button
-          onClick={() => switchTab("auction")}
-          className={`px-4 py-3 text-sm font-medium border-b-2 transition-colors ${
-            activeTab === "auction"
-              ? "border-primary text-primary bg-primary/5"
-              : "border-transparent text-secondary hover:text-slate-700"
-          }`}
-        >
-          <Gavel size={14} className="mr-2" />
-          Leilões
-        </button>
+      <div role="tablist" aria-label="Tipo de anúncio" className="flex gap-1 border-b border-rp-line">
+        {TABS.map((tab) => {
+          const Icon = tab.icon;
+          const selected = activeTab === tab.id;
+          return (
+            <button
+              key={tab.id}
+              type="button"
+              role="tab"
+              aria-selected={selected}
+              onClick={() => switchTab(tab.id)}
+              className={`inline-flex min-h-11 items-center gap-2 border-b-2 px-4 py-3 text-[14px] transition-colors duration-[var(--rp-dur-1)] ${
+                selected
+                  ? "border-rp-cobalt text-rp-cobalt"
+                  : "border-transparent text-rp-ink-2 hover:text-rp-cobalt"
+              }`}
+            >
+              <Icon size={14} aria-hidden="true" />
+              {tab.label}
+            </button>
+          );
+        })}
       </div>
     </div>
   );
