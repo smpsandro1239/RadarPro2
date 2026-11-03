@@ -6,9 +6,9 @@ Estados: `todo | doing | done | blocked(humano) | blocked(técnico)`.
 | WP | Item | Tipo | Estado |
 |---|---|---|---|
 | WP1 | `scripts/check-token-rotated.ts` + `npm run release:check` + `docs/RELEASE_CHECKLIST.md` (Gate final) | auto | done |
-| WP2 | Triagem de termos de utilizacao (Casa Sapo, Imovirtual e os outros portais) -> `docs/PORTAIS.md` | auto | todo |
-| WP3 | `timingSafeEqual` em `authorizeWrite`; `it.fails` legados com TODO + limite no CI; ids duplicados/`gen-*` identificados | auto | todo |
-| WP4 | Migracao `0003 data_origin` (so na BD local) + prova da origem por prefixo de id + `SHOW_SEED_DATA` + banner "Dados de demonstracao" | auto | todo |
+| WP2 | Triagem de termos de utilizacao (Casa Sapo, Imovirtual e os outros portais) -> `docs/PORTAIS.md` | auto | done |
+| WP3 | `timingSafeEqual` em `authorizeWrite`; `it.fails` legados com TODO + limite no CI; ids duplicados/`gen-*` identificados | auto | done |
+| WP4 | Migracao `0003 data_origin` (so na BD local) + prova da origem por prefixo de id + `SHOW_SEED_DATA` + banner "Dados de demonstracao" | auto | done |
 | WP5 | Dry-run de scraping real so na BD local (portais que o WP2 permita; limite pequeno; ritmo educado) + medicoes | auto | todo |
 | WP6 | Fase 2: geografia do `ingest.ts`, `findMarketData` nivel `district`, testes de integracao com `market-data.ts` real, proposta de estrutura/fontes/unidade | auto | todo |
 | WP7 | Fase 3: v2 como unico motor; legacy como wrapper `@deprecated`; migrar os 5 testes legados; `ValuationCard` consome servidor | auto | todo |
@@ -27,7 +27,11 @@ Estados: `todo | doing | done | blocked(humano) | blocked(técnico)`.
 | 2 | Definir `CRON_SECRET` na Vercel | ambiente Vercel | pendente |
 | 3 | Preview da `fase1-integracao` (log ou URL do deploy) | Vercel | pendente |
 | 4 | Merge da `fase1-integracao` para `main` | git | pendente |
-| 5 | Confirmar valores de mercado/unidades reais (decisoes com default seguro) | `docs/PORTAIS.md`, `docs/PROGRESS.md` | pendente |
+| 5 | Decidir portais `depende do dono` (Imovirtual, e-Leiloes, Leilosoc, Bidizi, Santander, Caixa Imobiliario, Novo Banco) | `docs/PORTAIS.md` | pendente |
+| 6 | Chave da API do Martelo.pt e uso comercial permitido | `docs/PORTAIS.md` | pendente |
+| 7 | Aplicar migracoes 0002/0003 na live ou autorizar `src/db/schema.ts` em conjunto | `scripts/sql/0003_add_data_origin.sql` | pendente |
+| 8 | Decidir `SHOW_SEED_DATA` em producao (hoje: dados de demonstracao fora das listagens) | `src/lib/data-origin.ts` | pendente |
+| 9 | Confirmar valores de mercado/unidades reais (decisoes com default seguro) | `src/lib/market-data.ts` | pendente |
 
 ## Notas de operacao
 
