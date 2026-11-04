@@ -7,7 +7,7 @@
   },
   "scripts": {
     "dev": "next dev",
-    "dev:local": "node scripts/dev-local.mjs",
+    "dev:local": "cross-env TURSO_DATABASE_URL=file:./local.db TURSO_AUTH_TOKEN= next dev",
     "dev:live": "next dev",
     "build": "next build",
     "start": "next start",
@@ -24,6 +24,7 @@
     "db:recreate": "npm run db:local:reset && npm run db:local:seed",
     "backfill:origin": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/backfill-data-origin.ts",
     "db:stats": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/db-stats.ts",
+    "db:check": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/check-schema.ts",
     "scrape:dry-run": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/scrape-dry-run.ts",
     "db:generate": "drizzle-kit generate",
     "db:push": "drizzle-kit push"
@@ -57,6 +58,7 @@
     "@types/node": "^22.0.0",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
+    "cross-env": "^10.1.0",
     "drizzle-kit": "^0.31.0",
     "postcss": "^8.4.47",
     "tailwindcss": "^4.3.3",

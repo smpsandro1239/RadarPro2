@@ -19,6 +19,7 @@ cp .env.example .env.local
 # Preencher variáveis de ambiente
 npm run dev        # usa .env.local (live)
 npm run dev:local  # força BD local (file:./local.db)
+npm run db:check    # verifica schema antes de correr (fail-fast)
 ```
 
 ## Verificação antes de push

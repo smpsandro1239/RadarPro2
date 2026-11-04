@@ -1,5 +1,8 @@
 # Migrações da base de dados
 
+## Auditoria ALTER TABLE NOT NULL
+✅ Nenhum `ALTER TABLE ... ADD COLUMN ... NOT NULL` sem `DEFAULT` encontrado em `scripts/sql/000*.sql`. Migrações seguras para tabelas com linhas.
+
 ## Nota sobre shell
 - PowerShell/bash: `VAR=value command` funciona.
 - cmd: usar `set VAR=value && command` ou `npm run dev:local`.

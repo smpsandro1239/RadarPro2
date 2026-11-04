@@ -1,4 +1,10 @@
 import { createClient } from "@libsql/client";
+import { existsSync } from "node:fs";
+
+if (!process.env.TURSO_DATABASE_URL) {
+  const envFile = existsSync(".env.local") ? ".env.local" : ".env";
+  if (existsSync(envFile)) process.loadEnvFile(envFile);
+}
 
 const url = process.env.TURSO_DATABASE_URL!;
 const authToken = process.env.TURSO_AUTH_TOKEN ?? "";
