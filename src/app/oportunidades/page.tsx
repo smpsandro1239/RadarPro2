@@ -8,8 +8,10 @@ import { formatOptional, formatScore, formatScoreOutOf100 } from "@/lib/format";
 export default async function OportunidadesPage() {
   const properties = await getAllActiveProperties();
 
-  // Sort by score descending
-  const ranked = [...properties].sort((a, b) => (b.score || 0) - (a.score || 0));
+  // Sort by score descending, excluindo imóveis sem score (sem avaliação)
+  const ranked = [...properties]
+    .filter((p) => p.score !== null)
+    .sort((a, b) => (b.score || 0) - (a.score || 0));
 
   // Top 10 opportunities
   const top10 = ranked.slice(0, 10);

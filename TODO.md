@@ -25,7 +25,7 @@ Modo contínuo: terminar um item, passar ao seguinte. Um commit por item, testes
 
 ## FASE 3 — Produto e UI (WP8)
 - [x] 3.1 Estados "Sem avaliação / Sem área / Sem score" consistentes (PropertyCard).
-- [ ] 3.2 `SourceReliabilityBadge` com escala; rankings sem NULL; leilões em separador próprio; `rentability` sintético fora dos rankings.
+- [x] 3.2 `SourceReliabilityBadge` com escala; rankings sem NULL; leilões em separador próprio; `rentability` sintético fora dos rankings.
 - [ ] 3.3 Card com padrão da referência (badge de origem, score, preço vs valoração).
 - [ ] 3.4 Detalhe: €/m² vs média da zona, tendência, rentabilidade.
 - [ ] 3.5 Seletor de distrito na home + página por distrito.
