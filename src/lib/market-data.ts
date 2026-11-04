@@ -10,6 +10,8 @@
  * - Confidencial Imobiliário (preço de venda): 1º trimestre 2026
  */
 
+import { normalizeName } from "@/lib/geography";
+
 export interface MarketDataEntry {
   district: string;
   municipality: string;
@@ -121,7 +123,8 @@ export function findDistrictMarketData(
   table: DistrictMarketEntry[] = MARKET_DATA_DISTRICT,
 ): DistrictMarketEntry | null {
   if (!district) return null;
-  return table.find((entry) => entry.district === district && entry.propertyType === propertyType) ?? null;
+  const nd = normalizeName(district);
+  return table.find((entry) => normalizeName(entry.district) === nd && entry.propertyType === propertyType) ?? null;
 }
 
 /**
@@ -137,20 +140,24 @@ export function findMarketData(params: {
   propertyType: "apartment" | "house" | "urban_land" | "rural_land" | "commercial";
 }): { pricePerSqm: number; source: string; asOf: string; level: "parish" | "municipality" | "district" } | null {
   const { district, municipality, parish, propertyType } = params;
-  const pool = ALL_MARKET_DATA.filter((d) => d.propertyType === propertyType && d.district === district);
+  const nd = normalizeName(district);
+  const pool = ALL_MARKET_DATA.filter((d) => d.propertyType === propertyType && normalizeName(d.district) === nd);
 
   if (pool.length === 0) return null;
 
+  const nm = normalizeName(municipality);
+  const np = parish ? normalizeName(parish) : null;
+
   // 1. Tentar paróquia
-  if (parish) {
-    const parishMatch = pool.find((d) => d.parish === parish && d.municipality === municipality);
+  if (np) {
+    const parishMatch = pool.find((d) => d.parish && normalizeName(d.parish) === np && normalizeName(d.municipality) === nm);
     if (parishMatch) {
       return { pricePerSqm: parishMatch.pricePerSqm, source: parishMatch.source, asOf: parishMatch.asOf, level: "parish" };
     }
   }
 
   // 2. Tentar concelho
-  const munMatch = pool.find((d) => d.municipality === municipality);
+  const munMatch = pool.find((d) => normalizeName(d.municipality) === nm);
   if (munMatch) {
     return { pricePerSqm: munMatch.pricePerSqm, source: munMatch.source, asOf: munMatch.asOf, level: "municipality" };
   }

@@ -157,7 +157,7 @@ export default async function PropertyPage({
 
           {prop.isAuction && prop.auctionEndDate && (
             <div className="mb-4 p-3 bg-orange-50 border border-orange-200 rounded-xl">
-              <AuctionCountdown endDate={Math.floor(new Date(prop.auctionEndDate).getTime() / 1000)} />
+              <AuctionCountdown endDate={Math.floor((typeof prop.auctionEndDate === "number" ? prop.auctionEndDate : new Date(prop.auctionEndDate).getTime()) / 1000)} />
             </div>
           )}
 

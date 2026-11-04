@@ -80,7 +80,7 @@ export default function PropertyCard({
   // Calcular dias restantes do leilão
   let auctionDaysLeft: number | null = null;
   if (auctionEndDate) {
-    const end = typeof auctionEndDate === "number" ? auctionEndDate * 1000 : new Date(auctionEndDate).getTime();
+    const end = typeof auctionEndDate === "number" ? auctionEndDate : new Date(auctionEndDate).getTime();
     const now = Date.now();
     auctionDaysLeft = Math.max(0, Math.ceil((end - now) / (1000 * 60 * 60 * 24)));
   }

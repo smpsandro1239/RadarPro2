@@ -34,9 +34,10 @@ export const PORTUGAL_DISTRICTS: readonly string[] = [
   "Açores",
 ];
 
-function fold(value: string): string {
+export function fold(value: string): string {
   return value.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().trim();
 }
+export const normalizeName = fold;
 
 export type Geography = {
   district: string | null;

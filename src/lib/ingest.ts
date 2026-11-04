@@ -91,7 +91,7 @@ export async function ingestProperty(prop: ScrapedProperty): Promise<{
   let isActive = true;
   if (prop.isAuction && prop.auctionEndDate) {
     const endDate = typeof prop.auctionEndDate === "number"
-      ? new Date(prop.auctionEndDate * 1000)
+      ? new Date(prop.auctionEndDate)
       : new Date(prop.auctionEndDate);
     if (endDate < new Date()) {
       isActive = false;
