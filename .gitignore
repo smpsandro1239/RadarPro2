@@ -48,5 +48,9 @@ local.db-shm
 # scripts (optional, keep seeds)
 # scripts/
 
+# temp scripts
+tmp-*
+scripts/tmp-*
+
 .vercel
 .env*

@@ -2,12 +2,11 @@
 
 import { ShieldCheck, ShieldAlert } from "lucide-react";
 
-interface SourceReliabilityBadgeProps {
-  sourceName: string;
+interface ScoreRatingBadgeProps {
   score: number | null;
 }
 
-export default function SourceReliabilityBadge({ sourceName, score }: SourceReliabilityBadgeProps) {
+export default function ScoreRatingBadge({ score }: ScoreRatingBadgeProps) {
   const getLabel = (s: number | null) => {
     if (s === null) return "Sem avaliação";
     if (s >= 13) return "Alta confiabilidade";
@@ -25,8 +24,8 @@ export default function SourceReliabilityBadge({ sourceName, score }: SourceReli
 
   return (
     <div className={`px-2 py-1 rounded text-xs font-bold border ${getColor(score)} flex items-center gap-1.5`}>
-      {score !== null && (score >= 13 ? <ShieldCheck size={12} /> : <ShieldAlert size={12} />)}
-      <span>{score === null ? "—" : `${score}/15`}</span>
+      {score !== null && (score >= 13 ? <ShieldCheck size={20} /> : <ShieldAlert size={20} />)}
+      <span className="text-xs">{score !== null ? `${score}/15` : "—"}</span>
     </div>
   );
 }

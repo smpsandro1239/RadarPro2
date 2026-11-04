@@ -1,3 +1,4 @@
+// @vitest-environment jsdom
 import { describe, it, expect, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
 import PropertyCard from "@/components/PropertyCard";
@@ -34,12 +35,12 @@ const baseProps = {
 };
 
 describe("PropertyCard", () => {
-  it("renderiza o SourceReliabilityBadge com score >= 13", () => {
+  it("renderiza o ScoreRatingBadge com score >= 13", () => {
     render(<PropertyCard {...baseProps} score={14} />);
     expect(screen.getByText("14/15")).toBeInTheDocument();
   });
 
-  it("renderiza o SourceReliabilityBadge com score null", () => {
+  it("renderiza o ScoreRatingBadge com score null", () => {
     render(<PropertyCard {...baseProps} score={null} />);
     expect(screen.getByText("—")).toBeInTheDocument();
   });
