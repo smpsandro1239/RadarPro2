@@ -17,7 +17,17 @@ Data: 2026-11-04
 - 88 imóveis (48 demo + 40 scrape).
 - area_sqm: 40/88 (45.5%) — apenas scrape tem área.
 - market_value/score: 50/88 (56.8%).
-- Imagens: demo tem URLs, scrape não tem (Martelo.pt não fornece fotos no dry-run).
+- Imagens: demo tem URLs (22/48 após backfill-images), scrape não tem (Martelo.pt não fornece fotos no endpoint usado).
+
+## Análise de scores em falta (17/40 scrape)
+Causa principal: market_data ausente para o município (tabela cobre ~25 de 308 municípios).
+- ~15 imóveis `mixed` (prédio) → sem avaliação por design (requer avaliação manual).
+- ~2 sem área (edge cases do parser).
+- ~12 sem market_data para o município.
+Mitigação: normalização de acentos (já feita), expansão da tabela de mercado (WP pendente).
+
+## Reclassificação `mixed`
+classify.ts melhorado: "prédio rústico" → rural_land, "prédio urbano" → mixed, "prédio" sozinho → apartment se tiver tipologia. Medição real pendente de execução contra produção.
 
 ## Ações pendentes para produção
 1. Aplicar migrações 0002/0003/0004 na live (parish, area_sqm, data_origin, opening_bid).
