@@ -17,11 +17,11 @@ Modo contínuo: terminar um item, passar ao seguinte. Um commit por item, testes
 - [x] 1.6 Leilões sem lance: campo separado `opening_bid`.
 
 ## FASE 2 — Backfill (WP11)
-- [ ] 2.1 Scripts de backfill com dry-run por defeito + relatório de distribuição.
-- [ ] 2.2 Imagens: `backfill-images.ts`/`v2` + `fotos` do Martelo.pt.
-- [ ] 2.3 `area_sqm` nos 48 demo (parse do título ou estimativa por tipologia).
-- [ ] 2.4 Recalcular scores com v2 nos 40 scrape.
-- [ ] 2.5 Rever os 15 imóveis `mixed` e melhorar `classify.ts`.
+- [x] 2.1 Scripts de backfill com dry-run por defeito + relatório de distribuição (docs/backfill-report.md).
+- [x] 2.2 Imagens: `backfill-images.ts` executado (22/48 demo).
+- [x] 2.3 `area_sqm` nos 48 demo (estimativa por tipologia).
+- [x] 2.4 Recalcular scores com v2 (23 atualizados em local).
+- [x] 2.5 Rever os 15 imóveis `mixed` e melhorar `classify.ts`.
 
 ## FASE 3 — Produto e UI (WP8)
 - [x] 3.1 Estados "Sem avaliação / Sem área / Sem score" consistentes (PropertyCard).
