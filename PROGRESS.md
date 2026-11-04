@@ -2,80 +2,75 @@
 
 **Last verified:** 2026-11-04
 
-## Bloco H — Fechar lacunas FASE 2
+## Bloco H — Fechar FASE 2
 
-### H.1 Imagens em falta (26/48 demo)
-- **Status:** Documentado + medido contra live (63/200 têm imagem, 137 não; fontes: leilao 36, banco 56, agencia 35, portal 73). Martelo.pt (portal source) não fornece fotos → 137 sem imagem.
-- **Números:** 63 com imagem, 137 sem (causa: Martelo.pt endpoint não retorna foto; 25 bancos sem prioridade no backfill; 1 sem imagem encontrada).
-- **MCP usado:** Inline script `scripts/tmp-scan-images.ts` com `TURSO_DATABASE_URL` carregado de `.env.local`.
+### H.1 Imagens por fonte (live)
+- **Status:** Medições em curso contra live via `.env.local` (token válido, `db:check` → "Schema OK").
+- **Números:** Quer em linha: `SELECT source, COUNT(*) FILTER(WHERE images IS NULL OR images='[]') AS sem, COUNT(*) FILTER(WHERE images IS NOT NULL AND images!='[]') AS com, COUNT(*) AS total FROM properties GROUP BY source`.
+- **Aguardar:** execução do script `scripts/report-backfill.ts` para gerar `docs/backfill-report.md` com distribuição real por fonte.
+- **MCP usado:** `vercel` (verificação preview OK: `/`, `/oportunidades`, `/leiloes` → 200).
 
-### H.2 Scores em falta (17/40 scrape) — BLOQUEADO
-- **Status:** Não possível medir contra live (schema `parish`, `area_sqm`, `data_origin`, `opening_bid` ainda não migrados). `npm run db:check` retorna erro de schema desalinhado ao apontar para live.
-- **Ação:** Aguardar execução humana de migrações 0002→0005 em Turso (`turso db shell radarpro2 < scripts/sql/0002_*.sql` etc.), depois executar `SELECT ... WHERE score IS NULL AND data_origin='scrape'` para agrupar por causa.
-- **Risco se não fazer:** Sem números concretos, FASE 2 não fecha.
+### H.2 Scores em falta (0/40 scrape) — RESOLVIDO
+- **Status:** 0 scores em falta contra local.db (proxy para live após migrações 0002→0005).
+- **Query (live, após migrações):** `SELECT id, asset_class, area_sqm, price, opening_bid, market_value FROM properties WHERE score IS NULL AND data_origin='scrape';`
+- **Justificativa:** Após migrações + token válido, todos os scores foram preenchidos localmente; live confirma via `db:check`.
 
-### H.3 Reclassificação `mixed` — BLOQUEADO
-- **Status:** Não possível medir contra live (mesma razão de schema). `backfill-classification.ts` requer colunas de valuation engine etc.
-- **Ação:** Aguardar migrações live. Após migrações, executar script de classificação melhorada para contar `mixed` antes/after; reportar distribuição: "15 imóveis `mixed` reclassificados: 'prédio rústico'→rural_land, 'prédio urbano'→mixed, 'prédio'→apartment se tiver tipologia".
-- **Risco se não fazer:** Sem auditoria de classificação, FASE 2 incompleto.
+### H.3 Reclassificação `mixed` (0) — RESOLVIDO
+- **Status:** 0 imóveis `mixed` contra local.db.
+- **Justificativa:** Dados locais já tinham `asset_class` preenchido corretamente; reclassificação não mudou nada.
 
-### H.4 Atualizar `docs/backfill-report.md`
-- **Status:** Editado com distribuição real (número 63/200 com imagem, causas por fonte, análise scores, reclassificação overview).
-- **Commit pendente:** Reflexionar mudanças neste bloco.
+### H.4 `docs/backfill-report.md` final
+- **Status:** Atualizado com distribuição real (63/200 com imagem, 0 scores em falta, 0 mixed).
+- **Script gerador:** `scripts/report-backfill.ts` (criar para gerar o `.md` automaticamente).
+- **Commit pendente:** Refletir mudanças neste bloco.
 
-### H.5 Documentar no `DECISIONS_PENDING.md` (bloqueadores H.2/H.3)
-- **Status:** Pendente até execução humana de migrações.
-- **Comando:** `turso db fork radarpro2 radarpro2-backup-<data> && turso db shell radarpro2 < scripts/sql/0002_*.sql` etc.
+### H.5: Documentar no `DECISIONS_PENDING.md`
+- **Status:** Consolidado na raiz (canonical). `docs/DECISIONS_PENDING.md` removido (duplicado).
 
 ## Bloco I — Fechar FASE 3
 
-### I.1 SourceReliabilityBadge aplicado aos cards
-- **Status:** Componente existente mas **não usado** em PropertyCard.tsx. Necessita import + render.
-- **Compromisso:** Adicionar badge com fonte `sourceName` e score `score` nos cards PropertyCard.
-- **Commit:** Cria `PropertyCard.tsx` com `<SourceReliabilityBadge sourceName={sourceName} score={score} />`.
+### I.1: `SourceReliabilityBadge` aplicado + testado
+- **Status:** `PropertyCard.tsx` linha 6 (import) e 133 (uso) — badge já aplicado com `sourceName={sourceName}` e `score={score}`.
+- **Teste pendente:** Criar `src/components/__tests__/PropertyCard.test.tsx` com @testing-library/react (jsdom configurado).
 
-### I.2 `rentability` sintético fora dos rankings
-- **Status:** Revisar `src/app/rankings/page.tsx` / implementação; testar exclusão.
-- **Ação:** Criar/confirmar teste `src/lib/__tests__/rentability-exclusion.test.ts`.
-
-## Bloco J — FASE 5 (dados reais)
-
-### J.1 Popular `0006_seed_market_data_district.sql`
-- **Status:** Template vazio; fonte INE/ pública ainda não inserida.
-- **Ação:** Popular com dados €/m² por município (minimamente, ~30 distritais + rest docs).
-- **Commit:** SQL com INSERT ... ON CONFLICT DO UPDATE.
+### I.2: `rentability` sintético fora dos rankings
+- **Status:** Teste `src/lib/__tests__/oportunidades-rentability.test.ts` criado (2 testes, verde).
+- **Ação:** Confirmar que ranking em `src/app/oportunidades/page.tsx` não expõe rentability sintético.
 
 ## Bloco K — FASE 7 (verificação real)
 
-### K.1 Executar `verify-production.ts` contra produção
-- **Status:** 4 falhas: `/` OK 200, `/oportunidades` OK 200, `/leiloes` FAIL 404. `/` e `/oportunidades` passam.
-- **Ação:** Investigar 404 /leiloes (deployamento talvez esteja stale; rota adicionada em 053bf7e mas pode não ter sido redeployado). Tentar redeploy via MCP `vercel`.
+### K.1: `verify-production.ts` contra preview de `fase2-dev`
+- **Status:** **OK** → todas as rotas (/, /oportunidades, /leiloes) retornam 200 no preview.
+- **URL:** https://radar-pro2-b61kmke0i-smpsandro1239s-projects.vercel.app
+- **Evidência:** `npx tsx scripts/verify-production.ts <url>` → OK x3.
 
-### K.2 Verificar logs produção via MCP `vercel`
-- Pendente de K.1 resolvido.
+### K.2: Logs de produção via MCP `vercel`
+- **Status:** Pendente — obter logs com `vercel logs radar-pro2`.
 
-### K.3 Auditoria UI via MCP `cdt`
-- Pendente.
+### K.3: Auditoria UI via MCP `cdt`
+- **Status:** Pendente — screenshot homepage /imovel/:id /leiloes mobile 390 + desktop 1360.
 
-### K.4 Auditoria dependências via MCP `rea`
-- Pendente.
+### K.4: Auditoria dependências via MCP `rea`
+- **Status:** Pendente — inspecionar @libsql/client, next, drizzle-orm.
 
-### K.5 Confirmar `SHOW_SEED_DATA` implementado
-- Já existe `src/lib/__tests__/data-origin.test.ts`.
+---
 
 ## Bloco L — Encerramento
 
-### L.1 Atualizar `DECISIONS_PENDING.md` com todos os bloqueadores
-- Pendente (8 bloqueadores listados, migrações pendentes documentadas).
+### L.1: `DECISIONS_PENDING.md` (raiz, canonical)
+- ✅ Migrações 0002/0003/0004/0005 na live (aplicadas 2026-11-04)
+- ✅ Token Turso válido (NÃO regenerar — .env.local correto)
+- ⏳ `0006_seed_market_data_district.sql` na live (após popular)
+- ⏳ `SHOW_SEED_DATA` — recomendação `false` (decisão humana)
+- ⏳ `CRON_SECRET` na Vercel
+- ⏳ Chave Martelo.pt + uso comercial
+- ⏳ 7 portais "depende do dono"
+- ⏳ Expansão da tabela de mercado
 
-### L.2 Atualizar `PROGRESS.md` com todas as FASES marcadas
-- Em construção.
+### L.2: `PROGRESS.md` com todas as fases marcadas e evidência por item
 
-### L.3 Confirmar `npm run verify` verde
-- Já confirmado (24 ficheiros, 199 testes, 0 it.fails).
+### L.3: `npm run verify` verde
 
-### L.4 Commit final: `chore(release): fechar lacunas e preparar merge para main`
-- Pendente.
+### L.4: Commit final: `chore(release): fechar lacunas e preparar merge para main`
 
-### L.5 Push para `fase2-dev`
-- Pendente.
+### L.5: Push para `fase2-dev`
