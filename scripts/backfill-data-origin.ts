@@ -12,10 +12,6 @@ import { existsSync } from "node:fs";
 import { inferDataOrigin } from "../src/lib/data-origin.ts";
 import { isRemoteDatabaseUrl } from "../src/lib/database-url.ts";
 
-if (existsSync(".env.local")) {
-  process.loadEnvFile(".env.local");
-}
-
 export function databaseUrl(repoRoot: string): string {
   const fromEnv = process.env.TURSO_DATABASE_URL;
   if (fromEnv) return fromEnv;
@@ -24,6 +20,11 @@ export function databaseUrl(repoRoot: string): string {
 }
 
 export async function main(repoRoot: string, args: string[]): Promise<number> {
+  // Carrega .env.local apenas quando executado como script (nao em testes de unidade)
+  if (existsSync(".env.local")) {
+    process.loadEnvFile(".env.local");
+  }
+
   const write = args.includes("--write");
   const url = databaseUrl(repoRoot);
 
