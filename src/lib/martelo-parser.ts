@@ -35,6 +35,7 @@ export type ScrapedRow = {
   isAuction: boolean;
   auctionType: AuctionType | null;
   auctionEndDate: number | null;
+  openingBid: number | null;
   currentBid: number | null;
   reservePrice: number | null;
   auctionHouse: string;
@@ -179,6 +180,7 @@ export function mapMarteloEvent(event: MarteloEvent): ScrapedRow {
     isAuction: true,
     auctionType: detectAuctionType(event),
     auctionEndDate: parsePortugalDateTime(event.data_fim),
+    openingBid: firstPositive(event.valor_abertura),
     currentBid,
     reservePrice: reserve,
     auctionHouse: mapAuctionHouse(event.source),

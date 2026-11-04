@@ -35,6 +35,7 @@ export const properties = sqliteTable("properties", {
   auctionType: text("auction_type").$type<"judicial" | "fiscal" | "private" | null>(),
   auctionHouse: text("auction_house"), // e-Leilões, Leilosoc, Martelo.pt, Estamo, etc.
   currentBid: real("current_bid"), // Lance atual
+  openingBid: real("opening_bid"), // Valor de abertura (leilão sem lance)
   reservePrice: real("reserve_price"), // Preço de reserva se conhecido
   maxBid: real("max_bid"), // Lance máximo sustentável calculado
   auctionEndDate: integer("auction_end_date", { mode: "timestamp" }),

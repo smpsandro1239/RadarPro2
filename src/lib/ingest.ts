@@ -2,6 +2,7 @@ import { db } from "@/db";
 import { properties } from "@/db/schema";
 import { eq, and } from "drizzle-orm";
 import { normalizeDistrict, resolveGeography } from "@/lib/geography";
+import { evaluateProperty } from "@/lib/valuation";
 
 /** Rotulo em portugues para o tipo inferido (o schema guarda texto livre). */
 const ASSET_CLASS_LABEL: Record<string, string> = {
@@ -28,6 +29,7 @@ export interface ScrapedProperty {
   auctionHouse?: string;
   auctionType?: string;
   currentBid?: number;
+  openingBid?: number;
   reservePrice?: number;
   maxBid?: number;
   /** Geografia estruturada (canais oficiais). Tem prioridade sobre `location`. */
@@ -78,6 +80,7 @@ export function inferAssetClass(type: string | null, title: string | null): { as
  * area mas a base de dados nao a pode guardar.
  */
 const supportsAreaColumn = "areaSqm" in properties;
+const supportsOpeningBidColumn = "openingBid" in properties;
 
 /** `parish` so existe na base depois da migracao 0002 (ver scripts/sql/0002). */
 const supportsParishColumn = "parish" in properties;
@@ -125,8 +128,6 @@ export async function ingestProperty(prop: ScrapedProperty): Promise<{
     ...(supportsParishColumn ? { parish: geography.parish } : {}),
     type: prop.type ?? ASSET_CLASS_LABEL[inferred.assetClass] ?? "",
     price: prop.price,
-    // marketValue / discountPct / score / rentability sao calculados pelo motor de
-    // avaliacao. Sem motor ligado ficam a null: nada de price*1.2 ou 15% inventados.
     marketValue: null,
     discountPct: null,
     score: null,
@@ -140,10 +141,27 @@ export async function ingestProperty(prop: ScrapedProperty): Promise<{
     auctionType: prop.auctionType ?? null,
     // Convencao unica: em leilao, `price` e o lance atual; `current_bid` espelha-o.
     currentBid: prop.currentBid ?? (prop.isAuction ? prop.price : null),
+    ...(supportsOpeningBidColumn ? { openingBid: prop.openingBid ?? (prop.isAuction && !prop.currentBid ? prop.price : null) } : {}),
     reservePrice: prop.reservePrice ?? null,
     ...(supportsAreaColumn ? { areaSqm: prop.areaSqm ?? null } : {}),
     maxBid: prop.maxBid ?? null,
   };
+
+  // Avaliacao com o motor v2 (unifica o caminho de escrita com o dry-run).
+  const valuation = evaluateProperty({
+    ...normalized,
+    assetClass: inferred.assetClass as any,
+    areaSqm: prop.areaSqm ?? null,
+    isAuction: prop.isAuction ?? false,
+    auctionType: prop.auctionType ?? null,
+    currentBid: prop.currentBid ?? (prop.isAuction ? prop.price : null),
+    marketValue: null,
+  });
+  (normalized as any).marketValue = valuation.valuation;
+  (normalized as any).score = valuation.score;
+  if (valuation.valuation && prop.price) {
+    (normalized as any).discountPct = Math.round(((valuation.valuation - prop.price) / valuation.valuation) * 100);
+  }
 
   // Check if property already exists (by source_url)
   const existing = await db
@@ -172,6 +190,7 @@ export async function ingestProperty(prop: ScrapedProperty): Promise<{
       auctionHouse: normalized.auctionHouse,
       auctionType: normalized.auctionType,
       currentBid: normalized.currentBid,
+      ...(supportsOpeningBidColumn ? { openingBid: normalized.openingBid } : {}),
       reservePrice: normalized.reservePrice,
       ...(supportsAreaColumn ? { areaSqm: normalized.areaSqm ?? null } : {}),
       maxBid: normalized.maxBid,

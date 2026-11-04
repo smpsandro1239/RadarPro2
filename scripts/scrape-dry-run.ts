@@ -169,10 +169,10 @@ async function writeRows(url: string, evaluated: Evaluated[]): Promise<number> {
       sql: `INSERT INTO properties
         (id, source, source_name, url, title, district, municipality, parish, type, price,
          market_value, max_bid, score, rentability, images, is_active, check_status, created_at, updated_at,
-         is_auction, auction_type, auction_house, current_bid, reserve_price, area_sqm, floor,
+         is_auction, auction_type, auction_house, current_bid, opening_bid, reserve_price, area_sqm, floor,
          lat, lng, geo_quality, asset_class, valuation_engine, valuation_confidence, data_origin)
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NULL, '[]', ?, 'ok', ?, ?,
-                1, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'scrape')
+                1, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'scrape')
         ON CONFLICT(id) DO UPDATE SET
           title = excluded.title, district = excluded.district, municipality = excluded.municipality,
           parish = excluded.parish, type = excluded.type, price = excluded.price,
@@ -180,7 +180,7 @@ async function writeRows(url: string, evaluated: Evaluated[]): Promise<number> {
           area_sqm = excluded.area_sqm, floor = excluded.floor, lat = excluded.lat, lng = excluded.lng,
           geo_quality = excluded.geo_quality, is_active = excluded.is_active,
           auction_type = excluded.auction_type, auction_house = excluded.auction_house,
-          current_bid = excluded.current_bid, reserve_price = excluded.reserve_price,
+          current_bid = excluded.current_bid, opening_bid = excluded.opening_bid, reserve_price = excluded.reserve_price,
           asset_class = excluded.asset_class, valuation_engine = excluded.valuation_engine,
           valuation_confidence = excluded.valuation_confidence,
           data_origin = 'scrape', updated_at = excluded.updated_at`,
@@ -204,6 +204,7 @@ async function writeRows(url: string, evaluated: Evaluated[]): Promise<number> {
         row.auctionType,
         row.auctionHouse,
         row.currentBid,
+        row.openingBid,
         row.reservePrice,
         row.areaSqm,
         row.floor,
