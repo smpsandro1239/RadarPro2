@@ -5,6 +5,7 @@ Data: 2026-11-04
 ## Base de dados local
 - 48 imóveis (demo, origem `demo`).
 - `area_sqm` preenchido em 48/48 (100%) via backfill por tipologia.
+- `image_url` preenchido em 22/48 (45.8%) via backfill-images. 25 imóveis de bancos não processados (fonte fora da lista de prioridade). 1 sem imagem encontrada.
 - `market_value` / `score` preenchidos em 48/48 (100%).
 - `rentability` > 0 em 43/48 (89.6%).
 - Distribuição de scores: 60-79 → 20, 80-100 → 28.
