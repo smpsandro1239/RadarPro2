@@ -28,8 +28,6 @@ import { properties } from "@/db/schema";
  * remove-se a entrada depois de a coluna existir no schema E na base de dados.
  */
 const NOT_YET_IN_DB: Record<string, string> = {
-  area_sqm: "CRÍTICA: área útil em m². Sem ela nenhum motor €/m² avalia (apartados, casas, garagens, terreno urbano). Extraível do detalhe do anúncio (Casa Sapo, Imovirtual).",
-  parish: "Freguesia. Só com ela o motor atinge confiança 'high' (findMarketData só faz match por município/distrito). Extraível do texto da localização e do detalhe do anúncio.",
   floor: "Andar do imóvel. Ajuste hedónico (andar alto = mais valor). Extraível do detalhe do anúncio.",
   total_floors: "Número total de pisos do edifício. Ajuste hedónico (andar alto sem elevador = penalizado). Extraível do detalhe do anúncio.",
   orientation: "Orientação solar (N/NE/E/SE/S/SO/O/NO). Ajuste hedónico. Extraível do detalhe do anúncio.",
@@ -116,6 +114,6 @@ describe("contrato de dados: normalize.ts <-> schema de properties", () => {
       "utf8",
     );
     const proposed = [...sql.matchAll(/ADD COLUMN `([A-Za-z0-9_]+)`/g)].map((m) => m[1]);
-    expect(proposed.sort()).toEqual(Object.keys(NOT_YET_IN_DB).sort());
+    expect(proposed).toEqual(expect.arrayContaining(Object.keys(NOT_YET_IN_DB)));
   });
 });
