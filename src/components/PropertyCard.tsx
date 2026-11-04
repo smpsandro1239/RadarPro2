@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { MapPin, Gavel, CheckCircle, TrendingDown, AlertTriangle, ChevronDown } from "lucide-react";
 import PropertyImage from "@/components/PropertyImage";
-import ScoreRatingBadge from "@/components/ScoreRatingBadge";
+
 
 interface PropertyCardProps {
   id: string;
@@ -130,7 +130,6 @@ export default function PropertyCard({
         {/* Score */}
         <div className={`absolute top-4 right-4 px-3 py-1.5 rounded-lg text-xs font-bold z-10 ${getScoreBadgeVariant(score, valuationConfidence)} border`}>
           {score !== null ? `${score}/100` : "Sem avaliação"}
-          <ScoreRatingBadge score={score} />
         </div>
       </div>
 

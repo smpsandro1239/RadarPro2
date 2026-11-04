@@ -35,13 +35,15 @@ const baseProps = {
 };
 
 describe("PropertyCard", () => {
-  it("renderiza o ScoreRatingBadge com score >= 13", () => {
+  it("renderiza o score do imovel como X/100", () => {
     render(<PropertyCard {...baseProps} score={14} />);
-    expect(screen.getByText("14/15")).toBeInTheDocument();
+    const matches = screen.getAllByText("14/100");
+    expect(matches.length).toBeGreaterThan(0);
   });
 
-  it("renderiza o ScoreRatingBadge com score null", () => {
+  it("renderiza 'Sem avaliacao' quando score e null", () => {
     render(<PropertyCard {...baseProps} score={null} />);
-    expect(screen.getByText("—")).toBeInTheDocument();
+    const matches = screen.getAllByText("Sem avaliação");
+    expect(matches.length).toBeGreaterThan(0);
   });
 });

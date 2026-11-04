@@ -1,6 +1,11 @@
 import { createClient } from "@libsql/client";
 import { writeFileSync } from "fs";
 import { join } from "path";
+import { existsSync } from "fs";
+
+if (existsSync(".env.local")) {
+  process.loadEnvFile(".env.local");
+}
 
 async function main() {
   const db = createClient({
@@ -38,7 +43,7 @@ async function main() {
   const totalWithoutImages = imagesRows.reduce((a, r) => a + r.sem, 0);
   const totalProperties = imagesRows.reduce((a, r) => a + r.total, 0);
 
-  const report = `# Backfill Report — RadarPro2
+  const report = `# Backfill Report - RadarPro2
 
 **Gerado:** ${new Date().toISOString()}
 **Base:** ${process.env.TURSO_DATABASE_URL ?? "file:./local.db"}

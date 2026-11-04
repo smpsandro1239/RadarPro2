@@ -13,7 +13,7 @@ import AuctionCountdown from "@/components/AuctionCountdown";
 import SimilarProperties from "@/components/SimilarProperties";
 import CommuteEstimator from "@/components/CommuteEstimator";
 import VerifiedBadge from "@/components/VerifiedBadge";
-import ScoreRatingBadge from "@/components/ScoreRatingBadge";
+
 import VisitBooking from "@/components/VisitBooking";
 import NeighborhoodRadar from "@/components/NeighborhoodRadar";
 
@@ -117,8 +117,7 @@ export default async function PropertyPage({
             <span className="bg-slate-100 px-3 py-1 rounded-lg text-sm font-medium">
               {prop.type}
             </span>
-            <ScoreRatingBadge score={prop.score} />
-          </div>
+            </div>
 
           {prop.valuationConfidence === "very_low" && (
             <div className="mb-4 p-3 bg-red-50 border border-red-100 rounded-xl flex items-center gap-2">
