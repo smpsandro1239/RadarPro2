@@ -30,7 +30,17 @@ export function deriveAssetClass(p: PropertyInput): AssetClassResult {
   if (has(/loja|armazem|escritorio|comerc|industrial|pavilhao|servicos/)) {
     return { assetClass: "commercial", inferred: true, reason: "Classe deduzida do texto: comercial" };
   }
+  if (has(/predio\s*rustic|predio\s*rústic|edificio\s*rustic/)) {
+    return { assetClass: "rural_land", inferred: true, reason: "Classe deduzida do texto: prédio rústico" };
+  }
+  if (has(/predio\s*urbano|predio\s*misto|ruina/)) {
+    return { assetClass: "mixed", inferred: true, reason: "Classe deduzida do texto: prédio (avaliação manual)" };
+  }
   if (has(/predio|edificio/)) {
+    // "Prédio" sozinho é ambíguo: só tratar como misto se não houver tipologia clara.
+    if (has(/apartamento|\bt[0-9]\b/)) {
+      return { assetClass: "apartment", inferred: true, reason: "Classe deduzida do texto: prédio com apartamentos" };
+    }
     return { assetClass: "mixed", inferred: true, reason: "Classe deduzida do texto: prédio (avaliação manual)" };
   }
   if (has(/moradia|vivenda|\bcasa\b|\bvilla\b|\bv[2-9]\b/)) {

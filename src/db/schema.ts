@@ -7,7 +7,8 @@ export const properties = sqliteTable("properties", {
   url: text("url").notNull(),
   title: text("title").notNull(),
   district: text("district").notNull(), 
-  municipality: text("municipality").notNull(), 
+  municipality: text("municipality").notNull(),
+  parish: text("parish"),
   type: text("type").notNull(), 
   /**
    * Preço de venda.
@@ -38,6 +39,7 @@ export const properties = sqliteTable("properties", {
   openingBid: real("opening_bid"), // Valor de abertura (leilão sem lance)
   reservePrice: real("reserve_price"), // Preço de reserva se conhecido
   maxBid: real("max_bid"), // Lance máximo sustentável calculado
+  areaSqm: real("area_sqm"), // Área útil em m²
   auctionEndDate: integer("auction_end_date", { mode: "timestamp" }),
   auctionStartDate: integer("auction_start_date", { mode: "timestamp" }),
   vpt: real("vpt"), // Valor Patrimonial Tributário
@@ -54,6 +56,7 @@ export const properties = sqliteTable("properties", {
   lng: real("lng"),
   geoQuality: text("geo_quality").$type<"exact" | "street" | "parish" | "district" | "NA">(),
   dedupHash: text("dedup_hash"),
+  dataOrigin: text("data_origin").$type<"demo" | "scrape">(),
   isActive: integer("is_active", { mode: "boolean" }).default(true),
   lastChecked: integer("last_checked", { mode: "timestamp" }),
   checkStatus: text("check_status").$type<"ok" | "not_found" | "error" | "pending">().default("pending"),

@@ -49,7 +49,7 @@ async function main() {
           marketValue: row.marketValue,
           discountPct: row.discountPct,
           rentability: row.rentability ?? 0,
-          sqm: null,
+          sqm: row.areaSqm ?? null,
           isAuction: Boolean(row.isAuction),
           auctionType: row.auctionType ?? undefined,
           auctionHouse: row.auctionHouse ?? undefined,

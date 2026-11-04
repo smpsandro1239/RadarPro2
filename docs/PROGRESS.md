@@ -1,5 +1,17 @@
 # Progresso — RadarPro (modo continuo)
 
+## Iteração 7 – FASE 1 (WP7) + FASE 2 parcial (2026-11-04)
+- v2 como motor único: legacy `@deprecated`, 5 `it.fails` migrados, `MAX_IT_FAILS` = 1.
+- `ValuationCard` consome v2; `/api/valuation` usa v2; `avm.ts` removido.
+- `auction_end_date` unificado em ms; `findMarketData` normaliza acentos.
+- `opening_bid` separado (schema + ingest + parser + dry-run).
+- `areaSqm`/`parish`/`dataOrigin` adicionados ao schema.ts (alinhamento com migrações).
+- Backfill: área para 48 demo, scores recalculados (23 atualizados).
+- `classify.ts` melhorado (prédio rústico/urbano).
+- `TODO.md` e `docs/backfill-report.md` criados.
+- `verify` verde (23 ficheiros, 199 + 1 `it.fails`).
+- Build local (local.db) verde. Live requer migrações 0002/0003/0004.
+
 Historico por iteracao, mais recente no topo.
 
 ## Iteracao 6 – WP6 Geografia do `ingest`, nivel `district` no mercado e testes de integracao (2026-11-03 05:10)

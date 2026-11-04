@@ -19,6 +19,7 @@ export const MIGRATION_FILES = [
   "drizzle/0001_amusing_captain_america.sql",
   "scripts/sql/0002_add_property_valuation_inputs.sql",
   "scripts/sql/0003_add_data_origin.sql",
+  "scripts/sql/0004_add_opening_bid.sql",
 ];
 
 export function splitStatements(sql: string): string[] {
