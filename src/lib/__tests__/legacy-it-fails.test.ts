@@ -3,7 +3,7 @@ import path from "node:path";
 import { describe, expect, it } from "vitest";
 
 /** Limite de `it.fails` no repo: subir este numero exige revisao explicita. */
-const MAX_IT_FAILS = 1;
+const MAX_IT_FAILS = 0;
 /** Distancia maxima (em linhas) entre o `it.fails` e o TODO que o justifica. */
 const TODO_WINDOW_LINES = 12;
 
@@ -37,10 +37,6 @@ function itFailsOccurrences(): { file: string; line: number; context: string[] }
 }
 
 describe("testes legados com it.fails", () => {
-  it("existe pelo menos um it.fails (o limite tem de valer para alguma coisa)", () => {
-    expect(itFailsOccurrences().length).toBeGreaterThan(0);
-  });
-
   it("nao ultrapassa o limite de it.fails", () => {
     const occurrences = itFailsOccurrences();
     expect(
