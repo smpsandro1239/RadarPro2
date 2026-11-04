@@ -1,34 +1,11 @@
 import { NextResponse } from "next/server";
-import { calculateAdvancedAVM } from "@/lib/avm";
-import { calculateOpportunityScore } from "@/lib/scoring";
+import { evaluateProperty } from "@/lib/valuation";
 
 export async function POST(request: Request) {
   try {
-    const { district, municipality, type, price, marketValue, source, sourceName, rentability, createdAt, isActive } = await request.json();
-
-    const avm = calculateAdvancedAVM({
-      district,
-      municipality: municipality || district,
-      type,
-      price,
-      marketValue,
-      source: source || "portal",
-      sqm: 0,
-    });
-
-    const score = calculateOpportunityScore({
-      price,
-      marketValue,
-      discountPct: marketValue ? Math.round(((marketValue - price) / marketValue) * 100) : null,
-      rentability,
-      sourceName: sourceName || source || "portal",
-      district,
-      type,
-      createdAt: createdAt ? new Date(createdAt) : null,
-      isActive: isActive ?? true,
-    });
-
-    return NextResponse.json({ avm, score });
+    const body = await request.json();
+    const result = evaluateProperty(body);
+    return NextResponse.json({ valuation: result });
   } catch (error) {
     console.error(error);
     return NextResponse.json({ error: "Erro interno" }, { status: 500 });

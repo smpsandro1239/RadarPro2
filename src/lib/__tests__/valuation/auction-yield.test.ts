@@ -57,11 +57,7 @@ describe("yield para leilões (TDD)", () => {
     expect(yieldScore).toBeGreaterThan(0);
   });
 
-    // Teste legado da API v1: o motor v2 usa cobertura e limites declarados,
-  // pelo que as expectativas da v1 nao se cumprem. Migracao para a v2 = Fase 3.
-  // it.fails avisa se o teste comecar a passar (ou seja, quando for migrado).
-  // TODO(Fase 3): migrar para o motor v2 — a expectativa e da API v1.
-  it.fails("preço fixo: yield usa price como denominador", () => {
+    it("preço fixo: yield usa price como denominador", () => {
     const fixedProperty = {
       ...BASE_PROPERTY,
       isAuction: false,
@@ -69,6 +65,7 @@ describe("yield para leilões (TDD)", () => {
       price: 120_000,
       maxBid: null,
       annual_income: 9_000,
+      sqm: 70,
     };
 
     const result = evaluateProperty(fixedProperty);

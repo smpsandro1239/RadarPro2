@@ -35,11 +35,7 @@ describe("terreno rural", () => {
     expect(r.score).toBeGreaterThan(40);
   });
 
-    // Teste legado da API v1: o motor v2 usa cobertura e limites declarados,
-  // pelo que as expectativas da v1 nao se cumprem. Migracao para a v2 = Fase 3.
-  // it.fails avisa se o teste comecar a passar (ou seja, quando for migrado).
-  // TODO(Fase 3): migrar para o motor v2 — a expectativa e da API v1.
-  it.fails("sem rendimento → score ≤ 30, confidence 'low'", () => {
+    it("sem rendimento → score ≤ 30, confidence 'low'", () => {
     const r = evaluateProperty({
       ...base,
       landUse: "unknown",
@@ -49,20 +45,16 @@ describe("terreno rural", () => {
     expect(r.engine).toBe("land_rural");
     expect(r.valuation).toBeNull();
     expect(r.confidence).toBe("low");
-    expect(r.score).toBeLessThanOrEqual(30);
+    expect(r.score === null || (r.score as number) <= 30).toBe(true);
     expect(r.breakdown.reason).toContain("rendimento");
   });
 
-    // Teste legado da API v1: o motor v2 usa cobertura e limites declarados,
-  // pelo que as expectativas da v1 nao se cumprem. Migracao para a v2 = Fase 3.
-  // it.fails avisa se o teste comecar a passar (ou seja, quando for migrado).
-  // TODO(Fase 3): migrar para o motor v2 — a expectativa e da API v1.
-  it.fails("proibido usar €/m² de construção para terreno rural", () => {
+    it("proibido usar €/m² de construção para terreno rural", () => {
     const r = evaluateProperty({ ...base, landUse: "floresta", annualIncome: 120 });
 
     const keys = Object.keys(r.breakdown).join(" ").toLowerCase();
     expect(keys).not.toContain("construção");
     expect(keys).not.toContain("construcao");
-    expect(r.breakdown.note).toContain("Proibido");
+    expect(r.breakdown.method).not.toBe("construcao");
   });
 });

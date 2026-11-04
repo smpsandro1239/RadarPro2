@@ -3,7 +3,7 @@ import path from "node:path";
 import { describe, expect, it } from "vitest";
 
 /** Limite de `it.fails` no repo: subir este numero exige revisao explicita. */
-const MAX_IT_FAILS = 6;
+const MAX_IT_FAILS = 1;
 /** Distancia maxima (em linhas) entre o `it.fails` e o TODO que o justifica. */
 const TODO_WINDOW_LINES = 12;
 

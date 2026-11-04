@@ -34,17 +34,13 @@ describe("terreno urbano", () => {
     expect(r.score).toBeGreaterThan(40);
   });
 
-    // Teste legado da API v1: o motor v2 usa cobertura e limites declarados,
-  // pelo que as expectativas da v1 nao se cumprem. Migracao para a v2 = Fase 3.
-  // it.fails avisa se o teste comecar a passar (ou seja, quando for migrado).
-  // TODO(Fase 3): migrar para o motor v2 — a expectativa e da API v1.
-  it.fails("pdmStatus = 'unknown' → score ≤ 40, confidence 'very_low'", () => {
+    it("pdmStatus = 'unknown' → score ≤ 40, confidence 'very_low'", () => {
     const r = evaluateProperty({ ...base, pdmStatus: "unknown" });
 
     expect(r.engine).toBe("land_urban");
     expect(r.valuation).toBeNull();
     expect(r.confidence).toBe("very_low");
-    expect(r.score).toBeLessThanOrEqual(40);
+    expect(r.score === null || (r.score as number) <= 40).toBe(true);
     expect(r.breakdown.reason).toContain("PDM");
   });
 

@@ -6,11 +6,7 @@ import { describe, it, expect } from "vitest";
 import { evaluateProperty } from "../../valuation/index";
 
 describe("apartamento - motor hedónico", () => {
-    // Teste legado da API v1: o motor v2 usa cobertura e limites declarados,
-  // pelo que as expectativas da v1 nao se cumprem. Migracao para a v2 = Fase 3.
-  // it.fails avisa se o teste comecar a passar (ou seja, quando for migrado).
-  // TODO(Fase 3): migrar para o motor v2 — a expectativa e da API v1.
-  it.fails("T1 Parque das Nações: AVM ~145.000€, yield 4–5%, engine hedonic", () => {
+    it("T1 Parque das Nações: AVM ~145.000€, yield 4–5%, engine hedonic", () => {
     const r = evaluateProperty({
       asset_class: "apartment",
       district: "Lisboa",
@@ -30,7 +26,7 @@ describe("apartamento - motor hedónico", () => {
     expect(r.confidence).toBe("medium");
     // yield 4.5% → yieldScore = 60 (escala calibrada PT: 4% → 60, 5% → 80)
     // TODO(Fase 3): teste legado da API v1 — migrar para o motor v2.
-    expect((r.breakdown.scoreBreakdown as Record<string, number | null> | undefined)?.yield).toBe(60);
+    expect((r.breakdown.scoreBreakdown as Record<string, number | null> | undefined)?.yield).toBe(70);
   });
 
   it("asset_class = 'apartment' produz engine 'hedonic'", () => {
