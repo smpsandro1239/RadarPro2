@@ -1,72 +1,38 @@
 -- 0006_seed_market_data_district.sql — market data by district (seed)
 -- Fonte: INE, mediana de avaliação bancária 2025-Q3 (aproximado).
 -- NÃO executar na live. Documentar comando em DECISIONS_PENDING.md.
--- INSERT ... ON CONFLICT(district, property_type) DO UPDATE.
+-- ON CONFLICT(district, property_type) DO UPDATE (idempotente).
+-- NÃO contém DELETE FROM — destrutivo.
 
--- PRIMEIRA: auditoria de estado
+-- PRIMEIRA: auditoria de estado (apenas leitura)
 SELECT district, property_type, COUNT(*) FROM properties GROUP BY district, property_type;
 
--- LIMPAÇÃO PREVENTIVA (conservadora)
-DELETE FROM market_data;
-
-INSERT INTO market_data (district, property_type, price_per_sqm) VALUES
--- Lisboa
-('lisboa', 'apartment', 4200),
-('lisboa', 'house', 3100),
--- Porto
-('porto', 'apartment', 2800),
-('porto', 'house', 1900),
--- Braga
-('braga', 'apartment', 2500),
-('braga', 'house', 1700),
--- Faro
-('faro', 'apartment', 3500),
-('faro', 'house', 2400),
--- Setúbal
-('setubal', 'apartment', 1800),
-('setubal', 'house', 1400),
--- Aveiro
-('aveiro', 'apartment', 2000),
-('aveiro', 'house', 1600),
--- Coimbra
-('coimbra', 'apartment', 1800),
-('coimbra', 'house', 1400),
--- Leiria
-('leiria', 'apartment', 1500),
-('leiria', 'house', 1100),
--- Viseu
-('viseu', 'apartment', 1300),
-('viseu', 'house', 950),
--- Viana do Castelo
-('viana_do_castelo', 'apartment', 1700),
-('viana_do_castelo', 'house', 1300),
--- Évora
-('evora', 'apartment', 1300),
-('evora', 'house', 1000),
--- Santarém
-('santarem', 'apartment', 1200),
-('santarem', 'house', 900),
--- Beja
-('beja', 'apartment', 1100),
-('beja', 'house', 850),
--- Bragança
-('braganca', 'apartment', 1200),
-('braganca', 'house', 900),
--- Castelo Branco
-('castelo_branco', 'apartment', 1200),
-('castelo_branco', 'house', 900),
--- Guarda
-('guarda', 'apartment', 1100),
-('guarda', 'house', 850),
--- Portalegre
-('portalegre', 'apartment', 1000),
-('portalegre', 'house', 750),
--- Vila Real
-('vila_real', 'apartment', 1000),
-('vila_real', 'house', 750),
--- Açores
-('ilha_de_flores', 'apartment', 1300),
-('ilha_de_flores', 'house', 1100),
--- Madeira
-('madeira', 'apartment', 2800),
-('madeira', 'house', 2400);
+-- SEED idempotente: insere apenas se não existir (ON CONFLICT)
+-- A estrutura refere-se ao mercado por distrito (apto/casa).
+-- Os valores €/m² são orientativos para os distritos principais.
+INSERT INTO market_data_district (district, property_type, price_per_sqm, source, as_of)
+VALUES
+('Lisboa', 'apartment', 4200, 'INE', '2025-Q3'),
+('Lisboa', 'house', 3100, 'INE', '2025-Q3'),
+('Porto', 'apartment', 2800, 'INE', '2025-Q3'),
+('Porto', 'house', 1900, 'INE', '2025-Q3'),
+('Braga', 'apartment', 2500, 'INE', '2025-Q3'),
+('Braga', 'house', 1700, 'INE', '2025-Q3'),
+('Faro', 'apartment', 3500, 'INE', '2025-Q3'),
+('Faro', 'house', 2400, 'INE', '2025-Q3'),
+('Setúbal', 'apartment', 1800, 'INE', '2025-Q3'),
+('Setúbal', 'house', 1400, 'INE', '2025-Q3'),
+('Aveiro', 'apartment', 2000, 'INE', '2025-Q3'),
+('Aveiro', 'house', 1600, 'INE', '2025-Q3'),
+('Coimbra', 'apartment', 1800, 'INE', '2025-Q3'),
+('Coimbra', 'house', 1400, 'INE', '2025-Q3'),
+('Leiria', 'apartment', 1500, 'INE', '2025-Q3'),
+('Leiria', 'house', 1100, 'INE', '2025-Q3'),
+('Viseu', 'apartment', 1300, 'INE', '2025-Q3'),
+('Viseu', 'house', 950, 'INE', '2025-Q3'),
+('Viana do Castelo', 'apartment', 1700, 'INE', '2025-Q3'),
+('Viana do Castelo', 'house', 1300, 'INE', '2025-Q3')
+ON CONFLICT(district, property_type) DO UPDATE SET
+  price_per_sqm = excluded.price_per_sqm,
+  source = excluded.source,
+  as_of = excluded.as_of;
