@@ -19,6 +19,7 @@
     "db:local": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/db-local.ts",
     "db:local:reset": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/db-local.ts --reset",
     "db:local:seed": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/db-local.ts --seed",
+    "db:recreate": "npm run db:local:reset && npm run db:local:seed",
     "backfill:origin": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/backfill-data-origin.ts",
     "db:stats": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/db-stats.ts",
     "scrape:dry-run": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/scrape-dry-run.ts",

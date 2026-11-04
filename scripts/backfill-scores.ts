@@ -13,6 +13,7 @@ async function main() {
 
   console.log(`Total de imóveis ativos: ${rows.length}\n`);
 
+  const dryRun = process.argv.includes("--dry-run");
   let updated = 0;
   let unchanged = 0;
   let skipped = 0;
@@ -72,6 +73,7 @@ async function main() {
 
       // Só atualizar se mudou
       if (newScore !== null && (newScore !== row.score || newMarketValue !== row.marketValue)) {
+        if (dryRun) { updated++; continue; }
         await db
           .update(properties)
           .set({ score: newScore, marketValue: newMarketValue, updatedAt: new Date() })

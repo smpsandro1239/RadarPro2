@@ -4,8 +4,13 @@ import { eq, isNull } from "drizzle-orm";
 import { typeSizeEstimates } from "../src/lib/scoring";
 
 async function main() {
+  const dryRun = process.argv.includes("--dry-run");
   const rows = await db.select().from(properties).where(eq(properties.isActive, true));
   const withoutArea = rows.filter((r) => r.areaSqm == null);
+  if (dryRun) {
+    console.log(`[dry-run] ${withoutArea.length} imóveis sem área seriam atualizados.`);
+    return;
+  }
   console.log(`Imóveis sem área: ${withoutArea.length}`);
 
   let updated = 0;
