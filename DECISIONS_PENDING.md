@@ -52,3 +52,13 @@ Usar `PRAGMA table_info(properties)` — `.schema` mostra o SQL original de cria
 - **O que fazer:** rodar token vazado (fingerprint `1bb0c1abb032`).
 - **Decisão recomendada:** rodar antes de qualquer deploy público.
 - **Risco:** acesso não autorizado à BD.
+
+## 9. Medicoes H contra live (confirmado 2026-11-04)
+- **H.1:** Imagens: 63/200 com imagem (31.5%), 137 sem (68.5%). Fonte: scripts/report-backfill.ts.
+- **H.2:** 0 scrape sem score (score IS NULL AND data_origin='scrape'; -> 0 rows).
+- **H.3:** 14 propriedades asset_class='mixed' (NOT 0). Reclassificar para review (nao alterar live diretamente).
+- **Base:** libsql://radarpro2-smpsandro1239.aws-eu-west-1.turso.io.
+
+## 10. Seed market data district
+- **O que fazer:** popular scripts/sql/0006_seed_market_data_district.sql na live.
+- **Comando:** npx tsx scripts/apply-migration.ts scripts/sql/0006_seed_market_data_district.sql --dry-run / --apply.
