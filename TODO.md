@@ -13,8 +13,8 @@ Modo contínuo: terminar um item, passar ao seguinte. Um commit por item, testes
 - [x] 1.2 `findMarketData`: normalizar acentos com `normalizeName`.
 - [x] 1.3 WP7: v2 como único motor, legacy `@deprecated`, migrar 5 `it.fails`, baixar `MAX_IT_FAILS`.
 - [x] 1.4 `ValuationCard` passa a consumir v2 (motor único).
-- [ ] 1.5 Unificar os dois caminhos de escrita (`ingest.ts` e `scrape-dry-run.ts`).
-- [ ] 1.6 Leilões sem lance: campo separado `opening_bid`.
+- [x] 1.5 Unificar os dois caminhos de escrita (`ingest.ts` e `scrape-dry-run.ts`).
+- [x] 1.6 Leilões sem lance: campo separado `opening_bid`.
 
 ## FASE 2 — Backfill (WP11)
 - [ ] 2.1 Scripts de backfill com dry-run por defeito + relatório de distribuição.
