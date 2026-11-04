@@ -10,6 +10,8 @@ export default defineConfig({
           name: "unit",
           environment: "node",
           include: ["src/**/*.test.ts"],
+          pool: "vmThreads",
+          poolOptions: { vmThreads: { singleThread: false } },
         },
       },
       {
@@ -19,6 +21,8 @@ export default defineConfig({
           environment: "jsdom",
           include: ["src/**/*.test.tsx"],
           setupFiles: ["./vitest.setup.ts"],
+          pool: "vmThreads",
+          poolOptions: { vmThreads: { singleThread: false } },
         },
       },
     ],

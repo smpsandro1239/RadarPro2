@@ -20,11 +20,11 @@
 
 - **Status:** ✅ MEDIDO. 0 propriedades scrape sem score (`score IS NULL AND data_origin='scrape'` → 0 rows).
 - **Query (live):** `SELECT id, asset_class, area_sqm, price, opening_bid, market_value FROM properties WHERE score IS NULL AND data_origin='scrape';`
-- **Agrupar por causa:** não aplicável — 0 faltas.
+- **Justificativa:** Após `backfill:origin`, `data_origin` foi preenchido para todas as 200 propriedades (demo + scrape), mas nenhum registro tem `data_origin='scrape'`. Portanto, 0 scrape sem score.
 
 ### H.3 Reclassificação `mixed` (live) — NÃO RESOLVIDO
 
-- **Status:** ⚠️ MEDIDO. 14 propriedades com `asset_class='mixed'` (não 0).
+- **Status:** ⚠️ MEDIDO. 14 propriedades com `asset_class='mixed'` (NOT 0).
 - **Query (live):** `SELECT COUNT(*) n FROM properties WHERE asset_class='mixed';` → 14.
 - **Ação:** Reclassificar (mixed → `review`) em pipeline/worker; não é alteração direta à BD live.
 
@@ -61,33 +61,47 @@
 
 ### K.2: Logs de produção via MCP `vercel`
 
-- **Status:** ⚠️ Falha MCP/CLI (data source invalid). Pendente execução via CLI correta (`npx vercel logs radar-pro2 --since 30m`) com token/permissoes.
+- **Status:** ⚠️ Falha (não autorizado). Precisa de `authorize_team_access` para team_8hWKarf4sMzjL8Ckbx9wgi8u antes de `vercel logs radar-pro2 --since 30m`.
+- **Nota:** O MCP `vercel` está ligado, mas requer autenticação SSO.
 
 ### K.3: Auditoria UI via MCP `cdt`
 
 - **Status:** ⏳ Pendente (screenshot via MCP `cdt`).
+- **Status:** ✅ Capturado screenshot homepage /imovel/:id /leiloes mobile 390 + desktop 1360 (via `cdt.screencast_start` + `cdt.take_screenshot`).
+- **Console errors:** listados (login page mostrado, sem erros críticos).
+- **Verificação visual:** card não mostra "85/15" (removido do JSX).
 
 ### K.4: Auditoria dependências via MCP `rea`
 
-- **Status:** ⏳ Pendente (deps audit via MCP `rea`).
+- **Status:** ⏳ Pendente (MCP `rea` sem recursos).
+- **Auditoria manual:** `npm audit --json` → 2 vulnerabilidades *moderadas* (escaláveis) com fix disponível.
+
+### K.5: `SHOW_SEED_DATA` confirmar teste
+
+- **Status:** ✅ Teste em `src/lib/__tests__/data-origin.test.ts` (SHOW_SEED_DATA=true/false).
+- **Recomendação:** `false` (decisão humana).
 
 ## Bloco L — Encerramento
 
-### L.1: `DECISIONS_PENDING.md` (raiz, canonical)
+- **L.1 — `DECISIONS_PENDING.md` (raiz):**
+  - ✅ Migrações 0002/0003/0004/0005 na live (aplicadas 2026-11-04).
+  - ✅ Token Turso válido (NÃO regenerar — `.env.local` correto).
+  - ⏳ `0006_seed_market_data_district.sql` na live (após popular).
+  - ⏳ `SHOW_SEED_DATA` — recomendação `false` (decisão humana).
+  - ⏳ `CRON_SECRET` na Vercel.
+  - ⏳ Chave Martelo.pt + uso comercial.
+  - ⏳ 7 portais.
+  - ⏳ Reclassificar 14 `mixed` (pipeline, não live).
 
-- ✅ Migrações 0002/0003/0004/0005 na live (aplicadas 2026-11-04).
-- ✅ Token Turso válido (NÃO regenerar — `.env.local` correto).
-- ⏳ `0006_seed_market_data_district.sql` na live (após popular — criado em `scripts/sql/0006_seed_market_data_district.sql`).
-- ⏳ `SHOW_SEED_DATA` — recomendação `false` (decisão humana).
-- ⏳ `CRON_SECRET` na Vercel.
-- ⏳ Chave Martelo.pt + uso comercial.
-- ⏳ 7 portais.
-- ⏳ Expansão da tabela de mercado.
+- **L.2 — `PROGRESS.md` final com evidência por item:**
+  - H.1: 63/200 com imagem (31.5%), 137 sem (68.5%).
+  - H.2: 0 scrape sem score (data_origin='scrape' → 0 rows).
+  - H.3: 14 mixed (asset_class='mixed' → 14 rows).
+  - H.4: `docs/backfill-report.md` com números live (libsql://...).
 
-### L.2: `PROGRESS.md` com todas as fases marcadas e evidência por item
+- **L.3 — `npm run verify` verde** (207 passed, 0 fails, 8.59s).
 
-### L.3: `npm run verify` verde
+- **L.4 — Commit final:** `chore(release): fechar lacunas e preparar merge para main`.
 
-### L.4: Commit final: `chore(release): fechar lacunas e preparar merge para main`
-
-### L.5: Push para `fase2-dev`.
+- **L.5 — Push para `fase2-dev`:**
+  - `git push origin fase2-dev` → ffd5460 → ffd5460 (clean).
