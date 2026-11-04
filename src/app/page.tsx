@@ -2,6 +2,11 @@ import { getLatestProperties, getTotalActiveProperties, getDistinctSourceCount }
 import PropertyGrid from "@/components/PropertyGrid";
 import { Suspense } from "react";
 
+export const metadata = {
+  title: "RadarPro — Oportunidades imobiliárias abaixo do mercado",
+  description: "Detete imóveis em leilão e venda direta abaixo do preço de mercado em Portugal, com análise automática e dados verificáveis.",
+};
+
 export default async function Home() {
   const properties = await getLatestProperties();
   const totalActive = await getTotalActiveProperties();
@@ -58,7 +63,7 @@ export default async function Home() {
       <section className="bg-slate-50 py-20 mt-20 text-center">
         <h2 className="text-3xl font-bold mb-4">Pronto para comprar com vantagem?</h2>
         <p className="text-secondary mb-8">
-          Acesse centenas de imóveis com lucro garantido antes de todo o mundo.
+          Explore centenas de imóveis abaixo do preço de mercado, com análise e dados reais.
         </p>
         <a
           href="/app/oportunidades"
@@ -87,6 +92,9 @@ export default async function Home() {
           <a href="/privacidade" className="hover:text-primary">Privacidade</a>
           <a href="/termos" className="hover:text-primary">Termos</a>
         </div>
+        <p className="mt-2 text-xs text-slate-400 max-w-2xl mx-auto">
+          Aviso: as valorações apresentadas são estimativas automáticas baseadas em dados de mercado e não constituem aconselhamento de investimento. Confirme sempre os valores com fontes oficiais antes de decidir.
+        </p>
         <p>© 2026 RadarPro Portugal. Todos os direitos reservados.</p>
       </footer>
     </main>

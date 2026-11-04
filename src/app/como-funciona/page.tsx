@@ -31,7 +31,7 @@ export default function ComoFuncionaPage() {
       </a>
       <h1 className="text-4xl font-extrabold mb-4">Como funciona</h1>
       <p className="text-xl text-secondary mb-12">
-        Sem experiência. Sem conhecimentos técnicos. Apenas oportunidades reais.
+        Análise automática de imóveis em leilão e venda direta, com dados verificáveis.
       </p>
 
       <div className="grid md:grid-cols-2 gap-8">

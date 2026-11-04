@@ -1,4 +1,9 @@
 import { getAllActiveProperties } from "@/lib/queries";
+
+export const metadata = {
+  title: "Melhores Oportunidades — RadarPro",
+  description: "Ranking das melhores oportunidades imobiliárias em Portugal, ordenadas por score de desconto e rentabilidade.",
+};
 import Link from "next/link";
 import Image from "next/image";
 import { MapPin, TrendingDown, Trophy } from "lucide-react";

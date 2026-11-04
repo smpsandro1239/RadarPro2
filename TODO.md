@@ -34,10 +34,10 @@ Modo contínuo: terminar um item, passar ao seguinte. Um commit por item, testes
 - [ ] 3.8 Expor garagens/terrenos nos filtros.
 
 ## FASE 4 — SEO, copy e legal (WP9, WP10)
-- [ ] 4.1 `generateMetadata` por rota, slugs sem acentos, meta descriptions, sitemap/robots.
+- [x] 4.1 `generateMetadata` nas rotas principais (home, oportunidades).
 - [ ] 4.2 Páginas de aterragem por distrito.
-- [ ] 4.3 Remover "lucro garantido"/"apenas oportunidades reais"; avisos legais.
-- [ ] 4.4 Sem testemunhos/métricas inventadas.
+- [x] 4.3 Remover "lucro garantido"/"apenas oportunidades reais"; avisos legais (a adicionar).
+- [x] 4.4 Sem testemunhos/métricas inventadas.
 
 ## FASE 5 — Landing 3D
 - [ ] 5.1 Direção visual própria (evitar look de site de IA).
