@@ -44,7 +44,7 @@ function getScoreBadgeVariant(score: number | null, confidence?: string | null):
 }
 
 function getScoreLabel(score: number | null): string {
-  if (score === null) return "--";
+  if (score === null) return "Sem avaliação";
   if (score >= 85) return "Excelente";
   if (score >= 70) return "Boa";
   return "Moderada";
@@ -128,7 +128,7 @@ export default function PropertyCard({
 
         {/* Score */}
         <div className={`absolute top-4 right-4 px-3 py-1.5 rounded-lg text-xs font-bold z-10 ${getScoreBadgeVariant(score, valuationConfidence)} border`}>
-          {score !== null ? score : "--"}<span className="text-[10px] opacity-80 ml-0.5">/100</span>
+          {score !== null ? `${score}/100` : "Sem avaliação"}
         </div>
       </div>
 
@@ -176,7 +176,7 @@ export default function PropertyCard({
         {/* Linha de 3 factos */}
         <div className="flex items-center justify-between text-xs text-secondary mb-3">
           <span className="flex items-center gap-1">
-            {sqm ? `${sqm}m²` : "— m²"}
+            {sqm ? `${sqm} m²` : "Sem área"}
           </span>
           <span className="flex items-center gap-1">
             {type}
@@ -191,7 +191,7 @@ export default function PropertyCard({
           <span className={`text-xs font-bold ${getScoreColor(score, valuationConfidence)}`}>
             {getScoreLabel(score)}
           </span>
-          <span className="text-[10px] text-slate-400">{score !== null ? score + "/100" : "—"}</span>
+          <span className="text-[10px] text-slate-400">{score !== null ? `${score}/100` : "sem score"}</span>
           {valuationConfidence === "very_low" && (
             <span className="text-[10px] text-red-500 font-medium ml-1">
               Confiança muito baixa
