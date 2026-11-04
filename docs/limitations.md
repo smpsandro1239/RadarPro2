@@ -7,3 +7,4 @@
 - Portais "depende do dono" (Imovirtual, e-Leilões, Leilosoc, Bidizi, Santander, Caixa Imobiliário, Novo Banco) não confirmados.
 - `auction_end_date` em segundos na live (migração pendente).
 - `SHOW_SEED_DATA` não decidido em produção.
+- `/leiloes` so existe em `fase2-dev`. A producao (`main`) devolve 404 ate o merge. Verificar com URL de preview da fase2-dev, nao producao.
