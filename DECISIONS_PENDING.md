@@ -36,6 +36,18 @@
 - **Decisão recomendada:** incremental, começar pelos 25 existentes + distritos principais.
 - **Risco:** 90% do feed sem avaliação.
 
+## Ordem das migrações (executar sequencialmente)
+1. `turso db fork radarpro2 radarpro2-backup-<data>`
+2. `turso db shell radarpro2 < scripts/sql/0002_add_property_valuation_inputs.sql`
+3. `turso db shell radarpro2 < scripts/sql/0003_add_data_origin.sql`
+4. `turso db shell radarpro2 < scripts/sql/0004_add_opening_bid.sql`
+5. `turso db shell radarpro2 < scripts/sql/0005_fix_auction_end_date.sql`
+6. Verificar: `turso db shell radarpro2 "PRAGMA table_info(properties);"` (não usar `.schema`)
+7. Redeploy na Vercel.
+
+## Verificação do schema (correta)
+Usar `PRAGMA table_info(properties)` — `.schema` mostra o SQL original de criação, não as colunas adicionadas por ALTER TABLE.
+
 ## 8. Token Turso
 - **O que fazer:** rodar token vazado (fingerprint `1bb0c1abb032`).
 - **Decisão recomendada:** rodar antes de qualquer deploy público.

@@ -1,5 +1,9 @@
 # Migrações da base de dados
 
+## Nota sobre shell
+- PowerShell/bash: `VAR=value command` funciona.
+- cmd: usar `set VAR=value && command` ou `npm run dev:local`.
+
 ## Passos para o humano executar (live Turso)
 
 1. **Fork da base** (backup): `turso db fork radarpro2 radarpro2-backup-<data>`

@@ -17,7 +17,8 @@ Plataforma de deteção de oportunidades imobiliárias abaixo do preço de merca
 npm install
 cp .env.example .env.local
 # Preencher variáveis de ambiente
-npm run dev
+npm run dev        # usa .env.local (live)
+npm run dev:local  # força BD local (file:./local.db)
 ```
 
 ## Verificação antes de push
