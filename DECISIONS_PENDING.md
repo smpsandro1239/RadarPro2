@@ -64,7 +64,25 @@
   - `node-html-parser` (tarefa atual, 1.1): parser OK, mas falhou no carregamento seguinte da cadeia: `Cannot find module 'C:\Users\smpsa\RadarPro\node_modules\next\dist\shared\lib\constants.ts'` via `@sentry/nextjs` → `next` → `src/lib/scrapers.ts`.
 - **Estado:** falhou 3× na mesma cadeia de imports (cheerio/slim → css-what; jsdom → whatwg-url; node-html-parser → @sentry/nextjs → next) → avanço sem mais tentativas automáticas. Requer investigação manual ou stub de `@sentry/nextjs` no script.
 - **Nova tentativa (Fase 1, task atual): `scripts/ingest-banks-standalone.ts` via `node-html-parser` + `@libsql/client` (sem imports Next/Sentry).** Resultado: `--limit 2 --dry-run` → **timeout** (duas execuções, >300s e >600s, sem output) → **falhou 2×** → avanço sem mais tentativas automáticas. (O helper `src/lib/html.ts` passou a usar só `node-html-parser`, mas a execução lenta/inabalável dos portais bancários completou-se sem sucesso.)
-- **Risco:** bancos/leilões não ingeridos; live mantém 45 Martelo + 200 demo.
+- **Nova tentativa 2 (Fase 1, task atual, segunda tentativa): `scripts/ingest-banks-standalone.ts` com `AbortController` (20s) + retry com backoff (3x, 2s/4s/8s) + rate limit (1 pedido/5s) + limit=5.**
+  - Resultado: `--limit 5 --dry-run` → **HTTP 404** (tentativa 1) → **HTTP 429** (tentativa 2) → **falhou 2×** → avanço sem mais tentativas automáticas.
+- **Risco atualizado:** bancos/leilões não ingeridos; live mantém 50 Martelo (scrape) — sem demo.
+
+### 11. Fontes adicionais — Casa Sapo / Imovirtual / e-Leiões (para escalar N > 50)
+
+- **Estado:** Fase 2 concluída parcialmente. Abordagem: scripts standalone no padrão do bancos (fetch + parser + `@libsql/client`, sem imports Next/Sentry).
+- **Casa Sapo (Fase 2.1, task atual): `scripts/ingest-casasapo-standalone.ts` criado (fetch + `parseCasaSapoListings` + `@libsql/client`).**
+  - `--limit 5 --dry-run` → **OK** (15 imóveis reais encontrados; lisboa 5, porto 5, braga 5).
+  - `--limit 5 --write --confirm-remote-write` → **HTTP 429** ×2 (tentativas) → **falhou 2×** → avanço sem mais tentativas automáticas.
+- **Imovirtual (Fase 2.2, task atual): `scripts/ingest-imovirtual-standalone.ts` criado (fetch + `parseImovirtualListingsFromHtml` + `@libsql/client`).**
+  - `--limit 5 --dry-run` → **OK** (15 imóveis reais encontrados).
+  - `--limit 5 --write --confirm-remote-write` → **OK** (15 inseridos).
+  - Escala `--limit 30 --write --confirm-remote-write` → **OK** (65 inseridos; alguns duplicados ignorados via UNIQUE constraint).
+  - **Impacto:** live `data_origin='scrape'` passou de **50 → 130** imóveis reais (N ≥ 100 ✅).
+- **e-Leiões/Leilosoc (Fase 2.3, task atual): `scripts/ingest-auction-sources-standalone.ts` criado (fetch + `loadHtml` + seletores, `is_auction=1`).**
+  - `--limit 5 --dry-run` → **HTTP fetch failed** (tentativa 1) → **fetch failed** (tentativa 2) → **falhou 2×** → avanço sem mais tentativas automáticas.
+
+- **Prioridade atual:** Fase 3 concluída (refino `/melhores`); Fase 4 (Inngest local) em curso/limitada.
 
 ### 8. Inngest keys na Vercel — FUNCÃO PRONTA, AGARDAR KEYS
 
@@ -80,6 +98,7 @@
 - **Decisão:** **RESOLVIDO (2026-11-05)** — demo **eliminada** (hard delete) mesmo com N = 50; o dono decidiu "não quero dados falsos".
 - **Risco:** site com 50 reais + 200 demo até nova escalada.
 - **Estado final (2026-11-05):** demo removida (DELETE `data_origin='demo'`); live agora `[{"data_origin":"scrape","n":50}]`; `DemoDataBanner` removido; N = 50 aceito como suficiente para rankings por distrito.
+- **Atualização (2026-11-05, Fase 2):** Imovirtual standalone escalado a `--limit 30` → live `[{"data_origin":"scrape","n":130}]` (N ≥ 100). N = 130 reais (`data_origin='scrape'`), sem demo.
 
 ### 9. Estamo RSS — feed público não utilizável
 

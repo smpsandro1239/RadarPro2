@@ -6,11 +6,12 @@ Semáforo: Dados 🟢 (live 100% reais após eliminação do demo) · Motor 🟢
 
 ✅ O que esta bem — so o que MEDISTE
 - Fase 2 concluída: backup dos 200 demo (`backup-demo-properties.json`); `DELETE FROM properties WHERE data_origin='demo'` executado; live agora `[{"data_origin":"scrape","n":50}]` (100% reais); `DemoDataBanner` removido do layout; testes do banner + data-origin a verde (10/10).
-- Fase 3 concluída: `src/lib/melhores.ts` (`getTopScrapeProperties` + `groupTopByDistrict`); página `/melhores` (top 3 por distrito, estado "sem dados" para distritos vazios); link no Navbar; teste do agrupamento (3 testes).
+- Fase 3 concluída: `src/lib/melhores.ts` (`getTopScrapeProperties` + `groupTopByDistrict`); página `/melhores` (top 3 por distrito, estado "sem dados" para distritos vazios); link no Navbar; teste do agrupamento (3 testes); depois refinada com **top 10 global** (`?page=`), **filtros** (distrito/tipo/preço) e **paginação** (10/página).
+- Fase 2 (parcialmente concluída): `scripts/ingest-imovirtual-standalone.ts` criado (dry OK, write OK, escala 30 → **65 inseridos**) → live `data_origin='scrape'` = **130** imóveis reais (N ≥ 100).
 - `npm run verify` verde: 32 ficheiros, 226 testes; build OK; rota `/melhores` gerada.
 
 ❌ O que esta mal / riscos
-- N = 50 aceito como suficiente (decisão do dono); bancos/leilões ainda sem ingest (bloqueado, §7 DECISIONS_PENDING).
+- N = 50 aceito como suficiente (decisão do dono); bancos/leilões ainda sem ingest (bloqueado, §7/§11 DECISIONS_PENDING.md); Casa Sapo write bloqueado por HTTP 429; leilões standalone bloqueado por fetch failed.
 
 🆕 O que deves acrescentar — propostas (nao implementadas)
 - Desbloquear ingest bancos/leilões para escalar N acima de 50.
@@ -22,7 +23,7 @@ Semáforo: Dados 🟢 (live 100% reais após eliminação do demo) · Motor 🟢
 1. Desbloquear interop dos scrapers bancos/leilões (ver §7 DECISIONS_PENDING.md).
 
 📊 Numeros
-- Live: 50 imóveis reais (`data_origin='scrape'`, Martelo.pt) — demo: 0.
+- Live: **130 imóveis reais** (`data_origin='scrape'`: Martelo 50 + Imovirtual 65; demo: 0).
 - Suite: `npm run verify` verde (32 ficheiros, 226 testes).
 
 ▶ Proxima iteracao: Fase 4 — verificação final (`npm run verify`, `scripts/verify-production.ts`, `npx vercel --prod`).
