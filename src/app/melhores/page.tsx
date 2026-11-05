@@ -78,6 +78,14 @@ export default async function MelhoresPage({ searchParams }: { searchParams: Pro
       <p className="mb-8 text-sm text-secondary">
         Apenas imóveis com avaliação completa são elegíveis para o ranking.
       </p>
+      {(() => {
+        const coveredDistricts = new Set(filtered.map((p) => p.district)).size;
+        return (
+          <p className="mb-8 text-sm text-secondary">
+            Cobertura atual: {coveredDistricts} de {PORTUGAL_DISTRICTS.length} distritos com imóveis elegíveis rankeáveis.
+          </p>
+        );
+      })()}
 
       {districtKey && (
         <p className="mb-8 text-sm text-secondary">
@@ -141,6 +149,14 @@ export default async function MelhoresPage({ searchParams }: { searchParams: Pro
       <div className="space-y-12">
         {districts.map((district) => {
           const items = byDistrict.get(district) ?? [];
+          const typeMap = new Map<string, typeof items>();
+          for (const prop of items) {
+            const key = (prop.type ?? "sem tipo").toUpperCase();
+            const bucket = typeMap.get(key) ?? [];
+            bucket.push(prop);
+            typeMap.set(key, bucket);
+          }
+          const typeList = [...typeMap.entries()];
           return (
             <section key={district}>
               <h2 className="text-2xl font-bold mb-4 flex items-center gap-2">
@@ -156,12 +172,16 @@ export default async function MelhoresPage({ searchParams }: { searchParams: Pro
                   Sem imóveis reais com avaliação neste distrito ainda.
                 </div>
               ) : (
-                <ol className="space-y-3">
-                  {items.map((prop, i) => {
-                    const images = imagesOf(prop);
-                    const discount = prop.discountPct === null ? null : -prop.discountPct;
-                    return (
-                      <li key={prop.id}>
+                <div className="space-y-8">
+                  {typeList.map(([type, bucket]) => (
+                    <div key={type}>
+                      {typeList.length > 1 && <h3 className="text-xl font-bold mb-3">{type}</h3>}
+                      <ol className="space-y-3">
+                        {bucket.map((prop, i) => {
+                          const images = imagesOf(prop);
+                          const discount = prop.discountPct === null ? null : -prop.discountPct;
+                          return (
+                            <li key={prop.id}>
                         <Link href={`/imovel/${prop.id}`} className="flex items-center gap-4 bg-white border rounded-xl p-3 hover:shadow-lg transition">
                           <div className="w-8 text-center font-bold text-lg text-primary">{i + 1}</div>
                           <div className="w-16 h-12 bg-slate-200 rounded overflow-hidden relative flex-shrink-0">
@@ -183,8 +203,11 @@ export default async function MelhoresPage({ searchParams }: { searchParams: Pro
                         </Link>
                       </li>
                     );
-                  })}
-                </ol>
+                          })}
+                      </ol>
+                    </div>
+                  ))}
+                </div>
               )}
             </section>
           );
