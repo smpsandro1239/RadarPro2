@@ -38,6 +38,8 @@ async function fetchHtml(url: string): Promise<string> {
           "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
           "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
           "Accept-Language": "pt-PT,pt;q=0.9,en;q=0.8",
+          "Referer": "https://www.google.com/",
+          "DNT": "1",
         },
         signal: controller.signal,
       });
@@ -90,6 +92,8 @@ export async function main(args: string[]): Promise<number> {
   const confirmRemoteWrite = args.includes("--confirm-remote-write");
   const limitIdx = args.indexOf("--limit");
   const limit = limitIdx >= 0 ? Number(args[limitIdx + 1]) || 5 : 5;
+  const delayIdx = args.indexOf("--delay");
+  const delayMs = delayIdx >= 0 ? Number(args[delayIdx + 1]) || 15000 : 15000;
 
   const url = process.env.TURSO_DATABASE_URL ?? `file:${path.resolve(process.cwd(), "local.db")}`;
   const isRemote = url.startsWith("libsql://");
@@ -102,7 +106,7 @@ export async function main(args: string[]): Promise<number> {
 
   const listings: Listing[] = [];
   for (const district of DISTRICTS) {
-    await new Promise((r) => setTimeout(r, RATE_LIMIT_MS));
+    await new Promise((r) => setTimeout(r, delayMs));
     const found = await scrapeCasaSapo(district, limit);
     for (const l of found) listings.push(l);
   }
