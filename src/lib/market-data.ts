@@ -141,6 +141,9 @@ export const MARKET_DATA_DISTRICT: DistrictMarketEntry[] = [
   { district: "Viana do Castelo", pricePerSqm: 2200, source: "INE", asOf: "2026-05", propertyType: "apartment" },
   { district: "Vila Real", pricePerSqm: 2000, source: "INE", asOf: "2026-05", propertyType: "apartment" },
   { district: "Viseu", pricePerSqm: 1800, source: "INE", asOf: "2026-05", propertyType: "apartment" },
+  { district: "Aveiro", pricePerSqm: 2496, source: "INE", asOf: "2026-05", propertyType: "apartment" },
+  { district: "Castelo Branco", pricePerSqm: 1100, source: "INE", asOf: "2026-05", propertyType: "house" },
+  { district: "Santarém", pricePerSqm: 1500, source: "INE", asOf: "2026-05", propertyType: "house" },
 ];
 
 /** Procura a mediana de um distrito numa tabela de distrito (parametro para poder ser testada). */
