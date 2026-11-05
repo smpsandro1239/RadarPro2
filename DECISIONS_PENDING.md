@@ -85,6 +85,9 @@
 - **OLX (Fase 2.1, task atual): `scripts/scrape-olx-standalone.ts` criado (fetch + `loadHtml` + seletores `[data-cy='l-card'], .listing-item, .offer-item, article`, `loadHtml` do modulo html, sem imports Next/Sentry).
   - `--limit 5 --dry-run` → **HTTP 403** (tentativa 1) → **HTTP 403** (tentativa 2) → **falhou 2×** → avanço sem mais tentativas automáticas.
   - Causa provavel: bloqueio anti-bot (Cloudflare/IP); requer browser automation (playwright) ou decisão do dono.
+- **SuperCasa (Fase 3.1, task atual): `scripts/probe-supercasa.ts` criado (fetch + headers Chrome completos, Referer Google, AbortController 20s).
+  - Tentativa 1: `https://supercasa.pt/comprar-casas/lisboa/` → **HTTP 403** (anti-bot).
+  - Tentativa 2: mesma URL + `/comprar-casas/porto/` com headers completos → **HTTP 403** ×2 → **falhou 2×** → avanço sem mais tentativas automáticas.
 
 - **Prioridade atual:** Fase 3 concluída (refino `/melhores`); Fase 4 (Inngest local) concluída parcialmente (dev server + functions + Invoke); Fase 5 (bancos CGD) em curso/limitada.
 
