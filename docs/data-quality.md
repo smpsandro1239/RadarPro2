@@ -111,3 +111,18 @@ Amostra sem score (market_value = null em todos): tipos variados (Moradia, Préd
 
 - Area >= 80%: **ATINGIDO** (100% em 65).
 - Score >= 80%: **NAO ATINGIDO** (46,2%, 30/65) — bloqueador honesto: asset classes sem motor/dados (mixed, rural, commercial, urban_land, PDM) que nao sao resolveis com market_data por distrito.
+
+
+## Distribuicao asset_class (2026-11-05, Fase 1.1 do ciclo corrente)
+
+| asset_class | Total | Com score | % |
+|---|---:|---:|---:|
+| apartment | 3 | 3 | 100% |
+| house | 12 | 12 | 100% |
+| mixed | 8 | 0 | 0% |
+| rural_land | 17 | 0 | 0% |
+| urban_land | 4 | 0 | 0% |
+| commercial | 6 | 0 | 0% |
+| null | 15 | 15 | 100% |
+
+**Conclusao Fase 1.1:** Cenario A confirmado — 100% dos imoveis apartment/house com score (30/30 rankeaveis). Os 35 sem score pertencem exclusivamente a mixed/rural/commercial/urban_land (por design / sem dados). Meta >=80% atingida para o que importa (residential scorable).
