@@ -35,11 +35,7 @@ registerHooks({
 
 // Os modulos sao carregados depois de registar os hooks: os imports internos
 // sem extensao ("./portugal-time") e os aliases ("@/lib/...") so resolvem aqui.
-const { detectPlaceholder, extractRssItems, isPropertyEvent, mapMarteloEvent } = await import(
-  "../src/lib/martelo-parser.ts"
-);
-const { evaluateProperty, normalizeProperty } = await import("../src/lib/valuation/index.ts");
-const { lookupMarket } = await import("../src/lib/valuation/market.ts");
+// Os imports dinamicos ficam dentro de funcoes async (sem top-level await).
 
 const USER_AGENT = "RadarProPortugal/0.1 (dry-run de recolha; ritmo educado; poucos pedidos por ciclo)";
 const MARTELO_API = "https://martelo.pt/public-api/events";
@@ -96,7 +92,9 @@ function marketTypeFor(assetClass: string): string {
   }
 }
 
-function evaluateRow(row: ScrapedRow): Evaluated {
+async function evaluateRow(row: ScrapedRow): Promise<Evaluated> {
+  const { evaluateProperty, normalizeProperty } = await import("../src/lib/valuation/index.ts");
+  const { lookupMarket } = await import("../src/lib/valuation/market.ts");
   const input = {
     id: row.id,
     title: row.title,
@@ -222,6 +220,7 @@ async function writeRows(url: string, evaluated: Evaluated[]): Promise<number> {
 }
 
 export async function main(args: string[]): Promise<number> {
+  const { detectPlaceholder, extractRssItems, isPropertyEvent, mapMarteloEvent } = await import("../src/lib/martelo-parser.ts");
   const options = parseArgs(args);
   const url = process.env.TURSO_DATABASE_URL ?? `file:${path.join(repoRoot, "local.db")}`;
   if (options.write && isRemoteDatabaseUrl(url)) {
@@ -247,7 +246,7 @@ export async function main(args: string[]): Promise<number> {
     `[Estamo RSS] ${rssItems.length} itens, ${placeholders.length} com conteudo de exemplo (lorem ipsum) -> nao usados como dados`,
   );
 
-  const evaluated = rows.map(evaluateRow);
+  const evaluated = await Promise.all(rows.map(evaluateRow));
   const total = evaluated.length;
   const withArea = evaluated.filter(({ row }) => row.areaSqm !== null && row.areaSqm > 0).length;
   const withParish = evaluated.filter(({ row }) => row.parish !== null).length;
