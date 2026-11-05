@@ -6,6 +6,7 @@ import { MapPin, TrendingDown, ExternalLink, Heart, ChevronDown, Info, AlertTria
 import Image from "next/image";
 import ValuationCard from "@/components/ValuationCard";
 import { calculateMaxBid, getCostBreakdownText } from "@/lib/auction-calculator";
+import { calculateCargasFromProperty } from "@/lib/valuation/cargas";
 import { formatEuros, formatOptional, formatScore, formatScoreOutOf100 } from "@/lib/format";
 import FavoriteButton from "@/components/FavoriteButton";
 import PropertyImage from "@/components/PropertyImage";
@@ -58,6 +59,15 @@ export default async function PropertyPage({
       targetMargin: 15,
     });
   }
+
+  const cargas = calculateCargasFromProperty({
+    cargasTotal: prop.cargasTotal,
+    condominiumDebt: prop.condominiumDebt,
+    renovationEstimate: prop.renovationEstimate,
+    embargos: prop.embargos,
+    hipotecas: prop.hipotecas,
+    marketValue: prop.marketValue,
+  });
 
   // JSON-LD
   const jsonLd = {
@@ -321,6 +331,23 @@ export default async function PropertyPage({
                   </div>
                 </div>
               </div>
+
+              {/* Cargas */}
+              {cargas.total !== null && cargas.loadPct !== null && (
+                <div className={`mb-4 p-3 rounded-lg border ${cargas.exceedsAlertThreshold ? "bg-red-50 border-red-100" : "bg-slate-50 border-slate-100"}`}>
+                  <div className="flex items-center justify-between text-sm">
+                    <span className="text-xs font-bold text-slate-500 uppercase">Cargas estimadas</span>
+                    <span className={`font-bold ${cargas.exceedsAlertThreshold ? "text-red-600" : "text-slate-900"}`}>
+                      {cargas.total.toLocaleString("pt-PT")}€ ({cargas.loadPct.toFixed(1)}% do valor)
+                    </span>
+                  </div>
+                  {cargas.exceedsAlertThreshold && (
+                    <div className="mt-1 text-xs text-red-700 font-medium">
+                      Cargas superam 20% do valor — lance máximo recomendado já considera estes custos.
+                    </div>
+                  )}
+                </div>
+              )}
 
               {/* Resumo */}
               <div className="bg-orange-50 p-4 rounded-lg border border-orange-100">
