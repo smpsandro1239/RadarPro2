@@ -81,6 +81,28 @@
 - L.4 ✅ Commit final
 - L.5 ✅ Push para `fase2-dev`
 
+## Trabalho técnico pós-fecho — Ativação ingest Martelo.pt
+
+### T1 — Fix CJS/ESM no scrape-dry-run.ts (Bloque A)
+- Commit: `771537c`
+- Resultado: `--limit 2` executa (dry-run OK; 2 imóveis com área/freguesia/preço/coordenadas; 0 mercado/avaliação).
+- Bloqueios: nenhum
+
+### T2 — Flag `--confirm-remote-write` (Bloque B)
+- Commit: `8340973`
+- Resultado: recusa sem flag (exit 1); com flag escreve contra base remota.
+- Bloqueios: nenhum
+
+### T3 — Carga `.env.local` no scrape-dry-run.ts
+- Commit: `3f4c7b0`
+- Resultado: base resolve para a live (`libsql://radarpro2-smpsandro1239.aws-eu-west-1.turso.io`).
+- Bloqueios: nenhum
+
+### T4 — Escrita controlada (limit 5) na live
+- Commit: `feat(ingest): 5 imoveis reais do Martelo.pt na live`
+- Resultado: 5 registos gravados na live; `data_origin` → `[{"demo":200},{"scrape":5}]`.
+- Bloqueios: nenhum
+
 ## Estado para merge
 
 **Técnico:** ✅ Código verde, testes passam, build verde, preview 200.
