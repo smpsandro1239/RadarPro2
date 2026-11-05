@@ -10,7 +10,7 @@ export const metadata = {
   description: "Os melhores imóveis reais de Portugal, com o top 3 por distrito selecionado pelo motor de avaliação.",
 };
 
-const LIMIT_PER_DISTRICT = 3;
+const LIMIT_PER_DISTRICT = 5;
 const PAGE_SIZE = 10;
 
 interface MelhoresSearchParams {
