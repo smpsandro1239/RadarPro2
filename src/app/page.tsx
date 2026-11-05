@@ -1,5 +1,6 @@
 import { getLatestProperties, getTotalActiveProperties, getDistinctSourceCount } from "@/lib/queries";
 import PropertyGrid from "@/components/PropertyGrid";
+import RadarSearch from "@/components/RadarSearch";
 import { Suspense } from "react";
 
 export const metadata = {
@@ -25,6 +26,10 @@ export default async function Home() {
         <p className="text-xl text-secondary mb-8">
           Analisamos anúncios de bancos, portais e leilões em Portugal e selecionamos apenas os que valem a pena.
         </p>
+
+        <div className="mb-12">
+          <RadarSearch />
+        </div>
 
         <div className="flex flex-wrap justify-center gap-2 mb-8">
           {allDistricts.map((city) => (
