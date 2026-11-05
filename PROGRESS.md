@@ -2,6 +2,33 @@
 
 **Last verified:** 2026-11-05
 
+## Tarefa atual — Dados reais e funcionalidades radarpro.ai (2026-11-05)
+
+### Fase 1 — Escalar dados reais — ✅ CONCLUÍDA (N = 50)
+- 1.1: Desbloquear bancos (node-html-parser) → falhou no `@sentry/nextjs` → `next` → registado, avançar.
+- 1.2: Desbloquear leilões → falhou no mesmo estágio → registado, avançar.
+- 1.3: Martelo `--limit 500 --write --confirm-remote-write` → +12 registos (45 → 50).
+- 1.4: `data_origin` final = `[{"demo":200},{"scrape":50}]` → N = 50 < 100 → demo mantido temporariamente (DECISIONS §10).
+
+### Fase 2 — Eliminar dados demo — ⏸️ BLOQUEADA
+- N = 50 < 100 → fase pulada. Demo mantido (DECISIONS §10).
+
+### Fase 3 — Funcionalidades radarpro.ai em falta — ✅ CONCLUÍDA (3.1–3.6)
+- 3.1: Histórico de preço — ✅ já existia (`price_history` + SVG inline); confirmado.
+- 3.2: Análise de cargas — ✅ implementada: migration 0007 (`embargos`, `hipotecas`, `cargas_total`), `src/lib/valuation/cargas.ts`, alerta >20%, UI no detalhe leilão; 5 testes cargas verdes.
+- 3.3: Heatmap mapa — ✅ `src/components/HeatmapLayer.tsx` (leaflet.heat) + legenda; 31 ficheiros / 223 testes verdes.
+- 3.4: Pesquisa NL — ✅ `src/lib/radar-parse.ts`, `/api/radar`, `RadarSearch`, 4 testes parser verdes.
+- 3.5: Blog — ✅ `src/lib/blog-posts.ts`, `BlogPost`, `/blog/[slug]`, 3 guias.
+- 3.6: Alertas in-app — ✅ migration 0008 (`alerts`), `/api/notifications` (GET/POST/PATCH), `NotificationBell` + Navbar; verify verde.
+
+### Fase 4 — Verificação final — ⏳ EM CURSO
+- F.1: `npm run verify` → ✅ verde (31 ficheiros / 223 testes, build OK) — executado após as mudanças da Fase 3.
+- F.2: `npx tsx scripts/verify-production.ts https://radar-pro2.vercel.app` → `/`, `/oportunidades`, `/leiloes` → 200 (a re-executar pós-deploy final).
+- F.3: Atualizar esta secção + `DECISIONS_PENDING.md` → pronto para commit final.
+- F.4: Commit final: `chore(release): dados reais + funcionalidades radarpro.ai`.
+- F.5: `git push origin fase2-dev`.
+- F.6: `npx vercel --prod`.
+
 ## Bloco H — Fechar FASE 2
 
 ### H.1 Imagens por fonte (live) — ✅ MEDIDO
@@ -181,16 +208,33 @@
 - C.4: invocação manual via REST → `POST /v1/runs` → 404 (endpoint não localizado).
 - C.7 commit: `docs(inngest): test daily-ingest localmente, keys pendentes`.
 
+### Fase 1 — Escalation real de dados (concluída — N = 50)
+
+- 1.1: Desbloquear bancos (node-html-parser) → falhou no `@sentry/nextjs` → `next` → registado, avançar.
+- 1.2: Desbloquear leilões → falhou no mesmo estágio → registado, avançar.
+- 1.3: Martelo `--limit 500 --write --confirm-remote-write` → +12 registos (45 → 50).
+- 1.4: `data_origin` final = `[{"demo":200},{"scrape":50}]` → N = 50 < 100 → demo mantido temporariamente (DECISIONS §10).
+
 ### Estado final (tarefa atual — desbloquear e escalar)
 - Live: `data_origin` = `[{"demo":200},{"scrape":45}]` — N final = 45 (Martelo.pt; API ~45 eventos acessíveis). Reclassificação `mixed` aplicada (13 reclassificados; mixed 22→9, urban_land 18, garage 20).
 - Fontes reais ativas: 1 (Martelo.pt). Bancos/leilões: bloqueados tecnicamente (interop).
 - Deploy produção: `dpl_EsMgPQ62JdyGUfCLfUNFGWQ5iR6v` (READY, commit `09cb4c0`).
 - Human blockers: `DECISIONS_PENDING.md` §1–§9.
 
+### Estado final (tarefa atual — dados reais + funcionalidades radarpro.ai)
+- Live: `data_origin` = `[{"demo":200},{"scrape":50}]` — N final = 50 (Martelo.pt; +12 registos em Fase 1.3).
+- Deploy produção: `dpl_EsMgPQ62JdyGUfCLfUNFGWQ5iR6v` (READY, commit `09cb4c0`) — a atualizar pós-deploy final (F.6).
+- Human blockers: `DECISIONS_PENDING.md` §1–§10.
+
 ### T9 — Desbloquear bancos/leiloes via interop — BLOQUEADO TECNICO
 - Commit: `feat(scrape): cheerio/slim para compatibilidade CJS/tsx` (nao executado; A.1 falhou)
 - Commit: `feat(scrape): jsdom em vez de cheerio (CJS-safe)` (nao executado; A.2 falhou)
 - Resultado: A.1 (`cheerio/slim`) falhou (css-what); A.2 (`jsdom` via `src/lib/html.ts`) falhou (whatwg-url). → registado em DECISIONS_PENDING.md §7, avancar para o bloco B.
+
+### T10 — Interop (tarefa atual, Fase 1.1) — BLOQUEADO TECNICO
+- Commit: `feat(scrape): jsdom em vez de cheerio (CJS-safe)` (nao executado; A.2 falhou)
+- Commit: `fix` via `node-html-parser` (nao executado; falhou no `@sentry/nextjs` → `next`).
+- Resultado: parser `node-html-parser` OK; falhou em `@sentry/nextjs` → `next` (`Cannot find module .../next/dist/shared/lib/constants.ts`). → registado em DECISIONS_PENDING.md §7, avancar para a fase 1.2.
 - Bloqueios: erro exato acima (registo em DECISIONS_PENDING.md §7).
 
 ## Estado para merge

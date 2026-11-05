@@ -61,7 +61,8 @@
 - **Tentativas de interop (falharam):**
   - `cheerio/slim` (A.1): `Cannot find module 'C:\Users\smpsa\RadarPro\node_modules\css-what\lib\commonjs\types.ts'` (Require stack: css-what → cheerio-select → cheerio → `src/lib/scrapers.ts`).
   - `jsdom` via helper `src/lib/html.ts` (A.2): `Cannot find module 'C:\Users\smpsa\RadarPro\node_modules\jsdom\node_modules\whatwg-url\webidl2js-wrapper.ts'` (Require stack: whatwg-url → jsdom → `src/lib/html.ts`).
-- **Estado:** falhou 2× → avanço para o bloco B sem mais tentativas. Requer investigação manual ou versão pinned (`cheerio@1.0.0-rc.12`).
+  - `node-html-parser` (tarefa atual, 1.1): parser OK, mas falhou no carregamento seguinte da cadeia: `Cannot find module 'C:\Users\smpsa\RadarPro\node_modules\next\dist\shared\lib\constants.ts'` via `@sentry/nextjs` → `next` → `src/lib/scrapers.ts`.
+- **Estado:** falhou 3× na mesma cadeia de imports → avanço sem mais tentativas automáticas. Requer investigação manual ou stub de `@sentry/nextjs` no script.
 - **Risco:** bancos/leilões não ingeridos; live mantém 45 Martelo + 200 demo.
 
 ### 8. Inngest keys na Vercel — FUNCÃO PRONTA, AGARDAR KEYS
@@ -70,6 +71,13 @@
 - **Comando:** `npx inngest-cli dev` (dev server local na porta 8288; função `daily-ingest` registada e responde em `/functions`).
 - **Estado:** keys não encontradas no repositório (`.env.local`) → função `daily-ingest` criada mas **não ativada em produção**.
 - **Risco:** cron 0 6 * * * sem funcionar até keys configuradas.
+
+### 10. Dados reais insuficientes (N < 100) — DEMO MANTIDO TEMPORARIAMENTE
+
+- **O que fazer:** escalar bancos/leilões (bloqueados por interop) para atingir N ≥ 100.
+- **Estado:** N final = 50 (`data_origin` = `[{"demo":200},{"scrape":50}]`); Martelo +12 novos.
+- **Decisão:** manter demo (`data_origin='demo'`, 200) até scrape real ≥ 100.
+- **Risco:** site com 50 reais + 200 demo até nova escalada.
 
 ### 9. Estamo RSS — feed público não utilizável
 
