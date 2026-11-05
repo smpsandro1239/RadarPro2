@@ -19,6 +19,24 @@ Semáforo: Dados EM verde (65 scrape, area 100%) · Motor AMARELO (score 46,2%, 
 - Com area: 65 (100%) | Com score: 30 (46,2%) | Com market_value: 30 (46,2%) | Com imagem: 9 (13,8%) | Com coords: 50 (76,9%).
 - /melhores: 30 rankeaveis (score !== null).
 
+## Iteração 12 – Diagnostico asset_class + imagens + refinamento /melhores (2026-11-05)
+
+Semáforo: Dados EM verde (65 scrape, area 100%, imagens 23,1%) · Motor AMARELO (score 46,2%, 30/65; residential scorable 100%) · UI EM verde (`/melhores` agrupado por distrito/tipo + cobertura) · Segurança EM verde · Deploy EM verde (release final aplicado).
+
+✅ O que esta bem — so o que MEDISTE
+- Fase 1.1: distribuicao asset_class confirmou Cenario A (100% apartment/house com score).
+- Fase 1.3: asset classes nao avaliaveis por design registadas (mixed, rural, commercial, urban_land).
+- Fase 3: backfill imagens recuperou 6 Casa Sapo via og:image (13,8% -> 23,1%).
+- Fase 4: `/melhores` ganhou agrupamento por distrito e tipo + aviso de cobertura.
+
+❌ O que esta mal / riscos
+- Meta >=80% global de score nao atingida (46,2%, 30/65) — explicada por design (mixed/rural/commercial/urban_land).
+
+➡ Proxima iteracao: novas fontes para mais apartments/houses (OLX bloqueado 403; SuperCasa/Remax/ERA pendentes); recolher fotos Martelo; conclusao do objetivo.
+
+ℹ Numeros (live, scrape 65)
+- Com area: 65 (100%) | Com score: 30 (46,2%) | Com imagem: 15 (23,1%) | Com coords: 50 (76,9%).
+
 ## Iteração 10 – Re-scrape area + qualidade final (2026-11-05)
 
 Semáforo: Dados EM verde (65 scrape, area 100%) · Motor AMARELO (score 24,6%, falta market data) · UI EM verde (`/melhores` top 5 + aviso elegibilidade) · Segurança EM verde · Deploy EM verde (release final aplicado).

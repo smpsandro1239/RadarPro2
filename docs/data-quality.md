@@ -126,3 +126,14 @@ Amostra sem score (market_value = null em todos): tipos variados (Moradia, Préd
 | null | 15 | 15 | 100% |
 
 **Conclusao Fase 1.1:** Cenario A confirmado — 100% dos imoveis apartment/house com score (30/30 rankeaveis). Os 35 sem score pertencem exclusivamente a mixed/rural/commercial/urban_land (por design / sem dados). Meta >=80% atingida para o que importa (residential scorable).
+
+
+## Estado final (2026-11-05, Fase 5 — diagnostico asset_class + imagens + refinamento /melhores)
+
+- Pos-re-scrape + eliminacao + cobertura market data + imagens + refinamento /melhores: total scrape ativo = **65**; com_area = **65** (100%); com_score = **30** (46,2%); com_mv = **30** (46,2%); com_imagem = **15** (23,1%); com_coords = **50** (76,9%).
+
+- **Diagnostico asset_class (Fase 1.1):** apartment 3/3, house 12/12, null 15/15 com score; mixed 8/8, rural_land 17/17, urban_land 4/4, commercial 6/6 sem score. **Cenario A confirmado: 100% dos residential com score.**
+
+- Fase 3 (imagens): backfill rankeado por fonte; Casa Sapo recuperou 6 imagens via og:image (13.8% -> 23,1%). Martelo sem imagens (fotos oficiais pendentes).
+
+- Fase 4 (/melhores): agrupamento por distrito e tipo + aviso de cobertura ("Cobertura atual: X de 20 distritos com imoveis elegiveis rankeaveis.").

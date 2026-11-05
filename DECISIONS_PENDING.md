@@ -82,6 +82,9 @@
   - **Impacto:** live `data_origin='scrape'` passou de **50 → 130** imóveis reais (N ≥ 100 ✅).
 - **e-Leiões/Leilosoc (Fase 2.3, task atual): `scripts/ingest-auction-sources-standalone.ts` criado (fetch + `loadHtml` + seletores, `is_auction=1`).**
   - `--limit 5 --dry-run` → **HTTP fetch failed** (tentativa 1) → **fetch failed** (tentativa 2) → **falhou 2×** → avanço sem mais tentativas automáticas.
+- **OLX (Fase 2.1, task atual): `scripts/scrape-olx-standalone.ts` criado (fetch + `loadHtml` + seletores `[data-cy='l-card'], .listing-item, .offer-item, article`, `loadHtml` do modulo html, sem imports Next/Sentry).
+  - `--limit 5 --dry-run` → **HTTP 403** (tentativa 1) → **HTTP 403** (tentativa 2) → **falhou 2×** → avanço sem mais tentativas automáticas.
+  - Causa provavel: bloqueio anti-bot (Cloudflare/IP); requer browser automation (playwright) ou decisão do dono.
 
 - **Prioridade atual:** Fase 3 concluída (refino `/melhores`); Fase 4 (Inngest local) concluída parcialmente (dev server + functions + Invoke); Fase 5 (bancos CGD) em curso/limitada.
 
