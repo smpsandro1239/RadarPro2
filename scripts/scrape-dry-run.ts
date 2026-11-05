@@ -11,6 +11,7 @@
 import { createClient } from "@libsql/client";
 import { registerHooks } from "node:module";
 import path from "node:path";
+import { existsSync } from "node:fs";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { isRemoteDatabaseUrl } from "../src/lib/database-url.ts";
 import type { MarteloEvent, ScrapedRow } from "../src/lib/martelo-parser.ts";
@@ -221,6 +222,9 @@ async function writeRows(url: string, evaluated: Evaluated[]): Promise<number> {
 }
 
 export async function main(args: string[]): Promise<number> {
+  if (existsSync(".env.local")) {
+    process.loadEnvFile(".env.local");
+  }
   const { detectPlaceholder, extractRssItems, isPropertyEvent, mapMarteloEvent } = await import("../src/lib/martelo-parser.ts");
   const options = parseArgs(args);
   const url = process.env.TURSO_DATABASE_URL ?? `file:${path.join(repoRoot, "local.db")}`;
