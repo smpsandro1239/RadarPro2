@@ -99,8 +99,12 @@
 - Bloqueios: nenhum
 
 ### T4 — Escrita controlada (limit 5) na live
-- Commit: `feat(ingest): 5 imoveis reais do Martelo.pt na live`
+- Commit: `a1e73dc`
 - Resultado: 5 registos gravados na live; `data_origin` → `[{"demo":200},{"scrape":5}]`.
+
+### T5 — Escala para 45 imóveis reais (limit 100) na live
+- Commit: `feat(ingest): 45 imoveis reais do Martelo.pt na live`
+- Resultado: 45 registos gravados na live; `data_origin` → `[{"demo":200},{"scrape":45}]`.
 - Bloqueios: nenhum
 
 ## Estado para merge
