@@ -7,9 +7,9 @@
 
 ## 🔴 BLOQUEADORES DE RELEASE (impedem merge para `main`)
 
-### 1. Live apenas com dados demo — BLOQUEADOR DE PRODUTO
+### 1. Live com scrape + dados demo — BLOQUEADOR DE PRODUTO
 
-- **Estado:** 200/200 propriedades com `data_origin='demo'`. Distribuição: `agencia` 35, `banco` 56, `leilao` 36, `portal` 73.
+- **Estado:** Live com 45 imóveis reais (`data_origin='scrape'`, ingest Martelo.pt) + 200 demo (`data_origin='demo'`). Distribuição: `agencia` 35, `banco` 56, `leilao` 36, `portal` 73.
 - **Causa:** os 40 scrapes do Martelo.pt referidos na análise inicial nunca chegaram à live. Os IDs `gen-*` na homepage são dados demo gerados, não scrape.
 - **Decisão necessária (humano):**
   - **(a)** Lançar pipeline de ingest em produção (requer chave Martelo.pt + uso comercial confirmado).
@@ -46,6 +46,7 @@
 
 - **O que fazer:** popular com dados INE (20 distritos preparados em `scripts/sql/0006_seed_market_data_district.sql`) e aplicar.
 - **Comando (após popular):**
+
   ```bash
   npx tsx scripts/apply-migration.ts scripts/sql/0006_seed_market_data_district.sql --dry-run
   npx tsx scripts/apply-migration.ts scripts/sql/0006_seed_market_data_district.sql --apply

@@ -73,6 +73,12 @@
 
 - Teste em `src/lib/__tests__/data-origin.test.ts`. **Recomendação:** `false` (decisão humana).
 
+### F. Verificação em produção — ✅ OK
+
+- `npx vercel --prod` → deployment `dpl_EsMgPQ62JdyGUfCLfUNFGWQ5iR6v` (commit `09cb4c0`) → **READY**, target production.
+- Preview `https://radar-pro2-b61kmke0i-smpsandro1239s-projects.vercel.app/` → acesso anónimo bloqueado por Vercel Deployment Protection (redirect para Vercel login).
+- DB live: `data_origin` `[{"demo":200},{"scrape":45}]` (45 imóveis reais do Martelo.pt).
+
 ## Bloco L — Encerramento
 
 - L.1 ✅ `DECISIONS_PENDING.md` (11 bloqueadores humanos)
