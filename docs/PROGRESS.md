@@ -1,5 +1,19 @@
 # Progresso — RadarPro (modo continuo)
 
+## Iteração 10 – Re-scrape area + qualidade final (2026-11-05)
+
+Semáforo: Dados EM verde (65 scrape, area 100%) · Motor AMARELO (score 24,6%, falta market data) · UI EM verde (`/melhores` top 5 + aviso elegibilidade) · Segurança EM verde · Deploy EM verde (release final aplicado).
+
+✅ O que esta bem — so o que MEDISTE
+- Fase 2: `scripts/backfill-area-detail.ts` criou re-scrape de detalhe; Casa Sapo recuperou area em 15 imoveis.
+- Fase 3: eliminados 108 scrape sem area (backup em /tmp/scrape-no-area-backup.json); com_area passou a 100% (65/65).
+- Fase 7: aviso de elegibilidade adicionado (`/melhores` so conta score !== null).
+
+❌ O que esta mal / riscos
+- Score: 16/65 (24,6%) — bloqueador §12 (market_data/market_value ausente para a maioria dos distritos).
+
+➡ Proxima iteracao: carregar market data para scores; conclui Inngest (run confirmado); release final.
+
 ## Iteração 9 – Qualidade de dados + leilões + cron (2026-11-05)
 
 Semáforo: Dados EM verde (live 100% reais, scrape 173) · Motor EM verde (v2 único) · UI EM verde (`/melhores` top 5 por distrito) · Segurança EM verde (gates `--write --confirm-remote-write`) · Deploy EM verde (release final aplicado).

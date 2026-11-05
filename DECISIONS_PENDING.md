@@ -89,6 +89,13 @@
 
 - **Casa Sapo (resolvido nesta task, 2026-11-05):** headers `Referer`/`DNT` + flag `--delay 15000` aplicados a `scripts/ingest-casasapo-standalone.ts`. Resultado: `--limit 3 --dry-run --delay 15000` -> OK (9 imoveis); `--limit 10 --write --confirm-remote-write` -> OK (**28 inseridos**); live `data_origin='scrape'` = **173**.
 
+### 12. Score insuficiente sem market_data para a maioria dos imóveis
+
+- **O que fazer:** carregar medianas de mercado (INE/EUR/m2) para os distritos onde faltam `market_value` no motor de avaliação.
+- **Comando:** `npx tsx scripts/backfill-scores.ts --write --confirm-remote-write` (apos market data) + re-verify.
+- **Estado:** live com 65 scrape (area 100%), score apenas 16/65 (24,6%) — faltam market_value para ~80% dos imões rankeáveis.
+- **Risco:** `/melhores` continua com poucos rankeáveis; objetivo "melhores dos melhores" nao cumprido.
+
 ### 8. Inngest keys na Vercel — FUNCÃO PRONTA, AGARDAR KEYS
 
 - **O que fazer:** definir `INNGEST_EVENT_KEY` e `INNGEST_SIGNING_KEY` (dashboard Inngest / CLI).
