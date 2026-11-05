@@ -173,7 +173,7 @@ export function findMarketData(params: {
   const nd = normalizeName(district);
   const pool = ALL_MARKET_DATA.filter((d) => d.propertyType === propertyType && normalizeName(d.district) === nd);
 
-  if (pool.length === 0) return null;
+  // O fallback de distrito aplica-se mesmo quando o pool esta vazio (p.e. propertyType sem mediana de concelho).
 
   const nm = normalizeName(municipality);
   const np = parish ? normalizeName(parish) : null;
@@ -192,10 +192,9 @@ export function findMarketData(params: {
     return { pricePerSqm: munMatch.pricePerSqm, source: munMatch.source, asOf: munMatch.asOf, level: "municipality" };
   }
 
-  // 3. Sem mediana de freguesia nem de concelho — tenta o distrito.
-  // Só existe se houver uma linha na tabela de distrito (hoje não há: ver
-  // MARKET_DATA_DISTRICT). Um distrito é demasiado agregado para servir de
-  // referência automática, por isso a confiança do motor é "low" neste nível.
+  // 3. Sem mediana de freguesia nem de concelho — tenta o distrito (fallback).
+  // Um distrito é demasiado agregado para servir de referência automática, por
+  // isso a confiança do motor é "low" neste nível.
   const districtMatch = findDistrictMarketData(district, propertyType);
   if (districtMatch) {
     return {
