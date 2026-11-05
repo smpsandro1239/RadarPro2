@@ -67,7 +67,7 @@
 - **Nova tentativa 2 (Fase 1, task atual, segunda tentativa): `scripts/ingest-banks-standalone.ts` com `AbortController` (20s) + retry com backoff (3x, 2s/4s/8s) + rate limit (1 pedido/5s) + limit=5.**
   - Resultado: `--limit 5 --dry-run` → **HTTP 404** (tentativa 1) → **HTTP 429** (tentativa 2) → **falhou 2×** → avanço sem mais tentativas automáticas.
 - **Risco atualizado:** bancos/leilões não ingeridos; live mantém 50 Martelo (scrape) — sem demo.
-- **Atualização (2026-11-05, Fase 5): bancos — URLs não verificadas manualmente neste ciclo; status mantém-se bloqueado para escalar além de Martelo+Imovirtual+Casa Sapo (N=173).
+- **Atualização (2026-11-05, Fase 5): bancos — URLs testadas manualmente neste ciclo (HEAD): santander.pt 404, cgd.pt 200, novobanco.pt 404, millenniumbcp.pt 404, montepio.org 404. Fonte funcional: Caixa Geral de Depósitos (CGD). `scripts/ingest-banks-standalone.ts` ganhou filtro `--source` e entrada CGD; dry-run CGD -> 0 imoveis (parser sem resultados). Bloqueio mantém-se para escalar alem de Martelo+Imovirtual+Casa Sapo (N=173).
 
 ### 11. Fontes adicionais — Casa Sapo / Imovirtual / e-Leiões (para escalar N > 50)
 
@@ -83,14 +83,18 @@
 - **e-Leiões/Leilosoc (Fase 2.3, task atual): `scripts/ingest-auction-sources-standalone.ts` criado (fetch + `loadHtml` + seletores, `is_auction=1`).**
   - `--limit 5 --dry-run` → **HTTP fetch failed** (tentativa 1) → **fetch failed** (tentativa 2) → **falhou 2×** → avanço sem mais tentativas automáticas.
 
-- **Prioridade atual:** Fase 3 concluída (refino `/melhores`); Fase 4 (Inngest local) em curso/limitada.
+- **Prioridade atual:** Fase 3 concluída (refino `/melhores`); Fase 4 (Inngest local) concluída parcialmente (dev server + functions + Invoke); Fase 5 (bancos CGD) em curso/limitada.
+
+- **Casa Sapo (resolvido nesta task, 2026-11-05):** headers `Referer`/`DNT` + flag `--delay 15000` aplicados a `scripts/ingest-casasapo-standalone.ts`. Resultado: `--limit 3 --dry-run --delay 15000` -> OK (9 imoveis); `--limit 10 --write --confirm-remote-write` -> OK (**28 inseridos**); live `data_origin='scrape'` = **173**.
+
+- **Casa Sapo (resolvido nesta task, 2026-11-05):** headers `Referer`/`DNT` + flag `--delay 15000` aplicados a `scripts/ingest-casasapo-standalone.ts`. Resultado: `--limit 3 --dry-run --delay 15000` -> OK (9 imoveis); `--limit 10 --write --confirm-remote-write` -> OK (**28 inseridos**); live `data_origin='scrape'` = **173**.
 
 ### 8. Inngest keys na Vercel — FUNCÃO PRONTA, AGARDAR KEYS
 
 - **O que fazer:** definir `INNGEST_EVENT_KEY` e `INNGEST_SIGNING_KEY` (dashboard Inngest / CLI).
 - **Comando:** `npx inngest-cli dev` (dev server local na porta 8288; função `daily-ingest` registada e responde em `/functions`).
 - **Estado:** keys não encontradas no repositório (`.env.local`) → função `daily-ingest` criada mas **não ativada em produção**.
-- **Atualização (2026-11-05, Fase 6): dev server `inngest-cli dev` iniciado (portas 8288/8290); arranque OK; invocação manual não concluída antes do encerramento do processo local.
+- **Atualização (2026-11-05, Fase 6): dev server `inngest-cli dev` reiniciado; fix aplicado — `INNGEST_DEV=1` no dev server Next (erro "In cloud mode but no signing key found" -> resolvido); `/api/inngest` -> 200; funções descobertas em `/functions` (Daily Ingest Martelo cron 0 6 * * *, Expire Stale, Geocode Missing, Scrape All, Scrape Source, Send Search Alerts); botão Invoke clicado no Daily Ingest Martelo; run não materializado no dashboard (0 runs) — invocação manual não concluída.
 - **Risco:** cron 0 6 * * * sem funcionar até keys configuradas.
 
 ### 10. Dados reais insuficientes (N < 100) — DEMO MANTIDO TEMPORARIAMENTE

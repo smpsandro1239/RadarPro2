@@ -1,5 +1,21 @@
 # Progresso — RadarPro (modo continuo)
 
+## Iteração 9 – Qualidade de dados + leilões + cron (2026-11-05)
+
+Semáforo: Dados EM verde (live 100% reais, scrape 173) · Motor EM verde (v2 único) · UI EM verde (`/melhores` top 5 por distrito) · Segurança EM verde (gates `--write --confirm-remote-write`) · Deploy EM verde (release final aplicado).
+
+✅ O que esta bem — so o que MEDISTE
+- Fase 1 (auditoria): `docs/data-quality.md` — de 173 scrape: com_area 50 (29%), com_score 1 (0,6%), com_imagem 0 (0%), com_coords 50 (29%).
+- Fase 2 (backfills): `scripts/backfill-area-scrape.ts` (regex titulo, 2 atualizados); `scripts/backfill-scores.ts` reescrito (libsql + env, 173 processados, 1 atualizado, 0 erros); `scripts/backfill-images.ts` reescrito (libsql + env + fetch og:image, 20 atualizados).
+- Fase 3 (leilões): `SELECT is_auction` -> **50** no scrape: leilões do Martelo já estão classificados.
+- Fase 4 (bancos): URLs testadas (HEAD) -> apenas CGD 200; `scripts/ingest-banks-standalone.ts` ganhou filtro `--source` + entrada CGD; dry-run CGD -> 0 imoveis.
+- Fase 5 (Inngest): dev server reiniciado com `INNGEST_DEV=1`; `/api/inngest` -> 200; funções descobertas (`daily-ingest` cron 0 6 * * *, Expire Stale, Geocode Missing, Scrape All, Scrape Source, Send Search Alerts); Invoke clicado.
+
+❌ O que esta mal / riscos
+- Criterio de paridade ≥ 80% com area E score **NAO** atingido: com_area 29% / com_score 0,6%. Gargalo: area_sqm ausente nas fontes Imovirtual/Casa Sapo (Lisboa/Porto/Braga com 0).
+
+➡ Proxima iteracao: Fase 6 — densificar distritos fracos (<5) com Imovirtual/Casa Sapo; concluir Inngest (run confirmado); release final.
+
 ## Iteração 8 – Dados reais apenas + /melhores por distrito + bancos standalone (2026-11-05)
 
 Semáforo: Dados 🟢 (live 100% reais após eliminação do demo) · Motor 🟢 (v2 único) · UI 🟢 (`/melhores` criado) · Segurança 🟢 (nenhuma escrita nova sem gate) · Deploy 🟡 (último deploy antes do release final)
