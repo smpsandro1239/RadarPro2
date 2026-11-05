@@ -9,7 +9,7 @@
  * - Casa Sapo: 28/28 cartoes com area em `.property-features` ("Usado - 91 m2").
  * - Imovirtual: 37/37 anuncios com `areaInSquareMeters` no __NEXT_DATA__.
  */
-import { load as cheerioLoad } from "cheerio";
+import { loadHtml } from "@/lib/html";
 import { extractImovirtualListings, parseAreaSqm, parseNumber } from "@/lib/area-parser";
 
 export interface PortalListing {
@@ -30,7 +30,7 @@ const IMOVIRTUAL_BASE = "https://www.imovirtual.com";
 
 /** Casa Sapo: cartoes `.property` com area em `.property-features` e url real no parametro `l=`. */
 export function parseCasaSapoListings(html: string): PortalListing[] {
-  const $ = cheerioLoad(html);
+  const $ = loadHtml(html);
   const out: PortalListing[] = [];
 
   $(".property, .property-card, article.property, .listing-item, .result-item").each((_, el) => {

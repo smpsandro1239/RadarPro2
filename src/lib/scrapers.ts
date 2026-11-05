@@ -1,5 +1,5 @@
 import { createClient } from "@libsql/client";
-import { load as cheerioLoad } from "cheerio";
+import { loadHtml } from "@/lib/html";
 import * as Sentry from "@sentry/nextjs";
 import { parseAreaSqm } from "@/lib/area-parser";
 import { parseCasaSapoListings, parseImovirtualListingsFromHtml } from "@/lib/portal-parsers";
@@ -140,7 +140,7 @@ export async function scrapeIdealista(district: string): Promise<ScrapedProperty
     const url = "https://www.idealista.pt/comprar-casas/" + district.toLowerCase() + "/";
     const res = await fetchWithRetry(url);
     const html = await res.text();
-    const $ = cheerioLoad(html);
+    const $ = loadHtml(html);
     $("article.item, .listing-item, .listing-item-card").each((_, el) => {
       const $el = $(el);
       const title = $el.find("h3, h2, [class*='title']").first().text().trim();
@@ -188,7 +188,7 @@ export async function scrapeOLX(district: string): Promise<ScrapedProperty[]> {
     const url = "https://www.olx.pt/imoveis/apartamento-casa-a-venda/" + district.toLowerCase() + "/q-barato/";
     const res = await fetchWithRetry(url);
     const html = await res.text();
-    const $ = cheerioLoad(html);
+    const $ = loadHtml(html);
     $("[data-cy='l-card'], .listing-item, .offer-item, article").each((_, el) => {
       const $el = $(el);
       const title = $el.find("h3, h2, [class*='title']").first().text().trim();
@@ -236,7 +236,7 @@ export async function scrapeCustoJusto(district: string): Promise<ScrapedPropert
     const url = "https://www.custojusto.pt/" + district.toLowerCase() + "/imoveis";
     const res = await fetchWithRetry(url);
     const html = await res.text();
-    const $ = cheerioLoad(html);
+    const $ = loadHtml(html);
     $("[data-cy='listing-item'], .listing-item, article").each((_, el) => {
       const $el = $(el);
       const title = $el.find("h3, h2, [class*='title']").first().text().trim();
@@ -284,7 +284,7 @@ export async function scrapeELeiloes(district: string): Promise<ScrapedProperty[
     const url = "https://www.e-leiloes.pt/leiloes/imoveis/" + district.toLowerCase() + "/";
     const res = await fetchWithRetry(url);
     const html = await res.text();
-    const $ = cheerioLoad(html);
+    const $ = loadHtml(html);
     $("article, .listing-item, .property-card").each((_, el) => {
       const $el = $(el);
       const title = $el.find("h2, h3, [class*='title']").first().text().trim();
@@ -354,7 +354,7 @@ export async function scrapeImobancos(district: string): Promise<ScrapedProperty
     const url = "https://imobancos.pt/imoveis/" + district.toLowerCase() + "/page/1/";
     const res = await fetchWithRetry(url);
     const html = await res.text();
-    const $ = cheerioLoad(html);
+    const $ = loadHtml(html);
     $(".property-card, article.property, .result-item, .listing-item").each((_, el) => {
       const $el = $(el);
       const title = $el.find("h2, h3, .title, [class*='title']").first().text().trim();
@@ -402,7 +402,7 @@ export async function scrapeMillenniumBCP(district: string): Promise<ScrapedProp
     const url = "https://ind.millenniumbcp.pt/pt/Particulares/viver/Imoveis/Pages/imoveis.aspx";
     const res = await fetchWithRetry(url);
     const html = await res.text();
-    const $ = cheerioLoad(html);
+    const $ = loadHtml(html);
     $(".property-card, article.property, .listing-item, .result-item").each((_, el) => {
       const $el = $(el);
       const title = $el.find("h2, h3, .title, [class*='title']").first().text().trim();
@@ -450,7 +450,7 @@ export async function scrapeSantander(district: string): Promise<ScrapedProperty
     const url = "https://www.santander.pt/pt-pt/pessoais/casa-imoveis/comprar/" + district.toLowerCase() + "/";
     const res = await fetchWithRetry(url);
     const html = await res.text();
-    const $ = cheerioLoad(html);
+    const $ = loadHtml(html);
     $(".property-card, article.property, .listing-item, .result-item").each((_, el) => {
       const $el = $(el);
       const title = $el.find("h2, h3, .title, [class*='title']").first().text().trim();
@@ -498,7 +498,7 @@ export async function scrapeMontepio(district: string): Promise<ScrapedProperty[
     const url = "https://www.montepio.pt/particulares/imoveis/" + district.toLowerCase() + "/";
     const res = await fetchWithRetry(url);
     const html = await res.text();
-    const $ = cheerioLoad(html);
+    const $ = loadHtml(html);
     $(".property-card, article.property, .listing-item, .result-item").each((_, el) => {
       const $el = $(el);
       const title = $el.find("h2, h3, .title, [class*='title']").first().text().trim();
@@ -546,7 +546,7 @@ export async function scrapeCaixaImobiliario(district: string): Promise<ScrapedP
     const url = "https://www.caixaimobiliario.pt/comprar/" + district.toLowerCase() + "/";
     const res = await fetchWithRetry(url);
     const html = await res.text();
-    const $ = cheerioLoad(html);
+    const $ = loadHtml(html);
     $(".property-card, article.property, .listing-item, .result-item").each((_, el) => {
       const $el = $(el);
       const title = $el.find("h2, h3, .title, [class*='title']").first().text().trim();
@@ -594,7 +594,7 @@ export async function scrapeCreditoAgricola(district: string): Promise<ScrapedPr
     const url = "https://www.cai.pt/imoveis/" + district.toLowerCase() + "/";
     const res = await fetchWithRetry(url);
     const html = await res.text();
-    const $ = cheerioLoad(html);
+    const $ = loadHtml(html);
     $(".property-card, article.property, .listing-item, .result-item").each((_, el) => {
       const $el = $(el);
       const title = $el.find("h2, h3, .title, [class*='title']").first().text().trim();
@@ -642,7 +642,7 @@ export async function scrapeNovoBanco(district: string): Promise<ScrapedProperty
     const url = "https://www.novobanco.pt/particulares/imoveis/" + district.toLowerCase() + "/";
     const res = await fetchWithRetry(url);
     const html = await res.text();
-    const $ = cheerioLoad(html);
+    const $ = loadHtml(html);
     $(".property-card, article.property, .listing-item, .result-item").each((_, el) => {
       const $el = $(el);
       const title = $el.find("h2, h3, .title, [class*='title']").first().text().trim();
@@ -690,7 +690,7 @@ export async function scrapeBPI(district: string): Promise<ScrapedProperty[]> {
     const url = "https://www.bpiexpressoimobiliario.pt/imoveis/" + district.toLowerCase() + "/";
     const res = await fetchWithRetry(url);
     const html = await res.text();
-    const $ = cheerioLoad(html);
+    const $ = loadHtml(html);
     $(".property-card, article.property, .listing-item, .result-item").each((_, el) => {
       const $el = $(el);
       const title = $el.find("h2, h3, .title, [class*='title']").first().text().trim();
