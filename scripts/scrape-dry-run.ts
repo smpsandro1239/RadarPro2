@@ -304,7 +304,7 @@ export async function main(args: string[]): Promise<number> {
 
   const written = await writeRows(url, evaluated);
   if (written < 0) return 1;
-  console.log(`\nRESULTADO: ${written} registos gravados na base local (data_origin='scrape')`);
+  console.log(`\nRESULTADO: ${written} registos gravados na base ${url} (data_origin='scrape')`);
   return 0;
 }
 
