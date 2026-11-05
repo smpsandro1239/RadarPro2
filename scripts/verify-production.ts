@@ -1,5 +1,5 @@
 const BASE = process.argv[2] ?? "https://radar-pro2.vercel.app";
-const paths = ["/", "/oportunidades", "/leiloes"];
+const paths = ["/", "/oportunidades", "/leiloes", "/melhores"];
 
 /**
  * `/leiloes` so existe na branch `fase2-dev`. A producao (`main`) devolve 404
