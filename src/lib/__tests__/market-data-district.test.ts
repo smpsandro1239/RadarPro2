@@ -20,4 +20,16 @@ describe("dados de mercado (distrito)", () => {
     expect(market).not.toBeNull();
     expect(market?.pricePerSqm).toBeGreaterThan(0);
   });
+
+  it("devolve mediana por distrito para Açores (apartamento)", () => {
+    const market = findDistrictMarketData("Acores", "apartment");
+    expect(market).not.toBeNull();
+    expect(market?.pricePerSqm).toBeGreaterThan(0);
+  });
+
+  it("devolve mediana por distrito para Madeira (apartamento)", () => {
+    const market = findDistrictMarketData("Madeira", "apartment");
+    expect(market).not.toBeNull();
+    expect(market?.pricePerSqm).toBeGreaterThan(0);
+  });
 });
