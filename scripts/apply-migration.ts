@@ -4,15 +4,22 @@ import path from "node:path";
 
 const args = process.argv.slice(2);
 const dryRun = !args.includes("--apply");
+const confirmRemoteWrite = args.includes("--confirm-remote-write");
 const file = args.find((a) => a.endsWith(".sql"));
 if (!file) {
-  console.error("Uso: tsx scripts/apply-migration.ts <ficheiro.sql> [--apply]");
+  console.error("Uso: tsx scripts/apply-migration.ts <ficheiro.sql> [--apply] [--confirm-remote-write]");
   process.exit(1);
 }
 
 const url = process.env.TURSO_DATABASE_URL!;
 const authToken = process.env.TURSO_AUTH_TOKEN ?? "";
+const isRemote = url.startsWith("libsql://");
 const client = createClient({ url, authToken });
+
+if (!dryRun && isRemote && !confirmRemoteWrite) {
+  console.error("[RECUSA] Migration contra base remota requer --confirm-remote-write.");
+  process.exit(1);
+}
 
 const sql = readFileSync(path.resolve(file), "utf8");
 const statements = sql

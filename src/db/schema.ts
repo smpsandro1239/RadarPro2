@@ -45,6 +45,9 @@ export const properties = sqliteTable("properties", {
   vpt: real("vpt"), // Valor Patrimonial Tributário
   condominiumDebt: real("condominium_debt"), // Condomínio em atraso
   renovationEstimate: real("renovation_estimate"), // Estimativa de obras
+  embargos: real("embargos"), // Dívida por embargos judiciais / penhoras
+  hipotecas: real("hipotecas"), // Dívida por hipotecas em curso
+  cargasTotal: real("cargas_total"), // Carga total conhecida (condomínio + obras + embargos + hipotecas)
   annualIncome: real("annual_income"), // Rendimento anual estimado (EUR/ano)
   maxBidCalculation: text("max_bid_calculation"), // JSON com breakdown dos custos
   assetClass: text("asset_class"), // apartment | house | urban_land | rural_land | commercial | garage | mixed
