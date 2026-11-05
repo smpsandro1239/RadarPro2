@@ -87,3 +87,27 @@ Fase 3: resolver leilões (is_auction=50 confirmado OK); Fase 4: bancos (CGD 200
 - Os 49 restantes sem score sao do Martelo (50 -> 1 com score) + imoveis com market_value ausente.
 
 Amostra sem score (market_value = null em todos): tipos variados (Moradia, Prédio, Rúcio, Quinta/Misto, Apartamento) nos concelhos de Leiria, Viseu, Guarda, Coimbra.
+
+
+## Estado final (2026-11-05, Fase 11 — cobertura market data + scores)
+
+- Pos-re-scrape + eliminacao + cobertura market data: total scrape ativo = **65**; com_area = **65** (100%); com_score = **30** (46,2%); com_mv = **30** (46,2%); com_imagem = **9** (13,8%); com_coords = **50** (76,9%).
+
+## Blocos por fase (resumo do ciclo corrente)
+
+- Fase 1 (auditoria por fonte): Martelo 50/50 area; Imovirtual 95/0; Casa Sapo 28/0. Leiloes: 50/50 no Martelo (is_auction=1).
+- Fase 2 (re-scrape): Casa Sapo recuperou area em 15 imoveis (`scripts/backfill-area-detail.ts`); Imovirtual listings em 404 (inacessiveis).
+- Fase 3 (eliminacao): 108 imoveis scrape sem area eliminados (backup em /tmp/scrape-no-area-backup.json); restantes com area = 65.
+- Fase 4 (scores): backfill recalculou em 65 imoveis: 16 com score (24,6%) -> apos fix do motor de leilao via `evaluateProperty`: 30 com score (46,2%).
+
+## Cobertura market data (2026-11-05)
+
+- Concilhos com mais imoveis sem score passaram a ter mediana: Leiria, Alcobaça, Beja/Cuba, Viseu/Tondela, Guarda/Gouveia.
+- Fallbacks de distrito completos: Aveiro (apartment), Castelo Branco (house), Santarém (house).
+- `findMarketData` corrigido: fallback de distrito aplicavel mesmo com pool de concelhos vazio.
+- `scripts/backfill-scores.ts` corrigido: leiloes passam a avaliar via motor (marketValue do engine) em vez de `calculateMaxBid` com marketValue=0.
+
+## Criterio de paridade
+
+- Area >= 80%: **ATINGIDO** (100% em 65).
+- Score >= 80%: **NAO ATINGIDO** (46,2%, 30/65) — bloqueador honesto: asset classes sem motor/dados (mixed, rural, commercial, urban_land, PDM) que nao sao resolveis com market_data por distrito.

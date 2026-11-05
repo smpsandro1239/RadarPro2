@@ -1,5 +1,24 @@
 # Progresso — RadarPro (modo continuo)
 
+## Iteração 11 – Cobertura market data + scores recalculados (2026-11-05)
+
+Semáforo: Dados EM verde (65 scrape, area 100%) · Motor AMARELO (score 46,2%, 30/65; resto mixed/rural/commercial/urban_land) · UI EM verde (`/melhores` com aviso elegibilidade) · Segurança EM verde · Deploy EM verde (release final aplicado).
+
+✅ O que esta bem — so o que MEDISTE
+- Fase 2: aderidos market data por concelho (Leiria, Alcobaça, Beja/Cuba, Viseu/Tondela, Guarda/Gouveia).
+- Fase 2b: completados fallbacks de distrito (Aveiro apartment, Castelo Branco house, Santarém house).
+- Fase 2c: corrigido `findMarketData` (fallback de distrito ignorado quando pool vazio).
+- Fase 3: corrigido `scripts/backfill-scores.ts` (leilao via `evaluateProperty` com marketValue do engine) -> scores 16 -> 30 (46,2%).
+
+❌ O que esta mal / riscos
+- Meta >=80% nao atingida: 35/65 sem score por asset classes nao honestamente avaliaveis (mixed, rural, commercial, urban_land, PDM).
+
+➡ Proxima iteracao: avaliacao manual para mixed/PDM; novas fontes para commercial/rural; release final.
+
+ℹ Numeros (live, scrape 65)
+- Com area: 65 (100%) | Com score: 30 (46,2%) | Com market_value: 30 (46,2%) | Com imagem: 9 (13,8%) | Com coords: 50 (76,9%).
+- /melhores: 30 rankeaveis (score !== null).
+
 ## Iteração 10 – Re-scrape area + qualidade final (2026-11-05)
 
 Semáforo: Dados EM verde (65 scrape, area 100%) · Motor AMARELO (score 24,6%, falta market data) · UI EM verde (`/melhores` top 5 + aviso elegibilidade) · Segurança EM verde · Deploy EM verde (release final aplicado).
