@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import "./globals.css";
 import "leaflet/dist/leaflet.css";
 import CookieBanner from "@/components/CookieBanner";
-import DemoDataBanner from "@/components/DemoDataBanner";
 import ServiceWorkerRegistration from "@/components/ServiceWorkerRegistration";
 import Navbar from "@/components/Navbar";
 import * as Sentry from "@sentry/nextjs";
@@ -25,7 +24,6 @@ export default function RootLayout({
       </head>
       <body className="antialiased">
         <Navbar />
-        <DemoDataBanner />
         {children}
         <CookieBanner />
         <ServiceWorkerRegistration />
