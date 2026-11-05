@@ -87,6 +87,10 @@
   - Causa provavel: bloqueio anti-bot (Cloudflare/IP); requer browser automation (playwright) ou decisão do dono.
 
 - **Remax (Fase 3.2, task atual): `scripts/probe-remax.ts` criado (fetch + headers Chrome).
+
+- **INE (Fase 1.2, task atual): `scripts/probe-ine.ts` criado (fetch direto).
+  - `https://www.ine.pt/xportaltmp/pt/news/INE-indicadores-precos-habitacao.csv` -> **fetch failed** (×6 URLs candidatas) -> **falhou 2×** (limite) -> avancar sem mais tentativas.
+  - Fonte principal do indice de precos fica coberto indirectamente via `flatin.pt` municipality stats (median sale price INE).
   - Tentativa 1: `https://www.remax.pt/pt/comprar/imoveis/apartamento/lisboa/lisboa` → **HTTP 200** (HTML), mas contém apenas metadata/i18n (sem listing cards server-rendered; `__NEXT_DATA__` sem listings).
   - Resultado: parse de listings via fetch simples **não viável** → requer browser automation (client-side rendering) ou API interna não pública.
 - **SuperCasa (Fase 3.1, task atual): `scripts/probe-supercasa.ts` criado (fetch + headers Chrome completos, Referer Google, AbortController 20s).
