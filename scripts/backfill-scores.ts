@@ -1,83 +1,123 @@
-import { db } from "../src/db/index";
-import { properties } from "../src/db/schema";
-import { eq } from "drizzle-orm";
+/**
+ * Backfill de score via motor de avaliacao (AVM / max bid) nos imoveis scrape ativos.
+ *   node scripts/backfill-scores.ts [--dry-run] [--write] [--confirm-remote-write]
+ */
+import { createClient } from "@libsql/client";
+import { existsSync } from "node:fs";
+import { fileURLToPath, pathToFileURL } from "node:url";
+import path from "node:path";
 import { calculateMaxBid } from "../src/lib/auction-calculator";
 import { evaluateProperty } from "../src/lib/valuation/index";
+import type { AssetClass, PropertyInput } from "../src/lib/valuation/types";
 
-async function main() {
-  console.log("A ler imóveis ativos da BD...");
-  const rows = await db
-    .select()
-    .from(properties)
-    .where(eq(properties.isActive, true));
+const num = (v: unknown): number | null => {
+  if (v === null || v === undefined || v === "") return null;
+  const n = Number(v);
+  return Number.isFinite(n) ? n : null;
+};
 
-  console.log(`Total de imóveis ativos: ${rows.length}\n`);
+const str = (v: unknown): string | null => (v === null || v === undefined || v === "" ? null : String(v));
 
-  const dryRun = process.argv.includes("--dry-run");
+async function main(args: string[]): Promise<number> {
+  if (existsSync(".env.local")) {
+    process.loadEnvFile(".env.local");
+  }
+  const dryRun = !args.includes("--write");
+  const write = args.includes("--write");
+  const confirmRemoteWrite = args.includes("--confirm-remote-write");
+  const limitIdx = args.indexOf("--limit");
+  const limit = limitIdx >= 0 ? Number(args[limitIdx + 1]) || 20 : 20;
+
+  const url = process.env.TURSO_DATABASE_URL ?? `file:${path.resolve(process.cwd(), "local.db")}`;
+  const isRemote = url.startsWith("libsql://");
+  const client = createClient({ url: process.env.TURSO_DATABASE_URL!, authToken: process.env.TURSO_AUTH_TOKEN ?? "" });
+
+  if (write && isRemote && !confirmRemoteWrite) {
+    console.error("[RECUSA] --write contra uma base remota. Usa --confirm-remote-write se for intencional.");
+    return 1;
+  }
+
+  const rows = await client.execute(
+    "SELECT id, source, source_name, title, district, municipality, type, price, market_value, discount_pct, score, rentability, images, image_url, image_source, image_status, is_auction, auction_type, auction_house, current_bid, opening_bid, reserve_price, max_bid, area_sqm, auction_end_date, auction_start_date, vpt, condominium_debt, renovation_estimate, embargos, hipotecas, cargas_total, annual_income, max_bid_calculation, asset_class, valuation_engine, valuation_confidence, pdm_status, infrastructure, lat, lng, geo_quality, dedup_hash, data_origin, is_active, last_checked, check_status, created_at, updated_at FROM properties WHERE is_active = 1",
+  );
+  const targets = rows.rows.slice(0, limit);
+
   let updated = 0;
   let unchanged = 0;
   let skipped = 0;
 
-  for (const row of rows) {
+  for (const row of targets) {
     try {
       let newScore: number | null = null;
       let newMarketValue: number | null = null;
 
-      if (row.isAuction === true) {
-        // Leilão: usar calculateMaxBid
+      if (row.is_auction) {
         const result = calculateMaxBid({
-          marketValue: row.marketValue ?? 0,
-          currentBid: row.currentBid ?? 0,
-          auctionHouse: row.auctionHouse ?? undefined,
-          vpt: row.vpt ?? undefined,
-          condominiumDebt: row.condominiumDebt ?? 0,
-          renovationEstimate: row.renovationEstimate ?? 0,
+          marketValue: num(row.market_value) ?? 0,
+          currentBid: num(row.current_bid) ?? 0,
+          auctionHouse: str(row.auction_house) ?? undefined,
+          vpt: num(row.vpt) ?? undefined,
+          condominiumDebt: num(row.condominium_debt) ?? 0,
+          renovationEstimate: num(row.renovation_estimate) ?? 0,
           targetMargin: 15,
         });
         newScore = result.maxBid > 0 ? result.maxBid : null;
         newMarketValue = result.marketValue;
       } else {
-        // Preço fixo: usar evaluateProperty (AVM hedónico)
-        const result = evaluateProperty({
-          id: row.id,
-          title: row.title,
-          district: row.district,
-          municipality: row.municipality,
-          sourceName: row.sourceName,
-          source: row.source,
-          type: row.type,
-          price: row.price,
-          marketValue: row.marketValue,
-          discountPct: row.discountPct,
-          rentability: row.rentability ?? 0,
-          sqm: row.areaSqm ?? null,
-          isAuction: Boolean(row.isAuction),
-          auctionType: row.auctionType ?? undefined,
-          auctionHouse: row.auctionHouse ?? undefined,
-          currentBid: row.currentBid ?? 0,
-          maxBid: row.maxBid ?? null,
-          vpt: row.vpt ?? undefined,
-          condominiumDebt: row.condominiumDebt ?? 0,
-          renovationEstimate: row.renovationEstimate ?? 0,
-          asset_class: row.assetClass ?? undefined,
-          valuation_engine: row.valuationEngine ?? undefined,
-          valuation_confidence: row.valuationConfidence ?? undefined,
-          pdm_status: row.pdmStatus ?? undefined,
-          infrastructure: row.infrastructure ?? undefined,
-          annualIncome: row.annualIncome ?? undefined,
-          is_auction: Boolean(row.isAuction),
-        });
+        const input: PropertyInput = {
+          id: row.id ? String(row.id) : null,
+          title: str(row.title),
+          type: str(row.type),
+          assetClass: (row.asset_class ? String(row.asset_class) : null) as AssetClass | null,
+          district: str(row.district),
+          municipality: str(row.municipality),
+          parish: str(row.parish),
+          price: num(row.price),
+          sqm: num(row.area_sqm),
+          floor: null,
+          totalFloors: null,
+          orientation: null,
+          condition: null,
+          energyCert: null,
+          hasGarage: false,
+          hasElevator: false,
+          hasView: false,
+          isAuction: false,
+          auctionType: str(row.auction_type),
+          currentBid: num(row.current_bid),
+          marketValue: num(row.market_value),
+          auctionHouse: str(row.auction_house),
+          vpt: num(row.vpt),
+          condominiumDebt: num(row.condominium_debt) ?? 0,
+          renovationEstimate: num(row.renovation_estimate) ?? 0,
+          embargos: num(row.embargos),
+          hipotecas: num(row.hipotecas),
+          cargasTotal: num(row.cargas_total),
+          pdmStatus: str(row.pdm_status),
+          infrastructure: str(row.infrastructure),
+          topography: null,
+          roadFrontageMeters: null,
+          landUse: null,
+          annualIncome: num(row.annual_income),
+          capRate: null,
+          annualRent: null,
+          yieldPct: null,
+          marketCapRate: null,
+        };
+        const result = evaluateProperty(input);
         newScore = result.score;
         newMarketValue = result.valuation;
       }
 
-      // Só atualizar se mudou
-      if (newScore !== null && (newScore !== row.score || newMarketValue !== row.marketValue)) {
-        if (dryRun) { updated++; continue; }
-        await db
-          .update(properties)
-          .set({ score: newScore, marketValue: newMarketValue, updatedAt: new Date() })
-          .where(eq(properties.id, row.id));
+      if (newScore !== null && (newScore !== num(row.score) || newMarketValue !== num(row.market_value))) {
+        if (dryRun) {
+          updated++;
+          continue;
+        }
+        await client.execute({
+          sql: "UPDATE properties SET score = ?, market_value = ?, updated_at = ? WHERE id = ?",
+          args: [newScore, newMarketValue, Date.now(), row.id],
+        });
         updated++;
       } else {
         unchanged++;
@@ -89,13 +129,21 @@ async function main() {
   }
 
   console.log(`\nResultado do backfill:`);
-  console.log(`  Total imóveis: ${rows.length}`);
+  console.log(`  Total imóveis: ${targets.length}`);
   console.log(`  Scores atualizados: ${updated}`);
   console.log(`  Inalterados: ${unchanged}`);
   console.log(`  Erros: ${skipped}`);
+  return 0;
 }
 
-main().catch((err) => {
-  console.error("Erro no backfill:", err);
-  process.exit(1);
-});
+const invokedAsScript = process.argv[1] ? pathToFileURL(path.resolve(process.argv[1])).href : "";
+if (invokedAsScript === import.meta.url) {
+  main(process.argv.slice(2))
+    .then((code) => {
+      process.exitCode = code;
+    })
+    .catch((error: unknown) => {
+      console.error(`[ERRO] ${error instanceof Error ? error.message : String(error)}`);
+      process.exitCode = 1;
+    });
+}
