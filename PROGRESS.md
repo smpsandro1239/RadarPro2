@@ -164,16 +164,27 @@
 - G.2/G.3: 22 imóveis `mixed` analisados; 13 mudaram (9 → mixed, 1 → garage, 12 → urban_land); report em `docs/reclassify-mixed-report.md`.
 - G.4 commit: `feat(pipeline): reclassify-mixed (14 imoveis, dry-run report)` (`eab9eec`)
 
-### Bloco H — Verificação final e documentação — ✅ CONCLUÍDO
-- H.1: `npm run verify` → typecheck ✓, typecheck:scripts ✓, tests 29/212 ✓, build ✓ (refeito após falha transitória de prerender `/estatisticas`).
-- H.2: `npx tsx scripts/verify-production.ts https://radar-pro2.vercel.app` → `/`, `/oportunidades`, `/leiloes` → 200 OK.
-- H.3/H.5/H.6: esta secção actualizada + commit `chore(release): escalar dados reais fase2-dev`.
+### Bloco E — Verificar Estamo RSS — ⚠️ FALSO POSITIVO (placeholder)
+- E.1: fetch RSS → STATUS 200.
+- E.2/E.3: items com placeholder (`Nome do empreendimento`, lorem ipsum) → feed não utilizável.
+- E.4 commit: `chore(scrape): verificar Estamo RSS (resultado em PROGRESS.md)`.
 
-### Estado final
-- Live: `data_origin` = `[{"demo":200},{"scrape":45}]` — N final = 45 (Martelo.pt; API ~45 eventos acessíveis).
-- Fontes reais ativas: 1 (Martelo.pt). Bancos (B) e leilões (C): bloqueados tecnicamente.
+### Bloco F — Verificação final e documentação — ✅ CONCLUÍDO (tarefa atual)
+- F.1: `npm run verify` → typecheck ✓, typecheck:scripts ✓, tests 29/212 ✓, build ✓ (refeito após falha transitória de prerender `/estatisticas`).
+- F.2: `npx tsx scripts/verify-production.ts https://radar-pro2.vercel.app` → `/`, `/oportunidades`, `/leiloes` → 200 OK.
+- F.3/F.5/F.6: esta secção actualizada + commit `chore(release): escalar dados reais fase2-dev`.
+
+### Estado final (tarefa atual — desbloquear e escalar)
+- Live: `data_origin` = `[{"demo":200},{"scrape":45}]` — N final = 45 (Martelo.pt; API ~45 eventos acessíveis). Reclassificação `mixed` aplicada (13 reclassificados; mixed 22→9, urban_land 18, garage 20).
+- Fontes reais ativas: 1 (Martelo.pt). Bancos/leilões: bloqueados tecnicamente (interop).
 - Deploy produção: `dpl_EsMgPQ62JdyGUfCLfUNFGWQ5iR6v` (READY, commit `09cb4c0`).
-- Human blockers: `DECISIONS_PENDING.md` §1–§8.
+- Human blockers: `DECISIONS_PENDING.md` §1–§9.
+
+### T9 — Desbloquear bancos/leiloes via interop — BLOQUEADO TECNICO
+- Commit: `feat(scrape): cheerio/slim para compatibilidade CJS/tsx` (nao executado; A.1 falhou)
+- Commit: `feat(scrape): jsdom em vez de cheerio (CJS-safe)` (nao executado; A.2 falhou)
+- Resultado: A.1 (`cheerio/slim`) falhou (css-what); A.2 (`jsdom` via `src/lib/html.ts`) falhou (whatwg-url). → registado em DECISIONS_PENDING.md §7, avancar para o bloco B.
+- Bloqueios: erro exato acima (registo em DECISIONS_PENDING.md §7).
 
 ## Estado para merge
 

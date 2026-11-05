@@ -37,11 +37,12 @@
 - **Recomendação:** confirmar ToS antes de scraping.
 - **Risco:** risco legal se ToS proibir.
 
-### 5. Reclassificar 14 `mixed`
+### 5. Reclassificar 14 `mixed` — RESOLVIDO (aplicado)
 
 - **O que fazer:** 14 propriedades com `asset_class='mixed'` no pipeline (não na BD live).
-- **Comando:** correr worker de classificação com `classify.ts` melhorado.
-- **Risco:** 14/200 = 7% do feed sem avaliação por design.
+- **Comando:** `npx tsx scripts/reclassify-mixed.ts --write --confirm-remote-write` (modo `--write` adicionado ao script).
+- **Resultado:** 22 imóveis `mixed` analisados; 13 reclassificados (12 → urban_land, 1 → garage); mixed 22→9 na live; contagens após: apartment 119, commercial 21, garage 20, house 39, mixed 9, rural_land 19, urban_land 18. Report atualizado em `docs/reclassify-mixed-report.md`.
+- **Risco:** mitigado (aplicado via script com guardas `--write`/`--confirm-remote-write`).
 
 ### 6. `0006_seed_market_data_district.sql` na live
 
@@ -53,17 +54,26 @@
   npx tsx scripts/apply-migration.ts scripts/sql/0006_seed_market_data_district.sql --apply
   ```
 
-### 7. Bancos: parser não utilizável via tsx — requer desenvolvimento
+### 7. Bancos/leilões: parser não utilizável via tsx — requer desenvolvimento
 
-- **O que fazer:** corrigir interop de carregamento (`cheerio`/`css-what`) no pipeline de ingest bancos (`scripts/ingest-banks.ts --dry-run`).
-- **Comando:** `npx tsx scripts/ingest-banks.ts --limit 5 --dry-run`
-- **Erro exato (2×):** `Cannot find module 'C:\Users\smpsa\RadarPro\node_modules\css-what\lib\commonjs\types.ts'` (Require stack: cheerio → cheerio-select → cheerio → `src/lib/scrapers.ts`).
-- **Estado:** falhou 2× → avanço para o bloco C (leilões).
-- **Risco:** bancos não ingeridos; live mantém 45 Martelo + 200 demo.
+- **O que fazer:** corrigir interop de carregamento no pipeline de ingest bancos/leilões (`scripts/ingest-banks.ts --dry-run`).
+- **Comandos:** `npx tsx scripts/ingest-banks.ts --limit 5 --dry-run`
+- **Tentativas de interop (falharam):**
+  - `cheerio/slim` (A.1): `Cannot find module 'C:\Users\smpsa\RadarPro\node_modules\css-what\lib\commonjs\types.ts'` (Require stack: css-what → cheerio-select → cheerio → `src/lib/scrapers.ts`).
+  - `jsdom` via helper `src/lib/html.ts` (A.2): `Cannot find module 'C:\Users\smpsa\RadarPro\node_modules\jsdom\node_modules\whatwg-url\webidl2js-wrapper.ts'` (Require stack: whatwg-url → jsdom → `src/lib/html.ts`).
+- **Estado:** falhou 2× → avanço para o bloco B sem mais tentativas. Requer investigação manual ou versão pinned (`cheerio@1.0.0-rc.12`).
+- **Risco:** bancos/leilões não ingeridos; live mantém 45 Martelo + 200 demo.
 
-### 8. Inngest keys na Vercel
+### 8. Inngest keys na Vercel — FUNCÃO PRONTA, AGARDAR KEYS
 
 - **O que fazer:** definir `INNGEST_EVENT_KEY` e `INNGEST_SIGNING_KEY` (dashboard Inngest / CLI).
-- **Comando:** `npx inngest-cli dev` / criar keys.
-- **Estado:** não encontradas no repositório (`.env.local`) → função `daily-ingest` criada mas **não ativada em produção**.
+- **Comando:** `npx inngest-cli dev` (dev server local na porta 8288; função `daily-ingest` registada e responde em `/functions`).
+- **Estado:** keys não encontradas no repositório (`.env.local`) → função `daily-ingest` criada mas **não ativada em produção**.
 - **Risco:** cron 0 6 * * * sem funcionar até keys configuradas.
+
+### 9. Estamo RSS — feed público não utilizável
+
+- **O que fazer:** investigar fonte alternativa de imóveis do Estamo (se o feed voltou a placeholder).
+- **Comando:** `npx tsx -e "fetch('https://www.estamo.pt/imoveis/feed/')..."`.
+- **Estado:** 2026-11-05 — feed responde 200 mas com conteúdo placeholder (`Nome do empreendimento`, lorem ipsum) → não utilizável.
+- **Risco:** imóveis Estamo não ingeridos; live mantém 45 Martelo + 200 demo.
