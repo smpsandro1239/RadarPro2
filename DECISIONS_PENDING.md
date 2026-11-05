@@ -17,7 +17,7 @@
   - **(c)** Adiar merge para `main` até o ingest real estar operacional.
 - **Recomendação:** **(c)**. O site em `radar-pro2.vercel.app` mostra imóveis fictícios ao público.
 - **Risco se não decidir:** merge para `main` põe demo em produção sem aviso ao utilizador.
-- **Estado final (2026-11-05, bloco A):** live com 45 imóveis reais + 200 demo; N final = 45 (`data_origin` = `[{"demo":200},{"scrape":45}]`).
+- **Estado final (2026-11-05, bloco B):** demo **ELIMINADA** (hard delete, decisão do dono, não negociável). Live agora: `[{"data_origin":"scrape","n":50}]` (100% reais, backup em `backup-demo-properties.json` com os 200). N final = 50.
 
 ### 2. `SHOW_SEED_DATA` em produção
 
@@ -62,7 +62,8 @@
   - `cheerio/slim` (A.1): `Cannot find module 'C:\Users\smpsa\RadarPro\node_modules\css-what\lib\commonjs\types.ts'` (Require stack: css-what → cheerio-select → cheerio → `src/lib/scrapers.ts`).
   - `jsdom` via helper `src/lib/html.ts` (A.2): `Cannot find module 'C:\Users\smpsa\RadarPro\node_modules\jsdom\node_modules\whatwg-url\webidl2js-wrapper.ts'` (Require stack: whatwg-url → jsdom → `src/lib/html.ts`).
   - `node-html-parser` (tarefa atual, 1.1): parser OK, mas falhou no carregamento seguinte da cadeia: `Cannot find module 'C:\Users\smpsa\RadarPro\node_modules\next\dist\shared\lib\constants.ts'` via `@sentry/nextjs` → `next` → `src/lib/scrapers.ts`.
-- **Estado:** falhou 3× na mesma cadeia de imports → avanço sem mais tentativas automáticas. Requer investigação manual ou stub de `@sentry/nextjs` no script.
+- **Estado:** falhou 3× na mesma cadeia de imports (cheerio/slim → css-what; jsdom → whatwg-url; node-html-parser → @sentry/nextjs → next) → avanço sem mais tentativas automáticas. Requer investigação manual ou stub de `@sentry/nextjs` no script.
+- **Nova tentativa (Fase 1, task atual): `scripts/ingest-banks-standalone.ts` via `node-html-parser` + `@libsql/client` (sem imports Next/Sentry).** Resultado: `--limit 2 --dry-run` → **timeout** (duas execuções, >300s e >600s, sem output) → **falhou 2×** → avanço sem mais tentativas automáticas. (O helper `src/lib/html.ts` passou a usar só `node-html-parser`, mas a execução lenta/inabalável dos portais bancários completou-se sem sucesso.)
 - **Risco:** bancos/leilões não ingeridos; live mantém 45 Martelo + 200 demo.
 
 ### 8. Inngest keys na Vercel — FUNCÃO PRONTA, AGARDAR KEYS
@@ -76,8 +77,9 @@
 
 - **O que fazer:** escalar bancos/leilões (bloqueados por interop) para atingir N ≥ 100.
 - **Estado:** N final = 50 (`data_origin` = `[{"demo":200},{"scrape":50}]`); Martelo +12 novos.
-- **Decisão:** manter demo (`data_origin='demo'`, 200) até scrape real ≥ 100.
+- **Decisão:** **RESOLVIDO (2026-11-05)** — demo **eliminada** (hard delete) mesmo com N = 50; o dono decidiu "não quero dados falsos".
 - **Risco:** site com 50 reais + 200 demo até nova escalada.
+- **Estado final (2026-11-05):** demo removida (DELETE `data_origin='demo'`); live agora `[{"data_origin":"scrape","n":50}]`; `DemoDataBanner` removido; N = 50 aceito como suficiente para rankings por distrito.
 
 ### 9. Estamo RSS — feed público não utilizável
 

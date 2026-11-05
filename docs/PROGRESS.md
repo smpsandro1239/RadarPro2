@@ -1,5 +1,34 @@
 # Progresso — RadarPro (modo continuo)
 
+## Iteração 8 – Dados reais apenas + /melhores por distrito + bancos standalone (2026-11-05)
+
+Semáforo: Dados 🟢 (live 100% reais após eliminação do demo) · Motor 🟢 (v2 único) · UI 🟢 (`/melhores` criado) · Segurança 🟢 (nenhuma escrita nova sem gate) · Deploy 🟡 (último deploy antes do release final)
+
+✅ O que esta bem — so o que MEDISTE
+- Fase 2 concluída: backup dos 200 demo (`backup-demo-properties.json`); `DELETE FROM properties WHERE data_origin='demo'` executado; live agora `[{"data_origin":"scrape","n":50}]` (100% reais); `DemoDataBanner` removido do layout; testes do banner + data-origin a verde (10/10).
+- Fase 3 concluída: `src/lib/melhores.ts` (`getTopScrapeProperties` + `groupTopByDistrict`); página `/melhores` (top 3 por distrito, estado "sem dados" para distritos vazios); link no Navbar; teste do agrupamento (3 testes).
+- `npm run verify` verde: 32 ficheiros, 226 testes; build OK; rota `/melhores` gerada.
+
+❌ O que esta mal / riscos
+- N = 50 aceito como suficiente (decisão do dono); bancos/leilões ainda sem ingest (bloqueado, §7 DECISIONS_PENDING).
+
+🆕 O que deves acrescentar — propostas (nao implementadas)
+- Desbloquear ingest bancos/leilões para escalar N acima de 50.
+
+🔧 Decisoes que tomei por defeito
+- Demo eliminada por **hard delete** (não soft), conforme decisão não negociável do dono.
+
+👤 Fila para o dono (nao bloqueia o ciclo)
+1. Desbloquear interop dos scrapers bancos/leilões (ver §7 DECISIONS_PENDING.md).
+
+📊 Numeros
+- Live: 50 imóveis reais (`data_origin='scrape'`, Martelo.pt) — demo: 0.
+- Suite: `npm run verify` verde (32 ficheiros, 226 testes).
+
+▶ Proxima iteracao: Fase 4 — verificação final (`npm run verify`, `scripts/verify-production.ts`, `npx vercel --prod`).
+
+⚠ PENDENTE: rotacao do token Turso (hash 1bb0c1abb032 = vazado). Gate final: nao esta feito.
+
 ## Iteração 7 – FASE 1 (WP7) + FASE 2 parcial (2026-11-04)
 - v2 como motor único: legacy `@deprecated`, 5 `it.fails` migrados, `MAX_IT_FAILS` = 1.
 - `ValuationCard` consome v2; `/api/valuation` usa v2; `avm.ts` removido.
