@@ -1,64 +1,51 @@
 # Decisões pendentes (bloqueadores humanos)
 
-## 1. Migrações na live (0002/0003/0004)
-- **O que fazer:** aplicar `scripts/sql/0002_*.sql`, `0003_*.sql`, `0004_*.sql` na base Turso.
-- **Comando:** `turso db shell radarpro2 < scripts/sql/0002_*.sql` (com fork prévio).
-- **Decisão recomendada:** aplicar todas de uma vez, com fork de backup.
-- **Risco se não fizer:** app quebra em produção (colunas parish, area_sqm, data_origin, opening_bid não existem na live).
+**Última atualização:** 2026-11-05
+**Estado da `fase2-dev`:** fechada tecnicamente; bloqueada por decisões de produto.
 
-## 2. auction_end_date na live
-- **O que fazer:** `UPDATE properties SET auction_end_date = auction_end_date * 1000 WHERE auction_end_date IS NOT NULL AND auction_end_date < 1000000000000;`
-- **Decisão recomendada:** aplicar após fork.
-- **Risco:** contagem regressiva de leilões errada.
+---
 
-## 3. SHOW_SEED_DATA
+## 🔴 BLOQUEADORES DE RELEASE (impedem merge para `main`)
+
+### 1. Live apenas com dados demo — BLOQUEADOR DE PRODUTO
+
+- **Estado:** 200/200 propriedades com `data_origin='demo'`. Distribuição: `agencia` 35, `banco` 56, `leilao` 36, `portal` 73.
+- **Causa:** os 40 scrapes do Martelo.pt referidos na análise inicial nunca chegaram à live. Os IDs `gen-*` na homepage são dados demo gerados, não scrape.
+- **Decisão necessária (humano):**
+  - **(a)** Lançar pipeline de ingest em produção (requer chave Martelo.pt + uso comercial confirmado).
+  - **(b)** Aceitar live só com demo + `SHOW_SEED_DATA=true` + banner visível "dados de demonstração".
+  - **(c)** Adiar merge para `main` até o ingest real estar operacional.
+- **Recomendação:** **(c)**. O site em `radar-pro2.vercel.app` mostra imóveis fictícios ao público.
+- **Risco se não decidir:** merge para `main` põe demo em produção sem aviso ao utilizador.
+
+### 2. `SHOW_SEED_DATA` em produção
+
 - **O que fazer:** definir na Vercel (Production + Preview).
-- **Decisão recomendada:** `false` (demo não visível em produção).
-- **Risco:** demo data visível publicamente se `true`.
+- **Recomendação:** se decisão §1 for (c) ou (b), `true` com banner. Se (a) com scrape real, `false`.
+- **Risco:** com `true` sem banner, demo data visível publicamente sem aviso. Com `false` e sem scrape, site fica vazio.
 
-## 4. CRON_SECRET
-- **O que fazer:** definir na Vercel (Production + Preview).
-- **Decisão recomendada:** definir e testar com `curl`.
-- **Risco:** crons recusam acesso (401).
+### 3. Chave API Martelo.pt + uso comercial
 
-## 5. Chave Martelo.pt + uso comercial
 - **O que fazer:** obter chave API e confirmar uso comercial permitido.
-- **Decisão recomendada:** contactar Martelo.pt.
-- **Risco:** scraping deixa de funcionar.
+- **Recomendação:** contactar Martelo.pt antes de escalar ingest.
+- **Risco:** scraping deixa de funcionar se ToS não permitir uso comercial.
 
-## 6. Portais "depende do dono"
-- **O que fazer:** decidir Imovirtual, e-Leilões, Leilosoc, Bidizi, Santander, Caixa Imobiliário, Novo Banco.
-- **Decisão recomendada:** confirmar ToS antes de scraping.
-- **Risco:** risco legal.
+### 4. Portais "depende do dono"
 
-## 7. Ampliação da tabela de mercado
-- **O que fazer:** popular `MARKET_DATA_DISTRICT` com ~308 municípios (INE / Confidencial Imobiliário).
-- **Decisão recomendada:** incremental, começar pelos 25 existentes + distritos principais.
-- **Risco:** 90% do feed sem avaliação.
+- **O que fazer:** decidir sobre Imovirtual, e-Leilões, Leilosoc, Bidizi, Santander, Caixa Imobiliário, Novo Banco.
+- **Recomendação:** confirmar ToS antes de scraping.
+- **Risco:** risco legal se ToS proibir.
 
-## Ordem das migrações (executar sequencialmente)
-1. `turso db fork radarpro2 radarpro2-backup-<data>`
-2. `turso db shell radarpro2 < scripts/sql/0002_add_property_valuation_inputs.sql`
-3. `turso db shell radarpro2 < scripts/sql/0003_add_data_origin.sql`
-4. `turso db shell radarpro2 < scripts/sql/0004_add_opening_bid.sql`
-5. `turso db shell radarpro2 < scripts/sql/0005_fix_auction_end_date.sql`
-6. Verificar: `turso db shell radarpro2 "PRAGMA table_info(properties);"` (não usar `.schema`)
-7. Redeploy na Vercel.
+### 5. Reclassificar 14 `mixed`
 
-## Verificação do schema (correta)
-Usar `PRAGMA table_info(properties)` — `.schema` mostra o SQL original de criação, não as colunas adicionadas por ALTER TABLE.
+- **O que fazer:** 14 propriedades com `asset_class='mixed'` no pipeline (não na BD live).
+- **Comando:** correr worker de classificação com `classify.ts` melhorado.
+- **Risco:** 14/200 = 7% do feed sem avaliação por design.
 
-## 8. Token Turso
-- **O que fazer:** rodar token vazado (fingerprint `1bb0c1abb032`).
-- **Decisão recomendada:** rodar antes de qualquer deploy público.
-- **Risco:** acesso não autorizado à BD.
+### 6. `0006_seed_market_data_district.sql` na live
 
-## 9. Medicoes H contra live (confirmado 2026-11-04)
-- **H.1:** Imagens: 63/200 com imagem (31.5%), 137 sem (68.5%). Fonte: scripts/report-backfill.ts.
-- **H.2:** 0 scrape sem score (score IS NULL AND data_origin='scrape'; -> 0 rows).
-- **H.3:** 14 propriedades asset_class='mixed' (NOT 0). Reclassificar para review (nao alterar live diretamente).
-- **Base:** libsql://radarpro2-smpsandro1239.aws-eu-west-1.turso.io.
-
-## 10. Seed market data district
-- **O que fazer:** popular scripts/sql/0006_seed_market_data_district.sql na live.
-- **Comando:** npx tsx scripts/apply-migration.ts scripts/sql/0006_seed_market_data_district.sql --dry-run / --apply.
+- **O que fazer:** popular com dados INE (20 distritos preparados em `scripts/sql/0006_seed_market_data_district.sql`) e aplicar.
+- **Comando (após popular):**
+  ```bash
+  npx tsx scripts/apply-migration.ts scripts/sql/0006_seed_market_data_district.sql --dry-run
+  npx tsx scripts/apply-migration.ts scripts/sql/0006_seed_market_data_district.sql --apply
