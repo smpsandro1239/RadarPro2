@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
+import NotificationBell from "@/components/NotificationBell";
 
 const navLinks = [
   { href: "/", label: "Início" },
@@ -30,6 +31,7 @@ export default function Navbar() {
 
         {/* Desktop nav */}
         <div className="hidden lg:flex items-center gap-1">
+          <NotificationBell />
           {navLinks.slice(0, 6).map((link) => (
             <a
               key={link.href}
