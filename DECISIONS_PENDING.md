@@ -67,6 +67,7 @@
 - **Nova tentativa 2 (Fase 1, task atual, segunda tentativa): `scripts/ingest-banks-standalone.ts` com `AbortController` (20s) + retry com backoff (3x, 2s/4s/8s) + rate limit (1 pedido/5s) + limit=5.**
   - Resultado: `--limit 5 --dry-run` → **HTTP 404** (tentativa 1) → **HTTP 429** (tentativa 2) → **falhou 2×** → avanço sem mais tentativas automáticas.
 - **Risco atualizado:** bancos/leilões não ingeridos; live mantém 50 Martelo (scrape) — sem demo.
+- **Atualização (2026-11-05, Fase 5): bancos — URLs não verificadas manualmente neste ciclo; status mantém-se bloqueado para escalar além de Martelo+Imovirtual+Casa Sapo (N=173).
 
 ### 11. Fontes adicionais — Casa Sapo / Imovirtual / e-Leiões (para escalar N > 50)
 
@@ -89,6 +90,7 @@
 - **O que fazer:** definir `INNGEST_EVENT_KEY` e `INNGEST_SIGNING_KEY` (dashboard Inngest / CLI).
 - **Comando:** `npx inngest-cli dev` (dev server local na porta 8288; função `daily-ingest` registada e responde em `/functions`).
 - **Estado:** keys não encontradas no repositório (`.env.local`) → função `daily-ingest` criada mas **não ativada em produção**.
+- **Atualização (2026-11-05, Fase 6): dev server `inngest-cli dev` iniciado (portas 8288/8290); arranque OK; invocação manual não concluída antes do encerramento do processo local.
 - **Risco:** cron 0 6 * * * sem funcionar até keys configuradas.
 
 ### 10. Dados reais insuficientes (N < 100) — DEMO MANTIDO TEMPORARIAMENTE
