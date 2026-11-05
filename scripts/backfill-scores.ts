@@ -6,7 +6,6 @@ import { createClient } from "@libsql/client";
 import { existsSync } from "node:fs";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import path from "node:path";
-import { calculateMaxBid } from "../src/lib/auction-calculator";
 import { evaluateProperty } from "../src/lib/valuation/index";
 import type { AssetClass, PropertyInput } from "../src/lib/valuation/types";
 
@@ -48,66 +47,50 @@ async function main(args: string[]): Promise<number> {
 
   for (const row of targets) {
     try {
-      let newScore: number | null = null;
-      let newMarketValue: number | null = null;
+      const input: PropertyInput = {
+        id: row.id ? String(row.id) : null,
+        title: str(row.title),
+        type: str(row.type),
+        assetClass: (row.asset_class ? String(row.asset_class) : null) as AssetClass | null,
+        district: str(row.district),
+        municipality: str(row.municipality),
+        parish: str(row.parish),
+        price: num(row.price),
+        sqm: num(row.area_sqm),
+        floor: null,
+        totalFloors: null,
+        orientation: null,
+        condition: null,
+        energyCert: null,
+        hasGarage: false,
+        hasElevator: false,
+        hasView: false,
+        isAuction: row.is_auction === 1,
+        auctionType: str(row.auction_type),
+        currentBid: num(row.current_bid),
+        marketValue: num(row.market_value),
+        auctionHouse: str(row.auction_house),
+        vpt: num(row.vpt),
+        condominiumDebt: num(row.condominium_debt) ?? 0,
+        renovationEstimate: num(row.renovation_estimate) ?? 0,
+        embargos: num(row.embargos),
+        hipotecas: num(row.hipotecas),
+        cargasTotal: num(row.cargas_total),
+        pdmStatus: str(row.pdm_status),
+        infrastructure: str(row.infrastructure),
+        topography: null,
+        roadFrontageMeters: null,
+        landUse: null,
+        annualIncome: num(row.annual_income),
+        capRate: null,
+        annualRent: null,
+        yieldPct: null,
+        marketCapRate: null,
+      };
 
-      if (row.is_auction) {
-        const result = calculateMaxBid({
-          marketValue: num(row.market_value) ?? 0,
-          currentBid: num(row.current_bid) ?? 0,
-          auctionHouse: str(row.auction_house) ?? undefined,
-          vpt: num(row.vpt) ?? undefined,
-          condominiumDebt: num(row.condominium_debt) ?? 0,
-          renovationEstimate: num(row.renovation_estimate) ?? 0,
-          targetMargin: 15,
-        });
-        newScore = result.maxBid > 0 ? result.maxBid : null;
-        newMarketValue = result.marketValue;
-      } else {
-        const input: PropertyInput = {
-          id: row.id ? String(row.id) : null,
-          title: str(row.title),
-          type: str(row.type),
-          assetClass: (row.asset_class ? String(row.asset_class) : null) as AssetClass | null,
-          district: str(row.district),
-          municipality: str(row.municipality),
-          parish: str(row.parish),
-          price: num(row.price),
-          sqm: num(row.area_sqm),
-          floor: null,
-          totalFloors: null,
-          orientation: null,
-          condition: null,
-          energyCert: null,
-          hasGarage: false,
-          hasElevator: false,
-          hasView: false,
-          isAuction: false,
-          auctionType: str(row.auction_type),
-          currentBid: num(row.current_bid),
-          marketValue: num(row.market_value),
-          auctionHouse: str(row.auction_house),
-          vpt: num(row.vpt),
-          condominiumDebt: num(row.condominium_debt) ?? 0,
-          renovationEstimate: num(row.renovation_estimate) ?? 0,
-          embargos: num(row.embargos),
-          hipotecas: num(row.hipotecas),
-          cargasTotal: num(row.cargas_total),
-          pdmStatus: str(row.pdm_status),
-          infrastructure: str(row.infrastructure),
-          topography: null,
-          roadFrontageMeters: null,
-          landUse: null,
-          annualIncome: num(row.annual_income),
-          capRate: null,
-          annualRent: null,
-          yieldPct: null,
-          marketCapRate: null,
-        };
-        const result = evaluateProperty(input);
-        newScore = result.score;
-        newMarketValue = result.valuation;
-      }
+      const result = row.is_auction ? evaluateProperty({ ...input, isAuction: true }) : evaluateProperty(input);
+      const newScore = result.score;
+      const newMarketValue = row.is_auction ? num(result.breakdown["marketValue"]) : result.valuation;
 
       if (newScore !== null && (newScore !== num(row.score) || newMarketValue !== num(row.market_value))) {
         if (dryRun) {
