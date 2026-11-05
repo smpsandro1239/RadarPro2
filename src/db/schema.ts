@@ -125,3 +125,11 @@ export const savedProperties = sqliteTable("saved_properties", {
   propertyId: text("property_id").notNull(),
   createdAt: integer("created_at", { mode: "timestamp" }).$defaultFn(() => new Date()),
 });
+
+export const alerts = sqliteTable("alerts", {
+  id: text("id").primaryKey(),
+  userId: text("user_id").notNull(),
+  propertyId: text("property_id").notNull(),
+  createdAt: integer("created_at", { mode: "timestamp" }).$defaultFn(() => new Date()),
+  readAt: integer("read_at", { mode: "timestamp" }),
+});
