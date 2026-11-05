@@ -42,3 +42,24 @@ Auditoria executada em live: `data_origin='scrape' AND is_active=1`.
 ## Próximo passo
 
 Fase 3: resolver leilões (is_auction=50 confirmado OK); Fase 4: bancos (CGD 200, parser sem resultados); Fase 5: Inngest.
+
+## Qualidade por fonte (2026-11-05, Fase 1.1)
+
+| Fonte | Total | Com area | % com area | Com score | Com imagem | % com imagem |
+|---|---:|---:|---:|---:|---:|---:|
+| Martelo.pt | 50 | 50 | 100% | 1 | 0 | 0% |
+| Imovirtual | 95 | 0 | 0% | 0 | 0 | 0% |
+| Casa Sapo | 28 | 0 | 0% | 0 | 20 | 71% |
+
+**Conclusao Fase 1.1:** as fontes sem area sao Imovirtual (95) e Casa Sapo (28) = **123 imoveis (71%) sem area** — exatamente os que impedem o motor v2 de avaliar. Apenas Martelo tem area em 100%.
+
+## Verificacao de paginas de detalhe (Fase 1.2)
+
+- Imovirtual: URLs sem area -> HEAD/fetch devolveu 404 para as amostras testadas (listings expirados/removidos).
+- Casa Sapo: URLs sem area -> HEAD devolveu 200 (ativas).
+
+## Distribuicao leilao vs venda direta por fonte (Fase 1.3)
+
+- Martelo.pt: is_auction=1 -> **50 leiloes** (100% do total de leiloes).
+- Casa Sapo: is_auction=0 -> 28 vendas.
+- Imovirtual: is_auction=0 -> 95 vendas.
