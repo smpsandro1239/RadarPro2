@@ -4,9 +4,9 @@
  *   - Estamo: feed RSS oficial (https://www.estamo.pt/imoveis/feed/)
  *
  * Nao ha recolha de HTML nem contorno de proteccoes. Limite pequeno, ritmo lento.
- * Por omissao nao escreve nada; `--write` grava apenas na base local (recusa BD remota).
+ * Por omissao nao escreve nada; `--write` grava apenas na base local (recusa BD remota; `--confirm-remote-write` para intencional na live).
  *
- *   node scripts/scrape-dry-run.ts --limit 100 --delay 1500 [--write]
+ *   node scripts/scrape-dry-run.ts --limit 100 --delay 1500 [--write] [--confirm-remote-write]
  */
 import { createClient } from "@libsql/client";
 import { registerHooks } from "node:module";
@@ -49,7 +49,7 @@ type Evaluated = {
   market: MarketData | null;
 };
 
-type Options = { limit: number; delayMs: number; write: boolean };
+type Options = { limit: number; delayMs: number; write: boolean; confirmRemoteWrite: boolean };
 
 function parseArgs(args: string[]): Options {
   const positive = (name: string, fallback: number): number => {
@@ -62,6 +62,7 @@ function parseArgs(args: string[]): Options {
     limit: positive("--limit", 20),
     delayMs: positive("--delay", 2000),
     write: args.includes("--write"),
+    confirmRemoteWrite: args.includes("--confirm-remote-write"),
   };
 }
 
@@ -223,8 +224,8 @@ export async function main(args: string[]): Promise<number> {
   const { detectPlaceholder, extractRssItems, isPropertyEvent, mapMarteloEvent } = await import("../src/lib/martelo-parser.ts");
   const options = parseArgs(args);
   const url = process.env.TURSO_DATABASE_URL ?? `file:${path.join(repoRoot, "local.db")}`;
-  if (options.write && isRemoteDatabaseUrl(url)) {
-    console.error("[RECUSA] --write contra uma base remota.");
+  if (options.write && isRemoteDatabaseUrl(url) && !options.confirmRemoteWrite) {
+    console.error("[RECUSA] --write contra uma base remota. Usa --confirm-remote-write se for intencional.");
     return 1;
   }
 
