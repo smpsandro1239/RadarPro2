@@ -1,8 +1,8 @@
-import { JSDOM } from "jsdom";
+import { parse, type HTMLElement } from "node-html-parser";
 
 export interface HtmlCollection {
   length: number;
-  each: (callback: (index: number, element: Element) => void) => HtmlCollection;
+  each: (callback: (index: number, element: HTMLElement) => void) => HtmlCollection;
   first: () => HtmlCollection;
   find: (selector: string) => HtmlCollection;
   text: () => string;
@@ -11,10 +11,10 @@ export interface HtmlCollection {
 
 export interface CheerioLike {
   (selector: string): HtmlCollection;
-  (element: Element): HtmlCollection;
+  (element: HTMLElement): HtmlCollection;
 }
 
-function wrap(elements: Element[]): HtmlCollection {
+function wrap(elements: HTMLElement[]): HtmlCollection {
   const collection: HtmlCollection = {
     length: elements.length,
     each(callback) {
@@ -25,31 +25,30 @@ function wrap(elements: Element[]): HtmlCollection {
       return wrap(elements.slice(0, 1));
     },
     find(selector) {
-      const found: Element[] = [];
+      const found: HTMLElement[] = [];
       for (const element of elements) {
-        found.push(...Array.from(element.querySelectorAll(selector)));
+        found.push(...element.querySelectorAll(selector));
       }
       return wrap(found);
     },
     text() {
-      return elements.map((element) => element.textContent ?? "").join("");
+      return elements.map((element) => element.text).join("");
     },
     attr(name) {
       const element = elements[0];
-      return element ? element.getAttribute(name) : null;
+      const value = element?.getAttribute(name);
+      return value === undefined ? null : value;
     },
   };
   return collection;
 }
 
-/** Carrega HTML via jsdom (CJS-safe) mantendo uma API de selecao estilo `$`. */
+/** Carrega HTML via node-html-parser (CJS-safe) mantendo uma API de selecao estilo `$`. */
 export function loadHtml(html: string): CheerioLike {
-  const dom = new JSDOM(html);
-  const document = dom.window.document;
-  const query = (selector: string): HtmlCollection =>
-    wrap(Array.from(document.querySelectorAll(selector)));
-  const single = (element: Element): HtmlCollection => wrap([element]);
-  const $: CheerioLike = (argument: string | Element) =>
+  const root = parse(html);
+  const query = (selector: string): HtmlCollection => wrap(root.querySelectorAll(selector));
+  const single = (element: HTMLElement): HtmlCollection => wrap([element]);
+  const $: CheerioLike = (argument: string | HTMLElement) =>
     typeof argument === "string" ? query(argument) : single(argument);
   return $;
 }
