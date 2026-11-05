@@ -38,14 +38,14 @@ describe("dados de mercado (tabela real)", () => {
     expect(market).toEqual({ pricePerSqm: 3610, source: "INE", asOf: "2026-05", level: "municipality" });
   });
 
-  it("nao devolve nada para um municipio sem mediana", () => {
-    expect(
-      findMarketData({
-        district: "Porto",
-        municipality: "Póvoa de Varzim",
-        propertyType: "apartment",
-      }),
-    ).toBeNull();
+  it("usa o distrito como fallback quando o municipio nao tem mediana", () => {
+    const market = findMarketData({
+      district: "Porto",
+      municipality: "Póvoa de Varzim",
+      propertyType: "apartment",
+    });
+    expect(market?.level).toBe("district");
+    expect(market?.pricePerSqm).toBe(3900);
   });
 
   it("tem tabelas separadas para apartamento, terreno urbano e rustico", () => {
@@ -60,9 +60,9 @@ describe("dados de mercado (tabela real)", () => {
     ).toBeNull();
   });
 
-  it("a tabela de distrito esta vazia: sem fonte oficial carregada", () => {
-    expect(MARKET_DATA_DISTRICT).toEqual([]);
-    expect(findDistrictMarketData("Porto", "apartment")).toBeNull();
+  it("a tabela de distrito passou a ter medianas por distrito (INE)", () => {
+    expect(MARKET_DATA_DISTRICT.length).toBeGreaterThanOrEqual(18);
+    expect(findDistrictMarketData("Porto", "apartment")).not.toBeNull();
   });
 
   it("usa a linha de distrito quando existe (tabela de teste)", () => {
@@ -111,7 +111,7 @@ describe("motor de avaliacao com a tabela real de mercado", () => {
     expect(result.breakdown["level"]).toBe("municipality");
   });
 
-  it("nao avalia sem dados de mercado para a zona", () => {
+  it("avalia com o fallback de distrito quando o municipio nao tem mediana", () => {
     const result = evaluateProperty({
       id: "test-3",
       title: "Apartamento",
@@ -121,9 +121,9 @@ describe("motor de avaliacao com a tabela real de mercado", () => {
       sqm: 100,
       price: 200000,
     });
-    expect(result.valuation).toBeNull();
-    expect(result.score).toBeNull();
-    expect(result.warnings).toContain("Sem dados de mercado para a zona");
+    expect(result.valuation).toBe(390000);
+    expect(result.score).toBeGreaterThan(0);
+    expect(result.warnings).not.toContain("Sem dados de mercado para a zona");
   });
 
   it("nao avalia sem area", () => {

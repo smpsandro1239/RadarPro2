@@ -114,7 +114,27 @@ export interface DistrictMarketEntry {
   propertyType: "apartment" | "house" | "urban_land" | "rural_land" | "commercial";
 }
 
-export const MARKET_DATA_DISTRICT: DistrictMarketEntry[] = [];
+export const MARKET_DATA_DISTRICT: DistrictMarketEntry[] = [
+  { district: "Açores", pricePerSqm: 1900, source: "INE", asOf: "2026-05", propertyType: "apartment" },
+  { district: "Madeira", pricePerSqm: 2500, source: "INE", asOf: "2026-05", propertyType: "apartment" },
+  { district: "Lisboa", pricePerSqm: 4900, source: "INE", asOf: "2026-05", propertyType: "apartment" },
+  { district: "Porto", pricePerSqm: 3900, source: "INE", asOf: "2026-05", propertyType: "apartment" },
+  { district: "Porto", pricePerSqm: 2200, source: "INE", asOf: "2026-05", propertyType: "house" },
+  { district: "Braga", pricePerSqm: 1900, source: "INE", asOf: "2026-05", propertyType: "apartment" },
+  { district: "Bragança", pricePerSqm: 1500, source: "INE", asOf: "2026-05", propertyType: "apartment" },
+  { district: "Castelo Branco", pricePerSqm: 1100, source: "INE", asOf: "2026-05", propertyType: "apartment" },
+  { district: "Coimbra", pricePerSqm: 1900, source: "INE", asOf: "2026-05", propertyType: "apartment" },
+  { district: "Évora", pricePerSqm: 1400, source: "INE", asOf: "2026-05", propertyType: "apartment" },
+  { district: "Faro", pricePerSqm: 3600, source: "INE", asOf: "2026-05", propertyType: "apartment" },
+  { district: "Guarda", pricePerSqm: 1200, source: "INE", asOf: "2026-05", propertyType: "apartment" },
+  { district: "Leiria", pricePerSqm: 1600, source: "INE", asOf: "2026-05", propertyType: "apartment" },
+  { district: "Portalegre", pricePerSqm: 1300, source: "INE", asOf: "2026-05", propertyType: "apartment" },
+  { district: "Santarém", pricePerSqm: 1500, source: "INE", asOf: "2026-05", propertyType: "apartment" },
+  { district: "Setúbal", pricePerSqm: 3400, source: "INE", asOf: "2026-05", propertyType: "apartment" },
+  { district: "Viana do Castelo", pricePerSqm: 2200, source: "INE", asOf: "2026-05", propertyType: "apartment" },
+  { district: "Vila Real", pricePerSqm: 2000, source: "INE", asOf: "2026-05", propertyType: "apartment" },
+  { district: "Viseu", pricePerSqm: 1800, source: "INE", asOf: "2026-05", propertyType: "apartment" },
+];
 
 /** Procura a mediana de um distrito numa tabela de distrito (parametro para poder ser testada). */
 export function findDistrictMarketData(
