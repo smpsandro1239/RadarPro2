@@ -174,6 +174,13 @@
 - F.2: `npx tsx scripts/verify-production.ts https://radar-pro2.vercel.app` → `/`, `/oportunidades`, `/leiloes` → 200 OK.
 - F.3/F.5/F.6: esta secção actualizada + commit `chore(release): escalar dados reais fase2-dev`.
 
+### Bloco C — Testar Inngest localmente — ✅ PARCIAL
+- C.1: `npx inngest-cli --version` → 1.49.0.
+- C.2: dev server Inngest (porta 8288) + Next dev (porta 3000) → servidor responde 200; `/api/inngest` do Next → 500 (intermitente).
+- C.3: endpoint `/functions` do Inngest dev → 200 (função `daily-ingest` registada).
+- C.4: invocação manual via REST → `POST /v1/runs` → 404 (endpoint não localizado).
+- C.7 commit: `docs(inngest): test daily-ingest localmente, keys pendentes`.
+
 ### Estado final (tarefa atual — desbloquear e escalar)
 - Live: `data_origin` = `[{"demo":200},{"scrape":45}]` — N final = 45 (Martelo.pt; API ~45 eventos acessíveis). Reclassificação `mixed` aplicada (13 reclassificados; mixed 22→9, urban_land 18, garage 20).
 - Fontes reais ativas: 1 (Martelo.pt). Bancos/leilões: bloqueados tecnicamente (interop).
