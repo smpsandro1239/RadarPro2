@@ -37,6 +37,16 @@ export default function ComparadorPage() {
       .catch(() => setLoading(false));
   }, []);
 
+  useEffect(() => {
+    const ids = (new URLSearchParams(window.location.search).get("ids") ?? "")
+      .split(",")
+      .map((s) => s.trim())
+      .filter(Boolean);
+    if (ids.length === 0) return;
+    const found = properties.filter((p) => ids.includes(p.id));
+    if (found.length > 0) setSelectedIds(found.map((p) => p.id));
+  }, [properties]);
+
   const selected = properties.filter((p) => selectedIds.includes(p.id));
   const available = properties.filter(
     (p) => !selectedIds.includes(p.id) && p.title.toLowerCase().includes(searchQuery.toLowerCase())

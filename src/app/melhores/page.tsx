@@ -111,8 +111,8 @@ export default async function MelhoresPage({ searchParams }: { searchParams: Pro
               const discount = prop.discountPct === null ? null : -prop.discountPct;
               const rank = (page - 1) * PAGE_SIZE + i + 1;
               return (
-                <li key={prop.id}>
-                  <Link href={`/imovel/${prop.id}`} className="flex items-center gap-4 bg-white border rounded-xl p-3 hover:shadow-lg transition">
+                <li key={prop.id} className="flex items-center gap-4">
+                  <Link href={`/imovel/${prop.id}`} className="flex items-center gap-4 flex-1 min-w-0">
                     <div className="w-8 text-center font-bold text-lg text-primary">{rank}</div>
                     <div className="w-16 h-12 bg-slate-200 rounded overflow-hidden relative flex-shrink-0">
                       <PropertyImage src={images} alt={prop.title} fill className="object-cover" />
@@ -130,6 +130,9 @@ export default async function MelhoresPage({ searchParams }: { searchParams: Pro
                         {formatOptional(discount, "%")} · {formatScoreOutOf100(prop.score)}
                       </div>
                     </div>
+                  </Link>
+                  <Link href={`/comparador?ids=${prop.id}`} className="flex-shrink-0 text-sm font-bold text-primary hover:underline px-2">
+                    Comparar
                   </Link>
                 </li>
               );
@@ -157,6 +160,13 @@ export default async function MelhoresPage({ searchParams }: { searchParams: Pro
             typeMap.set(key, bucket);
           }
           const typeList = [...typeMap.entries()];
+          const valid = items.filter((p) => p.score !== null);
+          const agg = valid.length > 0 ? {
+            n: valid.length,
+            avgPrice: valid.reduce((s, p) => s + p.price, 0) / valid.length,
+            avgScore: valid.reduce((s, p) => s + (p.score ?? 0), 0) / valid.length,
+            avgDiscount: valid.reduce((s, p) => s + (p.discountPct ?? 0), 0) / valid.length,
+          } : null;
           return (
             <section key={district}>
               <h2 className="text-2xl font-bold mb-4 flex items-center gap-2">
@@ -166,6 +176,12 @@ export default async function MelhoresPage({ searchParams }: { searchParams: Pro
                   {items.length > 0 ? `${items.length} no top ${LIMIT_PER_DISTRICT}` : "sem dados"}
                 </span>
               </h2>
+
+              {agg && items.length > 0 && (
+                <p className="mb-4 text-sm text-secondary">
+                  Média dos {items.length} rankeáveis: {formatEuros(agg.avgPrice)} · desconto médio {formatOptional(agg.avgDiscount, "%")} · score médio {formatScoreOutOf100(agg.avgScore)}
+                </p>
+              )}
 
               {items.length === 0 ? (
                 <div className="border rounded-xl p-6 text-center text-secondary">
@@ -181,8 +197,8 @@ export default async function MelhoresPage({ searchParams }: { searchParams: Pro
                           const images = imagesOf(prop);
                           const discount = prop.discountPct === null ? null : -prop.discountPct;
                           return (
-                            <li key={prop.id}>
-                        <Link href={`/imovel/${prop.id}`} className="flex items-center gap-4 bg-white border rounded-xl p-3 hover:shadow-lg transition">
+                            <li key={prop.id} className="flex items-center gap-4">
+                        <Link href={`/imovel/${prop.id}`} className="flex items-center gap-4 flex-1 min-w-0">
                           <div className="w-8 text-center font-bold text-lg text-primary">{i + 1}</div>
                           <div className="w-16 h-12 bg-slate-200 rounded overflow-hidden relative flex-shrink-0">
                             <PropertyImage src={images} alt={prop.title} fill className="object-cover" />
@@ -200,6 +216,9 @@ export default async function MelhoresPage({ searchParams }: { searchParams: Pro
                               {formatOptional(discount, "%")} · {formatScoreOutOf100(prop.score)}
                             </div>
                           </div>
+                        </Link>
+                        <Link href={`/comparador?ids=${prop.id}`} className="flex-shrink-0 text-sm font-bold text-primary hover:underline px-2">
+                          Comparar
                         </Link>
                       </li>
                     );
