@@ -79,3 +79,11 @@ Fase 3: resolver leilões (is_auction=50 confirmado OK); Fase 4: bancos (CGD 200
 
 - Area >= 80%: **ATINGIDO** (100% em 65).
 - Score >= 80%: **NAO ATINGIDO** (24,6%) — bloqueador: market_value ausente para a maioria dos distritos.
+
+## Causa raiz dos imoveis sem score (Fase 1.3)
+
+- Imovirtual: 0 com area; 95 listings sem area (na maior parte inacessiveis/404).
+- Casas Sapo: 28 sem area; 15 recuperados via re-scrape; 13 sem area (eliminados na Fase 3 desta task).
+- Os 49 restantes sem score sao do Martelo (50 -> 1 com score) + imoveis com market_value ausente.
+
+Amostra sem score (market_value = null em todos): tipos variados (Moradia, Prédio, Rúcio, Quinta/Misto, Apartamento) nos concelhos de Leiria, Viseu, Guarda, Coimbra.
