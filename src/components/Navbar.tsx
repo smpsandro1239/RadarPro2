@@ -8,6 +8,7 @@ const navLinks = [
   { href: "/", label: "Início" },
   { href: "/mapa", label: "Mapa" },
   { href: "/oportunidades", label: "Oportunidades" },
+  { href: "/melhores", label: "Melhores" },
   { href: "/favoritos", label: "Favoritos" },
   { href: "/comparador", label: "Comparar" },
   { href: "/alertas", label: "Alertas" },
