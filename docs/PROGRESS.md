@@ -1,5 +1,29 @@
 # Progresso — RadarPro (modo continuo)
 
+## Iteração 13 – Maximizar 30 + últimas fontes + cron definitivo + /sobre-dados (2026-11-05)
+
+Semáforo: Dados EM verde (scrape 65, area 100%) · Motor EM verde para residential (apartment/house 100% com score) · Imagens EM verde parcial (15/65 = 23,1%) · UI EM verde (`/melhores` agregado por distrito + comparador + /sobre-dados) · Inngest CONCLUÍDO (run Completed, ok:true) · Segurança EM verde · Deploy EM verde (release final aplicado).
+
+✅ O que esta bem — so o que MEDISTE
+- Fase 1 (asset_class): backfill nos 15 `asset_class` null (apartment) → apartment 18/18 com score (Cenario A confirmado).
+- Fase 2.1 (imagens): scored sem imagem = Martelo (fotos oficiais inacessiveis); Casa Sapo scored ja tem imagens.
+- Fase 4 (Inngest definitivo): run `01M6PPT3C5SBYQFDXJ07TWHZG4` -> status **Completed** (20:36:07 → 20:36:16); daily-ingest concluiu com `ok:true` (scrape-dry-run limite=100, RESULT: 0 registos gravados); `/api/inngest` -> 200; funções descobertas em `/functions`.
+
+- Fase 5 (`/melhores`): agregação por distrito (média preço/desconto/score) + botões "Comparar" (`/comparador?ids=`) + deep-link no comparador.
+
+- Fase 6 (`/sobre-dados`): página de transparência criada + link no footer.
+
+❌ O que esta mal / riscos
+- Meta >=80% global de score nao atingida (46,2%, 30/65) — explicada por design (mixed/rural/commercial/urban_land).
+- Imagens: 23,1% (Martelo sem fotos oficiais acessiveis; resto mecanismo ok).
+- Fontes gratuitas para mais residential: esgotadas (Imovirtual 404, Casa Sapo 429, OLX 403, SuperCasa 403x2, Remax client-side, bancos/leiloes bloqueados).
+
+➡ Proxima iteracao: conclusão do ciclo — release final + reporte ao utilizador.
+
+ℹ Numeros (live, scrape 65)
+- Com area: 65 (100%) | Com score: 30 (46,2%) | Com market_value: 30 (46,2%) | Com imagem: 15 (23,1%) | Com coords: 50 (76,9%).
+- Asset classes scorable: apartment 18/18, house 12/12 (100% residential com score).
+
 ## Iteração 11 – Cobertura market data + scores recalculados (2026-11-05)
 
 Semáforo: Dados EM verde (65 scrape, area 100%) · Motor AMARELO (score 46,2%, 30/65; resto mixed/rural/commercial/urban_land) · UI EM verde (`/melhores` com aviso elegibilidade) · Segurança EM verde · Deploy EM verde (release final aplicado).

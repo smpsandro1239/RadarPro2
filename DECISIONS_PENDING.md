@@ -123,6 +123,7 @@ Distribuição real (scrape 65 ativo): apartment 3 | house 12 | mixed 8 | rural_
 - **Comando:** `npx inngest-cli dev` (dev server local na porta 8288; função `daily-ingest` registada e responde em `/functions`).
 - **Estado:** keys não encontradas no repositório (`.env.local`) → função `daily-ingest` criada mas **não ativada em produção**.
 - **Atualização (2026-11-05, Fase 6): dev server `inngest-cli dev` reiniciado; fix aplicado — `INNGEST_DEV=1` no dev server Next (erro "In cloud mode but no signing key found" -> resolvido); `/api/inngest` -> 200; funções descobertas em `/functions` (Daily Ingest Martelo cron 0 6 * * *, Expire Stale, Geocode Missing, Scrape All, Scrape Source, Send Search Alerts); botão Invoke clicado no Daily Ingest Martelo; run não materializado no dashboard (0 runs) — invocação manual não concluída.
+- **Atualização (2026-11-05, Fase 7 — conclusiva): run `01M6PPT3C5SBYQFDXJ07TWHZG4` -> status **Completed** (queued 20:36:07, ended 20:36:16, trigger `inngest/function.invoked`, função Daily Ingest Martelo). daily-ingest concluiu com `ok:true` (`scrape-martelo` step -> `scrape-dry-run --limit 100 --write --confirm-remote-write`; output: Martelo API 100 eventos recebidos, 0 imovéis processados; RESULT: 0 registos gravados). `/api/inngest` -> 200; funções descobertas em `/functions`.
 - **Risco:** cron 0 6 * * * sem funcionar até keys configuradas.
 
 ### 10. Dados reais insuficientes (N < 100) — DEMO MANTIDO TEMPORARIAMENTE
