@@ -53,6 +53,9 @@ export function normalizeProperty(input: unknown): PropertyInput {
     vpt: toNum(g("vpt", "vpt")),
     condominiumDebt: toNum(g("condominiumDebt", "condominium_debt")),
     renovationEstimate: toNum(g("renovationEstimate", "renovation_estimate")),
+    embargos: toNum(g("embargos", "embargos")),
+    hipotecas: toNum(g("hipotecas", "hipotecas")),
+    cargasTotal: toNum(g("cargasTotal", "cargas_total")),
 
     pdmStatus: toStr(g("pdmStatus", "pdm_status")),
     infrastructure: toStr(g("infrastructure", "infrastructure")),

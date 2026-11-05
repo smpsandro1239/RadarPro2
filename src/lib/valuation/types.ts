@@ -62,6 +62,9 @@ export interface PropertyInput {
   vpt: number | null;
   condominiumDebt: number | null;
   renovationEstimate: number | null;
+  embargos: number | null;
+  hipotecas: number | null;
+  cargasTotal: number | null;
 
   pdmStatus: string | null;
   infrastructure: string | null;

@@ -7,6 +7,7 @@
  */
 import { calculateMaxBid } from "@/lib/auction-calculator";
 import type { EngineResult, PropertyInput } from "./types";
+import { calculateCargas, calculateCargasFromProperty } from "./cargas";
 import { downgrade, minConfidence, noValuation } from "./utils";
 
 export function evaluateAuction(p: PropertyInput, base: EngineResult): EngineResult {
@@ -31,6 +32,8 @@ export function evaluateAuction(p: PropertyInput, base: EngineResult): EngineRes
   if (p.renovationEstimate === null) unknown.push("custo de obras");
   if (p.vpt === null) unknown.push("VPT");
 
+  const cargas = calculateCargasFromProperty(p);
+
   const r = calculateMaxBid({
     marketValue,
     currentBid,
@@ -48,6 +51,9 @@ export function evaluateAuction(p: PropertyInput, base: EngineResult): EngineRes
   const warnings = [...base.warnings];
   if (unknown.length > 0) warnings.push(`Custos desconhecidos (assumidos 0): ${unknown.join(", ")}`);
   if (r.currentBidExceedsMax) warnings.push("Lance atual igual ou acima do lance máximo");
+  if (cargas.total !== null && cargas.loadPct !== null && cargas.exceedsAlertThreshold) {
+    warnings.push(`Cargas elevadas: ${cargas.total.toLocaleString("pt-PT")}€ (${cargas.loadPct.toFixed(1)}% do valor)`);
+  }
 
   return {
     valuation: Math.max(0, r.maxBid),
@@ -67,6 +73,9 @@ export function evaluateAuction(p: PropertyInput, base: EngineResult): EngineRes
       marketValue,
       marketValueSource: p.marketValue !== null ? "listing" : `engine:${base.engine}`,
       basePerSqm: base.breakdown["basePerSqm"] ?? null,
+      cargasTotal: cargas.total,
+      cargasLoadPct: cargas.loadPct,
+      cargasExceedsAlert: cargas.exceedsAlertThreshold,
     },
     warnings,
     assumptions: [...base.assumptions],
