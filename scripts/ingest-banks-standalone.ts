@@ -31,25 +31,37 @@ const BANK_SOURCES: { source: string; urlFor: (district: string) => string; sele
   { source: "Caixa Imobiliario", urlFor: (_d: string) => "https://www.caixaimobiliario.pt/comprar/", selector: ".property-card, article.property, .listing-item, .result-item" },
   { source: "Credito Agricola", urlFor: (_d: string) => "https://www.cai.pt/imoveis/", selector: ".property-card, article.property, .listing-item, .result-item" },
   { source: "Novo Banco", urlFor: (_d: string) => "https://www.novobanco.pt/particulares/imoveis/", selector: ".property-card, article.property, .listing-item, .result-item" },
+  { source: "Caixa Geral de Depósitos", urlFor: (_d: string) => "https://www.cgd.pt/imoveis/", selector: ".property-card, article.property, .listing-item, .result-item" },
 ];
 
+const FETCH_TIMEOUT_MS = 20000;
+const FETCH_RETRIES = 3;
+const RETRY_DELAY_MS = 2000;
+const RATE_LIMIT_MS = 5000;
+
 async function fetchHtml(url: string): Promise<string> {
-  const controller = new AbortController();
-  const timeoutId = setTimeout(() => controller.abort(), 10000);
-  try {
-    const res = await fetch(url, {
-      headers: {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-        "Accept-Language": "pt-PT,pt;q=0.9,en;q=0.8",
-      },
-      signal: controller.signal,
-    });
-    if (!res.ok) return "";
-    return await res.text();
-  } finally {
-    clearTimeout(timeoutId);
+  for (let attempt = 1; attempt <= FETCH_RETRIES; attempt++) {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
+    try {
+      const res = await fetch(url, {
+        headers: {
+          "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+          "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+          "Accept-Language": "pt-PT,pt;q=0.9,en;q=0.8",
+        },
+        signal: controller.signal,
+      });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      clearTimeout(timeoutId);
+      return await res.text();
+    } catch (error) {
+      clearTimeout(timeoutId);
+      if (attempt === FETCH_RETRIES) throw error;
+      await new Promise((r) => setTimeout(r, RETRY_DELAY_MS * attempt));
+    }
   }
+  return "";
 }
 
 function parsePrice(text: string): number {
@@ -103,6 +115,8 @@ export async function main(args: string[]): Promise<number> {
   const confirmRemoteWrite = args.includes("--confirm-remote-write");
   const limitIdx = args.indexOf("--limit");
   const limit = limitIdx >= 0 ? Number(args[limitIdx + 1]) || 5 : 5;
+  const sourceIdx = args.indexOf("--source");
+  const sourceFilter = sourceIdx >= 0 ? args[sourceIdx + 1] : null;
 
   const url = process.env.TURSO_DATABASE_URL ?? `file:${path.resolve(process.cwd(), "local.db")}`;
   const isRemote = url.startsWith("libsql://");
@@ -115,7 +129,9 @@ export async function main(args: string[]): Promise<number> {
 
   const listings: BankListing[] = [];
   for (const source of BANK_SOURCES) {
+    if (sourceFilter && source.source !== sourceFilter) continue;
     for (const district of DISTRICTS) {
+      await new Promise((r) => setTimeout(r, RATE_LIMIT_MS));
       const found = await scrapeBank(source.source, district, limit);
       for (const l of found) listings.push(l);
     }
