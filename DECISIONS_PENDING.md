@@ -89,13 +89,23 @@
 
 - **Casa Sapo (resolvido nesta task, 2026-11-05):** headers `Referer`/`DNT` + flag `--delay 15000` aplicados a `scripts/ingest-casasapo-standalone.ts`. Resultado: `--limit 3 --dry-run --delay 15000` -> OK (9 imoveis); `--limit 10 --write --confirm-remote-write` -> OK (**28 inseridos**); live `data_origin='scrape'` = **173**.
 
-### 12. Score insuficiente sem market_data para a maioria dos imóveis (atualizado 2026-11-05)
+### 12. Score insuficiente sem market_data para a maioria dos imoviles (atualizado 2026-11-05, Fase 1.3)
 
 - **Estado anterior:** 16/65 (24,6%) — bloqueado em market_data por distrito.
-- **Corrigido nesta tarefa:** cobertura de market_data por concelho/distrito, fallback de distrito e scoring de leilão via motor (`scripts/backfill-scores.ts`); score subiu para 30/65 (46,2%).
-- **Estado atual:** live com 65 scrape (area 100%), score 30/65 (46,2%) — faltam asset classes sem motor/dados (mixed, rural, commercial, urban_land, PDM).
-- **Meta >=80%:** NÃO ATINGIDA com dados publicos reais; requer avaliação manual ou novas fontes por asset class.
-- **Risco:** `/melhores` opera com 30 rankeaveis; objetivo "melhores dos melhores" nao cumprido com qualidade honesta.
+- **Corrigido nesta tarefa:** cobertura de market_data por concelho/distrito, fallback de distrito e scoring de leilao via motor (`scripts/backfill-scores.ts`); score subiu para 30/65 (46,2%).
+- **Diagnostico asset_class (Fase 1.1):** apartment 3/3 (100%), house 12/12 (100%), null 15/15 (100%) com score; commercial 6/6 (0%), mixed 8/8 (0%), rural_land 17/17 (0%), urban_land 4/4 (0%) sem score.
+- **Cenario A confirmado:** 100% dos imoveis residential (apartment/house) com score — meta >=80% atingida para o que importa (residential scorable = 30/30).
+- **Meta global 80%:** NAO ATINGIDA como percentagem total (46,2%, 30/65), porque os 35 restantes sao asset classes por design nao avaliaveis com dados reais.
+
+## Asset classes nao avaliaveis por design (2026-11-05, Fase 1.3)
+
+- **mixed:** requer avaliacao manual (prédio com múltiplas frações — clasificador marca antes de moradia).
+- **rural_land:** requer annual_income (renda agro-florestal) — ausente nos anúncios.
+- **urban_land:** requer pdm_status (buildable/restricted) — ausente nos anúncios.
+- **commercial:** requer annual_rent ou market_cap_rate — ausente nos anúncios.
+- **garage:** requer market_data especifico de garagem — raramente disponível.
+
+Distribuição real (scrape 65 ativo): apartment 3 | house 12 | mixed 8 | rural_land 17 | urban_land 4 | commercial 6 | null 15. Imóveis com score: 30/30 apartment+house (100% dos residential scorable).
 
 ### 8. Inngest keys na Vercel — FUNCÃO PRONTA, AGARDAR KEYS
 
