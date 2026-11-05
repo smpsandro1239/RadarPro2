@@ -96,6 +96,7 @@ export default async function Home() {
           <a href="/faq" className="hover:text-primary">FAQ</a>
           <a href="/privacidade" className="hover:text-primary">Privacidade</a>
           <a href="/termos" className="hover:text-primary">Termos</a>
+          <a href="/sobre-dados" className="hover:text-primary">Sobre os dados</a>
         </div>
         <p className="mt-2 text-xs text-slate-400 max-w-2xl mx-auto">
           Aviso: as valorações apresentadas são estimativas automáticas baseadas em dados de mercado e não constituem aconselhamento de investimento. Confirme sempre os valores com fontes oficiais antes de decidir.
