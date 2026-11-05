@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import dynamic from "next/dynamic";
 import { formatOptional, formatScore, formatScoreOutOf100 } from "@/lib/format";
 
@@ -24,6 +24,7 @@ const Polygon = dynamic(
   () => import("react-leaflet").then((m) => m.Polygon),
   { ssr: false }
 );
+const HeatmapLayer = dynamic(() => import("@/components/HeatmapLayer"), { ssr: false });
 
 // Component to handle map clicks
 const MapClickHandler = dynamic(
@@ -47,6 +48,7 @@ interface Property {
   price: number;
   score: number | null;
   discountPct: number | null;
+  rentability?: number | null;
   lat?: number | null;
   lng?: number | null;
   geoQuality?: string | null;
@@ -57,6 +59,18 @@ export default function MapView({ properties }: { properties: Property[] }) {
   const [polygonPoints, setPolygonPoints] = useState<[number, number][]>([]);
   const [isDrawing, setIsDrawing] = useState(false);
   const [filteredIds, setFilteredIds] = useState<Set<string> | null>(null);
+
+  const heatPoints = useMemo(() => {
+    const pts: { lat: number; lng: number; intensity: number }[] = [];
+    for (const p of properties) {
+      const lat = p.lat;
+      const lng = p.lng;
+      const rentability = p.rentability;
+      if (!lat || !lng || !rentability) continue;
+      pts.push({ lat, lng, intensity: Math.min(1, Math.max(0, rentability / 25)) });
+    }
+    return pts;
+  }, [properties]);
 
   useEffect(() => {
     setMounted(true);
@@ -157,6 +171,7 @@ export default function MapView({ properties }: { properties: Property[] }) {
           scrollWheelZoom={true}
         >
           <MapClickHandler onClick={handleMapClick} />
+          <HeatmapLayer points={heatPoints} />
           <TileLayer
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -197,6 +212,21 @@ export default function MapView({ properties }: { properties: Property[] }) {
             </Marker>
           ))}
         </MapContainer>
+      </div>
+
+      <div className="flex items-center gap-4 text-xs text-secondary">
+        <span className="flex items-center gap-1">
+          <span className="w-3 h-3 rounded-full" style={{ backgroundColor: "#16a34a" }} />
+          Alta rentabilidade
+        </span>
+        <span className="flex items-center gap-1">
+          <span className="w-3 h-3 rounded-full" style={{ backgroundColor: "#eab308" }} />
+          Média
+        </span>
+        <span className="flex items-center gap-1">
+          <span className="w-3 h-3 rounded-full" style={{ backgroundColor: "#ef4444" }} />
+          Baixa
+        </span>
       </div>
 
       <p className="text-xs text-secondary">
