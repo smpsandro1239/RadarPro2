@@ -7,6 +7,7 @@
 - Destino garage: 1
 - Destino urban_land: 12
 - Mantiveram mixed: 9
+- Aplicado em 2026-11-05: 13 mudanças efetivadas (asset_class atualizado na base live).
 
 ## Detalhes
 

@@ -10,11 +10,17 @@ import { isRemoteDatabaseUrl } from "../src/lib/database-url.ts";
 import { deriveAssetClass } from "../src/lib/valuation/classify.ts";
 import type { AssetClass, PropertyInput } from "../src/lib/valuation/types.ts";
 
-export async function main(): Promise<number> {
+export async function main(args: string[]): Promise<number> {
   if (existsSync(".env.local")) {
     process.loadEnvFile(".env.local");
   }
+  const write = args.includes("--write");
+  const confirmRemoteWrite = args.includes("--confirm-remote-write");
   const url = process.env.TURSO_DATABASE_URL ?? `file:${path.resolve(process.cwd(), "local.db")}`;
+  if (write && isRemoteDatabaseUrl(url) && !confirmRemoteWrite) {
+    console.error("[RECUSA] --write contra uma base remota. Usa --confirm-remote-write se for intencional.");
+    return 1;
+  }
   if (isRemoteDatabaseUrl(url)) {
     console.log("[reclassify] base remota detetada (somente leitura)");
   }
@@ -71,6 +77,17 @@ export async function main(): Promise<number> {
   }
 
   const changed = changes.filter((c) => c.from !== c.to);
+
+  if (write) {
+    for (const change of changed) {
+      await client.execute({
+        sql: "UPDATE properties SET asset_class = ? WHERE id = ? AND asset_class = ?",
+        args: [change.to, change.id, change.from],
+      });
+    }
+    console.log(`[reclassify] APLICADO: ${changed.length} imoveis reclassificados (asset_class) na base ${url}`);
+  }
+
   const report = [
     "# Relatório — Reclassificação de imóveis `mixed` (pipeline)",
     "",
@@ -96,7 +113,7 @@ export async function main(): Promise<number> {
 
 const invokedAsScript = process.argv[1] ? pathToFileURL(path.resolve(process.argv[1])).href : "";
 if (invokedAsScript === import.meta.url) {
-  main()
+  main(process.argv.slice(2))
     .then((code) => {
       process.exitCode = code;
     })
