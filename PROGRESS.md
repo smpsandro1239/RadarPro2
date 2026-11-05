@@ -113,6 +113,68 @@
 - Resultado: 45 registos gravados na live; `data_origin` → `[{"demo":200},{"scrape":45}]`.
 - Bloqueios: nenhum
 
+### T6 — Escalar Martelo.pt ate esgotar (novo bloco A)
+- Commit: `feat(ingest): escalar Martelo.pt para 45 imoveis reais` (docs)
+- Resultado: `--limit 500 --write --confirm-remote-write` → 45 registos gravados; `data_origin` permanece `[{"demo":200},{"scrape":45}]` → A.3: API tem ~45 eventos acessiveis.
+- Bloqueios: nenhum
+
+### T7 — Ingest bancos (novo bloco B) — BLOQUEADO TECNICO
+- Commit: `feat(ingest): bancos via HTML publico, M imoveis reais` (nao executado)
+- Resultado: `npx tsx scripts/ingest-banks.ts --limit 5 --dry-run` falhou 2x (`Cannot find module .../css-what/lib/commonjs/types.ts`, cheerio stack) → avancar para bloco C.
+- Bloqueios: erro exato acima (registo em DECISIONS_PENDING.md §7).
+
+### T8 — Ingest leilões (novo bloco C) — BLOQUEADO TECNICO
+- Commit: `feat(ingest): leiloes via HTML publico, K imoveis reais` (nao executado)
+- Resultado: `npx tsx scripts/ingest-auctions.ts --limit 5 --dry-run` falhou 2x (mesmo erro cheerio/css-what via `src/lib/scrapers.ts`) → avancar para bloco D.
+- Bloqueios: erro exato acima (registo em DECISIONS_PENDING.md §7).
+
+## Trabalho técnico pós-fecho 2 — Escalar dados reais e automatizar (2026-11-05)
+
+### Bloco A — Escalar Martelo.pt até esgotar — ✅ CONCLUÍDO
+- A.1: `npx tsx scripts/scrape-dry-run.ts --limit 500 --write --confirm-remote-write` → 45 registos gravados; `data_origin` permanece `[{"demo":200},{"scrape":45}]`.
+- A.2/A.3: N=45 → API tem ~45 eventos acessíveis → registado e avançado.
+- Commit: `feat(ingest): escalar Martelo.pt para 45 imoveis reais` (docs)
+
+### Bloco B — Ingest bancos — ❌ BLOQUEADO TECNICO
+- B.1: parsers existem (`scrapeAllBanks` em `src/lib/scrapers.ts`).
+- B.2: `scripts/ingest-banks.ts` criado; B.4 `--dry-run` falhou 2× (`Cannot find module .../css-what/lib/commonjs/types.ts`) → registado em `DECISIONS_PENDING.md` §7, avançado.
+- Commit: `feat(ingest): bancos via HTML publico, M imoveis reais` (nao executado)
+
+### Bloco C — Ingest leilões — ❌ BLOQUEADO TECNICO
+- C.1: parser existe (`scrapeELeiloes` em `src/lib/scrapers.ts`).
+- C.2/C.3: `scripts/ingest-auctions.ts` criado; C.4 `--dry-run` falhou 2× (mesmo erro cheerio/css-what) → avançado.
+- Commit: `feat(ingest): leiloes via HTML publico, K imoveis reais` (nao executado)
+
+### Bloco D — Automatizar Inngest cron — ✅ CONCLUÍDO (código)
+- D.2/D.3: `src/inngest/functions/daily-ingest.ts` (cron `0 6 * * *`, `step.run` → scrape `--limit 100 --write --confirm-remote-write`) + registado em `/api/inngest`.
+- D.4: keys `INNGEST_EVENT_KEY`/`INNGEST_SIGNING_KEY` ausentes → `DECISIONS_PENDING.md` §8; função criada, **não ativada** em produção.
+- Commit: `feat(cron): ingest diario Martelo.pt via Inngest` (`baca45c`)
+
+### Bloco E — MARKET_DATA_DISTRICT com 20 distritos INE — ✅ CONCLUÍDO
+- E.1–E.5: tabela `MARKET_DATA_DISTRICT` preenchida (20 distritos) + fallback distrito; 14 testes market-data verdes.
+- E.6 commit: `feat(valuation): MARKET_DATA_DISTRICT com 20 distritos INE` (`3ff9dae`)
+
+### Bloco F — DemoDataBanner — ✅ CONCLUÍDO
+- F.1–F.5: `src/components/DemoDataBanner.tsx` (flag `SHOW_SEED_DATA` + prop `demoCount`), layout atualizado, `SeedDataBanner` removido, 2 testes.
+- F.5 commit: `feat(ui): DemoDataBanner para live com dados mistos` (`b2dcf8f`)
+- F.4: suite verde (29 ficheiros / 212 testes)
+
+### Bloco G — Reclassificar mixed — ✅ CONCLUÍDO (dry-run)
+- G.1: `scripts/reclassify-mixed.ts` (SELECT read-only + `deriveAssetClass`).
+- G.2/G.3: 22 imóveis `mixed` analisados; 13 mudaram (9 → mixed, 1 → garage, 12 → urban_land); report em `docs/reclassify-mixed-report.md`.
+- G.4 commit: `feat(pipeline): reclassify-mixed (14 imoveis, dry-run report)` (`eab9eec`)
+
+### Bloco H — Verificação final e documentação — ✅ CONCLUÍDO
+- H.1: `npm run verify` → typecheck ✓, typecheck:scripts ✓, tests 29/212 ✓, build ✓ (refeito após falha transitória de prerender `/estatisticas`).
+- H.2: `npx tsx scripts/verify-production.ts https://radar-pro2.vercel.app` → `/`, `/oportunidades`, `/leiloes` → 200 OK.
+- H.3/H.5/H.6: esta secção actualizada + commit `chore(release): escalar dados reais fase2-dev`.
+
+### Estado final
+- Live: `data_origin` = `[{"demo":200},{"scrape":45}]` — N final = 45 (Martelo.pt; API ~45 eventos acessíveis).
+- Fontes reais ativas: 1 (Martelo.pt). Bancos (B) e leilões (C): bloqueados tecnicamente.
+- Deploy produção: `dpl_EsMgPQ62JdyGUfCLfUNFGWQ5iR6v` (READY, commit `09cb4c0`).
+- Human blockers: `DECISIONS_PENDING.md` §1–§8.
+
 ## Estado para merge
 
 **Técnico:** ✅ Código verde, testes passam, build verde, preview 200.

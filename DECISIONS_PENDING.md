@@ -17,6 +17,7 @@
   - **(c)** Adiar merge para `main` até o ingest real estar operacional.
 - **Recomendação:** **(c)**. O site em `radar-pro2.vercel.app` mostra imóveis fictícios ao público.
 - **Risco se não decidir:** merge para `main` põe demo em produção sem aviso ao utilizador.
+- **Estado final (2026-11-05, bloco A):** live com 45 imóveis reais + 200 demo; N final = 45 (`data_origin` = `[{"demo":200},{"scrape":45}]`).
 
 ### 2. `SHOW_SEED_DATA` em produção
 
@@ -50,3 +51,19 @@
   ```bash
   npx tsx scripts/apply-migration.ts scripts/sql/0006_seed_market_data_district.sql --dry-run
   npx tsx scripts/apply-migration.ts scripts/sql/0006_seed_market_data_district.sql --apply
+  ```
+
+### 7. Bancos: parser não utilizável via tsx — requer desenvolvimento
+
+- **O que fazer:** corrigir interop de carregamento (`cheerio`/`css-what`) no pipeline de ingest bancos (`scripts/ingest-banks.ts --dry-run`).
+- **Comando:** `npx tsx scripts/ingest-banks.ts --limit 5 --dry-run`
+- **Erro exato (2×):** `Cannot find module 'C:\Users\smpsa\RadarPro\node_modules\css-what\lib\commonjs\types.ts'` (Require stack: cheerio → cheerio-select → cheerio → `src/lib/scrapers.ts`).
+- **Estado:** falhou 2× → avanço para o bloco C (leilões).
+- **Risco:** bancos não ingeridos; live mantém 45 Martelo + 200 demo.
+
+### 8. Inngest keys na Vercel
+
+- **O que fazer:** definir `INNGEST_EVENT_KEY` e `INNGEST_SIGNING_KEY` (dashboard Inngest / CLI).
+- **Comando:** `npx inngest-cli dev` / criar keys.
+- **Estado:** não encontradas no repositório (`.env.local`) → função `daily-ingest` criada mas **não ativada em produção**.
+- **Risco:** cron 0 6 * * * sem funcionar até keys configuradas.
