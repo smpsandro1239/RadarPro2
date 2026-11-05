@@ -52,6 +52,13 @@ export const MARKET_DATA_APARTMENT_HOUSE: MarketDataEntry[] = [
   { district: "Faro", municipality: "Lagos", pricePerSqm: 4370, source: "Confidencial Imobiliário", asOf: "2026-03", propertyType: "apartment" },
   { district: "Faro", municipality: "Tavira", pricePerSqm: 3840, source: "Confidencial Imobiliário", asOf: "2026-03", propertyType: "apartment" },
 
+  // Task: cobertura de market_data para concelhos com mais imoveis sem score
+  { district: "Leiria", municipality: "Leiria", pricePerSqm: 1600, source: "INE", asOf: "2026-05", propertyType: "apartment" },
+  { district: "Leiria", municipality: "Alcobaça", pricePerSqm: 1600, source: "INE", asOf: "2026-05", propertyType: "apartment" },
+  { district: "Beja", municipality: "Cuba", pricePerSqm: 1200, source: "INE", asOf: "2026-05", propertyType: "apartment" },
+  { district: "Viseu", municipality: "Tondela", pricePerSqm: 1800, source: "INE", asOf: "2026-05", propertyType: "apartment" },
+  { district: "Guarda", municipality: "Gouveia", pricePerSqm: 1200, source: "INE", asOf: "2026-05", propertyType: "apartment" },
+
   // Setúbal
   { district: "Setúbal", municipality: "Setúbal", pricePerSqm: 3280, source: "INE", asOf: "2026-05", propertyType: "apartment" },
   { district: "Setúbal", municipality: "Almada", pricePerSqm: 3610, source: "Confidencial Imobiliário", asOf: "2026-03", propertyType: "apartment" },
