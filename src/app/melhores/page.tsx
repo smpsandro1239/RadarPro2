@@ -75,6 +75,9 @@ export default async function MelhoresPage({ searchParams }: { searchParams: Pro
         Os melhores negócios reais de Portugal, com o top {LIMIT_PER_DISTRICT} por distrito,
         selecionados pelo motor de avaliação. Dados 100% reais.
       </p>
+      <p className="mb-8 text-sm text-secondary">
+        Apenas imóveis com avaliação completa são elegíveis para o ranking.
+      </p>
 
       {districtKey && (
         <p className="mb-8 text-sm text-secondary">
