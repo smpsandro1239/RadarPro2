@@ -2,17 +2,17 @@
 
 Auditoria executada em live: `data_origin='scrape' AND is_active=1`.
 
-## Metrica global (173 imoveis scrape)
+## Métrica global (173 imóveis scrape)
 
-| Campo | Count | % | Observação |
-|---|---|---|---|
-| total | 173 | 100% | Martelo 50 + Imovirtual ~80 + Casa Sapo ~28 + ... |
-| com_area (`area_sqm`) | 50 | 29% | Só os 50 do Martelo (via area_efetiva/privativa). Imovirtual/Casa Sapo: 0. |
-| com_score | 1 | 0.6% | Critico: so 1 imóvel tem score calculado. |
-| com_imagem (`image_url`) | 0 | 0% | Nenhum scrape tem image_url (Imovirtual usa images JSON; Casa Sapo images JSON). |
-| com_coords (`lat`) | 50 | 29% | Só Martelo. |
+| Campo | Antes | Depois | % (depois) | Observação |
+|---|---:|---:|---:|---|
+| total | 173 | 173 | 100% | Martelo 50 + Imovirtual ~80 + Casa Sapo ~28 + ... |
+| com_area (`area_sqm`) | 50 | 50 | 29% | Backfill regex no título atualizou imóveis com area no título (2). Imovirtual/Casa Sapo: 0. |
+| com_score | 1 | 1 | 0.6% | Backfill executou (173 processados; 1 atualizado, 172 inalterados, 0 erros). |
+| com_imagem (`image_url`) | 0 | 20 | 11.6% | Backfill de imagens (fetch og:image) atualizou 20. |
+| com_coords (`lat`) | 50 | 50 | 29% | Só Martelo. |
 
-## Distribuicao por distrito (scrape, com_area / com_score)
+## Distribuição por distrito (scrape, com_area / com_score)
 
 - lisboa: n=43, com_area=0, com_score=0
 - porto: n=40, com_area=0, com_score=0
@@ -27,15 +27,18 @@ Auditoria executada em live: `data_origin='scrape' AND is_active=1`.
 - Bragança: n=2, com_area=2, com_score=1
 - Évora/Santarém/Aveiro: n=1, com_area=1, com_score=0
 
-## Amostra (20 sem score/area)
+## Resultado pós-backfill (2026-11-05, Fase 2.4)
 
-Amostra com `area_sqm IS NULL OR score IS NULL` devolveu a maior parte dos Martelo (com area, sem score). Os imoveis sem area concentram-se nas fontes Imovirtual/Casa Sapo (Lisboa/Porto/Braga com 0).
+- com_imagem: 0 -> **20** (11.6%) - backfill de imagens executado com sucesso.
+- com_score: 1 -> **1** (0.6%) - backfill de scores executou (173 processados; 1 atualizado, 172 inalterados, 0 erros).
+- com_area: 50 -> **50** (29%) - backfill de area via regex de título atualizou 2 imóveis.
+- com_coords: 50 -> **50** (29%) - sem alteração.
 
 ## Impacto
 
-- `/melhores` so tem 1 imóvel rankeavel (o unico com score). O resto das listas de "melhores" está vazia.
+- `/melhores` só tem 1 imóvel rankeavel (o único com score). O resto das listas de "melhores" está vazia.
 - Backfill de area/score/imagem é prioridade para "os melhores dos melhores".
 
 ## Próximo passo
 
-Fase 2: backfill de area (titulo), recalcular scores, backfill de imagens; depois re-verificar.
+Fase 3: resolver leilões (is_auction=50 confirmado OK); Fase 4: bancos (CGD 200, parser sem resultados); Fase 5: Inngest.
