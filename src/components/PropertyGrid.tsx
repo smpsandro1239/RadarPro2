@@ -152,11 +152,13 @@ export default function PropertyGrid({
   totalCount,
   pageParam = 1,
   perPage = 24,
+  lastChanges,
 }: {
   properties: Property[];
   totalCount?: number;
   pageParam?: number;
   perPage?: number;
+  lastChanges?: Record<string, { type: "price_down" | "price_up"; changePct: number }>;
 }) {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -521,6 +523,7 @@ export default function PropertyGrid({
             sqm={prop.sqm}
             valuationConfidence={prop.valuationConfidence}
             assetClass={prop.assetClass}
+            lastChange={lastChanges?.[prop.id] ?? null}
           />
         ))}
       </div>

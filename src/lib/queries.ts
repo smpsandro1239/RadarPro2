@@ -1,7 +1,8 @@
 import { drizzle } from "drizzle-orm/libsql";
 import { createClient } from "@libsql/client";
 import { properties } from "@/db/schema";
-import { desc, eq, and, sql } from "drizzle-orm";
+import { priceHistory } from "@/db/schema";
+import { desc, eq, and, sql, inArray } from "drizzle-orm";
 import { showSeedData } from "@/lib/data-origin";
 import { demoDataCondition } from "@/lib/data-origin-sql";
 
@@ -22,13 +23,63 @@ function publicConditions() {
   return conditions;
 }
 
+export interface PriceChangeInfo {
+  type: "price_down" | "price_up";
+  price: number;
+  previousPrice: number;
+  changePct: number;
+}
+
+/**
+ * Anexa a cada imóvel a ultima alteração de preço observada em price_history
+ * (comparando a entrada mais recente com a anterior). Permite badges sem N+1.
+ */
+async function attachLastChange<T extends { id: string; price: number }>(
+  rows: T[],
+): Promise<Array<T & { lastChange: PriceChangeInfo | null }>> {
+  if (rows.length === 0) return [];
+  const history = await db
+    .select({
+      propertyId: priceHistory.propertyId,
+      price: priceHistory.price,
+      recordedAt: priceHistory.recordedAt,
+    })
+    .from(priceHistory)
+    .where(inArray(priceHistory.propertyId, rows.map((r) => r.id)))
+    .orderBy(desc(priceHistory.recordedAt));
+
+  const byProperty = new Map<string, Array<{ price: number; recordedAt: unknown }>>();
+  for (const h of history) {
+    const pid = String(h.propertyId);
+    const arr = byProperty.get(pid) ?? [];
+    arr.push({ price: Number(h.price), recordedAt: h.recordedAt });
+    byProperty.set(pid, arr);
+  }
+
+  return rows.map((r) => {
+    const entries = (byProperty.get(r.id) ?? []).slice().sort(
+      (a, b) => new Date(b.recordedAt as any).getTime() - new Date(a.recordedAt as any).getTime(),
+    );
+    const last = entries[0];
+    const prev = entries[1];
+    let lastChange: PriceChangeInfo | null = null;
+    if (last && prev && last.price < prev.price) {
+      lastChange = { type: "price_down", price: last.price, previousPrice: prev.price, changePct: Math.round(((last.price - prev.price) / prev.price) * 100) };
+    } else if (last && prev && last.price > prev.price) {
+      lastChange = { type: "price_up", price: last.price, previousPrice: prev.price, changePct: Math.round(((last.price - prev.price) / prev.price) * 100) };
+    }
+    return { ...r, lastChange };
+  });
+}
+
 export async function getLatestProperties() {
-  return await db
+  const result = await db
     .select()
     .from(properties)
     .where(and(...publicConditions()))
     .orderBy(desc(properties.score))
     .limit(50);
+  return await attachLastChange(result);
 }
 
 export async function getPropertiesByDistrict(district: string) {
@@ -56,11 +107,12 @@ export async function getAllActiveProperties(listingType?: string, isAuction?: s
     }
   }
 
-  return await db
+  const result = await db
     .select()
     .from(properties)
     .where(and(...conditions))
     .orderBy(desc(properties.score));
+  return await attachLastChange(result);
 }
 
 export async function getTotalActiveProperties() {

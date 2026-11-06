@@ -12,6 +12,11 @@ export default async function OportunidadesPage() {
   if (!session) redirect("/auth");
 
   const properties = await getLatestProperties();
+  const lastChanges: Record<string, { type: "price_down" | "price_up"; changePct: number }> = {};
+  for (const p of properties) {
+    const lc = p.lastChange;
+    if (lc) lastChanges[p.id] = { type: lc.type, changePct: lc.changePct };
+  }
 
   return (
     <main className="min-h-screen max-w-7xl mx-auto px-6 py-12">
@@ -38,6 +43,7 @@ export default async function OportunidadesPage() {
             totalCount={properties.length}
             pageParam={1}
             perPage={24}
+            lastChanges={lastChanges}
           />
         </Suspense>
     </main>

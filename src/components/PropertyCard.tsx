@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { MapPin, Gavel, CheckCircle, TrendingDown, AlertTriangle, ChevronDown } from "lucide-react";
+import { MapPin, Gavel, CheckCircle, TrendingDown, TrendingUp, AlertTriangle, ChevronDown } from "lucide-react";
 import PropertyImage from "@/components/PropertyImage";
 
 
@@ -26,6 +26,7 @@ interface PropertyCardProps {
   sqm?: number | null;
   valuationConfidence?: string | null;
   assetClass?: string | null;
+  lastChange?: { type: "price_down" | "price_up"; changePct: number } | null;
 }
 
 function getScoreColor(score: number | null, confidence?: string | null): string {
@@ -72,6 +73,7 @@ export default function PropertyCard({
   sqm,
   valuationConfidence,
   assetClass,
+  lastChange,
 }: PropertyCardProps) {
   const imageList = images ? (typeof images === "string" ? JSON.parse(images) : images) : [];
   const imageUrl = imageList[0] || null;
@@ -158,6 +160,20 @@ export default function PropertyCard({
           {discountPct !== null && discountPct > 0 && (
             <span className="text-xs text-success ml-2">
               <TrendingDown size={12} className="mr-1" /> -{discountPct}% mercado
+            </span>
+          )}
+          {lastChange && (
+            <span
+              className={`text-xs font-bold ml-2 inline-flex items-center gap-1 ${
+                lastChange.type === "price_down" ? "text-success" : "text-red-500"
+              }`}
+            >
+              {lastChange.type === "price_down" ? (
+                <TrendingDown size={12} />
+              ) : (
+                <TrendingUp size={12} />
+              )}
+              {lastChange.type === "price_down" ? "↓" : "↑"} {lastChange.changePct}% (histórico)
             </span>
           )}
         </div>

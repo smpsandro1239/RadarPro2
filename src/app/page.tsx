@@ -10,6 +10,11 @@ export const metadata = {
 
 export default async function Home() {
   const properties = await getLatestProperties();
+  const lastChanges: Record<string, { type: "price_down" | "price_up"; changePct: number }> = {};
+  for (const p of properties) {
+    const lc = p.lastChange;
+    if (lc) lastChanges[p.id] = { type: lc.type, changePct: lc.changePct };
+  }
   const totalActive = await getTotalActiveProperties();
   const sourceCount = await getDistinctSourceCount();
 
@@ -60,6 +65,7 @@ export default async function Home() {
             totalCount={properties.length}
             pageParam={1}
             perPage={24}
+            lastChanges={lastChanges}
           />
         </Suspense>
       </section>

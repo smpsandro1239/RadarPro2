@@ -10,6 +10,11 @@ export const metadata = {
 
 export default async function LeiloesPage() {
   const all = await getAllActiveProperties();
+  const lastChanges: Record<string, { type: "price_down" | "price_up"; changePct: number }> = {};
+  for (const p of all) {
+    const lc = p.lastChange;
+    if (lc) lastChanges[p.id] = { type: lc.type, changePct: lc.changePct };
+  }
   const auctions = all.filter((p) => p.isAuction);
 
   return (
@@ -18,7 +23,7 @@ export default async function LeiloesPage() {
       <h1 className="text-4xl font-extrabold mb-2">Leilões</h1>
       <p className="text-secondary mb-8">Imóveis em leilão, ordenados por oportunidade.</p>
       <Suspense fallback={<p>A carregar...</p>}>
-        <PropertyGrid properties={auctions as any} totalCount={auctions.length} />
+        <PropertyGrid properties={auctions as any} totalCount={auctions.length} lastChanges={lastChanges} />
       </Suspense>
     </main>
   );
