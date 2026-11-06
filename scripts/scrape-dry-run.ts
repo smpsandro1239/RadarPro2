@@ -170,14 +170,14 @@ async function writeRows(url: string, evaluated: Evaluated[]): Promise<number> {
         (id, source, source_name, url, title, district, municipality, parish, type, price,
          market_value, max_bid, score, rentability, images, is_active, check_status, created_at, updated_at,
          is_auction, auction_type, auction_house, current_bid, opening_bid, reserve_price, area_sqm, floor,
-         lat, lng, geo_quality, asset_class, valuation_engine, valuation_confidence, data_origin)
+         auction_end_date, lat, lng, geo_quality, asset_class, valuation_engine, valuation_confidence, data_origin)
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NULL, '[]', ?, 'ok', ?, ?,
-                1, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'scrape')
+                1, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'scrape')
         ON CONFLICT(id) DO UPDATE SET
           title = excluded.title, district = excluded.district, municipality = excluded.municipality,
           parish = excluded.parish, type = excluded.type, price = excluded.price,
           market_value = excluded.market_value, max_bid = excluded.max_bid, score = excluded.score,
-          area_sqm = excluded.area_sqm, floor = excluded.floor, lat = excluded.lat, lng = excluded.lng,
+          area_sqm = excluded.area_sqm, floor = excluded.floor, auction_end_date = excluded.auction_end_date, lat = excluded.lat, lng = excluded.lng,
           geo_quality = excluded.geo_quality, is_active = excluded.is_active,
           auction_type = excluded.auction_type, auction_house = excluded.auction_house,
           current_bid = excluded.current_bid, opening_bid = excluded.opening_bid, reserve_price = excluded.reserve_price,
@@ -208,6 +208,7 @@ async function writeRows(url: string, evaluated: Evaluated[]): Promise<number> {
         row.reservePrice,
         row.areaSqm,
         row.floor,
+        row.auctionEndDate,
         row.lat,
         row.lng,
         row.geoQuality,

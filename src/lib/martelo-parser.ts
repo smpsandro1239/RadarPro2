@@ -99,7 +99,8 @@ export function mapAuctionHouse(source: string | null | undefined): string {
 
 /** True quando o evento e um imovel (e nao uma viatura, maquina ou mobilia). */
 export function isPropertyEvent(event: MarteloEvent): boolean {
-  return fold(event.tipo ?? "") === "imovel";
+  const tipo = fold(event.tipo ?? "");
+  return tipo === "imovel" || tipo === "imoveis";
 }
 
 /**
