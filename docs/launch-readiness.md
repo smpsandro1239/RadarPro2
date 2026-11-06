@@ -29,4 +29,14 @@
 - [ ] Investir numa das fontes pagas.
 - [ ] Aguardar recolha natural.
 
+## Decisão recomendada (agente)
+
+Com o restauro aplicado (scrape ativo: 72 = 65 baseline + 7 novos), recomenda-se:
+
+**(a) Lançar publicamente agora** — funcionalidades (price tracking, comparables, /mercado, /leiloes) operativas; dados limitados (~10 distritos, 72 imóveis).
+
+**(b) Adiar** — até obter 100+ imóveis reais via fonte paga (Apify $5 / Martelo premium).
+
+**Recomendação do agente:** (b). 72 imóveis ainda não sustentam "os melhores dos melhores por distrito", mas a infraestrutura está verde.
+
 **Status técnico atual:** deploy READY, `npm run verify` verde, 231 testes.
