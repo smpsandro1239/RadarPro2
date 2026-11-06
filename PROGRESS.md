@@ -286,3 +286,19 @@
 - F3: `docs/coverage-report.md`.
 - F5: `docs/launch-decision.md` (Conclusão A); `/estado` + footer.
 - F6: verify ✓ (58 páginas), prod 5 rotas → 200; commit final `chore(release): estabilizar + polir + decisao de launch`.
+
+### T16 — Fecho definitivo (placeholders + visual audit + launch final) — CONCLUIDA (2026-11-06)
+
+- F1: `feat(ui): placeholders por tipo quando sem imagem real` (commit `a13e46e`) — `public/placeholders/{apartment,house,commercial,land,garage,mixed}.svg`; `PropertyImage` ganhou fallback por `asset_class` + `data-placeholder="true"`; wiring em PropertyCard/melhores/oportunidades/search/favoritos/imovel. typecheck ✓, vitest PropertyCard+martelo-parser ✓.
+- F2: `docs: visual audit pos-placeholders` (commit `ca16f0c`) — rotas auditadas p/ deploy `a13e46e`; `/melhores` e `/oportunidades` com placeholders; `/imovel/martelo-lo1464432026` → house placeholder; zero "Sem imagem disponível".
+- F3: `docs(decisions): Sentry adiado formalmente (§15)` (commit `67b2375`) — DSN placeholder confirmado; adiado formalmente.
+- F4: `docs: launch decision final — Conclusão A` (commit `9db0770`) — `docs/launch-decision.md` final.
+- F6: `npm run verify` ✓ (33 files/231 tests, build OK, 58 páginas); prod verify → 5 rotas → 200; query final: 72 ativos, 34 com score, 15 com img, 34 residential com score; leiloes 57 (7 com data), not_found 0.
+- Deploy final (placeholders): `a13e46e` → READY (`dpl_KMiCQr27WaiCbXedkGemFnpWGFKK`).
+
+### Estado final — PROJETO EM ESTADO DE LAUNCH (2026-11-06)
+
+- Decisão: **Conclusão A** — lançar com 72 imóveis (docs/launch-decision.md final).
+- Sentry: adiado formalmente (§15).
+- Placeholders: implementados; audit visual sem "Sem imagem disponível".
+- Próximo passo: decisão do dono sobre Apify $5 / Martelo premium / expansão para 100+ imóveis.
