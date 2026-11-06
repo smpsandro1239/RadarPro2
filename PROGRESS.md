@@ -261,3 +261,12 @@
 - F5: `docs/launch-readiness.md` criado.
 - F6: `npm run verify` ✅ (231 tests, typecheck, build); prod 5 rotas → 200; DB final: 22 scrape, 7 leilões, 7 com data, 19 com score, price_history 85.
 - Commit final: `chore(release): auditoria + comparables + launch readiness`.
+
+### T13 — Diagnóstico + restauração da regressão (scrape 65 → 22) — CONCLUIDA (2026-11-06)
+
+- Diagnóstico: 50 rows scrape inativos (`martelo-lo*`/`martelo-np*`, `check_status=not_found`) → Cenário 1 → restaurar.
+- Restauro: `UPDATE properties SET is_active = 1 WHERE data_origin='scrape' AND is_active = 0` → ROWS_AFFECTED=50; scrape ativos: 22 → 72.
+- Causa: fluxo de expiração/check (`expireStale` / `ingestProperty`) + lote legado sem `auction_end_date`.
+- Prevencao: `scripts/db-snapshot.ts` adicionado (commit `669b051`).
+- Docs: `docs/data-regression.md`, `docs/launch-readiness.md` (decisão recomendada).
+- Estado final: scrape 72 ativos (65 baseline + 7 novos), leilões 57, com data 7, price_history 85.
