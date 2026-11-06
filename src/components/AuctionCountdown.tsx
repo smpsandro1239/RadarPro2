@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { Clock, Gavel } from "lucide-react";
 
 interface AuctionCountdownProps {
-  endDate: number; // Unix timestamp in seconds
+  endDate: number; // Unix timestamp em milissegundos
   compact?: boolean;
 }
 
@@ -13,7 +13,7 @@ export default function AuctionCountdown({ endDate, compact = false }: AuctionCo
 
   useEffect(() => {
     function update() {
-      const now = Math.floor(Date.now() / 1000);
+      const now = Date.now();
       const diff = endDate - now;
 
       if (diff <= 0) {
@@ -21,12 +21,12 @@ export default function AuctionCountdown({ endDate, compact = false }: AuctionCo
         return;
       }
 
-      const days = Math.floor(diff / (24 * 60 * 60));
-      const hours = Math.floor((diff % (24 * 60 * 60)) / (60 * 60));
-      const minutes = Math.floor((diff % (60 * 60)) / 60);
+      const days = Math.floor(diff / (24 * 60 * 60 * 1000));
+      const hours = Math.floor((diff % (24 * 60 * 60 * 1000)) / (60 * 60 * 1000));
+      const minutes = Math.floor((diff % (60 * 60 * 1000)) / (60 * 1000));
 
       if (days > 0) {
-        setTimeLeft(`${days}d ${hours}h`);
+        setTimeLeft(`${days} dias`);
       } else if (hours > 0) {
         setTimeLeft(`${hours}h ${minutes}m`);
       } else {

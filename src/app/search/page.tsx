@@ -452,7 +452,7 @@ function AdvancedSearchPageInner() {
                     )}
                     {prop.isAuction && prop.auctionEndDate && (
                       <div className="absolute bottom-4 right-4 bg-white px-2 py-1 rounded-lg text-xs font-bold text-orange-600 z-10">
-                        <AuctionCountdown endDate={Math.floor((typeof prop.auctionEndDate === "number" ? prop.auctionEndDate : new Date(prop.auctionEndDate).getTime()) / 1000)} compact />
+                        <AuctionCountdown endDate={typeof prop.auctionEndDate === "number" ? prop.auctionEndDate : new Date(prop.auctionEndDate).getTime()} compact />
                       </div>
                     )}
                     {prop.valuationConfidence === "very_low" && (
