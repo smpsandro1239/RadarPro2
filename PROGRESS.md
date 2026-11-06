@@ -278,3 +278,11 @@
 - F3: distribuicao 72 imoveis por asset_class/district; docs atualizado.
 - F5: launch readiness atualizado com 72.
 - F6: verify ✓, prod 5 rotas → 200; commit final `chore(release): bloquear regressao + consolidar 72 imoveis`.
+
+### T15 — Estabilizar + polir + decidir (2026-11-06, Fase 1-6)
+
+- F1: `expireStale` robusto (whitelist `SAFE_SOURCE_PREFIXES`, commits `730e26b`, `6fac05d`).
+- F2: parser Martelo extrai `fotos[0]` → images; writer persiste; re-scrape sem property events atuais (0 registados).
+- F3: `docs/coverage-report.md`.
+- F5: `docs/launch-decision.md` (Conclusão A); `/estado` + footer.
+- F6: verify ✓ (58 páginas), prod 5 rotas → 200; commit final `chore(release): estabilizar + polir + decisao de launch`.
