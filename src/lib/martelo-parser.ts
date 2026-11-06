@@ -42,6 +42,7 @@ export type ScrapedRow = {
   lat: number | null;
   lng: number | null;
   geoQuality: GeoQuality;
+  images: string[];
 };
 
 export type MarteloTag = { slug?: string; label?: string };
@@ -63,6 +64,8 @@ export type MarteloEvent = {
   area_privativa?: number | null;
   area_efetiva?: number | null;
   piso?: string | null;
+  capa?: string | null;
+  fotos?: string[] | null;
   source?: string | null;
   source_url?: string | null;
   tipo_processo?: string | null;
@@ -188,6 +191,7 @@ export function mapMarteloEvent(event: MarteloEvent): ScrapedRow {
     lat: typeof event.latitude === "number" ? event.latitude : null,
     lng: typeof event.longitude === "number" ? event.longitude : null,
     geoQuality: geoQualityOf(event),
+    images: [event.capa, ...(event.fotos ?? [])].filter((u): u is string => typeof u === "string" && u.startsWith("http")),
   };
 }
 

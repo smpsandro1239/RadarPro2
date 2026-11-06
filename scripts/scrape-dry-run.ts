@@ -171,7 +171,7 @@ async function writeRows(url: string, evaluated: Evaluated[]): Promise<number> {
          market_value, max_bid, score, rentability, images, is_active, check_status, created_at, updated_at,
          is_auction, auction_type, auction_house, current_bid, opening_bid, reserve_price, area_sqm, floor,
          auction_end_date, lat, lng, geo_quality, asset_class, valuation_engine, valuation_confidence, data_origin)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NULL, '[]', ?, 'ok', ?, ?,
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NULL, ${JSON.stringify(row.images ?? [])}, ?, 'ok', ?, ?,
                 1, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'scrape')
         ON CONFLICT(id) DO UPDATE SET
           title = excluded.title, district = excluded.district, municipality = excluded.municipality,
