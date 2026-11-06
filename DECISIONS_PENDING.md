@@ -318,10 +318,12 @@ Distribuição real (scrape 65 ativo): apartment 3 | house 12 | mixed 8 | rural_
 - **Risco:** janela de leilões <24h agora com 7 alvos (fim previsto ~2026-11-06); 50 leilões legados (`martelo-lo*`) com `auction_end_date` NULL; sem `change_type` no schema `price_history`.
 
 
-### 15. Sentry DSN em produção — PLACEHOLDER
+### 15. Sentry DSN em produção — ADIADO (formal, Fecho definitivo)
 
-- **O que fazer:** configurar DSN real no Vercel (`SENTRY_DSN`) + `NEXT_PUBLIC_SENTRY_DSN`.
-
-- **Estado:** 2026-11-06, Fase 4.2 — placeholders (`https://example@o1.ingest.sentry.io/123456`) presentes em `.env.local`. Confirmar DSN real com o owner.
-
+- **Status:** ADIADO formalmente — não bloqueia launch.
+- **Decisão do agente:** adiar error tracking até pós-launch.
+- **DSN:** placeholder (`https://example@o1.ingest.sentry.io/123456`) em `.env.local` — sem dados reais.
+- **Custo estimado:** free tier Sentry ~5k events/mês.
+- **Ação do dono:** criar conta em sentry.io, copiar DSN, adicionar em Vercel env vars (`SENTRY_DSN`, `NEXT_PUBLIC_SENTRY_DSN`).
+- **Bloqueador:** observabilidade — não crítico para os primeiros utilizadores.
 - **Risco:** error tracking sem DSN real → Sentry sem dados.
