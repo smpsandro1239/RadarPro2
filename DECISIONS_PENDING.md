@@ -350,3 +350,11 @@ Distribuição real (scrape 65 ativo): apartment 3 | house 12 | mixed 8 | rural_
 - **Fixatia** (`https://mcp.fixatia.com/api/mcp`): **FALHOU** (protocol error: `Method not found: notifications/initialized`). Avançar sem retry automático.
 - **Minha Morada** (`https://claudemarketplaces.com`): **FALHOU** (HTTP 405). Endpoint provavelmente inválido. Avançar sem retry automático.
 - **flat.in** (MCP/REST): já integrado via API REST no projeto (`src/lib/flatin.ts`).
+
+
+### 19. CasaNest — MCP funcional, catálogo acessível limitado (~10 imóveis por query padrão) (Ciclo reaberto parcial, Fase 1)
+
+- **Status:** REGISTRADO — parou o ciclo de expansão aqui (saída de emergência do plano).
+- **O que foi feito:** MCP `https://casanest.eu/mcp` conectado ✓; `scripts/ingest-casanest-mcp.ts` implementou paginação via `cursor` + `limit` (1-20); queries por distrito testadas (lisboa → 3, aveiro → 7).
+- **Resultado:** catálogo acessível com os filtros padrão usados devolve poucos resultados; alvo ≥50 não alcançado com queries atuais.
+- **Próximo passo:** decisão do dono sobre estratégia de query/owner (property types diversos, agregação por distrito) se voltar a abrir fonte.

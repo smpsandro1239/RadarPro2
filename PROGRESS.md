@@ -311,3 +311,9 @@
 - F3 (scrapers open-source): **não recomendado** (§17).
 - F4 (agregadores): Casas Penhoradas + Licito.pt — falharam em scraping estável (JS-heavy) → avanço.
 - Launch: **mantida** (Conclusão A). Decisão registada em `docs/launch-decision.md` (addenda) e `DECISIONS_PENDING.md` (§16-§18).
+
+### T18 — CasaNest: escala + saída de emergência (2026-11-06, ciclo reaberto parcial)
+
+- F1 (CasaNest): MCP conectado ✓; paginação via cursor implementada; queries por distrito (lisboa 3, aveiro 7). Catálogo acessível limitado (~10 imóveis). Saída de emergência: §19.
+- F4 (agregadores): casaispenhoradas/licito falharam → avanço.
+- Deploy final do ciclo: `2ace142` → READY (`dpl_6euWfJeWH9sm6W7giEDWw8fbU6fz`).

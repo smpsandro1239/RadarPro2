@@ -62,11 +62,21 @@ async function mcpCall(toolName: string, args: Record<string, unknown>): Promise
 }
 
 async function searchCasaNest(district: string, limit: number): Promise<CasaNestListing[]> {
-  const result = (await mcpCall("search_properties", { purpose: "sale", district, municipality: district, property_type: "apartment", limit })) as {
-    properties?: CasaNestListing[];
-    total?: number;
-  };
-  return result.properties ?? [];
+  const out: CasaNestListing[] = [];
+  let cursor: string | undefined = undefined;
+  let pages = 0;
+  do {
+    const result = (await mcpCall("search_properties", { purpose: "sale", district, municipality: district, property_type: "apartment", limit, ...(cursor ? { cursor } : {}) })) as {
+      properties?: CasaNestListing[];
+      total?: number;
+      next_cursor?: string | null;
+    };
+    out.push(...(result.properties ?? []));
+    cursor = result.next_cursor ?? undefined;
+    pages++;
+  } while (cursor && pages < 20);
+  console.log(`[casanest-mcp] Paginação: ${pages} página(s) para district=${district} (limit=${limit}).`);
+  return out;
 }
 
 export async function main(args: string[]): Promise<number> {
