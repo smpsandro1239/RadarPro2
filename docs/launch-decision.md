@@ -1,27 +1,29 @@
-# Decisão de launch — RadarPro (2026-11-06)
+# Launch Decision — RadarPro (2026-11-06)
 
-## Conclusão A — lançar com dados atuais
+## Estado atual
+- 72 imóveis ativos (100% reais, 0 demo)
+- 34 residential com score (apartment + house)
+- 9 distritos com ≥3 residential → /melhores útil
+- 11 distritos com cobertura limitada (1-2 imóveis)
+- 5 fontes ativas: Martelo, Casa Sapo, Imovirtual, OLX (parcial), SuperCasa (parcial)
+- Placeholders por tipo em cards sem imagem
 
-Com base na cobertura real medida (72 imóveis scrape ativos, 34 residential com score, 9 distritos com ≥3 imóveis com score), o agente conclui:
+## Decisão (Conclusão A)
+**Lançar publicamente com o estado atual.**
 
-**O site pode lançar publicamente agora** com dados reais e funcionalidades estáveis.
+Justificação:
+- 9 distritos com ≥3 residential é o mínimo viável para "melhores por distrito".
+- Site é honesto sobre limitações (/sobre-dados, /estado).
+- Placeholders eliminam o aspeto "quebrado".
+- Mais ciclos de scraping não trarão mais imóveis (fontes esgotadas).
 
-Justificação numérica:
-- 72 imóveis ativos (50 leilões Martelo + 15 Casa Sapo + 7 novos Martelo).
-- 34 residential com score → validação qualitativa funcional.
-- Infraestrutura verde: expireStale corrigido, price tracking E2E ok, comparables ok, /mercado ok, /leiloes ok, /baixaram ok, /melhores ok.
+## O que falta (não bloqueia launch)
+- Sentry real (§15).
+- Expandir para 100+ imóveis (Apify $5 ou Martelo premium — decisão do dono).
+- Imagens reais para cards com placeholder.
 
-Limitações registradas (não bloqueantes para lançamento):
-- Cobertura por distrito ainda limitada (~10 de 20 distritos com imóveis).
-- Imagens: 15 Casa Sapo (100%) + Martelo (parser corrigido) → display ~20.8% até novo scrape.
-- Fontes gratuitas para leilões com lances variáveis: esgotadas (Martelo sem novos eventos).
-
-## Decisão final do dono
-
-- [ ] **Aprovado pelo agente (Conclusão A)** — lançar com 72 imóveis.
-
-## Próximos passos (pós-launch)
-
-1. Apify $5 (opcional) para 1000 imóveis.
-2. Martelo premium.
-3. Monitorar cron diário.
+## Próximos passos
+1. Configurar domínio próprio (radarpro.pt?) — se aplicável.
+2. Anunciar em redes sociais / fóruns PT.
+3. Configurar Google Search Console (submeter sitemap).
+4. Monitorar /estado semanalmente.
