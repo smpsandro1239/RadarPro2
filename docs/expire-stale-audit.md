@@ -30,3 +30,8 @@ const expired = await db
 
 - Fontes com teto de eventos (`Martelo%`) não são expiradas por inatividade de check.
 - Demais fontes seguem a política atual (expirar após 7 dias sem check).
+
+## F1.3 (correção) — Implementação
+
+- `expireStale` passou a excluir source `Martelo%` via `notLike(properties.sourceName, "Martelo%")`.
+- Leilões com fim previsto (via `ingestProperty`) continuam a ser desativados quando o fim passa.
