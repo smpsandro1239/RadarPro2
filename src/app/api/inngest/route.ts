@@ -9,8 +9,9 @@ import {
   sendAlerts,
 } from "@/lib/inngest/functions";
 import { dailyIngest } from "@/inngest/functions/daily-ingest";
+import { checkPriceChanges } from "@/inngest/functions/check-price-changes";
 
 export const { GET, POST, PUT } = serve({
   client: inngest,
-  functions: [scrapeSource, scrapeAll, expireStale, geocodeMissing, sendAlerts, dailyIngest],
+  functions: [scrapeSource, scrapeAll, expireStale, geocodeMissing, sendAlerts, dailyIngest, checkPriceChanges],
 });
