@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { MapPin, TrendingDown, Home, Building2 } from "lucide-react";
 import { getTopScrapeProperties } from "@/lib/melhores";
+import { findDistrictMarketData } from "@/lib/market-data";
 import { PORTUGAL_DISTRICTS, fold } from "@/lib/geography";
 import { getIMI, getMunicipalityStats } from "@/lib/flatin";
 import { formatEuros, formatScoreOutOf100 } from "@/lib/format";
@@ -89,6 +90,23 @@ export default async function MercadoDistritoPage({ params }: Props) {
             ))}
           </ol>
         )}
+      </section>
+
+      <section className="mb-12">
+        <h2 className="text-2xl font-bold mb-4">Tendência de preços em {district}</h2>
+        <div className="border rounded-2xl p-6 space-y-3 text-secondary">
+          {(() => {
+            const apt = findDistrictMarketData(district, "apartment");
+            const house = findDistrictMarketData(district, "house");
+            return (
+              <>
+                {apt ? <p>Apartamentos: {formatEuros(apt.pricePerSqm)} €/m² (fonte: {apt.source}, ref. {apt.asOf}).</p> : null}
+                {house ? <p>Moradias: {formatEuros(house.pricePerSqm)} €/m² (fonte: {house.source}, ref. {house.asOf}).</p> : null}
+                <p>Sem histórico de tendência ainda — as leituras disponíveis são valores pontuais de referência.</p>
+              </>
+            );
+          })()}
+        </div>
       </section>
 
       <section>
