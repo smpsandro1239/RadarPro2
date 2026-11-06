@@ -56,7 +56,7 @@ export default async function OportunidadesPage() {
               className="border-2 border-primary rounded-2xl overflow-hidden hover:shadow-xl transition group block"
             >
               <div className="aspect-video bg-slate-200 relative overflow-hidden">
-                <PropertyImage src={imageUrl} alt={prop.title} fill className="group-hover:scale-105 transition-transform duration-300" />
+                <PropertyImage src={imageUrl} alt={prop.title} fill className="group-hover:scale-105 transition-transform duration-300" assetClass={prop.assetClass} />
                 <div className="absolute top-4 left-4 text-3xl z-10">{medals[i]}</div>
                 <div className="absolute top-4 right-4 bg-primary text-white px-3 py-1 rounded-lg text-sm font-bold z-10">
                   {formatScoreOutOf100(prop.score)}
@@ -116,7 +116,7 @@ export default async function OportunidadesPage() {
             >
               <div className="w-8 text-center font-bold text-lg text-primary">{i + 1}</div>
               <div className="w-16 h-12 bg-slate-200 rounded overflow-hidden relative flex-shrink-0">
-                <PropertyImage src={imageUrl} alt={prop.title} fill className="object-cover" />
+                <PropertyImage src={imageUrl} alt={prop.title} fill className="object-cover" assetClass={prop.assetClass} />
               </div>
               <div className="flex-1 min-w-0">
                 <div className="font-bold text-sm truncate">{prop.title}</div>
@@ -144,7 +144,7 @@ export default async function OportunidadesPage() {
               className="border rounded-xl overflow-hidden hover:shadow-lg transition group block"
             >
               <div className="aspect-video bg-slate-200 relative overflow-hidden">
-                <PropertyImage src={imageUrl} alt={prop.title} fill className="group-hover:scale-105 transition-transform duration-300" />
+                <PropertyImage src={imageUrl} alt={prop.title} fill className="group-hover:scale-105 transition-transform duration-300" assetClass={prop.assetClass} />
                 <div className="absolute top-2 right-2 bg-red-500 text-white px-2 py-0.5 rounded text-xs font-bold z-10">
                   {formatOptional(prop.discountPct === null ? null : -prop.discountPct, "%")}
                 </div>
@@ -172,7 +172,7 @@ export default async function OportunidadesPage() {
               className="border rounded-xl overflow-hidden hover:shadow-lg transition group block"
             >
               <div className="aspect-video bg-slate-200 relative overflow-hidden">
-                <PropertyImage src={imageUrl} alt={prop.title} fill className="group-hover:scale-105 transition-transform duration-300" />
+                <PropertyImage src={imageUrl} alt={prop.title} fill className="group-hover:scale-105 transition-transform duration-300" assetClass={prop.assetClass} />
                 <div className="absolute top-2 right-2 bg-success text-white px-2 py-0.5 rounded text-xs font-bold z-10">
                   {formatOptional(prop.rentability, "%")}
                 </div>

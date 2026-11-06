@@ -99,7 +99,7 @@ export default function PropertyCard({
       prefetch={false}
     >
       <div className="aspect-video bg-slate-200 relative overflow-hidden">
-        <PropertyImage src={imageUrl} alt={title} fill className="group-hover:scale-105 transition-transform duration-300" />
+        <PropertyImage src={imageUrl} alt={title} fill className="group-hover:scale-105 transition-transform duration-300" assetClass={assetClass} />
 
         {/* Tipo: Leilão ou Preço fixo */}
         {isAuction && auctionDaysLeft !== null && auctionDaysLeft >= 0 ? (

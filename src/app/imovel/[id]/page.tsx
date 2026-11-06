@@ -113,7 +113,7 @@ export default async function PropertyPage({
 
       <div className="grid md:grid-cols-2 gap-8">
         <div className="aspect-video bg-slate-200 rounded-2xl overflow-hidden relative">
-          <PropertyImage src={imageUrl} alt={prop.title} fill />
+          <PropertyImage src={imageUrl} alt={prop.title} fill assetClass={prop.assetClass} />
           <VerifiedBadge
             isVerified={isVerified}
             hasImage={hasImage}

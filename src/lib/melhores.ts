@@ -14,6 +14,7 @@ export interface RankedProperty {
   discountPct: number | null;
   type: string;
   images?: string | null;
+  assetClass?: string | null;
 }
 
 let cachedClient: ReturnType<typeof createClient> | null = null;
@@ -51,6 +52,7 @@ export async function getTopScrapeProperties(limit = 50): Promise<RankedProperty
       discountPct: properties.discountPct,
       type: properties.type,
       images: properties.images,
+      assetClass: properties.assetClass,
     })
     .from(properties)
     .where(and(eq(properties.dataOrigin, "scrape"), eq(properties.isActive, true)))

@@ -21,7 +21,7 @@ interface MelhoresSearchParams {
   page?: string;
 }
 
-function imagesOf(prop: { images?: string | null }) {
+function imagesOf(prop: { images?: string | null; assetClass?: string | null }) {
   if (!prop.images) return null;
   const parsed = JSON.parse(prop.images);
   return Array.isArray(parsed) ? parsed[0] ?? null : parsed;
@@ -115,7 +115,7 @@ export default async function MelhoresPage({ searchParams }: { searchParams: Pro
                   <Link href={`/imovel/${prop.id}`} className="flex items-center gap-4 flex-1 min-w-0">
                     <div className="w-8 text-center font-bold text-lg text-primary">{rank}</div>
                     <div className="w-16 h-12 bg-slate-200 rounded overflow-hidden relative flex-shrink-0">
-                      <PropertyImage src={images} alt={prop.title} fill className="object-cover" />
+                      <PropertyImage src={images} alt={prop.title} fill className="object-cover" assetClass={prop.assetClass} />
                     </div>
                     <div className="flex-1 min-w-0">
                       <div className="font-bold text-sm truncate">{prop.title}</div>
@@ -201,7 +201,7 @@ export default async function MelhoresPage({ searchParams }: { searchParams: Pro
                         <Link href={`/imovel/${prop.id}`} className="flex items-center gap-4 flex-1 min-w-0">
                           <div className="w-8 text-center font-bold text-lg text-primary">{i + 1}</div>
                           <div className="w-16 h-12 bg-slate-200 rounded overflow-hidden relative flex-shrink-0">
-                            <PropertyImage src={images} alt={prop.title} fill className="object-cover" />
+                            <PropertyImage src={images} alt={prop.title} fill className="object-cover" assetClass={prop.assetClass} />
                           </div>
                           <div className="flex-1 min-w-0">
                             <div className="font-bold text-sm truncate">{prop.title}</div>

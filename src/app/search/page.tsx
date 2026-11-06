@@ -434,7 +434,7 @@ function AdvancedSearchPageInner() {
                   className="border rounded-2xl overflow-hidden hover:shadow-xl transition group block"
                 >
                   <div className="aspect-video bg-slate-200 relative overflow-hidden">
-                    <PropertyImage src={imageUrl} alt={prop.title} fill className="group-hover:scale-105 transition-transform duration-300" />
+                    <PropertyImage src={imageUrl} alt={prop.title} fill className="group-hover:scale-105 transition-transform duration-300" assetClass={prop.assetClass} />
                     <div className="absolute top-4 left-4 bg-white px-3 py-1 rounded-lg text-xs font-bold shadow-sm z-10">
                       {prop.sourceName}
                     </div>
