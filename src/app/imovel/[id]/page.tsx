@@ -484,8 +484,10 @@ export default async function PropertyPage({
           <SimilarProperties
             currentPropertyId={prop.id}
             district={prop.district}
+            municipality={prop.municipality}
             type={prop.type}
             price={prop.price}
+            sqm={prop.areaSqm ?? null}
           />
 
           {/* Price history */}
