@@ -241,3 +241,13 @@
 
 **Técnico:** ✅ Código verde, testes passam, build verde, preview 200.
 **Produto:** ⚠️ Bloqueado por `DECISIONS_PENDING.md` §11 — live 100% demo. Não fazer merge para `main` até decisão.
+
+### T11 — Desbloquear auction_end_date + testar price tracking end-to-end (2026-11-06) — CONCLUIDA
+
+- Commits: `a5c699b` fix(martelo): extrair auction_end_date do evento (parser + writeRows); `c3cc59a`/`71de38f`/`3c537f1` docs martelo; F2/F3 re-scrape.
+- Causa raiz: `isPropertyEvent` esperava `tipo === "imovel"`, API devolve `Imoveis`/`Imóveis`; `writeRows` descartava `auction_end_date`.
+- Resultado: parser + writer corrigidos; re-scrape `--limit 50 --write --confirm-remote-write` → 7 leilões com `auction_end_date`.
+- Teste E2E price tracking: OK — check `--write --confirm-remote-write` detetou alteração → insert em `price_history` → cleanup/restore (85 entradas finais).
+- Estado final: live scrape com 7 leilões / 7 com `auction_end_date` / `price_history` 85 entradas.
+- Deploy produção: a atualizar pós-deploy final (F.6) — commit `a5c699b` deploy READY (`radar-pro2.vercel.app`).
+- Human blockers: `DECISIONS_PENDING.md` §14 (resolvido nesta tarefa).
