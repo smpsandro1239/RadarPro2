@@ -24,6 +24,26 @@ Semáforo: Dados EM verde (scrape 65, area 100%) · Motor EM verde para resident
 - Com area: 65 (100%) | Com score: 30 (46,2%) | Com market_value: 30 (46,2%) | Com imagem: 15 (23,1%) | Com coords: 50 (76,9%).
 - Asset classes scorable: apartment 18/18, house 12/12 (100% residential com score).
 
+## Iteração 14 – Profundidade + dados de mercado + conversão (2026-11-06)
+
+Semáforo: Dados EM verde (scrape 65, area 100%, flatin API keyless OK) · Motor EM verde para residential (apartment/house 100% com score) · UI EM verde (`/melhores`, `/mercado/[distrito]`, `/sobre-dados`) · SEO EM progresso (`/imovel` metadata, sitemap) · Segurança EM verde · Deploy EM verde (release em curso).
+
+✅ O que esta bem — so o que MEDISTE
+- Fase 1: `src/lib/flatin.ts` criado (API keyless flatin.pt v1: IMI + municipalities stats). F1.3: `/mercado/[distrito]` criado.
+- Fase 2: `src/lib/valuation/acquisition-costs.ts` criado + testes (IMT, selo, escritura, registro, comissao).
+
+- Fase 4.1: `generateMetadata` + JSON-LD adicionados em `/imovel/[id]`.
+- Fase 4.2: sitemap corrigido (dominio `radar-pro2.vercel.app`) + rotas `/melhores`, `/leiloes`, `/sobre-dados`, `/mercado/[distrito]` adicionadas.
+
+❌ O que esta mal / riscos
+- INE directo: bloqueou (fetch failed x6) — coberto indirectamente via flatin (median sale price INE).
+- Fase 3 (waitlist/newsletter): aguarda persistencia dedicada (tabela nova).
+
+➡ Proxima iteracao: Fase 5/6/7 (perf, dashboard /estado, conclusao final).
+
+ℹ Numeros (live, scrape 65)
+- Com area: 65 (100%) | Com score: 30 (46,2%) | Com imagem: 15 (23,1%).
+
 ## Iteração 11 – Cobertura market data + scores recalculados (2026-11-05)
 
 Semáforo: Dados EM verde (65 scrape, area 100%) · Motor AMARELO (score 46,2%, 30/65; resto mixed/rural/commercial/urban_land) · UI EM verde (`/melhores` com aviso elegibilidade) · Segurança EM verde · Deploy EM verde (release final aplicado).
