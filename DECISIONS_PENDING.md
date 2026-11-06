@@ -316,3 +316,12 @@ Distribuição real (scrape 65 ativo): apartment 3 | house 12 | mixed 8 | rural_
 - **Estado:** ✅ RESOLVIDO (2026-11-06, Fases 2–4) — parser `isPropertyEvent` aceita `Imoveis`/`Imóveis`; `writeRows` persiste `auction_end_date`; re-scrape (`--limit 50 --write --confirm-remote-write`) gravou 7 leilões com data fim; teste E2E de price tracking OK (check `--write --confirm-remote-write` → insert em `price_history` → restore/cleanup); `/baixaram` responde 200.
 
 - **Risco:** janela de leilões <24h agora com 7 alvos (fim previsto ~2026-11-06); 50 leilões legados (`martelo-lo*`) com `auction_end_date` NULL; sem `change_type` no schema `price_history`.
+
+
+### 15. Sentry DSN em produção — PLACEHOLDER
+
+- **O que fazer:** configurar DSN real no Vercel (`SENTRY_DSN`) + `NEXT_PUBLIC_SENTRY_DSN`.
+
+- **Estado:** 2026-11-06, Fase 4.2 — placeholders (`https://example@o1.ingest.sentry.io/123456`) presentes em `.env.local`. Confirmar DSN real com o owner.
+
+- **Risco:** error tracking sem DSN real → Sentry sem dados.

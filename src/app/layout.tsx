@@ -5,6 +5,7 @@ import CookieBanner from "@/components/CookieBanner";
 import ServiceWorkerRegistration from "@/components/ServiceWorkerRegistration";
 import Navbar from "@/components/Navbar";
 import * as Sentry from "@sentry/nextjs";
+import { Analytics } from "@vercel/analytics/next";
 
 export const metadata: Metadata = {
   title: "RadarPro Portugal - Oportunidades Imobiliárias",
@@ -27,6 +28,7 @@ export default function RootLayout({
         {children}
         <CookieBanner />
         <ServiceWorkerRegistration />
+        <Analytics />
       </body>
     </html>
   );
