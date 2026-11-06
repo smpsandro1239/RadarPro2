@@ -270,3 +270,11 @@
 - Prevencao: `scripts/db-snapshot.ts` adicionado (commit `669b051`).
 - Docs: `docs/data-regression.md`, `docs/launch-readiness.md` (decisão recomendada).
 - Estado final: scrape 72 ativos (65 baseline + 7 novos), leilões 57, com data 7, price_history 85.
+
+### T14 — Bloquear expireStale + consolidar 72 imoveis (2026-11-06, Fase 1-6)
+
+- F1: `src/lib/inngest/functions.ts` — expireStale exclui source `Martelo%` via `notLike(properties.sourceName, "Martelo%")`; docs `docs/expire-stale-audit.md` (commits `1410049`, `f368c86`, `0f6731a`).
+- F2: reset `check_status` not_found→pending nos 72 ativos (ROWS_AFFECTED=50).
+- F3: distribuicao 72 imoveis por asset_class/district; docs atualizado.
+- F5: launch readiness atualizado com 72.
+- F6: verify ✓, prod 5 rotas → 200; commit final `chore(release): bloquear regressao + consolidar 72 imoveis`.
