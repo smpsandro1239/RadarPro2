@@ -306,3 +306,13 @@ Distribuição real (scrape 65 ativo): apartment 3 | house 12 | mixed 8 | rural_
 
 - **Risco:** sem leiloes com fim previsto -> check nao tem alvo actualmente; quando Martelo passar a publicar `auction_end_date`, o cron passa a ter trabalho.
 
+
+
+### 14. Price tracking — infraestrutura pronta, dados a fluir (atualizado 2026-11-06, Fase 4)
+
+
+- **O que fazer:** validar mecanismo end-to-end de deteção/histórico de alterações de preço/lance.
+
+- **Estado:** ✅ RESOLVIDO (2026-11-06, Fases 2–4) — parser `isPropertyEvent` aceita `Imoveis`/`Imóveis`; `writeRows` persiste `auction_end_date`; re-scrape (`--limit 50 --write --confirm-remote-write`) gravou 7 leilões com data fim; teste E2E de price tracking OK (check `--write --confirm-remote-write` → insert em `price_history` → restore/cleanup); `/baixaram` responde 200.
+
+- **Risco:** janela de leilões <24h agora com 7 alvos (fim previsto ~2026-11-06); 50 leilões legados (`martelo-lo*`) com `auction_end_date` NULL; sem `change_type` no schema `price_history`.
