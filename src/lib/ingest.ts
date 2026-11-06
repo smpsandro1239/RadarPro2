@@ -1,5 +1,5 @@
 import { db } from "@/db";
-import { properties } from "@/db/schema";
+import { properties, priceHistory } from "@/db/schema";
 import { eq, and } from "drizzle-orm";
 import { normalizeDistrict, resolveGeography } from "@/lib/geography";
 import { evaluateProperty } from "@/lib/valuation";
@@ -196,7 +196,23 @@ export async function ingestProperty(prop: ScrapedProperty): Promise<{
       maxBid: normalized.maxBid,
     };
 
+    const oldPrice = existingProp.price ?? null;
+    const oldMarketValue = existingProp.marketValue ?? null;
+    const newMarketValue = (normalized as any).marketValue ?? null;
+
     await db.update(properties).set(updatedFields).where(eq(properties.id, existing[0].id));
+
+    const priceChanged = oldPrice !== null && normalized.price !== null && oldPrice !== normalized.price;
+    const mvChanged = oldMarketValue !== null && newMarketValue !== null && oldMarketValue !== newMarketValue;
+    if (priceChanged || mvChanged) {
+      await db.insert(priceHistory).values({
+        id: crypto.randomUUID(),
+        propertyId: existingProp.id,
+        price: normalized.price,
+        marketValue: newMarketValue,
+        recordedAt: new Date(),
+      });
+    }
 
     return { action: "updated", id: existing[0].id };
   }
@@ -212,6 +228,15 @@ export async function ingestProperty(prop: ScrapedProperty): Promise<{
   }
 
   await db.insert(properties).values(normalized as any);
+
+  await db.insert(priceHistory).values({
+    id: crypto.randomUUID(),
+    propertyId: normalized.id,
+    price: normalized.price,
+    marketValue: (normalized as any).marketValue ?? null,
+    recordedAt: new Date(),
+  });
+
   return { action: "inserted", id: normalized.id };
 }
 
