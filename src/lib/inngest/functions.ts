@@ -143,7 +143,7 @@ export const expireStale = inngest.createFunction(
     const result = await step.run("expire", async () => {
       const { db } = await import("@/db");
       const { properties } = await import("@/db/schema");
-      const { eq, and, lt } = await import("drizzle-orm");
+      const { eq, and, lt, notLike } = await import("drizzle-orm");
 
       const maxAgeDays = 7;
       const cutoffDate = new Date(Date.now() - maxAgeDays * 24 * 60 * 60 * 1000);
@@ -154,7 +154,8 @@ export const expireStale = inngest.createFunction(
         .where(
           and(
             eq(properties.isActive, true),
-            lt(properties.lastChecked, cutoffDate)
+            lt(properties.lastChecked, cutoffDate),
+            notLike(properties.sourceName, "Martelo%")
           )
         );
 
