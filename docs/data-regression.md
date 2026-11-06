@@ -23,5 +23,8 @@ Contagem de imóveis scrape ativos passou de **65** (2026-11-05, registado em DE
 ## Decisão (Fase 0.2)
 - **Cenário 1** (desativação em massa, sem apagar): **confirmado como hipótese** → restaurar via `UPDATE properties SET is_active = 1 WHERE data_origin='scrape' AND is_active = 0`.
 
-## Estado pós-restauro
-- Pendente (Fase 1).
+## Estado pos-restouro (Fase 1)
+
+- UPDATE `properties SET is_active = 1 WHERE data_origin='scrape' AND is_active = 0` executado (ROWS_AFFECTED=50).
+- Scrape ativos apos restauracao: **72** (50 legacy restaurados + 15 Casa Sapo + 7 novos martelo-leil_*).
+- Baseline original (2026-11-05): scrape 65 ativos (= 50 martelo legacy + 15 Casa Sapo). O re-scrape acrescentou 7.
