@@ -100,10 +100,11 @@ Semáforo: Dados EM verde (`price_history` 85 entradas) · Engine EM verde (F2.1
 - Fase 2.2: `scripts/backfill-initial-prices.ts` — 65 imóveis scrape → +65 entradas (initial); `price_history` = 85.
 - Fase 3: `scripts/check-price-changes-standalone.ts` — dry-run OK, write OK (0 leilões <24h com `auction_end_date` NULL); commit `51546c3`; Martelo sem re-check (limitação registrada).
 - Fase 4: `src/inngest/functions/check-price-changes.ts` — cron `0 9-22 * * *`; registada em `/api/inngest`; dev server + Inngest UI :8288; run `01M6Q5CN92DKTRJD6FFEYDD330` → **Completed** (`{checked: 0}`); commit `681bc9d`.
+- Fase 5: badge de alteração de preço no `PropertyCard` (via `attachLastChange` em queries + `lastChanges`); `/imovel/[id]` histórico (gráfico + % vs inicial) já existente; página `/baixaram` criada (+link no menu); `/leiloes` com secção de lances recentes.
+- Fase 6: `npm run verify` verde (33/33 · 231 tests · build OK); `scripts/verify-production.ts` → 5 rotas OK (`/`, `/oportunidades`, `/leiloes`, `/melhores`, `/baixaram`); query final `price_history` = 85 entradas / 68 imóveis com histórico.
 
 ❌ Em aberto
-- Fase 5: UI badge/histórico `/imovel`, `/baixaram`, `/leiloes` com lances.
-- Fase 6: verificação final + release.
+- Fase 7: release final + reporte ao utilizador.
 
 ## Iteração 11 – Cobertura market data + scores recalculados (2026-11-05)
 
