@@ -40,3 +40,12 @@ Com o restauro aplicado (scrape ativo: 72 = 65 baseline + 7 novos), recomenda-se
 **Recomendação do agente:** (b). 72 imóveis ainda não sustentam "os melhores dos melhores por distrito", mas a infraestrutura está verde.
 
 **Status técnico atual:** deploy READY, `npm run verify` verde, 231 testes.
+
+## Estado atual (após diagnóstico + restauro, 2026-11-06)
+
+- Scrape ativos: **72** (50 legacy restaurados + 15 Casa Sapo + 7 novos Martelo).
+- Leilões: 57 (7 com `auction_end_date`).
+- `not_found_ativos`: **0** (resetado para `pending`; `expireStale` corrigido para ignorar Martelo).
+- Comparables: funcional (3 por imóvel, zona).
+- `/mercado/[distrito]`: tendência pontual + top 3.
+- Vercel Analytics: ativo. Sentry: placeholder (pendente).
