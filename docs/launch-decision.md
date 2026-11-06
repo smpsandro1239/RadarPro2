@@ -27,3 +27,13 @@ Justificação:
 2. Anunciar em redes sociais / fóruns PT.
 3. Configurar Google Search Console (submeter sitemap).
 4. Monitorar /estado semanalmente.
+
+## Addenda (2026-11-06) — Fontes gratuitas não exploradas
+
+A Conclusão A afirmava "fontes gratuitas esgotadas". Esta afirmação estava incompleta: nunca foram tentados 4 MCPs públicos (CasaNest, Fixatia, Minha Morada) nem 2 agregadores de leilões (Casas Penhoradas, Licito.pt).
+
+A decisão de lançar mantém-se. O ciclo é reaberto apenas para testar estas fontes, sem alterar a data de lançamento. Se alguma funcionar, os imóveis adicionais aparecem em /melhores automaticamente. Se nenhuma funcionar, o site fica exatamente como está (72 imóis).
+
+- **CasaNest:** CONECTADO e FUNCIONAL — 3 imóveis Lisboa ingeridos (commit `bf6ead3`).
+- **Fixatia / Minha Morada:** falharam — registados em `DECISIONS_PENDING.md` §18, avanço sem retry.
+- **Casas Penhoradas / Licito.pt:** falharam em scraping estável — avanço sem retry automático.

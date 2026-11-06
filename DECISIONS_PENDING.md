@@ -327,3 +327,26 @@ Distribuição real (scrape 65 ativo): apartment 3 | house 12 | mixed 8 | rural_
 - **Ação do dono:** criar conta em sentry.io, copiar DSN, adicionar em Vercel env vars (`SENTRY_DSN`, `NEXT_PUBLIC_SENTRY_DSN`).
 - **Bloqueador:** observabilidade — não crítico para os primeiros utilizadores.
 - **Risco:** error tracking sem DSN real → Sentry sem dados.
+
+
+### 16. Apify — CRÉDITO GRÁTIS ($5) — PENDENTE DO DONO (Ciclo reaberto parcial, Fase 2)
+
+- **Status:** PENDENTE — ciclo reaberto (Opção 1) para testar fontes gratuitas não exploradas.
+- **O que fazer:** criar conta Apify (gratuita, sem cartão), copiar API token; adicionar `APIFY_TOKEN` a `.env.local` e Vercel.
+- **Decisão do agente:** não iniciar Fase 2 até token existir (§16 pendente). O `$5` de crédito daria acesso a Actors (Imovirtual, Idealista, ERA, C21).
+- **Risco:** sem token, fonte inacessível no ciclo atual.
+
+
+### 17. Scrapers open-source (Idealista, Casa Sapo) — NÃO RECOMENDADO
+
+- **Status:** NÃO RECOMENDADO — decisão do agente (Fase 3 do ciclo reaberto).
+- **Motivo:** `idealista-scraper` (Python) e `idealista-scraper-api` (Node) exigem browser automation (Puppeteer/Playwright); anti-bot agressivo; custo de manutenção alto.
+- **Alternativa mantida:** MCP CasaNest (funcionou) e agregadores HTML quando disponíveis.
+
+
+### 18. MCPs gratuitos — CasaNest OK; Fixatia falhou; Minha Morada falhou (Ciclo reaberto parcial, Fase 1)
+
+- **CasaNest** (`https://casanest.eu/mcp`): **CONECTADO e FUNCIONAL** (2026-11-06). Ingest executado com sucesso (`scripts/ingest-casanest-mcp.ts`, 3 imóveis Lisboa inseridos, commit `bf6ead3`).
+- **Fixatia** (`https://mcp.fixatia.com/api/mcp`): **FALHOU** (protocol error: `Method not found: notifications/initialized`). Avançar sem retry automático.
+- **Minha Morada** (`https://claudemarketplaces.com`): **FALHOU** (HTTP 405). Endpoint provavelmente inválido. Avançar sem retry automático.
+- **flat.in** (MCP/REST): já integrado via API REST no projeto (`src/lib/flatin.ts`).

@@ -302,3 +302,12 @@
 - Sentry: adiado formalmente (§15).
 - Placeholders: implementados; audit visual sem "Sem imagem disponível".
 - Próximo passo: decisão do dono sobre Apify $5 / Martelo premium / expansão para 100+ imóveis.
+
+### T17 — Ciclo reaberto parcial: fontes gratuitas não exploradas (2026-11-06)
+
+- Motivo: `docs/launch-decision.md` (Conclusão A) afirmava "fontes gratuitas esgotadas" — afirmação factualmente incompleta.
+- F1 (MCPs): CasaNest (`https://casanest.eu/mcp`) **conectado e funcional** → ingest `scripts/ingest-casanest-mcp.ts` (3 imóveis Lisboa, `bf6ead3`). Fixatia (`mcp.fixatia.com/api/mcp`) **falhou** (protocol error) → avanço. Minha Morada (`claudemarketplaces.com`) **falhou** (HTTP 405) → avanço.
+- F2 (Apify): **adiado** — pendente de token do dono (§16).
+- F3 (scrapers open-source): **não recomendado** (§17).
+- F4 (agregadores): Casas Penhoradas + Licito.pt — falharam em scraping estável (JS-heavy) → avanço.
+- Launch: **mantida** (Conclusão A). Decisão registada em `docs/launch-decision.md` (addenda) e `DECISIONS_PENDING.md` (§16-§18).
