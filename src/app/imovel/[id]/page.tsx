@@ -2,6 +2,7 @@ import { db } from "@/db";
 import { properties, priceHistory } from "@/db/schema";
 import { eq, desc } from "drizzle-orm";
 import { notFound } from "next/navigation";
+import type { Metadata } from "next";
 import { MapPin, TrendingDown, ExternalLink, Heart, ChevronDown, Info, AlertTriangle, Gavel } from "lucide-react";
 import Image from "next/image";
 import ValuationCard from "@/components/ValuationCard";
@@ -18,19 +19,23 @@ import VerifiedBadge from "@/components/VerifiedBadge";
 import VisitBooking from "@/components/VisitBooking";
 import NeighborhoodRadar from "@/components/NeighborhoodRadar";
 
+export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
+  const { id } = await params;
+  const result = await db.select().from(properties).where(eq(properties.id, id)).limit(1);
+  const prop = result[0];
+  if (!prop) return { title: "Im\u00f3vel \u2014 RadarPro" };
+  const title = `${prop.type ?? "Im\u00f3vel"} em ${prop.municipality} \u2014 ${prop.price.toLocaleString("pt-PT")}\u20ac | RadarPro`;
+  const description = `Im\u00f3vel real em ${prop.municipality}, distrito ${prop.district}. Pre\u00e7o ${prop.price.toLocaleString("pt-PT")}\u20ac. Score ${prop.score ?? "\u2014"}/100. Avalia\u00e7\u00e3o com motor de valoriza\u00e7\u00e3o.`;
+  return { title, description };
+}
+
 export default async function PropertyPage({
   params,
 }: {
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const result = await db
-    .select()
-    .from(properties)
-    .where(eq(properties.id, id))
-    .limit(1);
-
-  if (result.length === 0) notFound();
+  const result = await db.select().from(properties).where(eq(properties.id, id)).limit(1);
   const prop = result[0];
 
   // Get price history
