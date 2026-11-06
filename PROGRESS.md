@@ -251,3 +251,13 @@
 - Estado final: live scrape com 7 leilões / 7 com `auction_end_date` / `price_history` 85 entradas.
 - Deploy produção: a atualizar pós-deploy final (F.6) — commit `a5c699b` deploy READY (`radar-pro2.vercel.app`).
 - Human blockers: `DECISIONS_PENDING.md` §14 (resolvido nesta tarefa).
+
+### T12 — Auditoria + comparables + launch readiness (2026-11-06, Fases 1-6) — CONCLUIDA
+
+- F1: auditoria `martelo-lo*` → REFUTADA hipótese de loja (prefixos ≠ tipo); sem reclassificação. Commit `bdffc4c`.
+- F2: `findComparables` criada (`src/lib/valuation/comparables.ts`), UI `/imovel/[id]` + análise relativa. Commits `ce70e3b`, `a86dc2a`, `8a9aee1`.
+- F3: `/mercado/[distrito]` ganhou seção de tendência (pontual, sem série). Commit `4852cc5`.
+- F4: `@vercel/analytics` + `<Analytics />` (commit `86819cc`); Sentry DSN = placeholder (registo DECISIONS §15); `/metodologia` + footer (Metodologia/Reportar).
+- F5: `docs/launch-readiness.md` criado.
+- F6: `npm run verify` ✅ (231 tests, typecheck, build); prod 5 rotas → 200; DB final: 22 scrape, 7 leilões, 7 com data, 19 com score, price_history 85.
+- Commit final: `chore(release): auditoria + comparables + launch readiness`.

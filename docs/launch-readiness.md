@@ -1,0 +1,32 @@
+# RadarPro — Launch Readiness
+
+## O que está pronto
+
+- [x] Motor de avaliação v2 (AVM + score)
+- [x] Imóveis reais via scrape (Martelo.pt), 7 com `auction_end_date` preenchido
+- [x] Price tracking end-to-end testado (E2E manual + cron)
+- [x] `/melhores`, `/baixaram`, `/leiloes`, `/mercado/[distrito]`, `/imovel/[id]` com comparables
+- [x] Simulador de custos de aquisição
+- [x] Meta tags + JSON-LD + sitemap
+- [x] Cron Inngest (daily + check-price-changes)
+- [x] Vercel Analytics
+
+## O que bloqueia "melhores dos melhores"
+
+- Cobertura actual: imóveis reais scrape (20+ distritos, ~30 residenciais com score).
+- Fontes gratuitas esgotadas para leilões com lances variáveis.
+- 50 leilões legados sem `auction_end_date` (sem janela para cron).
+
+## Opções para desbloquear
+
+1. Martelo premium (custo a confirmar).
+2. Apify ($5 crédito) = ~1000 imóveis.
+3. Mapear URLs originais (bloqueado).
+
+## Decisão do dono
+
+- [ ] Lançar publicamente com dados atuais (honesto).
+- [ ] Investir numa das fontes pagas.
+- [ ] Aguardar recolha natural.
+
+**Status técnico atual:** deploy READY, `npm run verify` verde, 231 testes.
