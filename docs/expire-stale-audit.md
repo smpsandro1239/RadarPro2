@@ -35,3 +35,8 @@ const expired = await db
 
 - `expireStale` passou a excluir source `Martelo%` via `notLike(properties.sourceName, "Martelo%")`.
 - Leilões com fim previsto (via `ingestProperty`) continuam a ser desativados quando o fim passa.
+
+## F1.2 (correção final) — Estratégia robusta
+
+- **Opção B (whitelist por prefixo) implementada**: `expireStale` exclui sources não listados em `SAFE_SOURCE_PREFIXES = ["Martelo", "Casa Sapo", "Imovirtual", "OLX", "SuperCasa"]` (verificação por `startsWith`).
+- Fontes fora da whitelist (ex.: bancos, RSS sem source nomeado) seguem a política de expiração normal.
