@@ -61,12 +61,8 @@ export async function GET() {
       .from(properties)
       .where(sql`${properties.lat} IS NULL`);
 
-    if (needsGeocoding[0]?.count > 0) {
-      checks.status = "warning";
-    }
-
-    checks.status = "ok";
-    return NextResponse.json(checks);
+    if (Number(needsGeocoding[0]?.count ?? 0) > 0) checks.status = "warning";
+    return NextResponse.json(checks, { status: checks.status === "ok" ? 200 : 503 });
   } catch (error) {
     checks.status = "error";
     checks.database.reachable = false;
