@@ -1,11 +1,12 @@
 @import "tailwindcss";
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap");
 
 :root {
-  --background: #ffffff;
-  --foreground: #0f172a;
-  --primary: #2563eb;
+  --background: #FAFAF9;
+  --foreground: #334155;
+  --primary: #0F172A;
   --secondary: #64748b;
-  --accent: #f59e0b;
+  --accent: #B45309;
   --success: #22c55e;
 }
 
@@ -19,5 +20,5 @@
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: system-ui, -apple-system, sans-serif;
+  font-family: "Inter", system-ui, -apple-system, sans-serif;
 }
