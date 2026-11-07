@@ -7,7 +7,7 @@ import { evaluateProperty } from "../src/lib/valuation/index";
 async function main() {
  const apply=process.argv.includes("--apply"), url=process.env.TURSO_DATABASE_URL??"";
  if(apply&&process.env.ALLOW_DATABASE_BACKFILL!=="1")throw new Error("Define ALLOW_DATABASE_BACKFILL=1.");
- if(apply&&!url.startsWith("file:"))throw new Error("Backfill bloqueado: apenas BD local file:.");
+ if(!url.startsWith("file:"))throw new Error("Backfill bloqueado: qualquer execução exige TURSO_DATABASE_URL=file: local; não são permitidas leituras nem escritas em bases remotas.");
  const rows=await db.select().from(properties).where(eq(properties.isActive,true));
  let eligible=0,skipped=0;
  for(const row of rows){
