@@ -3,18 +3,38 @@
 
 :root {
   --background: #FAFAF9;
+  --surface: #ffffff;
+  --surface-elevated: #ffffff;
+  --border: #E2E8F0;
   --foreground: #334155;
+  --text-primary: #0F172A;
+  --text-secondary: #64748B;
+  --text-disabled: #94A3B8;
   --primary: #0F172A;
-  --secondary: #64748b;
+  --secondary: #64748B;
   --accent: #B45309;
-  --success: #22c55e;
+  --success: #22C55E;
+  --warning: #D97706;
+  --error: #DC2626;
+  --info: #2563EB;
 }
 
 @theme {
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-surface-elevated: var(--surface-elevated);
+  --color-border: var(--border);
+  --color-foreground: var(--foreground);
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-disabled: var(--text-disabled);
   --color-primary: var(--primary);
   --color-secondary: var(--secondary);
   --color-accent: var(--accent);
   --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-error: var(--error);
+  --color-info: var(--info);
 }
 
 body {
