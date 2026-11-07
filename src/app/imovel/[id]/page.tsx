@@ -16,7 +16,7 @@ import SimilarProperties from "@/components/SimilarProperties";
 import CommuteEstimator from "@/components/CommuteEstimator";
 import VerifiedBadge from "@/components/VerifiedBadge";
 
-import VisitBooking from "@/components/VisitBooking";
+import SourceContact from "@/components/SourceContact";
 import NeighborhoodRadar from "@/components/NeighborhoodRadar";
 
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
@@ -622,10 +622,10 @@ export default async function PropertyPage({
             </div>
           </div>
 
-          {/* Visit booking */}
+          {/* Contact source */}
           <div className="border-t pt-6">
-            <h2 className="font-bold mb-4">Agendar Visita</h2>
-            <VisitBooking propertyTitle={prop.title} propertyId={prop.id} sourceName={prop.sourceName} />
+            <h2 className="font-bold mb-4">Contactar Anúncio</h2>
+            <SourceContact propertyTitle={prop.title} sourceName={prop.sourceName} isAuction={prop.isAuction} url={prop.url} />
           </div>
         </div>
       </div>

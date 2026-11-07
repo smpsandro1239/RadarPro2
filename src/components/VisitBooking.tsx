@@ -1,5 +1,9 @@
 "use client";
 
+// @unused Componente temporariamente desativado. Deve substituir-se por
+// SourceContact (contacto com a fonte original). Reactivar quando o RadarPro
+// tiver imóveis próprios com visitas a gerir.
+
 import { useState } from "react";
 import { Calendar, Phone, MapPin, Send } from "lucide-react";
 
