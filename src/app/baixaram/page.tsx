@@ -88,6 +88,11 @@ export default async function BaixaramPage() {
         <div className="border rounded-2xl p-8 text-center text-secondary">
           Ainda não registamos quedas de preço nos dados reais. Quando um imóvel for
           atualizado com um valor inferior ao anterior, vai aparecer aqui.
+          <div className="mt-6">
+            <Link href="/melhores" className="inline-block bg-primary text-white px-6 py-3 rounded-xl font-bold hover:opacity-90 transition">
+              Ver oportunidades
+            </Link>
+          </div>
         </div>
       ) : (
         <div className="space-y-4">

@@ -319,17 +319,17 @@ export default async function PropertyPage({
                 <div className="text-sm space-y-1">
                   <div className="flex justify-between">
                     <span className="text-secondary">Valor de mercado</span>
-                    <span className="font-mono">{formatEuros(prop.marketValue)}</span>
+                    <span className="tabular-nums">{formatEuros(prop.marketValue)}</span>
                   </div>
                   {prop.vpt && (
                     <div className="flex justify-between">
                       <span className="text-secondary">VPT</span>
-                      <span className="font-mono">{prop.vpt.toLocaleString("pt-PT")}€</span>
+                      <span className="tabular-nums">{prop.vpt.toLocaleString("pt-PT")}€</span>
                     </div>
                   )}
                   <div className="pt-2 border-t border-slate-200 flex justify-between font-bold">
                     <span>Base de imposto (max)</span>
-                    <span className="font-mono text-orange-600">
+                    <span className="tabular-nums text-orange-600">
                       {Math.max(prop.marketValue ?? 0, prop.vpt ?? 0).toLocaleString("pt-PT")}€
                     </span>
                   </div>
@@ -359,15 +359,15 @@ export default async function PropertyPage({
                 <div className="space-y-2 text-sm">
                   <div className="flex justify-between">
                     <span className="text-secondary">Valor de mercado</span>
-                    <span className="font-mono">{auctionCalculation.marketValue.toLocaleString("pt-PT")}€</span>
+                    <span className="tabular-nums">{auctionCalculation.marketValue.toLocaleString("pt-PT")}€</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-secondary">Margem de segurança (15%)</span>
-                    <span className="font-mono text-red-600">-{Math.round(auctionCalculation.marketValue * 0.15).toLocaleString("pt-PT")}€</span>
+                    <span className="tabular-nums text-red-600">-{Math.round(auctionCalculation.marketValue * 0.15).toLocaleString("pt-PT")}€</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-secondary">Custos totais</span>
-                    <span className="font-mono text-red-600">-{auctionCalculation.totalCosts.toLocaleString("pt-PT")}€</span>
+                    <span className="tabular-nums text-red-600">-{auctionCalculation.totalCosts.toLocaleString("pt-PT")}€</span>
                   </div>
                   <div className="pt-2 border-t border-orange-200 flex justify-between font-bold text-lg">
                     <span>Lance máximo recomendado</span>
