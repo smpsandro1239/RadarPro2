@@ -1,7 +1,11 @@
 // @vitest-environment jsdom
-import { describe, it, expect, vi } from "vitest";
-import { render, screen } from "@testing-library/react";
+import { describe, it, expect, vi, afterEach } from "vitest";
+import { render, screen, cleanup } from "@testing-library/react";
 import PropertyCard from "@/components/PropertyCard";
+
+afterEach(() => {
+  cleanup();
+});
 
 vi.mock("next/link", () => ({
   default: ({ children, href }: { children: React.ReactNode; href: string }) => (
@@ -45,5 +49,23 @@ describe("PropertyCard", () => {
     render(<PropertyCard {...baseProps} score={null} />);
     const matches = screen.getAllByText("Sem avaliação");
     expect(matches.length).toBeGreaterThan(0);
+  });
+
+  it("renderiza badge de leilao com countdown em dias para leilao futuro (ms)", () => {
+    render(
+      <PropertyCard
+        {...baseProps}
+        isAuction
+        currentBid={50000}
+        maxBid={60000}
+        auctionEndDate={Date.now() + 2 * 24 * 60 * 60 * 1000}
+      />,
+    );
+    expect(screen.getByText(/Leilão • fecha em 2 dias/)).toBeInTheDocument();
+  });
+
+  it("nao renderiza badge de leilao sem data de fim", () => {
+    render(<PropertyCard {...baseProps} isAuction auctionEndDate={null} />);
+    expect(screen.queryByText(/Leilão • fecha em/)).not.toBeInTheDocument();
   });
 });
