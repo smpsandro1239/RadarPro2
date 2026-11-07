@@ -3,7 +3,7 @@ import { ExternalLink } from "lucide-react";
 interface SourceContactProps {
   propertyTitle: string;
   sourceName: string;
-  isAuction: boolean;
+  isAuction: boolean | null;
   url: string | null;
 }
 
@@ -20,7 +20,7 @@ const BANK_SOURCE_MARKERS = [
 
 export default function SourceContact({ propertyTitle, sourceName, isAuction, url }: SourceContactProps) {
   const name = sourceName.toLowerCase();
-  const isAuctionListing = isAuction || AUCTION_SOURCE_MARKERS.some((marker) => name.includes(marker));
+  const isAuctionListing = Boolean(isAuction) || AUCTION_SOURCE_MARKERS.some((marker) => name.includes(marker));
   const isBankListing = BANK_SOURCE_MARKERS.some((marker) => name.includes(marker));
 
   let heading = "Contactar Anúncio";
