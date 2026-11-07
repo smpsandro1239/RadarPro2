@@ -1,9 +1,11 @@
 import { NextResponse } from "next/server";
+import { isAuthorizedCronRequest } from "@/lib/cron-auth";
 import { inngest } from "@/lib/inngest";
 
 const DISTRICTS = ["Lisboa", "Porto", "Braga", "Faro", "Setúbal", "Aveiro", "Coimbra"];
 
 export async function POST(request: Request) {
+  if (!isAuthorizedCronRequest(request)) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   try {
     const { districts } = await request.json();
     const districtsList = districts || DISTRICTS;
