@@ -17,7 +17,6 @@ import CommuteEstimator from "@/components/CommuteEstimator";
 import VerifiedBadge from "@/components/VerifiedBadge";
 
 import SourceContact from "@/components/SourceContact";
-import NeighborhoodRadar from "@/components/NeighborhoodRadar";
 
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
   const { id } = await params;
@@ -470,13 +469,6 @@ export default async function PropertyPage({
           {prop.lat && prop.lng && (
             <div className="mb-6">
               <CommuteEstimator propertyLat={prop.lat} propertyLng={prop.lng} />
-            </div>
-          )}
-
-          {/* Neighborhood Radar */}
-          {prop.lat && prop.lng && (
-            <div className="mb-6">
-              <NeighborhoodRadar district={prop.district} municipality={prop.municipality} />
             </div>
           )}
 
