@@ -1,0 +1,2 @@
+# Integridade P0
+A ingestão já não classifica todos os anúncios como apartamentos. Tipo e título alimentam classificador central. Classes mixed/unknown ficam sem avaliação. marketValue deixa de ser asking price × 1,2. Actualizações preservam marketValue existente e só calculam desconto quando há referência positiva. Não foi executado backfill histórico; valores anteriores exigem auditoria local. Validar amostras reais de cada scraper.
