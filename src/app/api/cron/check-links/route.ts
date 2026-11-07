@@ -1,13 +1,11 @@
 import { NextResponse } from "next/server";
+import { isAuthorizedCronRequest } from "@/lib/cron-auth";
 import { db } from "@/db";
 import { properties } from "@/db/schema";
 import { eq, isNull, lt, or } from "drizzle-orm";
 
 export async function GET(request: Request) {
-  const authHeader = request.headers.get("authorization");
-  if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  }
+  if (!isAuthorizedCronRequest(request)) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
   try {
     // Get properties that haven't been checked in the last 24 hours or never checked

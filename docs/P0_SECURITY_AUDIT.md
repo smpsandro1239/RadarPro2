@@ -1,0 +1,3 @@
+# Segurança P0
+JWT_SECRET obrigatório (32+ caracteres), sem fallback hardcoded. CRON_SECRET obrigatório (32+ caracteres), comparação timing-safe centralizada. Rotas cron encontradas protegidas; GET adicionado a scrape-all e expire-stale. Proxy de imagens exige IMAGE_PROXY_ALLOWED_HOSTS, valida URL, credenciais, DNS/IP, redirects, MIME e tamanho máximo 5 MiB.
+Configurar JWT_SECRET, CRON_SECRET e IMAGE_PROXY_ALLOWED_HOSTS antes de deploy. Sem allowlist o proxy recusa imagens. Risco residual: DNS não fica pinado ao IP usado pelo fetch; DNS rebinding não está totalmente eliminado. Considerar DNS pinning/egress proxy antes de afirmar mitigação SSRF completa.

@@ -1,6 +1,8 @@
 import { db } from "@/db";
 import { properties } from "@/db/schema";
-import { eq, and } from "drizzle-orm";
+import { eq } from "drizzle-orm";
+import { inferAssetClass } from "@/lib/asset-classification";
+export { inferAssetClass } from "@/lib/asset-classification";
 
 export interface ScrapedProperty {
   id: string;
@@ -18,41 +20,10 @@ export interface ScrapedProperty {
   currentBid?: number;
   reservePrice?: number;
   maxBid?: number;
+  type?: string;
 }
 
 
-/**
- * Infere asset_class a partir de type e title.
- * Regras:
- *  apartamento/T0-T4 -> apartment
- *  moradia/V2-V5 -> house
- *  terreno urbano/lote -> urban_land
- *  terreno rústico -> rural_land
- *  loja/armazém/escritório -> commercial
- *  garagem/box -> garage
- *  ambíguo -> mixed + confidence='low'
- */
-export function inferAssetClass(type: string | null, title: string | null): { assetClass: string; confidence: 'high' | 'medium' | 'low' } {
-  const t = (type || '').toLowerCase();
-  const titleLower = (title || '').toLowerCase();
-  const text = t + ' ' + titleLower;
-
-  const garageKw = ['garagem', 'box', 'garage', 'lugar de estacionamento', 'estacionamento'];
-  const apartmentKw = ['apartamento', 't0', 't1', 't2', 't3', 't4', 'apt', 'apartament'];
-  const houseKw = ['moradia', 'v2', 'v3', 'v4', 'v5', 'vivenda', 'casa '];
-  const urbanLandKw = ['terreno urbano', 'lote', 'terreno de construção', 'edificável', 'construção'];
-  const ruralLandKw = ['terreno rústico', 'rústico', 'floresta', 'agricola', 'agrícola', 'olival', 'vinha'];
-  const commercialKw = ['loja', 'armazem', 'armazém', 'escritório', 'escritorio', 'comercial'];
-
-  if (garageKw.some(k => text.includes(k))) return { assetClass: 'garage', confidence: 'high' };
-  if (apartmentKw.some(k => text.includes(k))) return { assetClass: 'apartment', confidence: 'high' };
-  if (houseKw.some(k => text.includes(k))) return { assetClass: 'house', confidence: 'high' };
-  if (urbanLandKw.some(k => text.includes(k))) return { assetClass: 'urban_land', confidence: 'high' };
-  if (ruralLandKw.some(k => text.includes(k))) return { assetClass: 'rural_land', confidence: 'high' };
-  if (commercialKw.some(k => text.includes(k))) return { assetClass: 'commercial', confidence: 'medium' };
-
-  return { assetClass: 'mixed', confidence: 'low' };
-}
 
 export async function ingestProperty(prop: ScrapedProperty): Promise<{
   action: "inserted" | "updated" | "skipped";
@@ -78,10 +49,10 @@ export async function ingestProperty(prop: ScrapedProperty): Promise<{
     title: prop.title,
     district: prop.location.split(",").pop()?.trim() || "Lisboa",
     municipality: prop.location,
-    type: "Apartamento", // Will be refined by parser
+    type: prop.type?.trim() || "Por classificar",
     price: prop.price,
-    marketValue: Math.round(prop.price * 1.2), // Estimate market value
-    discountPct: Math.round(((Math.round(prop.price * 1.2) || prop.price * 1.2) - prop.price) / Math.round(prop.price * 1.2) * 100) || 0,
+    marketValue: null,
+    discountPct: null,
     score: undefined,
     rentability: undefined,
     images: JSON.stringify(prop.images),
@@ -105,14 +76,15 @@ export async function ingestProperty(prop: ScrapedProperty): Promise<{
 
   if (existing.length > 0) {
     const existingProp = existing[0];
+    const inferred = inferAssetClass(prop.type ?? null, normalized.title);
     const updatedFields: Record<string, any> = {
       title: normalized.title,
       district: normalized.district,
       municipality: normalized.municipality,
       type: normalized.type,
       price: normalized.price,
-      marketValue: normalized.marketValue,
-      discountPct: normalized.discountPct,
+      marketValue: existingProp.marketValue ?? null,
+      discountPct: existingProp.marketValue && existingProp.marketValue > 0 ? Math.round(((existingProp.marketValue - normalized.price) / existingProp.marketValue) * 100) : null,
       score: normalized.score,
       rentability: normalized.rentability,
       images: normalized.images,
@@ -124,6 +96,8 @@ export async function ingestProperty(prop: ScrapedProperty): Promise<{
       currentBid: normalized.currentBid,
       reservePrice: normalized.reservePrice,
       maxBid: normalized.maxBid,
+      assetClass: inferred.assetClass,
+      valuationConfidence: inferred.confidence,
     };
 
     await db.update(properties).set(updatedFields).where(eq(properties.id, existing[0].id));
@@ -132,7 +106,7 @@ export async function ingestProperty(prop: ScrapedProperty): Promise<{
   }
 
   // Inferir asset_class a partir de type e title
-  const { assetClass, confidence } = inferAssetClass(normalized.type, normalized.title);
+  const { assetClass, confidence } = inferAssetClass(prop.type ?? null, normalized.title);
   (normalized as any).assetClass = assetClass;
   (normalized as any).valuationConfidence = confidence;
 

@@ -1,0 +1,2 @@
+# Relatório final P0
+Estado: PARCIAL. Implementação na branch feature/p0-engineering-recovery. Concluído: JWT fail-closed; cron auth central; proxy de imagens restrito; classificação centralizada; remoção de +20%; dispatcher sem fallback; backfill dry-run/local-only; health warning preservado; testes e documentação. Pendente: Vitest/typecheck/build local, hosts CDN, validação dos scrapers, auditoria integral de APIs e DNS pinning. Nenhum merge, deploy, alteração Vercel ou escrita em produção.

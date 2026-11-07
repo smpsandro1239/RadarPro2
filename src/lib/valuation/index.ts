@@ -27,13 +27,14 @@ function deriveListingType(property: any): ListingType | null {
 }
 
 function deriveAssetClass(property: any): AssetClass {
-  const stored = property.asset_class;
-  if (stored && stored !== "mixed") return stored as AssetClass;
-  return "apartment"; // fallback
+  const stored = property.assetClass ?? property.asset_class;
+  if (stored && ["apartment","house","urban_land","rural_land","commercial","garage","mixed","unknown"].includes(stored)) return stored as AssetClass;
+  return "unknown";
 }
 
 function runAuctionEngine(property: any): ValuationResult {
-  const marketValue = property.marketValue ?? property.price * 1.2;
+  const marketValue = Number(property.marketValue ?? 0);
+  if (!Number.isFinite(marketValue) || marketValue <= 0) return { valuation: null, score: 0, engine: "auction", confidence: "very_low", breakdown: { reason: "Valor de mercado fundamentado indisponível." } };
   const result = calculateMaxBid({
     marketValue: marketValue > 0 ? marketValue : 0,
     currentBid: property.currentBid ?? 0,
@@ -72,8 +73,9 @@ export function evaluateProperty(property: any): ValuationResult {
   // Leilão: usa motor de auction (maxBid)
   if (isAuction) {
     const auctionResult = runAuctionEngine(property);
+    if (auctionResult.valuation === null) return auctionResult;
     const scoreResult = calculateScore(
-      { ...property, listing_type: listingType },
+      { ...property, asset_class: assetClass, valuation_confidence: property.valuationConfidence ?? property.valuation_confidence, listing_type: listingType },
       auctionResult
     );
     return {
@@ -88,6 +90,8 @@ export function evaluateProperty(property: any): ValuationResult {
       },
     };
   }
+
+  if (assetClass === "mixed" || assetClass === "unknown") return { valuation: null, score: 0, engine: "unclassified", confidence: "very_low", breakdown: { reason: "Classe de ativo ambígua/desconhecida; avaliação suspensa." } };
 
   // Não-leilão: despacha por asset_class
   let engineResult: ValuationResult;
@@ -105,10 +109,6 @@ export function evaluateProperty(property: any): ValuationResult {
     case "garage":
       engineResult = evaluateApartment({ ...property, type: "Garagem", sqm: property.sqm || 15 });
       break;
-    case "mixed":
-      engineResult = evaluateApartment({ ...property, type: "T2" });
-      engineResult.confidence = "low";
-      break;
     case "apartment":
     case "house":
     default:
@@ -117,7 +117,7 @@ export function evaluateProperty(property: any): ValuationResult {
   }
 
   const scoreResult = calculateScore(
-    { ...property, listing_type: listingType },
+    { ...property, asset_class: assetClass, valuation_confidence: property.valuationConfidence ?? property.valuation_confidence, listing_type: listingType },
     engineResult
   );
 
