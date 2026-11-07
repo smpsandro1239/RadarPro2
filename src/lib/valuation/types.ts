@@ -10,7 +10,8 @@ export type AssetClass =
   | "rural_land"
   | "commercial"
   | "garage"
-  | "mixed";
+  | "mixed"
+  | "unknown";
 
 export type ListingType =
   | "fixed_price"
