@@ -31,6 +31,33 @@ async function fetchWithRetry(url: string, retries = 3): Promise<Response> {
   throw new Error("Failed to fetch " + url + " after " + retries + " retries");
 }
 
+
+/** Extrai apenas áreas explicitamente identificadas no anúncio. */
+export interface ScrapedAreaDetails {
+  usableAreaSqm?: number;
+  grossAreaSqm?: number;
+  landAreaSqm?: number;
+}
+function parseAreaValue(value: string): number | undefined {
+  const parsed = Number.parseFloat(value.replace(/\./g, "").replace(",", "."));
+  return Number.isFinite(parsed) && parsed > 0 && parsed <= 1000000 ? parsed : undefined;
+}
+export function parseAreaDetails(text: string): ScrapedAreaDetails {
+  const source = text.replace(/\s+/g, " ");
+  const read = (pattern: RegExp): number | undefined => {
+    const match = source.match(pattern);
+    return match && match[1] ? parseAreaValue(match[1]) : undefined;
+  };
+  const usableAreaSqm = read(/(?:área\s+útil|area\s+util|superfície\s+útil|superficie\s+util)\s*[:\-]?\s*([\d.]+(?:,[\d]+)?)\s*m(?:²|2)(?=\s|$|[,;.)])/i);
+  const grossAreaSqm = read(/(?:área\s+bruta\s+privativa|area\s+bruta\s+privativa|área\s+bruta|area\s+bruta|área\s+de\s+construção|area\s+de\s+construcao)\s*[:\-]?\s*([\d.]+(?:,[\d]+)?)\s*m(?:²|2)(?=\s|$|[,;.)])/i);
+  const landAreaSqm = read(/(?:área\s+(?:do\s+)?terreno|area\s+(?:do\s+)?terreno|terreno)\s*[:\-]?\s*([\d.]+(?:,[\d]+)?)\s*m(?:²|2)(?=\s|$|[,;.)])/i);
+  return {
+    ...(usableAreaSqm !== undefined ? { usableAreaSqm } : {}),
+    ...(grossAreaSqm !== undefined ? { grossAreaSqm } : {}),
+    ...(landAreaSqm !== undefined ? { landAreaSqm } : {}),
+  };
+}
+
 function parsePrice(text: string): number {
   const match = text.match(/[\d.,]+/);
   if (!match) return 0;
@@ -47,6 +74,9 @@ export interface ScrapedProperty {
   url: string;
   source: string;
   images: string[];
+  usableAreaSqm?: number;
+  grossAreaSqm?: number;
+  landAreaSqm?: number;
   isAuction?: boolean;
   auctionEndDate?: number;
 }
@@ -84,6 +114,7 @@ export async function scrapeCasaSapo(district: string): Promise<ScrapedProperty[
           url: link ? (link.startsWith("http") ? link : "https://casa.sapo.pt" + link) : url,
           source: "Casa Sapo",
           images,
+          ...parseAreaDetails($el.text()),
         });
       }
     });
@@ -130,6 +161,7 @@ export async function scrapeImovirtual(district: string): Promise<ScrapedPropert
           url: link ? (link.startsWith("http") ? link : "https://www.imovirtual.com" + link) : url,
           source: "Imovirtual",
           images,
+          ...parseAreaDetails($el.text()),
         });
       }
     });
@@ -176,6 +208,7 @@ export async function scrapeIdealista(district: string): Promise<ScrapedProperty
           url: link ? (link.startsWith("http") ? link : "https://www.idealista.pt" + link) : url,
           source: "Idealista",
           images,
+          ...parseAreaDetails($el.text()),
         });
       }
     });
@@ -222,6 +255,7 @@ export async function scrapeOLX(district: string): Promise<ScrapedProperty[]> {
           url: link ? (link.startsWith("http") ? link : "https://www.olx.pt" + link) : url,
           source: "OLX",
           images,
+          ...parseAreaDetails($el.text()),
         });
       }
     });
@@ -268,6 +302,7 @@ export async function scrapeCustoJusto(district: string): Promise<ScrapedPropert
           url: link ? (link.startsWith("http") ? link : "https://www.custojusto.pt" + link) : url,
           source: "CustoJusto",
           images,
+          ...parseAreaDetails($el.text()),
         });
       }
     });
@@ -314,6 +349,7 @@ export async function scrapeELeiloes(district: string): Promise<ScrapedProperty[
           url: link ? (link.startsWith("http") ? link : "https://www.e-leiloes.pt" + link) : url,
           source: "e-Leiloes",
           images,
+          ...parseAreaDetails($el.text()),
           isAuction: true,
         });
       }
@@ -382,6 +418,7 @@ export async function scrapeImobancos(district: string): Promise<ScrapedProperty
           url: link ? (link.startsWith("http") ? link : "https://imobancos.pt" + link) : url,
           source: "Imobancos",
           images,
+          ...parseAreaDetails($el.text()),
         });
       }
     });
@@ -428,6 +465,7 @@ export async function scrapeMillenniumBCP(district: string): Promise<ScrapedProp
           url: link ? (link.startsWith("http") ? link : "https://ind.millenniumbcp.pt" + link) : url,
           source: "Millennium BCP",
           images,
+          ...parseAreaDetails($el.text()),
         });
       }
     });
@@ -474,6 +512,7 @@ export async function scrapeSantander(district: string): Promise<ScrapedProperty
           url: link ? (link.startsWith("http") ? link : "https://www.santander.pt" + link) : url,
           source: "Santander",
           images,
+          ...parseAreaDetails($el.text()),
         });
       }
     });
@@ -520,6 +559,7 @@ export async function scrapeMontepio(district: string): Promise<ScrapedProperty[
           url: link ? (link.startsWith("http") ? link : "https://www.montepio.pt" + link) : url,
           source: "Montepio",
           images,
+          ...parseAreaDetails($el.text()),
         });
       }
     });
@@ -566,6 +606,7 @@ export async function scrapeCaixaImobiliario(district: string): Promise<ScrapedP
           url: link ? (link.startsWith("http") ? link : "https://www.caixaimobiliario.pt" + link) : url,
           source: "Caixa Imobiliário",
           images,
+          ...parseAreaDetails($el.text()),
         });
       }
     });
@@ -612,6 +653,7 @@ export async function scrapeCreditoAgricola(district: string): Promise<ScrapedPr
           url: link ? (link.startsWith("http") ? link : "https://www.cai.pt" + link) : url,
           source: "Crédito Agrícola",
           images,
+          ...parseAreaDetails($el.text()),
         });
       }
     });
@@ -658,6 +700,7 @@ export async function scrapeNovoBanco(district: string): Promise<ScrapedProperty
           url: link ? (link.startsWith("http") ? link : "https://www.novobanco.pt" + link) : url,
           source: "Novo Banco",
           images,
+          ...parseAreaDetails($el.text()),
         });
       }
     });
@@ -704,6 +747,7 @@ export async function scrapeBPI(district: string): Promise<ScrapedProperty[]> {
           url: link ? (link.startsWith("http") ? link : "https://www.bpiexpressoimobiliario.pt" + link) : url,
           source: "BPI Expresso",
           images,
+          ...parseAreaDetails($el.text()),
         });
       }
     });
