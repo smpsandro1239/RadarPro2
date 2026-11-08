@@ -43,13 +43,15 @@ describe("compareProperties", () => {
     expect(result.medianPricePerSqm).toBe(1_666.67);
   });
 
-  it("recusa calcular €/m² quando falta a área do imóvel analisado", () => {
+  it("usa comparação por preço quando falta a área do imóvel analisado", () => {
     const result = compareProperties({ ...subject, sqm: null }, []);
 
     expect(result.status).toBe("insufficient_data");
     expect(result.confidence).toBe("very_low");
+    expect(result.comparisonMode).toBe("price_only");
     expect(result.subjectPricePerSqm).toBeNull();
-    expect(result.reasons).toContain("Área do imóvel em análise desconhecida.");
+    expect(result.medianPricePerSqm).toBeNull();
+    expect(result.reasons[0]).toContain("Área não indicada");
   });
   it("exclui anúncios ainda não validados", () => {
     const result = compareProperties(subject, [
