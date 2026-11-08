@@ -22,7 +22,7 @@ export async function GET(request: Request) {
     }
 
     const analysis = compareProperties(
-      subject as ComparableProperty,
+      ({ ...subject, title: subject.title } as ComparableProperty),
       candidates as ComparableProperty[],
     );
     return NextResponse.json({ analysis });
