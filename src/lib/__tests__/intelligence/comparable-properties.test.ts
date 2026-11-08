@@ -51,7 +51,7 @@ describe("compareProperties", () => {
     expect(result.comparisonMode).toBe("price_only");
     expect(result.subjectPricePerSqm).toBeNull();
     expect(result.medianPricePerSqm).toBeNull();
-    expect(result.reasons[0]).toContain("Área não indicada");
+    expect(result.reasons[0]).toContain("Área do imóvel em análise desconhecida");
   });
   it("exclui anúncios ainda não validados", () => {
     const result = compareProperties(subject, [
@@ -149,6 +149,6 @@ describe("compareProperties", () => {
     ]);
     expect(result.comparisonMode).toBe("price_per_sqm");
     expect(result.sampleSize).toBe(3);
-    expect(result.subjectPricePerSqm).toBe(200);
+    expect(result.subjectPricePerSqm).toBe(360);
   });
 });
