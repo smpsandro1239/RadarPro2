@@ -73,19 +73,6 @@ function getAreaBasis(property: ComparableProperty): "usable" | "gross" | "legac
 
 function getComparableType(property: ComparableProperty): string {
   const text = normalize((property.type ?? "") + " " + (property.title ?? ""));
-  const typology = text.match(/\\b(?:t|v)\\s*\\d+\\b/i)?.[0]?.replace(/\\s+/g, "") ?? "";
-  return typology || normalize(property.type);
-}
-
-function getAreaBasis(property: ComparableProperty): "usable" | "gross" | "legacy" | null {
-  if (property.usableAreaSqm != null) return "usable";
-  if (property.grossAreaSqm != null) return "gross";
-  if (property.sqm != null || property.area != null) return "legacy";
-  return null;
-}
-
-function getComparableType(property: ComparableProperty): string {
-  const text = normalize((property.type ?? "") + " " + (property.title ?? ""));
   const typology = text.match(/\b(?:t|v)\s*\d+\b/i)?.[0]?.replace(/\s+/g, "") ?? "";
   return typology || normalize(property.type);
 }
