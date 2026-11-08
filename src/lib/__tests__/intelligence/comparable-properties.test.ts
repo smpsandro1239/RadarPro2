@@ -126,4 +126,29 @@ describe("compareProperties", () => {
     expect(result.comparables.map((item) => item.id)).not.toContain("gross-only");
   });
 
+
+  it("usa a área bruta quando a área útil é inválida", () => {
+    const result = compareProperties(
+      { ...subject, sqm: null, usableAreaSqm: 0, grossAreaSqm: 90 },
+      [
+        { ...subject, id: "gross-a", sqm: null, usableAreaSqm: null, grossAreaSqm: 88, price: 160_000 },
+        { ...subject, id: "gross-b", sqm: null, usableAreaSqm: null, grossAreaSqm: 90, price: 180_000 },
+        { ...subject, id: "gross-c", sqm: null, usableAreaSqm: null, grossAreaSqm: 92, price: 200_000 },
+      ],
+    );
+    expect(result.comparisonMode).toBe("price_per_sqm");
+    expect(result.sampleSize).toBe(3);
+  });
+
+  it("usa área do terreno para terrenos e não área de construção", () => {
+    const land = { ...subject, assetClass: "urban_land", type: "Terreno", title: "Terreno urbano", sqm: null, usableAreaSqm: null, grossAreaSqm: 120, landAreaSqm: 500 };
+    const result = compareProperties(land, [
+      { ...land, id: "land-a", grossAreaSqm: 100, landAreaSqm: 450, price: 80_000 },
+      { ...land, id: "land-b", grossAreaSqm: 120, landAreaSqm: 500, price: 100_000 },
+      { ...land, id: "land-c", grossAreaSqm: 130, landAreaSqm: 550, price: 120_000 },
+    ]);
+    expect(result.comparisonMode).toBe("price_per_sqm");
+    expect(result.sampleSize).toBe(3);
+    expect(result.subjectPricePerSqm).toBe(200);
+  });
 });
