@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Menu, X } from "lucide-react";
+import { Menu, X, ChevronDown } from "lucide-react";
 
 const navLinks = [
   { href: "/", label: "Início" },
@@ -19,68 +19,62 @@ const navLinks = [
 
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [moreOpen, setMoreOpen] = useState(false);
+  const primaryLinks = navLinks.slice(0, 6);
+  const secondaryLinks = navLinks.slice(6);
 
   return (
-    <nav className="border-b bg-white sticky top-0 z-40">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 flex justify-between items-center h-16">
-        {/* Logo */}
-        <a href="/" className="text-xl sm:text-2xl font-bold tracking-tight text-primary flex-shrink-0">
-          RadarPro <span className="text-foreground">PT</span>
+    <header className="sticky top-0 z-40 border-b border-white/10 bg-slate-950/90 text-slate-200 shadow-lg shadow-black/10 backdrop-blur-xl">
+      <nav aria-label="Navegação principal" className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6">
+        <a href="/" className="flex shrink-0 items-center gap-2.5">
+          <span className="flex h-9 w-9 items-center justify-center rounded-xl border border-blue-400/20 bg-blue-400/10 text-sm font-bold text-blue-300">R</span>
+          <span className="text-lg font-semibold tracking-tight text-white">Radar<span className="text-blue-300">Pro</span><span className="ml-1 text-[10px] font-semibold tracking-[0.2em] text-slate-500">PT</span></span>
         </a>
 
-        {/* Desktop nav */}
-        <div className="hidden lg:flex items-center gap-1">
-          {navLinks.slice(0, 6).map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              className="px-3 py-2 text-sm font-medium hover:text-primary transition rounded-lg hover:bg-slate-50"
-            >
+        <div className="hidden items-center gap-1 lg:flex">
+          {primaryLinks.map((link) => (
+            <a key={link.href} href={link.href} className="whitespace-nowrap rounded-lg px-3 py-2 text-sm font-medium text-slate-400 transition-colors hover:bg-white/[0.06] hover:text-white">
               {link.label}
             </a>
           ))}
-          <a
-            href="/auth"
-            className="ml-2 bg-primary text-white px-4 py-2 rounded-lg text-sm font-medium hover:opacity-90 transition"
-          >
+          <div className="relative">
+            <button type="button" onClick={() => setMoreOpen(!moreOpen)} aria-expanded={moreOpen} className="flex items-center gap-1 rounded-lg px-3 py-2 text-sm font-medium text-slate-400 transition-colors hover:bg-white/[0.06] hover:text-white">
+              Mais <ChevronDown size={14} className={moreOpen ? "rotate-180 transition-transform" : "transition-transform"} />
+            </button>
+            {moreOpen && (
+              <div className="absolute right-0 top-full mt-2 w-52 rounded-xl border border-white/10 bg-slate-900 p-2 shadow-2xl shadow-black/30">
+                {secondaryLinks.map((link) => (
+                  <a key={link.href} href={link.href} onClick={() => setMoreOpen(false)} className="block rounded-lg px-3 py-2.5 text-sm text-slate-300 transition-colors hover:bg-white/[0.06] hover:text-white">
+                    {link.label}
+                  </a>
+                ))}
+              </div>
+            )}
+          </div>
+          <a href="/auth" className="ml-2 rounded-lg border border-blue-300/20 bg-blue-500 px-4 py-2 text-sm font-semibold text-white shadow-lg shadow-blue-950/30 transition hover:bg-blue-400">
             Aceder
           </a>
         </div>
 
-        {/* Mobile hamburger */}
-        <button
-          onClick={() => setMobileOpen(!mobileOpen)}
-          className="lg:hidden p-2 rounded-lg hover:bg-slate-100 transition"
-          aria-label="Menu"
-        >
-          {mobileOpen ? <X size={24} /> : <Menu size={24} />}
+        <button type="button" onClick={() => setMobileOpen(!mobileOpen)} className="rounded-lg border border-white/10 p-2 text-slate-300 transition hover:bg-white/[0.06] hover:text-white lg:hidden" aria-label={mobileOpen ? "Fechar menu" : "Abrir menu"} aria-expanded={mobileOpen}>
+          {mobileOpen ? <X size={21} /> : <Menu size={21} />}
         </button>
-      </div>
+      </nav>
 
-      {/* Mobile menu */}
       {mobileOpen && (
-        <div className="lg:hidden border-t bg-white">
-          <div className="px-4 py-4 space-y-1">
+        <div className="border-t border-white/10 bg-slate-950 px-4 pb-5 pt-3 lg:hidden">
+          <div className="mx-auto grid max-w-7xl gap-1 sm:grid-cols-2">
             {navLinks.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                onClick={() => setMobileOpen(false)}
-                className="block px-4 py-3 text-sm font-medium hover:text-primary hover:bg-slate-50 rounded-lg transition"
-              >
+              <a key={link.href} href={link.href} onClick={() => setMobileOpen(false)} className="rounded-lg px-4 py-3 text-sm font-medium text-slate-300 transition-colors hover:bg-white/[0.06] hover:text-white">
                 {link.label}
               </a>
             ))}
-            <a
-              href="/auth"
-              onClick={() => setMobileOpen(false)}
-              className="block mt-2 bg-primary text-white px-4 py-3 rounded-lg text-sm font-medium text-center hover:opacity-90 transition"
-            >
-              Aceder
-            </a>
           </div>
+          <a href="/auth" onClick={() => setMobileOpen(false)} className="mx-auto mt-3 block max-w-7xl rounded-lg bg-blue-500 px-4 py-3 text-center text-sm font-semibold text-white transition hover:bg-blue-400">
+            Aceder
+          </a>
         </div>
       )}
-    </nav>
+    </header>
   );
 }
