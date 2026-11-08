@@ -23,6 +23,9 @@ export const properties = sqliteTable("properties", {
    * (o scraper usa price); max_bid é o campo canónico para leilões.
    */
   price: real("price").notNull(),
+  usableAreaSqm: real("usable_area_sqm"),
+  grossAreaSqm: real("gross_area_sqm"),
+  landAreaSqm: real("land_area_sqm"),
   marketValue: real("market_value"),
   discountPct: real("discount_pct"),
   score: integer("score"),
