@@ -10,6 +10,7 @@ export type ComparableConfidence = "high" | "medium" | "low" | "very_low";
 
 export interface ComparableProperty {
   id: string;
+  title?: string | null;
   price: number;
   sqm?: number | null;
   area?: number | null;
@@ -70,6 +71,12 @@ function getAreaBasis(property: ComparableProperty): "usable" | "gross" | "legac
   return null;
 }
 
+function getComparableType(property: ComparableProperty): string {
+  const text = normalize((property.type ?? "") + " " + (property.title ?? ""));
+  const typology = text.match(/\\b(?:t|v)\\s*\\d+\\b/i)?.[0]?.replace(/\\s+/g, "") ?? "";
+  return typology || normalize(property.type);
+}
+
 function getAssetClass(property: ComparableProperty): string {
   return normalize(property.assetClass ?? property.asset_class ?? "apartment");
 }
@@ -104,7 +111,7 @@ export function compareProperties(
   const minimumSample = options.minimumSample ?? 3;
   const subjectArea = getArea(subject);
   const subjectPrice = subject.price;
-  const subjectType = normalize(subject.type);
+  const subjectType = getComparableType(subject);
   const subjectMunicipality = normalize(subject.municipality);
   const subjectDistrict = normalize(subject.district);
   const subjectAsset = getAssetClass(subject);
@@ -129,7 +136,7 @@ export function compareProperties(
       if (candidate.id === subject.id || !isActive(candidate)) return false;
       if (!hasAcceptableCheckStatus(candidate) || candidate.isAuction === true || subject.isAuction === true) return false;
       if (!Number.isFinite(candidate.price) || candidate.price <= 0) return false;
-      if (normalize(candidate.type) !== subjectType || getAssetClass(candidate) !== subjectAsset) return false;
+      if (getComparableType(candidate) !== subjectType || getAssetClass(candidate) !== subjectAsset) return false;
       const candidateMunicipality = normalize(candidate.municipality);
       const candidateDistrict = normalize(candidate.district);
       return subjectMunicipality ? candidateMunicipality === subjectMunicipality : candidateDistrict === subjectDistrict;
@@ -192,7 +199,7 @@ export function compareProperties(
       const candidateArea = getArea(candidate);
       if (!candidateArea || getAreaBasis(candidate) !== getAreaBasis(subject)) return false;
       if (Math.abs(candidateArea - subjectArea) / subjectArea > areaTolerance) return false;
-      if (normalize(candidate.type) !== subjectType) return false;
+      if (getComparableType(candidate) !== subjectType) return false;
       if (getAssetClass(candidate) !== subjectAsset) return false;
 
       const candidateMunicipality = normalize(candidate.municipality);
