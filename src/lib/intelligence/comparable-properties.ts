@@ -1,9 +1,8 @@
 /**
  * RadarPro Intelligence — comparador de imóveis.
  *
- * Compara apenas anúncios de venda fixa, ativos, com preço e área válidos,
- * na mesma localização e tipologia. Não mistura leilões com preço anunciado.
- * Não estima áreas em falta: sem amostra suficiente devolve confiança baixa.
+ * Nunca estima áreas em falta. Imóveis sem área usam comparação por preço,
+ * localização e tipologia, sem produzir métricas €/m².
  */
 
 export type ComparableConfidence = "high" | "medium" | "low" | "very_low";
@@ -36,12 +35,7 @@ export interface ComparableAnalysis {
   medianPricePerSqm: number | null;
   differencePct: number | null;
   sampleSize: number;
-  comparables: Array<{
-    id: string;
-    pricePerSqm: number;
-    price: number;
-    areaSqm: number;
-  }>;
+  comparables: Array<{ id: string; pricePerSqm: number; price: number; areaSqm: number }>;
   reasons: string[];
   comparisonMode?: "price_per_sqm" | "price_only";
   subjectPrice?: number | null;
@@ -49,36 +43,37 @@ export interface ComparableAnalysis {
   priceDifferencePct?: number | null;
 }
 
+type AreaBasis = "usable" | "gross" | "land" | "legacy" | null;
+
 function normalize(value: unknown): string {
-  return String(value ?? "")
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .trim()
-    .toLocaleLowerCase("pt-PT");
+  return String(value ?? "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim().toLocaleLowerCase("pt-PT");
 }
 
-function getArea(property: ComparableProperty): number | null {
-  const area = property.usableAreaSqm ?? property.grossAreaSqm ?? property.sqm ?? property.area;
-  return typeof area === "number" && Number.isFinite(area) && area > 0
-    ? area
-    : null;
+function validArea(value: unknown): value is number {
+  return typeof value === "number" && Number.isFinite(value) && value > 0 && value <= 1_000_000;
 }
 
-function getAreaBasis(property: ComparableProperty): "usable" | "gross" | "legacy" | null {
-  if (property.usableAreaSqm != null) return "usable";
-  if (property.grossAreaSqm != null) return "gross";
-  if (property.sqm != null || property.area != null) return "legacy";
-  return null;
+function getAssetClass(property: ComparableProperty): string {
+  return normalize(property.assetClass ?? property.asset_class ?? "apartment");
+}
+
+function getAreaDetails(property: ComparableProperty): { area: number | null; basis: AreaBasis } {
+  const assetClass = getAssetClass(property);
+  if (assetClass === "urban_land" || assetClass === "rural_land") {
+    return validArea(property.landAreaSqm)
+      ? { area: property.landAreaSqm, basis: "land" }
+      : { area: null, basis: null };
+  }
+  if (validArea(property.usableAreaSqm)) return { area: property.usableAreaSqm, basis: "usable" };
+  if (validArea(property.grossAreaSqm)) return { area: property.grossAreaSqm, basis: "gross" };
+  const legacy = property.sqm ?? property.area;
+  return validArea(legacy) ? { area: legacy, basis: "legacy" } : { area: null, basis: null };
 }
 
 function getComparableType(property: ComparableProperty): string {
   const text = normalize((property.type ?? "") + " " + (property.title ?? ""));
   const typology = text.match(/\b(?:t|v)\s*\d+\b/i)?.[0]?.replace(/\s+/g, "") ?? "";
   return typology || normalize(property.type);
-}
-
-function getAssetClass(property: ComparableProperty): string {
-  return normalize(property.assetClass ?? property.asset_class ?? "apartment");
 }
 
 function isActive(property: ComparableProperty): boolean {
@@ -93,15 +88,30 @@ function hasAcceptableCheckStatus(property: ComparableProperty): boolean {
 function median(values: number[]): number {
   const sorted = [...values].sort((a, b) => a - b);
   const middle = Math.floor(sorted.length / 2);
-  return sorted.length % 2 === 0
-    ? (sorted[middle - 1] + sorted[middle]) / 2
-    : sorted[middle];
+  return sorted.length % 2 === 0 ? (sorted[middle - 1] + sorted[middle]) / 2 : sorted[middle];
 }
 
-/**
- * Produz uma comparação de €/m² com imóveis semelhantes.
- * O chamador deve fornecer os anúncios candidatos obtidos da base de dados.
- */
+function sameLocation(subject: ComparableProperty, candidate: ComparableProperty): boolean {
+  const municipality = normalize(subject.municipality);
+  if (municipality) return normalize(candidate.municipality) === municipality;
+  const district = normalize(subject.district);
+  return Boolean(district) && normalize(candidate.district) === district;
+}
+
+function sameBasicProfile(subject: ComparableProperty, candidate: ComparableProperty): boolean {
+  return candidate.id !== subject.id &&
+    isActive(candidate) &&
+    hasAcceptableCheckStatus(candidate) &&
+    candidate.isAuction !== true &&
+    subject.isAuction !== true &&
+    Number.isFinite(candidate.price) &&
+    candidate.price > 0 &&
+    getComparableType(candidate) === getComparableType(subject) &&
+    getAssetClass(candidate) === getAssetClass(subject) &&
+    sameLocation(subject, candidate);
+}
+
+/** Compara imóveis semelhantes sem misturar leilões ou bases de área distintas. */
 export function compareProperties(
   subject: ComparableProperty,
   candidates: ComparableProperty[],
@@ -109,163 +119,80 @@ export function compareProperties(
 ): ComparableAnalysis {
   const areaTolerance = options.areaTolerance ?? 0.25;
   const minimumSample = options.minimumSample ?? 3;
-  const subjectArea = getArea(subject);
+  const { area: subjectArea, basis: subjectAreaBasis } = getAreaDetails(subject);
   const subjectPrice = subject.price;
   const subjectType = getComparableType(subject);
-  const subjectMunicipality = normalize(subject.municipality);
-  const subjectDistrict = normalize(subject.district);
-  const subjectAsset = getAssetClass(subject);
+  const validSubjectPrice = Number.isFinite(subjectPrice) && subjectPrice > 0;
   const reasons: string[] = [];
 
   if (!subjectArea) reasons.push("Área do imóvel em análise desconhecida.");
-  if (!Number.isFinite(subjectPrice) || subjectPrice <= 0) {
-    reasons.push("Preço do imóvel em análise inválido.");
-  }
+  if (!validSubjectPrice) reasons.push("Preço do imóvel em análise inválido.");
   if (!subjectType) reasons.push("Tipologia não identificada.");
-  if (!hasAcceptableCheckStatus(subject)) {
-    reasons.push("O anúncio em análise ainda não foi validado.");
-  }
-  if (!subjectMunicipality && !subjectDistrict) {
-    reasons.push("Localização não identificada.");
+  if (!hasAcceptableCheckStatus(subject)) reasons.push("O anúncio em análise ainda não foi validado.");
+  if (!normalize(subject.municipality) && !normalize(subject.district)) reasons.push("Localização não identificada.");
+
+  if (!validSubjectPrice || !subjectType || !hasAcceptableCheckStatus(subject) ||
+      (!normalize(subject.municipality) && !normalize(subject.district))) {
+    return {
+      status: "insufficient_data", confidence: "very_low",
+      subjectPricePerSqm: null, medianPricePerSqm: null, differencePct: null,
+      sampleSize: 0, comparables: [], reasons,
+    };
   }
 
-  if (!subjectArea && Number.isFinite(subjectPrice) && subjectPrice > 0 &&
-      subjectType && hasAcceptableCheckStatus(subject) &&
-      (subjectMunicipality || subjectDistrict)) {
-    const priceRows = candidates.filter((candidate) => {
-      if (candidate.id === subject.id || !isActive(candidate)) return false;
-      if (!hasAcceptableCheckStatus(candidate) || candidate.isAuction === true || subject.isAuction === true) return false;
-      if (!Number.isFinite(candidate.price) || candidate.price <= 0) return false;
-      if (getComparableType(candidate) !== subjectType || getAssetClass(candidate) !== subjectAsset) return false;
-      const candidateMunicipality = normalize(candidate.municipality);
-      const candidateDistrict = normalize(candidate.district);
-      return subjectMunicipality ? candidateMunicipality === subjectMunicipality : candidateDistrict === subjectDistrict;
-    });
-    const sampleSize = priceRows.length;
-    const medianPrice = sampleSize ? median(priceRows.map((row) => row.price)) : null;
-    const priceDifferencePct = medianPrice && medianPrice > 0
+  const matchingRows = candidates.filter((candidate) => sameBasicProfile(subject, candidate));
+
+  if (!subjectArea || !subjectAreaBasis) {
+    const sampleSize = matchingRows.length;
+    const medianPrice = sampleSize ? median(matchingRows.map((row) => row.price)) : null;
+    const priceDifferencePct = medianPrice !== null && medianPrice > 0
       ? Math.round(((subjectPrice - medianPrice) / medianPrice) * 10000) / 100
       : null;
-    const confidence: ComparableConfidence =
-      sampleSize >= 8 ? "medium" : sampleSize >= minimumSample ? "low" : "very_low";
-    const priceReasons = ["Área não indicada: comparação apenas por preço, localização e tipologia; €/m² não calculado."];
-    if (sampleSize < minimumSample) {
-      priceReasons.push(`Amostra insuficiente: encontrados ${sampleSize} comparáveis; mínimo recomendado: ${minimumSample}.`);
-    }
+    reasons.push("Área não indicada: comparação apenas por preço, localização e tipologia; €/m² não calculado.");
+    if (sampleSize < minimumSample) reasons.push(`Amostra insuficiente: encontrados ${sampleSize} comparáveis; mínimo recomendado: ${minimumSample}.`);
     return {
-      status: sampleSize >= minimumSample ? "ok" as const : "insufficient_data" as const,
-      confidence,
-      subjectPricePerSqm: null,
-      medianPricePerSqm: null,
-      differencePct: null,
-      sampleSize,
-      comparables: [],
-      reasons: priceReasons,
-      comparisonMode: "price_only" as const,
-      subjectPrice,
-      medianPrice,
-      priceDifferencePct,
+      status: sampleSize >= minimumSample ? "ok" : "insufficient_data",
+      confidence: sampleSize >= 8 ? "medium" : sampleSize >= minimumSample ? "low" : "very_low",
+      subjectPricePerSqm: null, medianPricePerSqm: null, differencePct: null,
+      sampleSize, comparables: [], reasons, comparisonMode: "price_only",
+      subjectPrice, medianPrice, priceDifferencePct,
     };
   }
 
-  if (
-    !subjectArea ||
-    !Number.isFinite(subjectPrice) ||
-    subjectPrice <= 0 ||
-    !subjectType ||
-    !hasAcceptableCheckStatus(subject) ||
-    (!subjectMunicipality && !subjectDistrict)
-  ) {
-    return {
-      status: "insufficient_data",
-      confidence: "very_low",
-      subjectPricePerSqm: null,
-      medianPricePerSqm: null,
-      differencePct: null,
-      sampleSize: 0,
-      comparables: [],
-      reasons,
-    };
-  }
-
-  const subjectIsAuction = subject.isAuction === true;
-  const comparableRows = candidates
-    .filter((candidate) => {
-      if (candidate.id === subject.id || !isActive(candidate)) return false;
-      if (!hasAcceptableCheckStatus(candidate)) return false;
-      if (candidate.isAuction === true || subjectIsAuction) return false;
-      if (!Number.isFinite(candidate.price) || candidate.price <= 0) return false;
-
-      const candidateArea = getArea(candidate);
-      if (!candidateArea || getAreaBasis(candidate) !== getAreaBasis(subject)) return false;
-      if (Math.abs(candidateArea - subjectArea) / subjectArea > areaTolerance) return false;
-      if (getComparableType(candidate) !== subjectType) return false;
-      if (getAssetClass(candidate) !== subjectAsset) return false;
-
-      const candidateMunicipality = normalize(candidate.municipality);
-      const candidateDistrict = normalize(candidate.district);
-
-      if (subjectMunicipality) {
-        return candidateMunicipality === subjectMunicipality;
-      }
-      return candidateDistrict === subjectDistrict;
-    })
-    .map((candidate) => {
-      const areaSqm = getArea(candidate)!;
-      return {
-        id: candidate.id,
-        price: candidate.price,
-        areaSqm,
-        pricePerSqm: candidate.price / areaSqm,
-      };
-    })
-    .filter((candidate) => Number.isFinite(candidate.pricePerSqm));
+  const comparableRows = matchingRows.flatMap((candidate) => {
+    const { area, basis } = getAreaDetails(candidate);
+    if (!area || basis !== subjectAreaBasis) return [];
+    if (Math.abs(area - subjectArea) / subjectArea > areaTolerance) return [];
+    return [{ id: candidate.id, price: candidate.price, areaSqm: area, pricePerSqm: candidate.price / area }];
+  }).filter((row) => Number.isFinite(row.pricePerSqm));
 
   const sampleSize = comparableRows.length;
-  if (sampleSize < minimumSample) {
-    reasons.push(
-      `Amostra insuficiente: encontrados ${sampleSize} comparáveis; mínimo recomendado: ${minimumSample}.`,
-    );
-  }
-
+  if (sampleSize < minimumSample) reasons.push(`Amostra insuficiente: encontrados ${sampleSize} comparáveis; mínimo recomendado: ${minimumSample}.`);
   if (sampleSize === 0) {
     return {
-      status: "insufficient_data",
-      confidence: "very_low",
-      subjectPricePerSqm: subjectPrice / subjectArea,
-      medianPricePerSqm: null,
-      differencePct: null,
-      sampleSize,
-      comparables: [],
-      reasons,
+      status: "insufficient_data", confidence: "very_low",
+      subjectPricePerSqm: Math.round((subjectPrice / subjectArea) * 100) / 100,
+      medianPricePerSqm: null, differencePct: null,
+      sampleSize, comparables: [], reasons,
     };
   }
 
   const medianPricePerSqm = median(comparableRows.map((row) => row.pricePerSqm));
   const subjectPricePerSqm = subjectPrice / subjectArea;
-  const differencePct =
-    ((subjectPricePerSqm - medianPricePerSqm) / medianPricePerSqm) * 100;
-
-  const confidence: ComparableConfidence =
-    sampleSize >= 8 ? "high" :
-    sampleSize >= minimumSample ? "medium" :
-    "low";
+  const differencePct = ((subjectPricePerSqm - medianPricePerSqm) / medianPricePerSqm) * 100;
 
   return {
     status: sampleSize >= minimumSample ? "ok" : "insufficient_data",
-    confidence,
+    confidence: sampleSize >= 8 ? "high" : sampleSize >= minimumSample ? "medium" : "low",
     subjectPricePerSqm: Math.round(subjectPricePerSqm * 100) / 100,
     medianPricePerSqm: Math.round(medianPricePerSqm * 100) / 100,
     differencePct: Math.round(differencePct * 100) / 100,
     sampleSize,
-    comparables: comparableRows
-      .sort((a, b) => a.pricePerSqm - b.pricePerSqm)
-      .map((row) => ({
-        id: row.id,
-        pricePerSqm: Math.round(row.pricePerSqm * 100) / 100,
-        price: row.price,
-        areaSqm: row.areaSqm,
-      })),
+    comparables: comparableRows.sort((a, b) => a.pricePerSqm - b.pricePerSqm).map((row) => ({
+      id: row.id, pricePerSqm: Math.round(row.pricePerSqm * 100) / 100,
+      price: row.price, areaSqm: row.areaSqm,
+    })),
     reasons,
+    comparisonMode: "price_per_sqm",
   };
 }
