@@ -63,6 +63,13 @@ function getArea(property: ComparableProperty): number | null {
     : null;
 }
 
+function getAreaBasis(property: ComparableProperty): "usable" | "gross" | "legacy" | null {
+  if (property.usableAreaSqm != null) return "usable";
+  if (property.grossAreaSqm != null) return "gross";
+  if (property.sqm != null || property.area != null) return "legacy";
+  return null;
+}
+
 function getAssetClass(property: ComparableProperty): string {
   return normalize(property.assetClass ?? property.asset_class ?? "apartment");
 }
@@ -183,7 +190,7 @@ export function compareProperties(
       if (!Number.isFinite(candidate.price) || candidate.price <= 0) return false;
 
       const candidateArea = getArea(candidate);
-      if (!candidateArea) return false;
+      if (!candidateArea || getAreaBasis(candidate) !== getAreaBasis(subject)) return false;
       if (Math.abs(candidateArea - subjectArea) / subjectArea > areaTolerance) return false;
       if (normalize(candidate.type) !== subjectType) return false;
       if (getAssetClass(candidate) !== subjectAsset) return false;
