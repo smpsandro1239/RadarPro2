@@ -64,6 +64,11 @@ function isActive(property: ComparableProperty): boolean {
   return (property.isActive ?? property.is_active ?? true) !== false;
 }
 
+function hasAcceptableCheckStatus(property: ComparableProperty): boolean {
+  const status = property.checkStatus ?? property.check_status;
+  return status == null || status === "ok";
+}
+
 function median(values: number[]): number {
   const sorted = [...values].sort((a, b) => a - b);
   const middle = Math.floor(sorted.length / 2);
@@ -96,6 +101,9 @@ export function compareProperties(
     reasons.push("Preço do imóvel em análise inválido.");
   }
   if (!subjectType) reasons.push("Tipologia não identificada.");
+  if (!hasAcceptableCheckStatus(subject)) {
+    reasons.push("O anúncio em análise ainda não foi validado.");
+  }
   if (!subjectMunicipality && !subjectDistrict) {
     reasons.push("Localização não identificada.");
   }
@@ -105,6 +113,7 @@ export function compareProperties(
     !Number.isFinite(subjectPrice) ||
     subjectPrice <= 0 ||
     !subjectType ||
+    !hasAcceptableCheckStatus(subject) ||
     (!subjectMunicipality && !subjectDistrict)
   ) {
     return {
@@ -123,6 +132,7 @@ export function compareProperties(
   const comparableRows = candidates
     .filter((candidate) => {
       if (candidate.id === subject.id || !isActive(candidate)) return false;
+      if (!hasAcceptableCheckStatus(candidate)) return false;
       if (candidate.isAuction === true || subjectIsAuction) return false;
       if (!Number.isFinite(candidate.price) || candidate.price <= 0) return false;
 
