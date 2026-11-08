@@ -14,6 +14,7 @@ jobs:
     env:
       TURSO_DATABASE_URL: file:./radarpro-ci.db
       TURSO_AUTH_TOKEN: ci-placeholder-token
+      STRIPE_SECRET_KEY: sk_test_ci_placeholder
       NEXT_TELEMETRY_DISABLED: "1"
     steps:
       - name: Checkout
