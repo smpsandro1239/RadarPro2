@@ -15,6 +15,10 @@ describe("parseAreaDetails", () => {
     expect(parseAreaDetails("Área bruta: 125.5 m2")).toEqual({ grossAreaSqm: 125.5 });
   });
 
+  it("rejeita formatos numéricos malformados", () => {
+    expect(parseAreaDetails("Área útil: 12.34.5 m²")).toEqual({});
+  });
+
   it("não interpreta números sem rótulo de área como área", () => {
     expect(parseAreaDetails("T2 · 85 m² · 250.000 €")).toEqual({});
   });
