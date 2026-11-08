@@ -4,6 +4,8 @@ import Image from "next/image";
 import { MapPin, TrendingDown, Trophy } from "lucide-react";
 import PropertyImage from "@/components/PropertyImage";
 
+export const dynamic = "force-dynamic";
+
 export default async function OportunidadesPage() {
   const properties = await getAllActiveProperties();
 

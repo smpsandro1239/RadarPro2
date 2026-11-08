@@ -18,6 +18,9 @@ interface Property {
   rentability: number | null;
   type: string;
   images: string | null;
+  usableAreaSqm: number | null;
+  grossAreaSqm: number | null;
+  landAreaSqm: number | null;
 }
 
 export default function ComparadorPage() {
@@ -25,6 +28,8 @@ export default function ComparadorPage() {
   const [properties, setProperties] = useState<Property[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [loading, setLoading] = useState(true);
+  const [analysis, setAnalysis] = useState<any>(null);
+  const [analysisLoading, setAnalysisLoading] = useState(false);
 
   useEffect(() => {
     fetch("/api/properties")
@@ -37,6 +42,17 @@ export default function ComparadorPage() {
   }, []);
 
   const selected = properties.filter((p) => selectedIds.includes(p.id));
+
+  useEffect(() => {
+    const propertyId = selectedIds[0];
+    if (!propertyId) { setAnalysis(null); return; }
+    setAnalysisLoading(true);
+    fetch(`/api/intelligence/comparables?propertyId=${encodeURIComponent(propertyId)}`)
+      .then((response) => response.ok ? response.json() : Promise.reject())
+      .then((data) => setAnalysis(data.analysis))
+      .catch(() => setAnalysis(null))
+      .finally(() => setAnalysisLoading(false));
+  }, [selectedIds]);
   const available = properties.filter(
     (p) => !selectedIds.includes(p.id) && p.title.toLowerCase().includes(searchQuery.toLowerCase())
   );
@@ -110,6 +126,14 @@ export default function ComparadorPage() {
                 ))}
               </tr>
               <tr>
+                <td className="p-3 font-medium text-sm border bg-slate-50">Área útil / bruta / terreno</td>
+                {selected.map((p) => (
+                  <td key={p.id} className="p-3 text-center border text-sm">
+                    {[p.usableAreaSqm ? p.usableAreaSqm + " m² útil" : null, p.grossAreaSqm ? p.grossAreaSqm + " m² bruta" : null, p.landAreaSqm ? p.landAreaSqm + " m² terreno" : null].filter(Boolean).join(" · ") || "Não indicada"}
+                  </td>
+                ))}
+              </tr>
+              <tr>
                 <td className="p-3 font-medium text-sm border bg-slate-50">Valorização</td>
                 {selected.map((p) => (
                   <td key={p.id} className="p-3 text-center border text-success">
@@ -168,6 +192,24 @@ export default function ComparadorPage() {
             </tbody>
           </table>
         </div>
+      )}
+
+      {selected.length > 0 && (
+        <section className="mb-8 rounded-xl border p-5">
+          <h2 className="font-bold text-lg mb-2">Análise de mercado do primeiro imóvel selecionado</h2>
+          {analysisLoading ? <p className="text-secondary">A calcular comparação...</p> : analysis ? (
+            <div className="space-y-2 text-sm">
+              <p><strong>Modo:</strong> {analysis.comparisonMode === "price_only" ? "Comparação por preço (sem área)" : "Comparação por €/m²"}</p>
+              <p><strong>Confiança:</strong> {analysis.confidence} · <strong>Comparáveis:</strong> {analysis.sampleSize}</p>
+              {analysis.comparisonMode === "price_only" ? (
+                <p><strong>Preço mediano dos comparáveis:</strong> {analysis.medianPrice == null ? "Indisponível" : formatPrice(analysis.medianPrice)} · <strong>Diferença:</strong> {analysis.priceDifferencePct == null ? "Indisponível" : analysis.priceDifferencePct + "%"}</p>
+              ) : (
+                <p><strong>Preço do imóvel:</strong> {analysis.subjectPricePerSqm == null ? "Indisponível" : analysis.subjectPricePerSqm.toLocaleString("pt-PT") + " €/m²"} · <strong>Mediana:</strong> {analysis.medianPricePerSqm == null ? "Indisponível" : analysis.medianPricePerSqm.toLocaleString("pt-PT") + " €/m²"}</p>
+              )}
+              {analysis.reasons?.map((reason: string) => <p key={reason} className="text-secondary">{reason}</p>)}
+            </div>
+          ) : <p className="text-secondary">Não foi possível obter uma avaliação fiável.</p>}
+        </section>
       )}
 
       {/* Add property */}

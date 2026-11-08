@@ -2,6 +2,8 @@ import { getLatestProperties, getTotalActiveProperties, getDistinctSourceCount }
 import PropertyGrid from "@/components/PropertyGrid";
 import { Suspense } from "react";
 
+export const dynamic = "force-dynamic";
+
 export default async function Home() {
   const properties = await getLatestProperties();
   const totalActive = await getTotalActiveProperties();

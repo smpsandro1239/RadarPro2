@@ -1,6 +1,8 @@
 import { getAllActiveProperties } from "@/lib/queries";
 import MapView from "@/components/MapView";
 
+export const dynamic = "force-dynamic";
+
 export default async function MapaPage() {
   const properties = await getAllActiveProperties();
 

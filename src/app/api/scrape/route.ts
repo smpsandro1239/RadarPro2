@@ -31,6 +31,12 @@ export async function POST(request: Request) {
       // Check if already exists
       const existing = await db.select().from(properties).where(eq(properties.dedupHash, dedupHash)).limit(1);
       if (existing.length > 0) {
+        await db.update(properties).set({
+          usableAreaSqm: prop.usableAreaSqm ?? existing[0].usableAreaSqm,
+          grossAreaSqm: prop.grossAreaSqm ?? existing[0].grossAreaSqm,
+          landAreaSqm: prop.landAreaSqm ?? existing[0].landAreaSqm,
+          updatedAt: new Date(),
+        }).where(eq(properties.id, existing[0].id));
         skipped++;
         continue;
       }
@@ -51,6 +57,9 @@ export async function POST(request: Request) {
           score: 70,
           rentability: 5.0,
           images: prop.imageUrl ? JSON.stringify([prop.imageUrl]) : "[]",
+          usableAreaSqm: prop.usableAreaSqm ?? null,
+          grossAreaSqm: prop.grossAreaSqm ?? null,
+          landAreaSqm: prop.landAreaSqm ?? null,
           dedupHash,
           isActive: true,
           checkStatus: "pending",

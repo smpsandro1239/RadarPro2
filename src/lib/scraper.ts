@@ -1,4 +1,5 @@
 import * as cheerio from "cheerio";
+import { parseAreaDetails } from "@/lib/area-parser";
 
 export interface ScrapedProperty {
   title: string;
@@ -7,6 +8,9 @@ export interface ScrapedProperty {
   url: string;
   source: string;
   imageUrl?: string;
+  usableAreaSqm?: number;
+  grossAreaSqm?: number;
+  landAreaSqm?: number;
 }
 
 export async function scrapeCasaSapo(district: string): Promise<ScrapedProperty[]> {
@@ -48,6 +52,7 @@ export async function scrapeCasaSapo(district: string): Promise<ScrapedProperty[
           url: link ? (link.startsWith("http") ? link : `https://casa.sapo.pt${link}`) : url,
           source: "Casa Sapo",
           imageUrl: img,
+          ...parseAreaDetails($el.text()),
         });
       }
     });
@@ -96,6 +101,7 @@ export async function scrapeImovirtual(district: string): Promise<ScrapedPropert
           url: link ? (link.startsWith("http") ? link : `https://www.imovirtual.com${link}`) : url,
           source: "Imovirtual",
           imageUrl: img,
+          ...parseAreaDetails($el.text()),
         });
       }
     });

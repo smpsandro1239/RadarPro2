@@ -1,6 +1,8 @@
 import { getPropertiesByDistrict } from "@/lib/queries";
 import PropertyCard from "@/components/PropertyCard";
 
+export const dynamic = "force-dynamic";
+
 const districtNames: Record<string, string> = {
   lisboa: "Lisboa",
   porto: "Porto",
