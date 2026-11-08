@@ -3,6 +3,8 @@ import { properties } from "@/db/schema";
 import { eq, sql, count, avg, min, max } from "drizzle-orm";
 import { getAllActiveProperties } from "@/lib/queries";
 
+export const dynamic = "force-dynamic";
+
 export default async function EstatisticasPage() {
   const properties = await getAllActiveProperties();
 
