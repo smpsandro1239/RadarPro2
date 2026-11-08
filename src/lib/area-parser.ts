@@ -5,7 +5,10 @@ export interface ScrapedAreaDetails {
   landAreaSqm?: number;
 }
 function parseAreaValue(value: string): number | undefined {
-  const parsed = Number.parseFloat(value.replace(/\./g, "").replace(",", "."));
+  const normalized = value.includes(",")
+    ? value.replace(/\./g, "").replace(",", ".")
+    : /^\d{1,3}(?:\.\d{3})+$/.test(value) ? value.replace(/\./g, "") : value;
+  const parsed = Number.parseFloat(normalized);
   return Number.isFinite(parsed) && parsed > 0 && parsed <= 1000000 ? parsed : undefined;
 }
 export function parseAreaDetails(text: string): ScrapedAreaDetails {
