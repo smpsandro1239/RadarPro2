@@ -10,6 +10,9 @@ export interface ScrapedProperty {
   url: string;
   source: string;
   images: string[];
+  usableAreaSqm?: number;
+  grossAreaSqm?: number;
+  landAreaSqm?: number;
   isAuction?: boolean;
   auctionEndDate?: number;
   auctionStartDate?: number;
@@ -85,6 +88,9 @@ export async function ingestProperty(prop: ScrapedProperty): Promise<{
     score: undefined,
     rentability: undefined,
     images: JSON.stringify(prop.images),
+    usableAreaSqm: prop.usableAreaSqm ?? null,
+    grossAreaSqm: prop.grossAreaSqm ?? null,
+    landAreaSqm: prop.landAreaSqm ?? null,
     isActive,
     checkStatus: "pending" as "ok" | "not_found" | "error" | "pending",
     createdAt: new Date(),
@@ -116,6 +122,9 @@ export async function ingestProperty(prop: ScrapedProperty): Promise<{
       score: normalized.score,
       rentability: normalized.rentability,
       images: normalized.images,
+      usableAreaSqm: normalized.usableAreaSqm ?? existingProp.usableAreaSqm,
+      grossAreaSqm: normalized.grossAreaSqm ?? existingProp.grossAreaSqm,
+      landAreaSqm: normalized.landAreaSqm ?? existingProp.landAreaSqm,
       isActive: normalized.isActive,
       checkStatus: "ok",
       updatedAt: new Date(),
