@@ -13,6 +13,9 @@ export interface ComparableProperty {
   price: number;
   sqm?: number | null;
   area?: number | null;
+  usableAreaSqm?: number | null;
+  grossAreaSqm?: number | null;
+  landAreaSqm?: number | null;
   district?: string | null;
   municipality?: string | null;
   type?: string | null;
@@ -39,6 +42,10 @@ export interface ComparableAnalysis {
     areaSqm: number;
   }>;
   reasons: string[];
+  comparisonMode?: "price_per_sqm" | "price_only";
+  subjectPrice?: number | null;
+  medianPrice?: number | null;
+  priceDifferencePct?: number | null;
 }
 
 function normalize(value: unknown): string {
@@ -50,7 +57,7 @@ function normalize(value: unknown): string {
 }
 
 function getArea(property: ComparableProperty): number | null {
-  const area = property.sqm ?? property.area;
+  const area = property.usableAreaSqm ?? property.sqm ?? property.area ?? property.grossAreaSqm;
   return typeof area === "number" && Number.isFinite(area) && area > 0
     ? area
     : null;
@@ -106,6 +113,45 @@ export function compareProperties(
   }
   if (!subjectMunicipality && !subjectDistrict) {
     reasons.push("Localização não identificada.");
+  }
+
+  if (!subjectArea && Number.isFinite(subjectPrice) && subjectPrice > 0 &&
+      subjectType && hasAcceptableCheckStatus(subject) &&
+      (subjectMunicipality || subjectDistrict)) {
+    const priceRows = candidates.filter((candidate) => {
+      if (candidate.id === subject.id || !isActive(candidate)) return false;
+      if (!hasAcceptableCheckStatus(candidate) || candidate.isAuction === true || subject.isAuction === true) return false;
+      if (!Number.isFinite(candidate.price) || candidate.price <= 0) return false;
+      if (normalize(candidate.type) !== subjectType || getAssetClass(candidate) !== subjectAsset) return false;
+      const candidateMunicipality = normalize(candidate.municipality);
+      const candidateDistrict = normalize(candidate.district);
+      return subjectMunicipality ? candidateMunicipality === subjectMunicipality : candidateDistrict === subjectDistrict;
+    });
+    const sampleSize = priceRows.length;
+    const medianPrice = sampleSize ? median(priceRows.map((row) => row.price)) : null;
+    const priceDifferencePct = medianPrice && medianPrice > 0
+      ? Math.round(((subjectPrice - medianPrice) / medianPrice) * 10000) / 100
+      : null;
+    const confidence: ComparableConfidence =
+      sampleSize >= 8 ? "medium" : sampleSize >= minimumSample ? "low" : "very_low";
+    const priceReasons = ["Área não indicada: comparação apenas por preço, localização e tipologia; €/m² não calculado."];
+    if (sampleSize < minimumSample) {
+      priceReasons.push(`Amostra insuficiente: encontrados ${sampleSize} comparáveis; mínimo recomendado: ${minimumSample}.`);
+    }
+    return {
+      status: sampleSize >= minimumSample ? "ok" as const : "insufficient_data" as const,
+      confidence,
+      subjectPricePerSqm: null,
+      medianPricePerSqm: null,
+      differencePct: null,
+      sampleSize,
+      comparables: [],
+      reasons: priceReasons,
+      comparisonMode: "price_only" as const,
+      subjectPrice,
+      medianPrice,
+      priceDifferencePct,
+    };
   }
 
   if (
