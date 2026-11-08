@@ -109,4 +109,19 @@ describe("compareProperties", () => {
     expect(result.priceDifferencePct).toBeNull();
   });
 
+
+  it("não mistura área útil com área bruta nos comparáveis", () => {
+    const result = compareProperties(
+      { ...subject, sqm: null, usableAreaSqm: 90 },
+      [
+        { ...subject, id: "gross-only", sqm: null, usableAreaSqm: null, grossAreaSqm: 90, price: 150_000 },
+        { ...subject, id: "usable-a", sqm: null, usableAreaSqm: 88, price: 160_000 },
+        { ...subject, id: "usable-b", sqm: null, usableAreaSqm: 90, price: 180_000 },
+        { ...subject, id: "usable-c", sqm: null, usableAreaSqm: 92, price: 200_000 },
+      ],
+    );
+    expect(result.sampleSize).toBe(3);
+    expect(result.comparables.map((item) => item.id)).not.toContain("gross-only");
+  });
+
 });
