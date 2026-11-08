@@ -79,4 +79,34 @@ describe("compareProperties", () => {
     expect(result.reasons).toContain("O anúncio em análise ainda não foi validado.");
   });
 
+
+  it("compara preços quando falta a área, sem calcular €/m²", () => {
+    const result = compareProperties(
+      { ...subject, sqm: null, usableAreaSqm: null },
+      [
+        { ...subject, id: "price-a", price: 160_000, sqm: 80 },
+        { ...subject, id: "price-b", price: 180_000, sqm: 90 },
+        { ...subject, id: "price-c", price: 200_000, sqm: 100 },
+        { ...subject, id: "price-auction", price: 100_000, isAuction: true },
+        { ...subject, id: "price-pending", price: 120_000, checkStatus: "pending" },
+      ],
+    );
+    expect(result.comparisonMode).toBe("price_only");
+    expect(result.status).toBe("ok");
+    expect(result.sampleSize).toBe(3);
+    expect(result.medianPrice).toBe(180_000);
+    expect(result.priceDifferencePct).toBe(0);
+    expect(result.subjectPricePerSqm).toBeNull();
+    expect(result.medianPricePerSqm).toBeNull();
+    expect(result.comparables).toHaveLength(0);
+  });
+
+  it("indica dados insuficientes quando não há área nem comparáveis", () => {
+    const result = compareProperties({ ...subject, sqm: null }, []);
+    expect(result.comparisonMode).toBe("price_only");
+    expect(result.status).toBe("insufficient_data");
+    expect(result.confidence).toBe("very_low");
+    expect(result.priceDifferencePct).toBeNull();
+  });
+
 });
