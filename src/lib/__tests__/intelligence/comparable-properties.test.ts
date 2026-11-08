@@ -51,4 +51,32 @@ describe("compareProperties", () => {
     expect(result.subjectPricePerSqm).toBeNull();
     expect(result.reasons).toContain("Área do imóvel em análise desconhecida.");
   });
+  it("exclui anúncios ainda não validados", () => {
+    const result = compareProperties(subject, [
+      { ...subject, id: "verified-a", price: 160_000, sqm: 80, checkStatus: "ok" },
+      { ...subject, id: "verified-b", price: 180_000, sqm: 90, checkStatus: "ok" },
+      { ...subject, id: "verified-c", price: 200_000, sqm: 100, checkStatus: "ok" },
+      { ...subject, id: "pending", price: 150_000, sqm: 90, checkStatus: "pending" },
+    ]);
+
+    expect(result.status).toBe("ok");
+    expect(result.sampleSize).toBe(3);
+    expect(result.comparables.map((item) => item.id)).not.toContain("pending");
+  });
+
+  it("não avalia um anúncio-alvo ainda não validado", () => {
+    const result = compareProperties(
+      { ...subject, checkStatus: "pending" },
+      [
+        { ...subject, id: "a", checkStatus: "ok" },
+        { ...subject, id: "b", checkStatus: "ok" },
+        { ...subject, id: "c", checkStatus: "ok" },
+      ],
+    );
+
+    expect(result.status).toBe("insufficient_data");
+    expect(result.confidence).toBe("very_low");
+    expect(result.reasons).toContain("O anúncio em análise ainda não foi validado.");
+  });
+
 });
